@@ -9,39 +9,39 @@ public class PageMaker {
 	private int endPage;
 	private boolean prev;
 	private boolean next;
-	// ¸¸¾à ÆäÀÌÁö ÇÏ´Ü ¹öÆ°°³¼ö¸¦ À¯µ¿ÀûÀ¸·Î °¡Á®°¡°í ½ÍÀº °æ¿ì 
-	// displayPageNumÀ» ¼±¾ðÇÕ´Ï´Ù.
+	// ë§Œì•½ íŽ˜ì´ì§€ í•˜ë‹¨ ë²„íŠ¼ê°œìˆ˜ë¥¼ ìœ ë™ì ìœ¼ë¡œ ê°€ì ¸ê°€ê³  ì‹¶ì€ ê²½ìš° 
+	// displayPageNumì„ ì„ ì–¸í•©ë‹ˆë‹¤.
 	private int displayPageNum;
-	// Criteria¿¡¼­ ÇöÀç Á¶È¸ÇÏ°í ÀÖ´Â ÆäÀÌÁö Á¤º¸ + ÇöÀç ÆäÀÌÁö¿¡ ±ò¸®´Â ±Û ¼ö¸¦ ¹Þ¾Æ¿Í¾ßÇÔ.
+	// Criteriaì—ì„œ í˜„ìž¬ ì¡°íšŒí•˜ê³  ìžˆëŠ” íŽ˜ì´ì§€ ì •ë³´ + í˜„ìž¬ íŽ˜ì´ì§€ì— ê¹”ë¦¬ëŠ” ê¸€ ìˆ˜ë¥¼ ë°›ì•„ì™€ì•¼í•¨.
 	private SearchCriteria cri;
-	// ÇÊ¿äÇÑ ¸ðµç »çÇ×À» °è»êÇØÁÖ´Â ¸Þ¼­µå.
+	// í•„ìš”í•œ ëª¨ë“  ì‚¬í•­ì„ ê³„ì‚°í•´ì£¼ëŠ” ë©”ì„œë“œ.
 	public void calcData() {
 		this.displayPageNum =10;
 		
-		// ÇöÀçÆäÀÌÁö(cri.PageNum())À» ±Ù°Å·Î ÆäÀÌÁö ±×·ìÁß ³¡³ª´Â ÆäÀÌÁö¸¦ ±¸ÇÔ 
+		// í˜„ìž¬íŽ˜ì´ì§€(cri.PageNum())ì„ ê·¼ê±°ë¡œ íŽ˜ì´ì§€ ê·¸ë£¹ì¤‘ ëë‚˜ëŠ” íŽ˜ì´ì§€ë¥¼ êµ¬í•¨ 
 		this.endPage = (int)(Math.ceil(cri.getPageNum() / 
 				(double)displayPageNum) * displayPageNum);
 		
-		// ³¡³ª´Â ÆäÀÌÁö¸¦ Åä´ë·Î ÆäÀÌÁö ±×·ìÀÇ ½ÃÀÛÆäÀÌÁö¸¦ ±¸ÇÔ .
+		// ëë‚˜ëŠ” íŽ˜ì´ì§€ë¥¼ í† ëŒ€ë¡œ íŽ˜ì´ì§€ ê·¸ë£¹ì˜ ì‹œìž‘íŽ˜ì´ì§€ë¥¼ êµ¬í•¨ .
 		this.startPage = (endPage - displayPageNum) +1 ;
 		
-		// À§ÀÇ endPage´Â ¸í¿Á»óÀÇ(´Ü¼ø ±×·ì°è»êÀ¸·Î)³¡³ª´Â ÆäÀÌÁöÀÌ±â ‹š¹®¿¡ ½ÇÁúÀûÀÎ ±Û °³¼ö¸¦ ÅëÇØ º¸ÀåÇØÁà¾ßÇÔ.
+		// ìœ„ì˜ endPageëŠ” ëª…ì˜¥ìƒì˜(ë‹¨ìˆœ ê·¸ë£¹ê³„ì‚°ìœ¼ë¡œ)ëë‚˜ëŠ” íŽ˜ì´ì§€ì´ê¸° ë–„ë¬¸ì— ì‹¤ì§ˆì ì¸ ê¸€ ê°œìˆ˜ë¥¼ í†µí•´ ë³´ìž¥í•´ì¤˜ì•¼í•¨.
 		int tempEndPage = (int)(Math.ceil(totalBoard/(double)cri.getNumber()));
 		
 		if(endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
 		
-		// next,prev¹öÆ° ¿©ºÎ Ã³¸®
-		// prev´Â startPage°¡ 1ÀÎ °æ¿ì¿¡¸¸ ºñÈ°¼ºÈ­ ÀÌ¹Ç·Î »ïÇ×¿¬»êÀÚ·Î °£´ÜÈ÷ Ã³¸®
+		// next,prevë²„íŠ¼ ì—¬ë¶€ ì²˜ë¦¬
+		// prevëŠ” startPageê°€ 1ì¸ ê²½ìš°ì—ë§Œ ë¹„í™œì„±í™” ì´ë¯€ë¡œ ì‚¼í•­ì—°ì‚°ìžë¡œ ê°„ë‹¨ížˆ ì²˜ë¦¬
 		prev = startPage == 1 ? false : true; 
 		
-		//next´Â ¿©ÅÂ±îÁö Ãâ·ÂÇÑ ÆäÀÌÁö¿¡ ¼ÓÇÑ ±Û °³¼öº¸´Ù DB³» ÀüÃ¼ ±ÛÀÌ ´õ ¸¹Àº°æ¿ì¿¡ È°¼ºÈ­
+		//nextëŠ” ì—¬íƒœê¹Œì§€ ì¶œë ¥í•œ íŽ˜ì´ì§€ì— ì†í•œ ê¸€ ê°œìˆ˜ë³´ë‹¤ DBë‚´ ì „ì²´ ê¸€ì´ ë” ë§Žì€ê²½ìš°ì— í™œì„±í™”
 		next = endPage * cri.getNumber() >= totalBoard ? false : true;
 	}
 	public void setTotalBoard(int totalBoard) {
 		this.totalBoard = totalBoard;
-		calcData(); // prev , next, endPage, startPage¸¦ ´Ù ±¸ÇØ¹ö¸².
+		calcData(); // prev , next, endPage, startPageë¥¼ ë‹¤ êµ¬í•´ë²„ë¦¼.
 	}
 	
 }
