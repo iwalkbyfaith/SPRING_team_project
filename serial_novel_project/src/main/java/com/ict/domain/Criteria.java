@@ -7,8 +7,8 @@ public class Criteria {
 	private int pageNum =1;
 	private int number =10 ;
 	
-	// ÆäÀÌÁö * ÆäÀÌÁö´ç ¼ıÀÚ°¡ ½ÇÁ¦ limit ±¸¹®¿¡ µé¾î°¥ ½ÃÀÛÁ¡ÀÌ µË´Ï´Ù.
-	// mybatis´Â getter¸¦ °¡Á®´Ù ¾µ ¼ö ÀÖ½À´Ï´Ù.
+	// í˜ì´ì§€ * í˜ì´ì§€ë‹¹ ìˆ«ìê°€ ì‹¤ì œ limit êµ¬ë¬¸ì— ë“¤ì–´ê°ˆ ì‹œì‘ì ì´ ë©ë‹ˆë‹¤.
+	// mybatisëŠ” getterë¥¼ ê°€ì ¸ë‹¤ ì“¸ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 	public int getPageStart() {
 		return (this.pageNum -1) * number;
 	}
