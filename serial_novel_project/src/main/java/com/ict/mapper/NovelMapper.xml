@@ -4,5 +4,31 @@
 	
 	<mapper namespace="com.ict.mapper.NovelMapper">
 	
-	
+		<select id="getList" resultType="com.ict.domain.NovelVO">
+			SELECT * FROM novel_tbl
+		</select>
+		
+		<select id="countPageNum" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM novel_tbl WHERE
+		]]>
+		
+			<include refid="search"></include>
+			
+		<![CDATA[
+			novel_num > 0
+		]]>
+	</select>
+		
+		<insert id="insert">
+			INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
+		</insert>
+		
+		<update id="update">
+			UPDATE novel_tbl
+			SET
+			novel_title = #{novel_title}, novel_tsnum = #{novel_tsnum}, novel_category = #{novel_category}, novel_week = #{novel_week} WHERE novel_num = #{novel_num}
+		</update>
+		
 	</mapper>
