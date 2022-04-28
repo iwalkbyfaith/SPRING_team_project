@@ -7,11 +7,15 @@ import com.ict.domain.SearchCriteria;
 
 public interface NovelMapper {
 	
-	public List<NovelVO> getList();
+	public List<NovelVO> getList(SearchCriteria cri);
+	
+	public int countPageNum(SearchCriteria cri);
 	
 	public void insert(NovelVO vo);
 	
-	public void update(NovelVO vo);
+	public NovelVO select(int novel_num);
 	
-	public int countPageNum(SearchCriteria cri);
+	public void delete(int novel_num);
+	
+	public void update(NovelVO vo);
 }

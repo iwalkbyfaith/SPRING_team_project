@@ -20,11 +20,23 @@
 		]]>
 	</select>
 		
+		<!-- 등록 -->
 		<insert id="insert">
 			INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
                         (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
 		</insert>
 		
+		<!-- 디테일 -->
+		<select id="select" resultType="com.ict.domain.NovelVO">
+			SELECT * FROM novel_tbl WHERE novel_num = #{novel_num}
+		</select>
+		
+		<!-- 삭제 -->
+		<delete id="delete">
+			DELETE FROM novel_tbl WHERE novel_num = #{novel_num}
+		</delete>
+		
+		<!-- 수정 -->
 		<update id="update">
 			UPDATE novel_tbl
 			SET

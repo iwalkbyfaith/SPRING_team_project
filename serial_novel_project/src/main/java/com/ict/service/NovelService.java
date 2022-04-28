@@ -7,12 +7,15 @@ import com.ict.domain.SearchCriteria;
 
 public interface NovelService {
 	
+	public List<NovelVO> getList(SearchCriteria cri);
 	
-	public int countPageNum(SearchCriteria cri); 
+	public int countPageNum(SearchCriteria cri);
 	
-	public List<NovelVO> listNovel();
+	public NovelVO select(int novel_Num);
 	
-	public void insertNovel(NovelVO vo);
+	public void insert(NovelVO vo);
 	
-	public void updateNovel(NovelVO vo);
+	public void delete(int novel_Num);
+	
+	public void update(NovelVO vo);
 }

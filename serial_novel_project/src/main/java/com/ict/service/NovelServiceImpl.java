@@ -16,22 +16,35 @@ public class NovelServiceImpl implements NovelService{
 	private NovelMapper mapper;
 
 	@Override
-	public List<NovelVO> listNovel() {
-		return mapper.getList();
-	}
-
-	@Override
-	public void insertNovel(NovelVO vo) {
-		mapper.insert(vo);
-	}
-
-	@Override
-	public void updateNovel(NovelVO vo) {
-		mapper.update(vo);
+	public List<NovelVO> getList(SearchCriteria cri) {
+		return mapper.getList(cri);
 	}
 
 	@Override
 	public int countPageNum(SearchCriteria cri) {
 		return mapper.countPageNum(cri);
 	}
+
+	@Override
+	public NovelVO select(int novel_Num) {
+		return mapper.select(novel_Num);
+	}
+
+	@Override
+	public void insert(NovelVO vo) {
+		mapper.insert(vo);
+	}
+
+	@Override
+	public void delete(int novel_Num) {
+		mapper.delete(novel_Num);
+	}
+
+	@Override
+	public void update(NovelVO vo) {
+		mapper.update(vo);
+		
+	}
+
+	
 }
