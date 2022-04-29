@@ -17,6 +17,7 @@ local.properties
 db.properties
 pom.properties
 Servers/
+server.xml
 
 
 
