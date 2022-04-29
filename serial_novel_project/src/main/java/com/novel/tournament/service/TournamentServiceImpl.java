@@ -1,16 +1,16 @@
-package com.ict.service;
+package com.novel.tournament.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ict.domain.TournamentJoinVO;
-import com.ict.domain.TournamentVO;
-import com.ict.mapper.TournamentMapper;
+import com.novel.tournament.domain.TournamentJoinVO;
+import com.novel.tournament.domain.TournamentVO;
+import com.novel.tournament.mapper.TournamentMapper;
 
 @Service
-public class TournamentServiceImpl implements ITournamentService{
+public class TournamentServiceImpl implements TournamentService{
 
 	@Autowired
 	private TournamentMapper mapper;

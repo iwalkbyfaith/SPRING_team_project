@@ -1,23 +1,12 @@
-package com.ict.mapper;
+package com.novel.free.mapper;
 
 import java.util.List;
 
-import com.ict.domain.FreeNovelVO;
-import com.ict.domain.SearchCriteria;
+
+import com.novel.free.domain.FreeNovelVO;
 
 public interface FreeNovelMapper {
 	
-		public List<FreeNovelVO> getList(SearchCriteria cri);
-		
-		public void insert (FreeNovelVO vo);
-		
-		public FreeNovelVO select(long free_num);
-		
-		public void delete(long free_num);
-		
-		public void update(FreeNovelVO vo);
-		
-		public int countPageNum(SearchCriteria cri);
 		
 		
 		

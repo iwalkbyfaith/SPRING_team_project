@@ -1,4 +1,4 @@
-package com.ict.domain;
+package com.novel.tournament.domain;
 
 import lombok.Data;
 

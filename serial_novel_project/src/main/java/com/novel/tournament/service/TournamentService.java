@@ -1,11 +1,11 @@
-package com.ict.service;
+package com.novel.tournament.service;
 
 import java.util.List;
 
-import com.ict.domain.TournamentJoinVO;
-import com.ict.domain.TournamentVO;
+import com.novel.tournament.domain.TournamentJoinVO;
+import com.novel.tournament.domain.TournamentVO;
 
-public interface ITournamentService {
+public interface TournamentService {
 
 	// ■ 전체 리스트 가져오기
 	public List<TournamentVO> listTournament();

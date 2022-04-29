@@ -1,9 +1,9 @@
-package com.ict.service;
+package com.novel.paid.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ict.mapper.PaidNovelMapper;
+import com.novel.paid.mapper.PaidNovelMapper;
 
 @Service
 public class PaidNovelServiceImpl implements PaidNovelService{

@@ -1,18 +1,12 @@
-package com.ict.service;
+package com.novel.free.service;
 
 import java.util.List;
 
-import com.ict.domain.FreeNovelVO;
-import com.ict.domain.SearchCriteria;
+
+import com.novel.free.domain.FreeNovelVO;
 
 
 public interface FreeNovelService {
-	
-	public List<FreeNovelVO> getList(SearchCriteria cri);
-	public int countPageNum(SearchCriteria cri);
-	public FreeNovelVO select(long free_num);
-	public void insert(FreeNovelVO vo);
-	public void delete(long free_num);
-	public void update(FreeNovelVO vo);
+
 	
 }

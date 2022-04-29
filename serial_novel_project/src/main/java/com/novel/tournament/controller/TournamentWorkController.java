@@ -1,4 +1,4 @@
-package com.ict.controller;
+package com.novel.tournament.controller;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ict.domain.TournamentJoinVO;
-import com.ict.domain.TournamentVO;
-import com.ict.service.ITournamentService;
+import com.novel.tournament.domain.TournamentJoinVO;
+import com.novel.tournament.domain.TournamentVO;
+import com.novel.tournament.service.TournamentService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 public class TournamentWorkController {
 	
 	@Autowired
-	private ITournamentService service;
+	private TournamentService service;
 	
 	
 	// ■ 토너먼트 대회 리스트 조회

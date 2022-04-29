@@ -1,9 +1,9 @@
-package com.ict.mapper;
+package com.novel.tournament.mapper;
 
 import java.util.List;
 
-import com.ict.domain.TournamentJoinVO;
-import com.ict.domain.TournamentVO;
+import com.novel.tournament.domain.TournamentJoinVO;
+import com.novel.tournament.domain.TournamentVO;
 
 public interface TournamentMapper {
 	

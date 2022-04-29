@@ -1,4 +1,4 @@
-package com.ict.controller;
+package com.novel.tournament.controller;
 
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ict.service.ITournamentService;
+import com.novel.tournament.service.TournamentService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -16,7 +16,7 @@ import lombok.extern.log4j.Log4j;
 public class TournamentController {
 	
 	@Autowired
-	private ITournamentService service;
+	private TournamentService service;
 	
 	@GetMapping(value="/list")
 	public String goTournamentMain() {
@@ -26,5 +26,10 @@ public class TournamentController {
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
 		return "tournament/tournament2";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "tournament/test";
 	}
 }

@@ -1,4 +1,4 @@
-package com.ict.mapper;
+package com.novel.paid.mapper;
 
 public interface PaidNovelMapper {
 

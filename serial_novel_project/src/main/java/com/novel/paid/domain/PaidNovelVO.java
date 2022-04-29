@@ -1,4 +1,4 @@
-package com.ict.domain;
+package com.novel.paid.domain;
 
 import java.sql.Date;
 
