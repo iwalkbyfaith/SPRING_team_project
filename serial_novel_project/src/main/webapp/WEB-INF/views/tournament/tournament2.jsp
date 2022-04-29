@@ -12,7 +12,7 @@
 	
 	<style>
 	
-		#tournament, #tournament8 {
+		#tournament, #tournament8, .tourna-work-list{
 			margin: 0px -18px -16px;
 		    column-gap: 60px;
 		    padding-bottom: 16px;
@@ -24,6 +24,7 @@
 		    overflow: scroll hidden;
 		    border : solid 3px black;
 		}
+		
 	
 	</style>
 
@@ -84,13 +85,16 @@
 				$(data).each(function(){
 					
 					str += "<div class='tourna-work-list' data-tno='" + this.to_num + "'>"
-						+ this.to_name		 + "/"
-						+ this.towork_num	 + "/"
-						+ this.novel_title	 + "/"
-						+ this.novel_writer	 + "/"
-						+ this.towork_rec
-						+ "</div>"
-						+ "<button type='button'>추천</button>";
+							+ "<div class='tourna-work-list-div'>여기에 이미지</div>"
+							+ "<div class='tourna-work-list-div'>"
+							+ this.to_name		 + "/"
+							+ this.towork_num	 + "/"
+							+ this.novel_title	 + "/"
+							+ this.novel_writer	 + "/"
+							+ this.towork_rec
+							+ "</div>"
+							+ "<button type='button'>추천</button>"
+						+ "</div>";
 
 				});
 				
