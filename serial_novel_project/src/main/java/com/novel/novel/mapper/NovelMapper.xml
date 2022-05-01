@@ -3,6 +3,39 @@
 	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.novel.novel.mapper.NovelMapper">
+	
+	<!-- 검색 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				(Title like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'c'.toString()">
+				(Content like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'w'.toString()">
+				(Writer like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				((Title like '%'||#{keyword}||'%')
+					or
+				(Content like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				((Content like '%'||#{keyword}||'%')
+					or
+				(Writer like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				((Title like '%'||#{keyword}||'%')
+					or
+				(Content like '%'||#{keyword}||'%')
+					or
+				(Writer like '%'||#{keyword}||'%')) AND
+			</if>
+		</if>	
+	</sql>
+			
 		<!--  -->
 		<select id="getList" resultType="com.novel.novel.domain.NovelVO">
 			<![CDATA[
@@ -11,6 +44,7 @@
 				ROWNUM rn, novel_tbl.* FROM novel_tbl WHERE 
 			]]>	
 			
+				<include refid="search"></include>
 			
 			<![CDATA[		
 				ROWNUM <= #{pageEnd})
@@ -24,6 +58,8 @@
 			SELECT COUNT(*) FROM novel_tbl WHERE
 			]]>
 			
+				<include refid="search"></include>
+				
 			<![CDATA[
 			novel_num > 0
 			]]>
