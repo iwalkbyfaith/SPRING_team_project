@@ -77,7 +77,8 @@ public class NovelController {
 		return "novel/novelUpdateForm";
 	}
 	
-public String novelUpdate(NovelVO novel, SearchCriteria cri, RedirectAttributes rttr){
+	@PostMapping("/novelUpdate")
+	public String novelUpdate(NovelVO novel, SearchCriteria cri, RedirectAttributes rttr){
 		
 		log.info("수정로직입니다." + novel);
 		log.info("검색어 : " + cri.getKeyword());
