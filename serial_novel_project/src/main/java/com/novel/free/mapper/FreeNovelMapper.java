@@ -2,27 +2,25 @@ package com.novel.free.mapper;
 
 import java.util.List;
 
-
+import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.domain.SearchCriteria;
 
 public interface FreeNovelMapper {
-	public List<FreeNovelVO> getList(SearchCriteria cri);
+	
+	public List<FreeNovelJoinVO> getJoinList(SearchCriteria cri); // 무료 소설 리스트 받아오기 
 	
 	
-	public void insert(FreeNovelVO vo);
+	public void insertNovel(FreeNovelVO vo);	 	//소설 정보 입력(작가,제목 등등..)
 	
-	// select구문은 글 번호를 입력받아서 해당 글 "하나"에 대한 정보만 얻어올 예정이므로 
-	// 리턴자료형은 글 하나를 담당할수있는 BoardVO로 해야 함.
-	public FreeNovelVO select(long free_num);
+	public void insertFree(FreeNovelVO vo);	 		// 무료 소설 쓰기(소제목, 내용 등등..) 
 	
+	public FreeNovelJoinVO select(long free_num); 	// 원하는 작품정보 가져오기 
 	
-	// 글 삭제는 DELETE 구문으로 하는데, 비 SELECT구문이므로 리턴자료를 void로 적습니다.
-	// 하나의 글만 삭제할 예정이므로, 살제할 글 정보를 호출시 같이 입력하게 합니다.
-	public void delete(long free_num);
+	public void delete(long free_num); 				// 작품 지우기 
 	
-	public void update(FreeNovelVO vo);
+	public void update(FreeNovelVO vo); 			// 작품 수정하기
 		
-	public int countPageNum(SearchCriteria cri);
+	public int countPageNum(SearchCriteria cri);	// 작품 페이지 
 		
 }
