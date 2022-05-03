@@ -34,9 +34,9 @@
 		
 	</if>
 	</sql>
-	<select id="getList" resultType="com.novel.free.domain.FreeNovelVO">
+	<select id="getJoinList" resultType="com.novel.free.domain.FreeNovelJoinVO">
 	<![CDATA[ 
-(SELECT /* + INDEX_DESC(free_tbl free_num) */
+SELECT /* + INDEX_DESC(free_tbl free_num) */
 rownum rn, f.free_num,f.free_rec, n.novel_title , n.novel_category, 
 n.novel_end FROM (free_tbl f INNER JOIN 
 	novel_tbl n ON f.novel_num = n.novel_num) WHERE 
@@ -62,15 +62,35 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	</select>
 	<insert id="insertNovel">
 	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
-                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week});
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
 	</insert>
 	<insert id="insertFree">
 	INSERT INTO free_tbl (free_num, novel_num, free_snum, free_title, free_content) values
-                        (free_num.nextval, #{novel_num},#{free_snum},#{free_title},#{free_content}); 
+                        (free_num.nextval, #{novel_num},#{free_snum},#{free_title},#{free_content}) 
 	</insert>
-	<select id="select" resultType="com.novel.free.domian.FreeNovelVO">
+	
+	<select id="select" resultType="com.novel.free.domian.FreeNovelJoinVO">
 	
 		SELECT f.*,n.* FROM free_tbl f INNER JOIN 
-	novel_tbl n ON f.novel_num = n.novel_num WHERE free_num = #{free_num}; 
+	novel_tbl n ON f.novel_num = n.novel_num WHERE free_num = #{free_num} 
+	</select>
+	<delete id="delete">
+	
+		DELETE FROM free_tbl WHERE free_snum = #{free_snum}
+	</delete>
+	<update id="update">
+	UPDATE free_tbl SET free_title =#{free_title}, free_content = #{free_content},
+	free_mdate = sysdate WHERE free_snum = #{free_snum}
+	</update>
+	<select id="countPageNum" resultType="int">
+	<![CDATA[ 
+	SELECT count(*) FROM free_tbl WHERE
+	
+	]]> 
+	<include refid="search"></include>
+	
+	<![CDATA[
+	free_num > 0
+	]]>
 	</select>
 	</mapper>
