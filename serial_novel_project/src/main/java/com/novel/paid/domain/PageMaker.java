@@ -1,4 +1,4 @@
-package com.novel.novel.domain;
+package com.novel.paid.domain;
 
 import lombok.Data;
 
