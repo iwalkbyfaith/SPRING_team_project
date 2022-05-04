@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="com.novel.free.mapper.FreeNovelMapper">
-<sql id="search">
+	<sql id="search">
 	<!-- 동적 쿼리문이 들어올 자리  -->
 	<if test="searchType != null">
 		<if test="searchType == 't'.toString()">
@@ -56,10 +56,15 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	WHERE rn > #{pageStart}
 	
 	]]>
-	
-	
-	
 	</select>
+	
+	<select id="getListAll" resultType="com.novel.free.domain.FreeNovelJoinVO">
+	SELECT f.free_num,n.novel_title,n.novel_writer,n.novel_num
+	 FROM free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num
+	</select>
+	
+	
+	
 	<insert id="insertNovel">
 	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
                         (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
@@ -69,9 +74,9 @@ n.novel_end FROM (free_tbl f INNER JOIN
                         (free_num.nextval, #{novel_num},#{free_snum},#{free_title},#{free_content}) 
 	</insert>
 	
-	<select id="select" resultType="com.novel.free.domian.FreeNovelJoinVO">
+	<select id="select" resultType="com.novel.free.domain.FreeNovelJoinVO">
 	
-		SELECT f.*,n.* FROM free_tbl f INNER JOIN 
+		SELECT f.free_num,n.novel_title,n.novel_writer,n.novel_num FROM free_tbl f INNER JOIN 
 	novel_tbl n ON f.novel_num = n.novel_num WHERE free_num = #{free_num} 
 	</select>
 	<delete id="delete">

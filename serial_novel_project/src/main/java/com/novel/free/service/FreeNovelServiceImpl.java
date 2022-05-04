@@ -11,12 +11,18 @@ import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 import com.novel.free.mapper.FreeNovelMapper;
 
+
 @Service
 public class FreeNovelServiceImpl implements FreeNovelService{
 	
 	@Autowired
 	private FreeNovelMapper freeMapper;
 
+	@Override
+	public List<FreeNovelJoinVO> getListAll(){
+			return freeMapper.getListAll();
+	}
+	
 	@Override
 	public List<FreeNovelJoinVO> getList(SearchCriteria cri) {
 	
@@ -49,8 +55,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	}
 	
 	@Override
-	public void delete(long free_num) {
-			freeMapper.delete(free_num);
+	public void delete(long free_snum) {
+			freeMapper.delete(free_snum);
 		
 	}
 
