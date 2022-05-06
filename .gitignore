@@ -16,8 +16,15 @@ local.properties
 .recommenders
 db.properties
 pom.properties
+*.properties
 Servers/
 server.xml
+/target/*
+/META-INF/*
+*.MF
+/target/
+.classpath
+.project
 
 
 
