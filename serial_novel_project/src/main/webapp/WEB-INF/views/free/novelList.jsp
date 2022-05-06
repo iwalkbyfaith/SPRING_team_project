@@ -22,10 +22,11 @@
 	<script>
 
 		
-function getList(){
+function getFantasyList(){
 		
-		$.getJSON("/free/novel", function(data){
+		$.getJSON("/free/novel"+ novel_category , function(data){
 			
+			var novel_category="판타지";
 			let str = "";
 			console.log(data);
 			
@@ -41,7 +42,7 @@ function getList(){
 		
 	}
 	
-	getList();
+	getFantasyList();
 		
 		
 		

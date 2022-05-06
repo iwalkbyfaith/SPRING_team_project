@@ -19,8 +19,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	private FreeNovelMapper freeMapper;
 
 	@Override
-	public List<FreeNovelJoinVO> getListAll(){
-			return freeMapper.getListAll();
+	public List<FreeNovelJoinVO> selectList(String novel_category){
+			return freeMapper.selectList(novel_category);
 	}
 	
 	@Override
