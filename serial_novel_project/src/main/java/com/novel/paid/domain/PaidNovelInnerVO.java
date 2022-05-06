@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class PaidNovelInnerVO {
+	
+	// NovelVO
 	private long novel_num;
 	private String novel_writer;
 	private String novel_title;
