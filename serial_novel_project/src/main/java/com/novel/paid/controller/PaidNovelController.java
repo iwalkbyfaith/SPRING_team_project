@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import com.novel.paid.domain.PageMaker;
 import com.novel.paid.domain.PaidNovelVO;
@@ -36,4 +36,17 @@ public class PaidNovelController {
 		
 		return "paid/paidList";
 	}
+	
+	@GetMapping("/paidInsert")
+	public String paidForm() {
+		return "paid/paidForm";
+	}
+	
+	@PostMapping("/paidInsert")
+	public String paidInsert(PaidNovelVO vo) {
+		service.insert(vo);
+		return "redirect:/paid/paidList";
+	}
+	
+	
 }
