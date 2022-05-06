@@ -9,13 +9,13 @@ import com.novel.free.domain.SearchCriteria;
 
 
 public interface FreeNovelService {
-	public List<FreeNovelJoinVO> selectList(String novel_category);
+	public List<FreeNovelJoinVO> selectList(String novelCategory);
 	
 	public List<FreeNovelJoinVO> getList(SearchCriteria cri);  	// 페이징 전용 getList
 	
 	public int countPageNum(SearchCriteria cri);				// 페이징 숫자 			  
 		
-	public FreeNovelJoinVO select(long free_num);				// 원하는 무료소설 정보선택
+	public FreeNovelJoinVO select(long free_snum);				// 원하는 무료소설 정보선택
 			
 	public void insertNovel(NovelVO vo);						// 소설 정보 입력
 	

@@ -12,7 +12,7 @@
 
 <div class="header"></div>
 <div class="container">
-<ul id="freenovellist">
+<ul id="fantasynovellist">
 </ul>
 </div>
 <div class="footer"></div>
@@ -21,12 +21,17 @@
 
 	<script>
 
-		
+	
+
+$("#fantasynovellist").on("click", function(){
+	var novelCategory = $("판타지").val();
+	
 function getFantasyList(){
 		
-		$.getJSON("/free/novel"+ novel_category , function(data){
+		
+		$.getJSON("/free/novel"+ novelCategory , function(data){
 			
-			var novel_category="판타지";
+			
 			let str = "";
 			console.log(data);
 			
@@ -37,12 +42,13 @@ function getFantasyList(){
 
 			});
 			
-			$("#freenovellist").html(str);
+			$("#fantasynovellist").html(str);
 		});
 		
 	}
-	
+});
 	getFantasyList();
+	
 		
 		
 		
