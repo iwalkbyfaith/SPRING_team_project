@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.novel.tournament.domain.TournamentJoinVO;
 import com.novel.tournament.domain.TournamentVO;
+import com.novel.tournament.domain.TournamentWorkRecVO;
 import com.novel.tournament.mapper.TournamentMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -43,6 +44,13 @@ public class TournamentServiceImpl implements TournamentService{
 		return mapper.getToWorkList(to_num);
 	}
 	
+	// ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기)
+	@Override
+	public List<TournamentJoinVO> get2and4WorkList(long to_num) {
+		return mapper.get2and4WorkList(to_num);
+	}
+	
+	
 	// ■ 8강 토너먼트 참여 작품 가져오기
 	@Override
 	public List<TournamentJoinVO> listTournamentWork2() {
@@ -54,12 +62,22 @@ public class TournamentServiceImpl implements TournamentService{
 	public void upRec(long towork_num) {
 		mapper.upRec(towork_num);
 	}
+	
+		// ■ 추천수 +1 할 때, 해당 추천 기록 적재하기
+		@Override
+		public void insertUpRecRecord(TournamentWorkRecVO vo) {
+			mapper.insertUpRecRecord(vo);
+		}
+	
 
 	// ■ 예상 우승 작품 가져오기
 	@Override
 	public TournamentJoinVO getWinner() {
 		return mapper.getWinner();
 	}
+
+	
+
 
 
 

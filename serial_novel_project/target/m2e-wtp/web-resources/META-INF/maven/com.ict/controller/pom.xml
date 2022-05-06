@@ -206,6 +206,13 @@
 		    <version>2.12.2</version>
 		</dependency>
 		
+		<!-- POST에서 415떠서 추가해본 것. 나중에 삭제해야할수도 -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		
 		
 		
 		
