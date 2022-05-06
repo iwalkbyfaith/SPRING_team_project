@@ -26,6 +26,7 @@ server.xml
 .classpath
 .project
 
+
 # External tool builders
 .externalToolBuilders/
 
