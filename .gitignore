@@ -22,7 +22,7 @@ server.xml
 /target/*
 /META-INF/*
 *.MF
-/target/
+*/target/*
 .classpath
 .project
 
