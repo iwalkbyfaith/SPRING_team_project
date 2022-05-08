@@ -86,6 +86,34 @@ ${novelList}
 		  		<input type="submit" value="Search">
 		  	</form>
 	  	</div>
+	  	
+	  	<!-- jquery cdn -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+		<ul id="novelList">
+		</ul>
+		<button id="monNovel">
+			월요일 웹툰
+		</button>
+		
+		<script>
+			
+			$("#monNovel").on("click",function(){
+				
+				var str = "";
+				
+				$.getJSON("주소", function(data){
+					
+					$(data).each(function(){
+						
+						str += "<li "
+					});
+					$("#novelList").html(str);
+				});
+			});
+		
+		</script>
+	
 	</div>
 	<div id="footer">
 	

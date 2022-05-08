@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import com.novel.paid.domain.PaidNovelInnerVO;
+import com.novel.paid.domain.PaidNovelJoinVO;
 import com.novel.paid.domain.PaidNovelVO;
 import com.novel.paid.domain.SearchCriteria;
 import com.novel.paid.mapper.PaidNovelMapper;
@@ -28,7 +28,7 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public PaidNovelInnerVO select(long paid_num) {
+	public PaidNovelJoinVO select(long paid_num) {
 		return paidMapper.select(paid_num);
 	}
 
@@ -45,5 +45,10 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	@Override
 	public void update(PaidNovelVO vo) {
 		paidMapper.update(vo);
+	}
+
+	@Override
+	public List<PaidNovelJoinVO> pnList() {
+		return paidMapper.pnList();
 	}
 }

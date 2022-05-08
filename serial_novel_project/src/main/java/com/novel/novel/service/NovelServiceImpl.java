@@ -44,6 +44,13 @@ public class NovelServiceImpl implements NovelService{
 	public void update(NovelVO vo) {
 		mapper.update(vo);
 	}
+
+	@Override
+	public List<NovelVO> getMonList() {
+		return mapper.getMonList();
+	}
+
+	
 	
 
 

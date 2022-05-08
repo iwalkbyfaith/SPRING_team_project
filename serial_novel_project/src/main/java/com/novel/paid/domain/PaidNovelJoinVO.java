@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class PaidNovelInnerVO {
+public class PaidNovelJoinVO {
 	
 	// NovelVO 변수
 	private long novel_num;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.novel.paid.domain.PageMaker;
+import com.novel.paid.domain.PaidNovelJoinVO;
 import com.novel.paid.domain.PaidNovelVO;
 import com.novel.paid.domain.SearchCriteria;
 import com.novel.paid.service.PaidNovelService;
@@ -27,6 +28,9 @@ public class PaidNovelController {
 		
 		List<PaidNovelVO> paidList = service.getList(cri);
 		model.addAttribute("paidList", paidList);
+		
+		List<PaidNovelJoinVO> pnList = service.pnList();
+		model.addAttribute("pnList", pnList);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);

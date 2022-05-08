@@ -19,4 +19,6 @@ public interface NovelMapper {
 	public void delete(long novel_num); // 소설 삭제
 	
 	public void update(NovelVO vo); // 소설 수정
+	
+	public List<NovelVO> getMonList();
 }

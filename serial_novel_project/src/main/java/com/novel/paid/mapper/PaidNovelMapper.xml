@@ -68,7 +68,13 @@
 		</select>
 		
 		<!-- Novel과 Paid join (상세정보) -->
-		<select id="select" resultType="com.novel.paid.domain.PaidNovelInnerVO">
+		<select id="select" resultType="com.novel.paid.domain.PaidNovelJoinVO">
+			SELECT * FROM novel_tbl n inner join paid_tbl p 
+						on n.#{novel_num} = p.#{novel_num}
+		</select>
+		
+		<!-- Novel, Paid 모든 정보 -->
+		<select id="pnList" resultType="com.novel.paid.domain.PaidNovelJoinVO">
 			SELECT * FROM novel_tbl n inner join paid_tbl p 
 						on n.#{novel_num} = p.#{novel_num}
 		</select>
