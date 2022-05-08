@@ -15,8 +15,10 @@ public interface FreeNovelService {
 	
 	public int countPageNum(SearchCriteria cri);				// 페이징 숫자 			  
 		
-	public FreeNovelJoinVO select(long free_snum);				// 원하는 무료소설 정보선택
-			
+	public FreeNovelJoinVO selectDetail(long free_snum);		// 원하는 무료소설 디테일 선택
+	
+	public FreeNovelJoinVO select(long novel_num);				// 원하는 무료소설 정보선택
+
 	public void insertNovel(NovelVO vo);						// 소설 정보 입력
 	
 	public void insertFree(FreeNovelVO vo);						// 무료 소설 Detail입력(내용,소제목 등등)

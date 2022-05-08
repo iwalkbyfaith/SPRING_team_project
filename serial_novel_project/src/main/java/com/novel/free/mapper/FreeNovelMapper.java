@@ -17,7 +17,7 @@ public interface FreeNovelMapper {
 	
 	public void insertFree(FreeNovelVO vo);	 						// 무료 소설 쓰기(소제목, 내용 등등..) 
 	
-	public FreeNovelJoinVO select(long free_num); 					// 원하는 작품정보 가져오기 
+	public FreeNovelJoinVO select(long novelNum); 					// 원하는 작품정보 가져오기 
 	
 	public void delete(long free_snum); 							// 작품 n회차 지우기 
 	

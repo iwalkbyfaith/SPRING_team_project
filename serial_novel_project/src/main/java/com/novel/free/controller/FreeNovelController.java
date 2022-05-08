@@ -28,14 +28,14 @@ public class FreeNovelController {
 	@Autowired
 	private FreeNovelService service;
 	
-	@GetMapping(value="/novel/{novel_category}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+	@GetMapping(value="/novel/{novelCategory}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE} )
-	public ResponseEntity<List<FreeNovelJoinVO>> novelList(@PathVariable("novel_category") String novel_category){
+	public ResponseEntity<List<FreeNovelJoinVO>> novelList(@PathVariable("novelCategory") String novelCategory){
 		
 		ResponseEntity<List<FreeNovelJoinVO>> entity = null;
 		
 		try {
-			entity = new ResponseEntity<>(service.selectList(novel_category), HttpStatus.OK);
+			entity = new ResponseEntity<>(service.selectList(novelCategory), HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
