@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.novel.novel.domain.NovelVO;
+import com.novel.novel.domain.PageMaker;
+import com.novel.novel.domain.SearchCriteria;
 import com.novel.novel.service.NovelService;
 
 import lombok.extern.log4j.Log4j;
@@ -24,9 +26,15 @@ public class NovelController {
 	private NovelService novelservice;
 
 	@GetMapping(value="/allList")
-	public String getNovelList(Model model) {
-		List<NovelVO> novelList = novelservice.getNovelList();
+	public String getNovelList(SearchCriteria cri, Model model) {
+		List<NovelVO> novelList = novelservice.getNovelList(cri);
 		model.addAttribute("novelList", novelList);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri); 
+		int countPage = novelservice.countPageNum(cri);
+		pageMaker.setTotalBoard(countPage);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "novel/novelList";
 	}

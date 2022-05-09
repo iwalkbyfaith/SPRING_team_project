@@ -4,8 +4,47 @@
 	
 	<mapper namespace="com.novel.novel.mapper.NovelMapper">
 		
+			<sql id="search">
+				<if test="searchType != null">
+					<if test="searchType == 't'.toString()">
+						(novel_Title like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'c'.toString()">
+						(novel_Category like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'w'.toString()">
+						(novel_Writer like '%'||#{keyword}||'%') AND
+					</if>
+				</if>	
+			</sql>
+		
+		
 		<select id="getNovelList" resultType="com.novel.novel.domain.NovelVO">
-			SELECT * FROM novel_tbl order by novel_num desc
+			
+			<![CDATA[
+			SELECT * FROM
+				(SELECT /*+ INDEX_DESC(novel_tbl pk_novel) */
+				ROWNUM rn, novel_tbl.* FROM novel_tbl WHERE 
+			]]>	
+			
+			<include refid="search"></include>
+			
+			<![CDATA[		
+				ROWNUM <= #{pageEnd})
+					WHERE rn > #{pageStart}
+			]]>
+		</select>
+		
+		<select id="countPageNum" resultType="int">
+			<![CDATA[
+				SELECT COUNT(*) FROM novel_tbl WHERE
+			]]>
+			
+			<include refid="search"></include>
+				
+			<![CDATA[
+				novel_num > 0
+			]]>
 		</select>
 		
 		<insert id="insertNovel">

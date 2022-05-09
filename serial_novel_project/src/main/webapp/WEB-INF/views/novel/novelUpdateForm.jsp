@@ -21,8 +21,8 @@
 				<label><input type="radio" name="novel_week" value="Sat">토</label>
 				<label><input type="radio" name="novel_week" value="Free">자유</label><br>
 			장르<input type="text" name="novel_category" value="${novel.novel_category }"><br>
-			연재유무<label><input type="radio" name="novel_end" value=0>완결</label>
-				<label><input type="radio" name="novel_end" value=1>연재</label><br>
+			연재유무<label><input type="radio" name="novel_end" value=0>연재</label>
+				<label><input type="radio" name="novel_end" value=1>완결</label><br>
 			
 		
 			<input type="submit" value="수정"><input type="reset" value="초기화">
