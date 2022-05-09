@@ -28,6 +28,12 @@ public class TournamentServiceImpl implements TournamentService{
 		return mapper.getList();
 	}
 
+	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
+	@Override
+	public TournamentWorkRecVO checkRec(long to_num, String user_id) {
+		return mapper.checkRec(to_num, user_id);
+	}
+	
 	// ■ 특정 토너먼트 참여 작품 가져오기 ( 4강, 2강 )
 	@Transactional
 	@Override
@@ -75,6 +81,10 @@ public class TournamentServiceImpl implements TournamentService{
 	public TournamentJoinVO getWinner() {
 		return mapper.getWinner();
 	}
+
+
+
+
 
 	
 

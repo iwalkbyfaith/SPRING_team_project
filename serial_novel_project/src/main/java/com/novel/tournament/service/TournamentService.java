@@ -2,6 +2,8 @@ package com.novel.tournament.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.novel.tournament.domain.TournamentJoinVO;
 import com.novel.tournament.domain.TournamentVO;
 import com.novel.tournament.domain.TournamentWorkRecVO;
@@ -10,6 +12,10 @@ public interface TournamentService {
 
 	// ■ 전체 리스트 가져오기
 	public List<TournamentVO> listTournament();
+	
+	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
+	public TournamentWorkRecVO checkRec(@Param("to_num")long to_num, String user_id);
+	
 	
 	// ■ 특정 토너먼트 리스트 가져오기('시작' 버튼 클릭시 적재하는 버전)
 	public List<TournamentJoinVO> listTournamentWork(long to_num);
