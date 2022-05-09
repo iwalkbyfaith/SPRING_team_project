@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.service.FreeNovelService;
-import com.novel.tournament.domain.TournamentJoinVO;
-import com.novel.tournament.domain.TournamentVO;
+
 
 import lombok.extern.log4j.Log4j;
 

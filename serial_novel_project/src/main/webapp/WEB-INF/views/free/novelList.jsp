@@ -67,8 +67,8 @@
    	
   </tbody>
 </table>
-<h1 class='test' style="display:none;">
-</h1>
+<div class='test' style="display:none;">
+</div>
 <div id="modDiv" style="display:none;">
 <div class="modal-title"></div>
 </div>
@@ -185,12 +185,20 @@ $("#novellist").on("click",".fantasyLi", function(){
 		
 		$(data).each(
 				function(){
+					let timestamp1 = this.free_rdate;
+					let timestamp2 = this.free_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
 					str+= "<tr><td>"+this.free_snum+"</td>"
-						+ "<td class='title'>"+this.novel_title+"</td>"
+						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
 						+ "<td>"+this.novel_writer+"</td>"
-						+ "<td>"+this.free_rdate+"</td>"
-						+ "<td>"+this.free_mdate+"</td></tr>"
-					console.log(this);
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
+						console.log(this);
 					
 					$(".tbody").html(str);
 	});
@@ -212,12 +220,20 @@ $("#novellist").on("click",".romanceLi", function(){
 		
 		$(data).each(
 				function(){
+					let timestamp1 = this.free_rdate;
+					let timestamp2 = this.free_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
 					str+= "<tr><td>"+this.free_snum+"</td>"
-						+ "<td class='title'>"+this.novel_title+"</td>"
+						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
 						+ "<td>"+this.novel_writer+"</td>"
-						+ "<td>"+this.free_rdate+"</td>"
-						+ "<td>"+this.free_mdate+"</td></tr>"
-					console.log(this);
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
+						console.log(this);
 					
 					$(".tbody").html(str);
 	});
@@ -239,11 +255,19 @@ $("#novellist").on("click",".wuxiaLi", function(){
 		
 		$(data).each(
 				function(){
+					let timestamp1 = this.free_rdate;
+					let timestamp2 = this.free_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
 					str+= "<tr><td>"+this.free_snum+"</td>"
 						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
 						+ "<td>"+this.novel_writer+"</td>"
-						+ "<td>"+this.free_rdate+"</td>"
-						+ "<td>"+this.free_mdate+"</td></tr>"
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 					
 					$(".tbody").html(str);
@@ -259,7 +283,7 @@ $(".title").on("click",function(){
 	$("#novellist").empty();
 	$(".table").hide();
 	console.log(freeSNum);
-	$.getJSON("/free/novel/detail/"+ freeSNum +novelNum, function(data){
+	$.getJSON("/free/novel/detail/"+ freeSNum +"/"+novelNum, function(data){
 		
 		
 		let str = "";
@@ -267,13 +291,13 @@ $(".title").on("click",function(){
 		
 		$(data).each(
 				function(){
-					str+= "내용 : "+this.free_content
+					str+= "<h1>내용 : "+this.free_content+"<h1/>"
 					
 					$(".test").html(str);
 				});
 	});
 	
-$(".test").show("slow");
+	$(".test").show("slow");
 });
 getFantasyList();	
 	</script>
