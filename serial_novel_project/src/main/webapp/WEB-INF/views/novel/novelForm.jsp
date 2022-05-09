@@ -8,11 +8,11 @@
 </head>
 <body>
 	<div id="header">
-	
+		<h2>소설 등록</h2>
 	</div>
 	<div id="container">
 		<form action="/novel/novelInsert" method="POST">
-			<input type="text" name="novel_title" placeholder="제목">
+			<input type="text" name="novel_title" placeholder="제목"><br>
 			<input type="text" name="novel_writer" placeholder="작가"><br>
 			<input type="number" name="novel_tsnum" placeholder="총 회차"><br>
 			<input type="text" name="novel_category" placeholder="장르"><br>

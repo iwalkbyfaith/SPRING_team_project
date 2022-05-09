@@ -6,53 +6,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.novel.novel.domain.NovelVO;
-import com.novel.novel.domain.SearchCriteria;
 import com.novel.novel.mapper.NovelMapper;
 
 @Service
 public class NovelServiceImpl implements NovelService{
-	
+
 	@Autowired
-	private NovelMapper mapper;
+	private NovelMapper novelMapper;
 	
 	@Override
-	public List<NovelVO> getList(SearchCriteria cri) {
-		return mapper.getList(cri); 
+	public List<NovelVO> getNovelList() {
+		return novelMapper.getNovelList();
 	}
 
 	@Override
-	public int countPageNum(SearchCriteria cri) {
-		return mapper.countPageNum(cri);
+	public void insertNovel(NovelVO vo) {
+		novelMapper.insertNovel(vo);
 	}
 
 	@Override
-	public NovelVO select(long novel_num) {
-		return mapper.select(novel_num);
+	public void deleteNovel(long novel_num) {
+		novelMapper.deleteNovel(novel_num);
+		
 	}
 
 	@Override
-	public void insert(NovelVO vo) {
-		mapper.insert(vo);
+	public NovelVO detailNovel(long novel_num) {
+		return novelMapper.detailNovel(novel_num);
 	}
 
 	@Override
-	public void delete(long novel_num) {
-		mapper.delete(novel_num);
+	public void updateNovel(NovelVO vo) {
+		novelMapper.updateNovel(vo);
+		
 	}
-
-	@Override
-	public void update(NovelVO vo) {
-		mapper.update(vo);
-	}
-
-	@Override
-	public List<NovelVO> getMonList() {
-		return mapper.getMonList();
-	}
-
-	
-	
-
-
 	
 }

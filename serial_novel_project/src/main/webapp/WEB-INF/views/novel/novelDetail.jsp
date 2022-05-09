@@ -12,26 +12,20 @@
 	<div id=container>
 		제목 <input type="text" value="${novel.novel_title }" readonly><br>
 		작가 <input type="text" value="${novel.novel_writer }" readonly><br>
-		회차 <input type="number" class="form-control" value="${novel.novel_tsnum }">	<br>
-		장르 <input type="text" class="form-control" value="${novel.novel_category }"><br>		
-		연재요일 <input type="text" class="form-control" value="${novel.novel_week }"><br>	
-		연재유무 <input type="text" class="form-control" value="${novel.novel_end eq 0 ? '연재중' : '완결'}"><br>	
-			<a href="/novel/novelList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-info btn-sm">목록</a>
+		회차 <input type="number" value="${novel.novel_tsnum }" readonly><br>
+		장르 <input type="text" value="${novel.novel_category }" readonly><br>		
+		연재요일 <input type="text" value="${novel.novel_week }" readonly><br>	
+		연재유무 <input type="text" value="${novel.novel_end eq true ? '연재중' : '완결'}" readonly><br>	
+			<a href="/novel/allList">목록</a>
 	
 			<form action="/novel/novelDelete" method="post">
 				<input type="hidden" name="novel_num" value="${novel.novel_num }">
-				<input type="hidden" name="pageNum" value="${param.pageNum }">
-				<input type="hidden" name="searchType" value="${param.searchType }">
-				<input type="hidden" name="keyword" value="${param.keyword }">
-				<input type="submit" value="삭제" class="btn btn-danger btn-sm">
+				<input type="submit" value="삭제">
 			</form>
 			
 			<form action="/novel/novelUpdateForm" method="post">
 				<input type="hidden" name="novel_num" value="${novel.novel_num }">
-				<input type="hidden" name="pageNum" value="${param.pageNum }">
-				<input type="hidden" name="searchType" value="${param.searchType }">
-				<input type="hidden" name="keyword" value="${param.keyword }">
-				<input type="submit" value="수정" class="btn btn-warning btn-sm">
+				<input type="submit" value="수정">
 			</form>
 			
 	
