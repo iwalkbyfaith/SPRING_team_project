@@ -36,14 +36,14 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	}
 
 	@Override
-	public FreeNovelJoinVO selectDetail(long free_snum) {
+	public List<FreeNovelJoinVO> selectDetail(long freeSNum , long novelNum) {
 
-		return freeMapper.select(free_snum);
+		return freeMapper.selectDetail(freeSNum , novelNum);
 	}
 	@Override
-	public FreeNovelJoinVO select(long novel_num) {
+	public List<FreeNovelJoinVO> select(long novelNum) {
 		
-		return freeMapper.select(novel_num);
+		return freeMapper.select(novelNum);
 	}
 
 	@Override

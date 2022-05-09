@@ -44,6 +44,36 @@ public class FreeNovelController {
 		return entity;
 
 	}
+	@GetMapping(value="/novel/select/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<FreeNovelJoinVO>> select(@PathVariable("novelNum") long novelNum){
+		
+		ResponseEntity<List<FreeNovelJoinVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(service.select(novelNum), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
 	}
-	
+	@GetMapping(value="/novel/detail/{freeSNum}/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<FreeNovelJoinVO>> selectDetail(@PathVariable("freeSNum") long freeSNum
+			,@PathVariable("novelNum") long novelNum){
+		
+		ResponseEntity<List<FreeNovelJoinVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(service.selectDetail(freeSNum,novelNum), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		return entity;
+	}
+}
 
