@@ -46,5 +46,7 @@ public class NovelServiceImpl implements NovelService{
 	public int countPageNum(SearchCriteria cri) {
 		return novelMapper.countPageNum(cri);
 	}
+
+	
 	
 }

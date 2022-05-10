@@ -19,4 +19,6 @@ public interface NovelMapper {
 	
 	public int countPageNum(SearchCriteria cri);
 	
+
+	
 }

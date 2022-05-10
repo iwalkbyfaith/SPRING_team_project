@@ -18,4 +18,6 @@ public interface NovelService {
 	public void updateNovel(NovelVO vo);
 	
 	public int countPageNum(SearchCriteria cri);
+	
+
 }

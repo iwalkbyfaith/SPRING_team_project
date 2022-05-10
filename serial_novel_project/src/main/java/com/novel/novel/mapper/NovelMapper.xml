@@ -65,4 +65,7 @@
 			novel_title = #{novel_title}, novel_tsnum = #{novel_tsnum}, novel_category = #{novel_category}, novel_week = #{novel_week}, novel_end = #{novel_end} 
 			WHERE novel_num = #{novel_num}
 		</update>
+		
+		
+		
 	</mapper>

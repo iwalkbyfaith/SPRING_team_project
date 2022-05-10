@@ -84,9 +84,56 @@
 		  		<input type="submit" value="Search">
 		  	</form>
 	  	</div>
+	  	
+  	<!-- jquery cdn -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	  	
+	 <h2>연재,완결 웹툰</h2>
+	<div class="series">	
+		연재 <ul id="series1"></ul>
+		완결 <ul id="series2"></ul>
+	</div>
+	  	
 	  	<div class="container2">
+	  		<script>
+	  		function getEedList(){
+				
+	  			let novelEnd = "0";
+	  			
+				$.getJSON("/series/" + novelEnd, function(data){
+			
+					var str= "";
+					
+					$(data).each(function(){
+						
+						str+= "<li>" + this.novel_title +"</li>"
+					});
+					$("#series1").html(str);
+				});
+			}
+			function getEedList1(){
+				
+	  			let novelEnd = "1";
+	  			
+				$.getJSON("/series/" + novelEnd, function(data){
+			
+					var str= "";
+					
+					$(data).each(function(){
+						
+						str+= "<li>" + this.novel_title +"</li>"
+					});
+					$("#series2").html(str);
+				});
+			}
+	  		getEedList();	
+	  		getEedList1();	
 	  	
+	  		
+	
+	  		</script>
 	  	
+	  		
 	  	</div>
 	</div>
 	<div id="footer">
