@@ -83,7 +83,7 @@ free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num
 	
 		SELECT n.novel_title,n.novel_writer,n.novel_end,f.free_content,f.free_rdate,f.free_hit,f.free_rec
 		 FROM free_tbl f INNER JOIN 
-	novel_tbl n ON f.novel_num = n.novel_num WHERE free_snum = #{freeSNum} and f.novel_num=#{novelNum} 
+	novel_tbl n ON f.novel_num = n.novel_num WHERE free_snum =#{freeSNum} and f.novel_num=#{novelNum} 
 	</select>
 	<delete id="delete">
 	
