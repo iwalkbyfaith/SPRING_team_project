@@ -27,20 +27,16 @@ function getList(){
 		$.getJSON("/free/novel", function(data){
 			
 			let str = "";
-			console.log(data);
-			
-			$(data).each(
-					function(){
+
+			$(data).each(function(){
 				
-				str += "<li>" + this.novel_title + "</li>";
+				str += "<li>" + this.paid_title + "</li>";
 
 			});
 			
 			$("#freenovellist").html(str);
 		});
-		
-	}
-	
+	}	
 	getList();
 		
 		

@@ -2,10 +2,8 @@ package com.novel.paid.domain;
 
 import java.sql.Date;
 
-import lombok.Data;
-
-@Data
-public class PaidNovelVO {
+public class PaidNovelJoinVO {
+	
 	private long paid_num; // 유료 소설 번호
 	private long novel_num; // 소설 번호 pk
 	private long paid_snum; // 유료 소설 현재 회차 
@@ -16,5 +14,7 @@ public class PaidNovelVO {
 	private long paid_hit; // 조회수
 	private long paid_rec; // 추천수
 	private long paid_price; // 유료 소설 가격
+	
+	
 	
 }

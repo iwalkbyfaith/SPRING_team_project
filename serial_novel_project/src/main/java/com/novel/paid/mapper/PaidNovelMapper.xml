@@ -4,6 +4,8 @@
 	
 	<mapper namespace="com.novel.paid.mapper.PaidNovelMapper">
 	
-	
+		<select id="getPaidList" resultType="com.novel.paid.domain.PaidVO">
+			SELECT * FROM paid_tbl
+		</select>
 		
 	</mapper>
