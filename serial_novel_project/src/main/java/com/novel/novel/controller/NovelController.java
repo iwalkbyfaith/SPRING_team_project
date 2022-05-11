@@ -24,9 +24,8 @@ public class NovelController {
 	
 	@Autowired
 	private NovelService novelservice;
-
-	@GetMapping(value="/allList")
-	@GetMapping(value="/novelList")
+	
+	@GetMapping("/allList")
 	public String getNovelList(SearchCriteria cri, Model model) {
 		List<NovelVO> novelList = novelservice.getNovelList(cri);
 		model.addAttribute("novelList", novelList);

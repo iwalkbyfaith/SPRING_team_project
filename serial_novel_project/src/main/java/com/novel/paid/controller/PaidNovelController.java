@@ -23,16 +23,5 @@ public class PaidNovelController {
 		
 		return "paid/paidList";
 	}
-	
-	@GetMapping("/Insert")
-	public String paidForm() {
-		
-		return "paid/paidForm";
-	}
-	
-	@PostMapping("/Insert")
-	public String paidInsert(PaidVO vo) {
-		paidservice.insertPaid(vo);
-		return "redirect:/paid/List";
-	}
+
 }
