@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<!-- jquery cdn -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -13,25 +13,33 @@
 	
 	</div>
 	<div class="container">
-		
-			
+		<h1>유료</h1>
 			<ul id="paidList"></ul>
 		
+	<!-- jquery cdn -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+		
 		<script>
-		function getPaidList(){
+		function getAllList(){
 			
 			$.getJSON("/paid/allList", function(data){
 		
 				var str= "";
 				
+				console.log(data.length);
+				
 				$(data).each(function(){
 				
 					str += "<li>" + this.paid_title + "</li>";
+					
 					});
+				
+				console.log("str" + str);
 				$("#paidList").html(str);
 			});
 		}
-		getPaidList();
+		getAllList();
 		</script>
 	</div>
 	<div class="footer">

@@ -20,5 +20,10 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	public List<PaidVO> getPaidList() {
 		return paidMapper.getPaidList();
 	}
+
+	@Override
+	public void insertPaid(PaidVO vo) {
+		paidMapper.insertPaid(vo);
+	}
 	
 }

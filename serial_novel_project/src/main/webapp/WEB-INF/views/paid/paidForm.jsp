@@ -11,12 +11,11 @@
 	
 	</div>
 	<div id="container">
-		<form action="/paid/paidInsert" method="POST">
-			<input type="text" name="novel_title" placeholder="제목">
-			<input type="text" name="novel_writer" placeholder="작가"><br>
-			<input type="number" name="novel_tsnum" placeholder="총 회차"><br>
-			<input type="text" name="novel_category" placeholder="장르"><br>
-			<input type="text" name="novel_week" placeholder="연재 요일"><br>
+		<form action="/paid/Insert" method="POST">
+			<input type="text" name="novel_num" placeholder="소설 번호"><br>
+			<input type="text" name="paid_title" placeholder="소제목"><br>
+			<input type="text" name="paid_snum" placeholder="회차"><br>
+			<input type="text" name="paid_content" placeholder="내용"><br>
 			<input type="submit" value="작성"><input type="reset" value="초기화">
 		</form>
 	</div>

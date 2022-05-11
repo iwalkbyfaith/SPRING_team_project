@@ -7,5 +7,7 @@ import com.novel.paid.domain.PaidVO;
 public interface PaidNovelService {
 	
 	public List<PaidVO> getPaidList();
+	
+	public void insertPaid(PaidVO vo);
 
 }

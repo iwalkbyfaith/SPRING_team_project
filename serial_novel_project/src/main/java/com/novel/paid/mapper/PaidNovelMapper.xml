@@ -5,7 +5,16 @@
 	<mapper namespace="com.novel.paid.mapper.PaidNovelMapper">
 	
 		<select id="getPaidList" resultType="com.novel.paid.domain.PaidVO">
-			SELECT * FROM paid_tbl
+			select * from paid_tbl ORDER BY paid_num DESC
 		</select>
 		
+		
+		<select id="paidDetail" resultType="com.novel.paid.domain.PaidVO">
+			select * from paid_tbl p left join novel_tbl n on p.novel_num = n.novel_num where p.novel_num = #{novel_num}
+		</select>
+		
+		<insert id="insertPaid">
+			INSERT INTO paid_tbl (paid_num, novel_num, paid_snum, paid_title, paid_content) values
+                        (paid_num.nextval, #{novel_num}, #{paid_snum}, #{paid_title}, #{paid_content})
+		</insert>
 	</mapper>
