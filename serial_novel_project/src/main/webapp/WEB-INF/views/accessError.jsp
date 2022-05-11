@@ -16,7 +16,7 @@
 		<h2><c:out value="${SPRING_SECURITY_403_EXCEPTION.getMessage()}"/></h2>		<!-- 출력 메세지 : Access is denied -->
 																					<!-- 스프링 시큐리티에서 403이 떴을때 이 메세지를 얻어와라 -->																		
 																					
-		<h2><c:out value="${errorMessage}"/></h2>									<!-- 출력 메세지 : 접근 거부 -->
+		<h2><c:out value="${errorMessage}"/></h2> 									<!-- 출력 메세지 : 접근 거부 -->
 																					<!-- CommonController에서 errorMessage라는 이름으로 바인딩 했기 떄문 -->
 
 

@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
+	 <!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 -->
+		 <!-- ▣ 1. <head>태그 사이에 아래 <meta> 태그 두 줄 추가 -->
+		 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	 	 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	
 	
 	<!-- ★ 부트스트랩 1. css 복붙 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -33,6 +40,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
 
 	
@@ -72,14 +80,18 @@
 		<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
-	
-	
 
+	
+	
+	<hr/>
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/>
+			
 	
 	
 	<script>
 	
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■ 스크립트 순서 ■■■■■■■■■■■■■■■■■■■■■■■■ -->
+					<!-- ■ 변수 설정 -->
 					<!-- ■ 전체 리스트를 불러오는 함수 -->
 					<!-- ■ 토너먼트 전체 참여 리스트를 불러오는 함수 -->
 					<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
@@ -96,10 +108,24 @@
 		<!-- ■ 변수 설정 -->
 			
 			// 로그인 아이디
-			let id = "id012";
+			let userInfo = "<sec:authentication property="principal.user"/>";
+			console.log("유저 정보 ▼");
+			console.log(userInfo);
+			
+			let id = "<sec:authentication property="principal.user.user_id"/>";
+			//let id = "id012";
+			console.log("변수 설정) sec로 받아온 아이디 -> " + id);
 			
 			// 추천한 아이디
 			let userId = "id012"; 
+			
+			<!-- ▣ 2. <script> 태그에서 변수로 받아준다. -->
+			// csrf 토큰
+			let token = $("meta[name='_csrf']").attr("content");
+ 			let header = $("meta[name='_csrf_header']").attr("content");
+ 			console.log("토큰, 헤더 ▼");
+ 			console.log(token);
+ 			console.log(header);
 		
 		<!-- ■ 전체 리스트를 불러오는 함수 -->
 		function getTournamentList(){
@@ -344,6 +370,7 @@
 					// ● 비활성화 유무
 						// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
 					let deactivation  = (hideBtn == true ? 'disabled' : '');
+					console.log("추천 버튼을 disabled로 만드는 deactivation의 값 -> " + deactivation);
 					
 					$(data).each(function(){
 						
@@ -451,7 +478,8 @@
 						
 						// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
 						//let userId = "id012"; // 8강추천아이디
-						console.log("8강 추천한 아이디 -> " + userId);
+						//console.log("8강 추천한 아이디 -> " + userId);
+						console.log("8강 추천한 아이디 -> " + id);
 						
 						
 					$.ajax({
@@ -462,11 +490,14 @@
 							"X-HTTP-Method-Override" : "POST"
 						},
 						dataType : 'text',
+						beforeSend : function(xhr){					// <!-- ▣ 3. post로 보내기 전 beforeSend를 추가해줌 -->
+							xhr.setRequestHeader(header, token);
+						},
 						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
 						data : JSON.stringify({ 
 							towork_num : toworkNum,
 							to_num : toNum,
-							user_id : userId
+							user_id : id
 						}),
 						success : function(result){
 							console.log("result: " + result);
@@ -498,7 +529,7 @@
 					
 					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
 					//let userId = "id012"; // 4강추천아이디
-					console.log("4강 추천한 아이디 -> " + userId);
+					console.log("4강 추천한 아이디 -> " + id);
 					
 					
 					$.ajax({
@@ -509,11 +540,14 @@
 							"X-HTTP-Method-Override" : "POST"
 						},
 						dataType : 'text',
+						beforeSend : function(xhr){					
+							xhr.setRequestHeader(header, token);
+						},
 						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
 						data : JSON.stringify({ 
 							towork_num : toworkNum,
 							to_num : toNum,
-							user_id : userId
+							user_id : id
 						}),
 						success : function(result){
 							console.log("result: " + result);
@@ -542,7 +576,7 @@
 					
 					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
 					//let userId = "id012"; // 2강추천아이디
-					console.log("2강 추천한 아이디 -> " + userId);
+					console.log("2강 추천한 아이디 -> " + id);
 					
 					
 					$.ajax({
@@ -553,11 +587,14 @@
 							"X-HTTP-Method-Override" : "POST"
 						},
 						dataType : 'text',
+						beforeSend : function(xhr){					
+							xhr.setRequestHeader(header, token);
+						},
 						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
 						data : JSON.stringify({ 
 							towork_num : toworkNum,
 							to_num : toNum,
-							user_id : userId
+							user_id : id
 						}),
 						success : function(result){
 							console.log("result: " + result);
