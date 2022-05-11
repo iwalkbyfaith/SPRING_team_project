@@ -9,7 +9,7 @@ import com.novel.free.domain.SearchCriteria;
 
 
 public interface FreeNovelService {
-	public List<FreeNovelJoinVO> getListAll();
+	public List<FreeNovelJoinVO> selectList(String novel_category);
 	
 	public List<FreeNovelJoinVO> getList(SearchCriteria cri);  	// 페이징 전용 getList
 	

@@ -8,7 +8,7 @@ import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 
 public interface FreeNovelMapper {
-	public List<FreeNovelJoinVO> getListAll();						// 무료 소설 리스트 받아오기                     
+	public List<FreeNovelJoinVO> selectList(String novel_category);						// 카테고리별 소설 리스트 받아오기                     
 	
 	public List<FreeNovelJoinVO> getJoinList(SearchCriteria cri); 	// 무료 소설 리스트 받아오기(페이징용) 
 	

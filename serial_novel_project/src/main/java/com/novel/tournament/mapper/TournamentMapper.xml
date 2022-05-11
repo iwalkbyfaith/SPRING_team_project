@@ -33,7 +33,12 @@
 			
 			]]>
 		</insert>
-		
+			
+			
+	<!-- ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기  -->
+	<select id="checkRec" resultType="com.novel.tournament.domain.TournamentWorkRecVO">
+		 SELECT towork_num, user_id FROM torec_tbl WHERE to_num=#{to_num} AND user_id = #{user_id}
+	</select>
 		
 	<!-- ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기) = 4강, 2강 데이터 가져오기 -->
 	<select id="get2and4WorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">		
