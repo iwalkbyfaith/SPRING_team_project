@@ -92,7 +92,15 @@
 					<!-- ■ 예상 우승 작품 -->
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 	
-	
+		
+		<!-- ■ 변수 설정 -->
+			
+			// 로그인 아이디
+			let id = "id012";
+			
+			// 추천한 아이디
+			let userId = "id012"; 
+		
 		<!-- ■ 전체 리스트를 불러오는 함수 -->
 		function getTournamentList(){
 			
@@ -148,7 +156,7 @@
 		
 		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
 		function getTournamentWorkList3(){
-			
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			$.getJSON("/tournament/toWork/3", function(data){
 				
 				let str = "";
@@ -184,7 +192,12 @@
 		
 		<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
 		function getTournamentWorkList2(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			// 1. 만약 이미 추천한 기록이 있다면, '참여하기' 버튼을 눌렀을 때 또 다시 적재하지 말아야 함. ( 그냥 데이터 불러오기만 )
 			
+				//let id = "id012";
+			
+			// 2.
 			$.getJSON("/tournament/toWork/2", function(data){
 				
 				let str = "";
@@ -224,11 +237,12 @@
 		
 		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 (코드 수정중) -->
 		function getTournamentWorkList1(){
-			
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
 			
 				// (임시)나중에 로그인한 아이디 받아오기
-				let id = "id012";	     	 
+				//let id = "id012";	   
+				console.log("8강 로그인 아이디 -> " + id);
 				
 				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
@@ -289,11 +303,13 @@
 		
 		<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (코드 수정중) -->
 		function getTournament4List(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			
 			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
 			
 				// (임시)나중에 로그인한 아이디 받아오기
-				let id = "id012";	     	 
+				//let id = "id012";	     	 
+				console.log("4강 로그인 아이디 -> " + id);
 				
 				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
@@ -353,12 +369,14 @@
 		
 		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (코드 수정중) -->
 		function getTournament2List(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			
 			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
 			
 				// (임시)나중에 로그인한 아이디 받아오기
-				let id = "id012";
-				
+				//let id = "id012";
+				console.log("2강 로그인 아이디 -> " + id);	
+			
 				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
 		
@@ -425,15 +443,15 @@
 				
 						// 작품 번호
 						let toworkNum = $(this).parent().attr("data-twno");	
-						console.log(toworkNum);
+						console.log("8강 작품 대회 번호 -> " + toworkNum);
 						
 						// 대회 번호
 						let toNum = $(this).parent().attr("data-tno");
-						console.log(toNum);
+						console.log("8강 대회 번호 -> " + toNum);
 						
 						// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-						let userId = "id012"; // 8강추천아이디
-						console.log(userId);
+						//let userId = "id012"; // 8강추천아이디
+						console.log("8강 추천한 아이디 -> " + userId);
 						
 						
 					$.ajax({
@@ -479,7 +497,7 @@
 					console.log("4강 대회 번호 -> " + toNum);
 					
 					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-					let userId = "id012"; // 4강추천아이디
+					//let userId = "id012"; // 4강추천아이디
 					console.log("4강 추천한 아이디 -> " + userId);
 					
 					
@@ -523,7 +541,7 @@
 					console.log("2강 대회 번호 -> " + toNum);
 					
 					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-					let userId = "id012"; // 2강추천아이디
+					//let userId = "id012"; // 2강추천아이디
 					console.log("2강 추천한 아이디 -> " + userId);
 					
 					
