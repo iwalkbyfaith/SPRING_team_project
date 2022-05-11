@@ -123,6 +123,12 @@ float:right;
 </ul>
 </div>
 <br/>
+<div class="series" style="display:none;">
+</div>
+<br/>
+<div class="List" style="display:none;">
+</div>
+<br/>
 <div class="write" style="display:none;">
 </div>
 <br/>
@@ -169,6 +175,9 @@ $('.navbar-light .dmenu').hover(function () {
 });
 function getFantasyList(){
 	  var novelCategory = "fantasy";
+	  	$(".List").hide();
+		$(".write").hide();
+		$(".series").hide();
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
 			
@@ -190,6 +199,11 @@ function getFantasyList(){
 }
 function getRomanceList(){
 	  var novelCategory = "romance";
+	  	$(".List").hide();
+		$(".write").hide();
+		$(".series").hide();
+		
+		
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
 			
@@ -211,6 +225,9 @@ function getRomanceList(){
 }
 function getWuxiaList(){
 	  var novelCategory = "wuxia";
+	  	$(".List").hide();
+		$(".write").hide();
+		$(".series").hide();
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
 			
@@ -234,7 +251,7 @@ function getWuxiaList(){
 
 $("#headerfLi").on("click",function(){
 
-
+	
 	$("#novellist").empty();
 	$(".content").hide();
 	$(".table").hide();
@@ -263,6 +280,7 @@ getWuxiaList();
 
 $("#novellist").on("click",".fantasyLi", function(){
 var novelNum = $(this).attr("data-novelNum");
+var novelCategory = "fantasy";
 console.log(novelNum);
 
 	$("#novellist").empty();
@@ -273,6 +291,7 @@ console.log(novelNum);
 	
 	let str = "";
 	let str1 = "";
+	let str2 = "";
 	console.log(data);
 	
 	$(data).each(
@@ -293,19 +312,23 @@ console.log(novelNum);
 					console.log(this);
 				
 				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 				
 					
 				
 				$(".tbody").html(str);
 				$(".write").html(str1);
+				$(".List").html(str2);
 });
 });
 	$(".table").show("slow");
 	$(".write").show("slow");
-	
+	$(".List").show("slow");
 });
+
 $("#novellist").on("click",".romanceLi", function(){
 var novelNum = $(this).attr("data-novelNum");
+var novelCategory = "romance";
 console.log(novelNum);
 
 	$("#novellist").empty();
@@ -316,6 +339,7 @@ console.log(novelNum);
 	
 	let str = "";
 	let str1 = "";
+	let str2 = "";
 	console.log(data);
 	
 	$(data).each(
@@ -336,16 +360,20 @@ console.log(novelNum);
 					console.log(this);
 				
 				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 				$(".tbody").html(str);
 				$(".write").html(str1);
-});
+				$(".List").html(str2);
+});		
 });
 	$(".table").show("slow");
 	$(".write").show("slow");
+	$(".List").show("slow");
 	
 });
 $("#novellist").on("click",".wuxiaLi", function(){
 var novelNum = $(this).attr("data-novelNum");
+var novelCategory = "wuxia";
 console.log(novelNum);
 
 	$("#novellist").empty();
@@ -356,6 +384,7 @@ console.log(novelNum);
 	
 	let str = "";
 	let str1 ="";
+	let str2 = "";
 	console.log(data);
 	
 	$(data).each(
@@ -377,13 +406,16 @@ console.log(novelNum);
 				console.log(this);
 					
 				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 				
 				$(".tbody").html(str);
 				$(".write").html(str1);
+				$(".List").html(str2);
 });
 });
 	$(".table").show("slow");
 	$(".write").show("slow");
+	$(".List").show("slow");
 });
 
 $(".tbody").on("click",".title",function(){
@@ -402,18 +434,107 @@ $.getJSON(url, function(data){
 	
 	
 	let str = "";
+	let str1 = "";
 	console.log(data);
 	
 	$(data).each(
 			function(){
 				str+= "<p>내용 : "+this.free_content+"</p>"
-				
+				str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"'>회차목록</button>";
 				$(".view-detail-content").html(str);
+				$(".series").html(str1);
 			});
 });
 
 $(".content").show("slow");
+$(".series").show("slow");
 });
+$(".List").on("click",".novelList",function(){
+
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".write").hide();
+	$(".table").hide();
+	$(".List").hide();
+	$(".series").hide();
+	
+var novelCategory = $(this).attr("data-novelCategory");
+	
+	$.getJSON("/free/novel/"+ novelCategory , function(data){
+			
+						
+		let str = "";
+		console.log(data);
+		
+		$(data).each(
+				function(){
+			
+			str += "<div class='"+novelCategory+"Li' data-novelNum='" + this.novel_num + "'>" + 
+			this.novel_title + "</div>";
+
+		});
+		
+		$("#novellist").html(str);
+	});
+	
+		
+	});
+$(".series").on("click",".novelSeries",function(){
+
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".write").hide();
+	$(".table").hide();
+	$(".List").hide();
+	$(".series").hide();
+	
+	var novelNum = $(this).attr("data-novelNum");
+	var novelCategory = $(this).attr("data-novelCategory");
+	console.log(novelNum);
+
+		$("#novellist").empty();
+			
+		
+		$.getJSON("/free/novel/select/"+ novelNum , function(data){
+		
+		
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					let timestamp1 = this.free_rdate;
+					let timestamp2 = this.free_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
+					str+= "<tr><td>"+this.free_snum+"</td>"
+						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+						+ "<td>"+this.novel_writer+"</td>"
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
+						
+					console.log(this);
+						
+					str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+					str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+					
+					$(".tbody").html(str);
+					$(".write").html(str1);
+					$(".List").html(str2);
+	});
+	});
+		$(".table").show("slow");
+		$(".write").show("slow");
+		$(".List").show("slow");
+	});
+		
+	
 getFantasyList();
 
 </script>
