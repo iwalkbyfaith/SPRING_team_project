@@ -9,15 +9,85 @@
 		SELECT * FROM tourna_tbl
 	</select>
 	
-	<!-- ■ 전체 토너먼트 참여 작품 가져오기 -->
+	
+	<!-- ■ 특정 토너먼트 참여 작품 가져오기 -->
 	<select id="getToWorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">
 		SELECT tt.QCSJ_C000000000400000 as to_num, tt.to_name, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec
-   		FROM 
-        	(SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
-        INNER JOIN 
-        	novel_tbl nt 
-    	ON tt.novel_num = nt.novel_nums
+	    FROM 
+	        (SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
+	    INNER JOIN 
+	        novel_tbl nt 
+	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = #{to_num}
 	</select>
+	
+		<!-- ■ 새로운 토너먼트 참여시 상위 n개의 row를 적재하기  -->
+		<insert id="insertNewRow">
+			<![CDATA[
+   			    INSERT INTO towork_tbl(towork_num, to_num, novel_num, towork_rec)
+       				SELECT 
+   				towork_num.nextval, #{to_num}, novel_num, towork_rec
+       				 FROM 
+   				(SELECT * FROM (SELECT * FROM towork_tbl WHERE to_num = #{to_num}- 1 ORDER BY towork_rec DESC) 
+   					WHERE 
+   				rownum <= #{rownum})
+			
+			]]>
+		</insert>
+			
+			
+	<!-- ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기  -->
+	<select id="checkRec" resultType="com.novel.tournament.domain.TournamentWorkRecVO">
+		 SELECT towork_num, user_id FROM torec_tbl WHERE to_num=#{to_num} AND user_id = #{user_id}
+	</select>
+		
+	<!-- ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기) = 4강, 2강 데이터 가져오기 -->
+	<select id="get2and4WorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">		
+		 SELECT * 
+		 	FROM 
+		 (SELECT tt.to_num, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec FROM towork_tbl tt INNER JOIN novel_tbl nt ON tt.novel_num = nt.novel_num) 
+		 	WHERE 
+		 to_num=#{to_num}
+	</select>
+	
+	
+	<!-- ■ 8강 토너먼트 참여 작품 가져오기 -->
+	<select id="getToWorkList2" resultType="com.novel.tournament.domain.TournamentJoinVO">
+		SELECT tt.QCSJ_C000000000400000 as to_num, tt.to_name, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec
+	    FROM 
+	        (SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
+	    INNER JOIN 
+	        novel_tbl nt 
+	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = 1
+	</select>
+	
+	<!-- ■ 대회 참여 작품 추천수 +1 하기 -->
+	<update id="upRec">
+		UPDATE towork_tbl 
+			SET 
+		towork_rec = towork_rec + 1 
+			WHERE 
+		towork_num = #{towork_num}
+	</update>
+	
+			<!-- ■ 추천수 +1 할 때, 해당 추천 기록 적재하기 -->
+			<insert id="insertUpRecRecord">
+				 INSERT INTO torec_tbl (torec_num, user_id, to_num, towork_num) 
+       				 VALUES 
+       			 (torec_num.nextval, #{user_id}, #{to_num}, #{towork_num})
+			</insert>
+	
+	
+	<!-- ■ 예상 우승 작품 가져오기 -->
+	<select id="getWinner" resultType="com.novel.tournament.domain.TournamentJoinVO">
+		<![CDATA[
+		SELECT * 
+            FROM 
+        (SELECT tt.to_num, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec FROM towork_tbl tt INNER JOIN novel_tbl nt ON tt.novel_num = nt.novel_num ORDER BY towork_rec DESC) 
+            WHERE 
+        rownum <= 1
+		]]>
+	</select>
+	
 
 
 </mapper>

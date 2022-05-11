@@ -37,11 +37,15 @@ ul li a{
 	float:left;
 	margin-left:20px;
 	outline:solid 1px;
+}
+.write{
+float:right;
+}
  
 }
 	
 	</style>
-  <title>Navbar</title>
+  <title>무료 소설</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -49,7 +53,7 @@ ul li a{
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
 </head>
   <body>
-
+	<div class="header">
     <nav class="navbar navbar-expand-sm   navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -99,7 +103,9 @@ ul li a{
           </div>
         </div>
       </nav>
-  <div class="header">
+      </div>
+<div class="container">
+  <div class="categoryheader">
 <ul>
 <li id="headerfLi">판타지</li>
 <li id="headerwLi">무협지</li>
@@ -108,13 +114,19 @@ ul li a{
 </ul>
 </div>
 
+
 <br/>
-<div class="container">
+<br/>
 <br/>
 <div>
 <ul id="novellist">
 </ul>
 </div>
+<br/>
+<div class="write" style="display:none;">
+</div>
+<br/>
+<br/>
 <table class="table" style="display:none;">
   <thead class="table-dark">
    <tr>
@@ -134,7 +146,12 @@ ul li a{
 <div id="modDiv" style="display:none;">
 <div class="modal-title"></div>
 </div>
-
+<div class="content" style="display:none;">
+<div class="section-area-viewer">
+	<div class="viewer-header"></div>
+	<div class="view-detail-content"></div>
+</div>
+</div>
 
 </div>
 <div class="footer"></div>
@@ -219,6 +236,7 @@ $("#headerfLi").on("click",function(){
 
 
 	$("#novellist").empty();
+	$(".content").hide();
 	$(".table").hide();
 
 getFantasyList();
@@ -227,6 +245,7 @@ getFantasyList();
 $("#headerrLi").on("click",function(){
 
 	$("#novellist").empty();
+	$(".content").hide();
 	$(".table").hide();
 
 getRomanceList();
@@ -235,6 +254,7 @@ getRomanceList();
 $("#headerwLi").on("click",function(){
 
 $("#novellist").empty();
+$(".content").hide();
 $(".table").hide();
 
 getWuxiaList();
@@ -247,10 +267,12 @@ console.log(novelNum);
 
 	$("#novellist").empty();
 	
+	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
 	
 	let str = "";
+	let str1 = "";
 	console.log(data);
 	
 	$(data).each(
@@ -270,10 +292,16 @@ console.log(novelNum);
 					+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 				
+				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+				
+					
+				
 				$(".tbody").html(str);
+				$(".write").html(str1);
 });
 });
 	$(".table").show("slow");
+	$(".write").show("slow");
 	
 });
 $("#novellist").on("click",".romanceLi", function(){
@@ -282,10 +310,12 @@ console.log(novelNum);
 
 	$("#novellist").empty();
 	
+	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
 	
 	let str = "";
+	let str1 = "";
 	console.log(data);
 	
 	$(data).each(
@@ -305,10 +335,13 @@ console.log(novelNum);
 					+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 				
+				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
 				$(".tbody").html(str);
+				$(".write").html(str1);
 });
 });
 	$(".table").show("slow");
+	$(".write").show("slow");
 	
 });
 $("#novellist").on("click",".wuxiaLi", function(){
@@ -316,11 +349,13 @@ var novelNum = $(this).attr("data-novelNum");
 console.log(novelNum);
 
 	$("#novellist").empty();
+		
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
 	
 	let str = "";
+	let str1 ="";
 	console.log(data);
 	
 	$(data).each(
@@ -338,13 +373,17 @@ console.log(novelNum);
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
+					
 				console.log(this);
+					
+				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
 				
 				$(".tbody").html(str);
+				$(".write").html(str1);
 });
 });
 	$(".table").show("slow");
-	
+	$(".write").show("slow");
 });
 
 $(".tbody").on("click",".title",function(){
@@ -353,7 +392,9 @@ console.log(freeSNum);
 var novelNum =  $(this).attr("data-novelNum");
 console.log(novelNum);
 $("#novellist").empty();
+$(".content").hide();
 $(".table").hide();
+$(".write").hide();
 
 var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
 console.log(url);
@@ -365,13 +406,13 @@ $.getJSON(url, function(data){
 	
 	$(data).each(
 			function(){
-				str+= "<h1>내용 : "+this.free_content+"<h1/>"
+				str+= "<p>내용 : "+this.free_content+"</p>"
 				
-				$(".test").html(str);
+				$(".view-detail-content").html(str);
 			});
 });
 
-$(".test").show("slow");
+$(".content").show("slow");
 });
 getFantasyList();
 
