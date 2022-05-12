@@ -20,7 +20,7 @@ public interface TournamentMapper {
 	// ■ 특정 토너먼트 참여 작품 가져오기('시작' 버튼 클릭시 적재하는 버전)
 		public List<TournamentJoinVO> getToWorkList(long to_num);
 		
-		// ■ 새로운 토너먼트 참여시 상위 n개의 row를 적재하기 
+		// ● 새로운 토너먼트 참여시 상위 n개의 row를 적재하기 
 		//	 1) 토너먼트 번호(2:4강, 3:2강)
 		//   2) 상위 n개를 자를 rownum(8강시 8, 4강시 4, 2강시 2)
 		public void insertNewRow(@Param("to_num") long to_num, @Param("rownum")int rownum);

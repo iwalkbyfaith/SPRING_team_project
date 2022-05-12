@@ -19,8 +19,9 @@
 	        novel_tbl nt 
 	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = #{to_num}
 	</select>
+		
 	
-		<!-- ■ 새로운 토너먼트 참여시 상위 n개의 row를 적재하기  -->
+		<!-- ● 새로운 토너먼트 참여시 상위 n개의 row를 적재하기  -->
 		<insert id="insertNewRow">
 			<![CDATA[
    			    INSERT INTO towork_tbl(towork_num, to_num, novel_num, towork_rec)
