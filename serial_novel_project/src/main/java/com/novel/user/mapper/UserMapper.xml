@@ -57,9 +57,9 @@
 		
 		<!-- ■ 회원가입 로직 - 회원 정보 기입-->
 		<insert id="insertMemberTbl">
-			INSERT INTO MEMBER_TBL(userid, userpw, username)
+			INSERT INTO user_Tbl(user_num, user_id, user_pw, user_name, user_pnum, user_email)
 				VALUES
-			(#{userId}, #{userPw}, #{userName})
+			(user_num.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_pnum}, #{user_email})
 		</insert>
 	
 	
@@ -68,9 +68,9 @@
 		<update id="insertMemberAuth">
 			INSERT ALL
 				<foreach collection="authList" item="item" separator=" ">
-					INTO MEMBER_AUTH(userid, auth)
+					INTO auth_tbl(auth_num, user_id, auth)
 						VALUES
-					(#{item.userId}, #{item.auth})
+					(auth_num.nextval, #{item.user_id}, #{item.auth})
 				</foreach>
 			SELECT *
 				FROM DUAL
