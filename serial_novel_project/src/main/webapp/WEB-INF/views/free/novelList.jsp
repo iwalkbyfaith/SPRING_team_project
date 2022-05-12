@@ -158,8 +158,7 @@ margin-right:10px;
 	<div class="view-detail-content"></div>
 </div>
 </div>
-<form action ="#" method="post" class="work" style="display:none;">
-        <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
+				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
                 <tr>
                 <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
                 </tr>
@@ -167,7 +166,7 @@ margin-right:10px;
                 <td bgcolor=white>
                 <table class = "table2">
                         <tr>
-                        <td>작가</td>
+                        <td>작성자</td>
                         <td><input type = text name = name size=20> </td>
                         </tr>
  
@@ -178,17 +177,23 @@ margin-right:10px;
  
                         <tr>
                         <td>내용</td>
-                        <td><textarea name = content cols=85 rows=15></textarea></td>
+                        <td>
+                        <textarea name="contents" onKeyUp="javascript:fnChkByte(this,'4000')"></textarea>
+						<span id="byteInfo">0</span> /4000bytes
+                        
+                        </td>
                         </tr>
-                      </table>
  
                         
-                        <button class="writeNovel">글쓰기</button>
-                        
+                     </table>
+ 
                 </td>
                 </tr>
         </table>
-        </form>
+
+
+
+
 
 
 
@@ -200,6 +205,44 @@ margin-right:10px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+function fnChkByte(obj, maxByte)
+{
+    var str = obj.value;
+    var str_len = str.length;
+
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 2;                                         //한글2Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        fnChkByte(obj, maxByte);
+     }
+     else
+     {
+        document.getElementById('byteInfo').innerText = rbyte;
+     }
+}
+
 $(document).ready(function () {
 $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
