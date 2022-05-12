@@ -8,11 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import com.novel.free.domain.FreeNovelJoinVO;
+import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.service.FreeNovelService;
 
 
@@ -72,6 +75,27 @@ public class FreeNovelController {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 		}
+		return entity;
+	}
+	@PostMapping(value="", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+	// produces에 TEXT_PLAIN_VALUES를 줬으므로 결과코드와 문자열을 넘김
+	public ResponseEntity<String> register(
+			// rest컨트롤러에서 받는 파라미터 앞에 
+			// @RequestBody 어노테이션이 붙어야
+			// consumes와 연결됨
+			@RequestBody FreeNovelVO vo){
+		// 깡통 entity를 먼저 생성
+		ResponseEntity<String> entity = null;
+		try {
+			// 먼저 글쓰기 로직 실행 후 에러가 없다면...
+			service.insertFree(vo);
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+			
+		} catch(Exception e) {
+			// catch로 넘어왔다는건 글쓰기 로직에 문제가 생긴 상황
+			entity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		// 위의 try블럭이나 catch블럭에서 얻어온 entity변수 리턴
 		return entity;
 	}
 }

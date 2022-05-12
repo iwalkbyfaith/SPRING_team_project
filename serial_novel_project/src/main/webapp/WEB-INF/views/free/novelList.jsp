@@ -38,8 +38,9 @@ ul li a{
 	margin-left:20px;
 	outline:solid 1px;
 }
-.write{
+.writebtn,.List,.series{
 float:right;
+margin-right:10px;
 }
  
 }
@@ -105,7 +106,7 @@ float:right;
       </nav>
       </div>
 <div class="container">
-  <div class="categoryheader">
+  <div class="categoryheader" style="display:show;">
 <ul>
 <li id="headerfLi">판타지</li>
 <li id="headerwLi">무협지</li>
@@ -125,11 +126,10 @@ float:right;
 <br/>
 <div class="series" style="display:none;">
 </div>
-<br/>
 <div class="List" style="display:none;">
 </div>
-<br/>
-<div class="write" style="display:none;">
+
+<div class="writebtn" style="display:none;">
 </div>
 <br/>
 <br/>
@@ -158,8 +158,42 @@ float:right;
 	<div class="view-detail-content"></div>
 </div>
 </div>
+<form action ="#" method="post" class="work" style="display:none;">
+        <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
+                <tr>
+                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        <tr>
+                        <td>작가</td>
+                        <td><input type = text name = name size=20> </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td><input type = text name = title size=60></td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용</td>
+                        <td><textarea name = content cols=85 rows=15></textarea></td>
+                        </tr>
+                      </table>
+ 
+                        
+                        <button class="writeNovel">글쓰기</button>
+                        
+                </td>
+                </tr>
+        </table>
+        </form>
+
+
 
 </div>
+
 <div class="footer"></div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -176,7 +210,7 @@ $('.navbar-light .dmenu').hover(function () {
 function getFantasyList(){
 	  var novelCategory = "fantasy";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
@@ -200,7 +234,7 @@ function getFantasyList(){
 function getRomanceList(){
 	  var novelCategory = "romance";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 		
 		
@@ -226,7 +260,7 @@ function getRomanceList(){
 function getWuxiaList(){
 	  var novelCategory = "wuxia";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
@@ -292,6 +326,10 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -311,18 +349,15 @@ console.log(novelNum);
 					+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 				
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 				
 					
 				
 				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
+	
 });
 });
 	$(".table").show("slow");
-	$(".write").show("slow");
+	$(".writebtn").show("slow");
 	$(".List").show("slow");
 });
 
@@ -340,6 +375,10 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -359,15 +398,13 @@ console.log(novelNum);
 					+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 				
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+				
 				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
+				
 });		
 });
 	$(".table").show("slow");
-	$(".write").show("slow");
+	$(".writebtn").show("slow");
 	$(".List").show("slow");
 	
 });
@@ -385,6 +422,10 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -405,16 +446,12 @@ console.log(novelNum);
 					
 				console.log(this);
 					
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 				
 				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
 });
 });
 	$(".table").show("slow");
-	$(".write").show("slow");
+	$(".writebtn").show("slow");
 	$(".List").show("slow");
 });
 
@@ -426,7 +463,7 @@ console.log(novelNum);
 $("#novellist").empty();
 $(".content").hide();
 $(".table").hide();
-$(".write").hide();
+$(".writebtn").hide();
 
 var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
 console.log(url);
@@ -453,7 +490,7 @@ $(".List").on("click",".novelList",function(){
 
 	$("#novellist").empty();
 	$(".content").hide();
-	$(".write").hide();
+	$(".writebtn").hide();
 	$(".table").hide();
 	$(".List").hide();
 	$(".series").hide();
@@ -483,7 +520,7 @@ $(".series").on("click",".novelSeries",function(){
 
 	$("#novellist").empty();
 	$(".content").hide();
-	$(".write").hide();
+	$(".writebtn").hide();
 	$(".table").hide();
 	$(".List").hide();
 	$(".series").hide();
@@ -521,18 +558,30 @@ $(".series").on("click",".novelSeries",function(){
 						
 					console.log(this);
 						
-					str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+					str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
 					str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 					
 					$(".tbody").html(str);
-					$(".write").html(str1);
+					$(".writebtn").html(str1);
 					$(".List").html(str2);
 	});
 	});
 		$(".table").show("slow");
-		$(".write").show("slow");
+		$(".writebtn").show("slow");
 		$(".List").show("slow");
 	});
+$(".writebtn").on("click",".writenovelbtn",function(){
+	
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".writebtn").hide();
+	$(".table").hide();
+	$(".List").hide();
+	$(".series").hide();
+	$(".work").show();
+	$(".categoryheader").hide();
+	
+});
 		
 	
 getFantasyList();
