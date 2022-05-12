@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.novel.novel.domain.NovelVO;
 import com.novel.novel.domain.PageMaker;
@@ -24,73 +23,60 @@ import lombok.extern.log4j.Log4j;
 public class NovelController {
 	
 	@Autowired
-	private NovelService service;
+	private NovelService novelservice;
 	
-	@GetMapping(value="/novelList")
-	public String getAllList(SearchCriteria cri, Model model) {
-		
-		List<NovelVO> novelList = service.getList(cri);
+	@GetMapping("/allList")
+	public String getNovelList(SearchCriteria cri, Model model) {
+		List<NovelVO> novelList = novelservice.getNovelList(cri);
 		model.addAttribute("novelList", novelList);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri); 
-		int countPage = service.countPageNum(cri);
+		int countPage = novelservice.countPageNum(cri);
 		pageMaker.setTotalBoard(countPage);
 		model.addAttribute("pageMaker", pageMaker);
 		
 		return "novel/novelList";
 	}
 	
-	@GetMapping(value="/novelDetail/{novel_num}")
-	public String getDetail(@PathVariable long novel_num, Model model) {
-		NovelVO novel = service.select(novel_num);
+	@GetMapping("/novelDetail/{novel_num}")
+	public String getNovelDetail(@PathVariable long novel_num, Model model) {
+		NovelVO novel = novelservice.detailNovel(novel_num);
 		model.addAttribute("novel", novel);
 		return "novel/novelDetail";
 	}
 	
-	@GetMapping(value="/novelInsert")
+	@GetMapping("/novelInsert")
 	public String novelForm() {
 		return "novel/novelForm";
 	}
 	
-	@PostMapping(value="/novelInsert")
-	public String novelInsert(NovelVO novel) {
-		service.insert(novel);
-		return "redirect:/novel/novelList";
+	@PostMapping("/novelInsert")
+	public String novelInsert(NovelVO vo) {
+		novelservice.insertNovel(vo);
+		return "redirect:/novel/allList";
 	}
 	
-	@PostMapping(value="/novelDelete")
-	public String novelDelete(long novel_num, SearchCriteria cri, RedirectAttributes rttr) {
-		
-		service.delete(novel_num);
-		
-		rttr.addAttribute("pageNum",cri.getPageNum());
-		rttr.addAttribute("searchType",cri.getSearchType());
-		rttr.addAttribute("keyword",cri.getKeyword());
-		return "redirect:/novel/novelList";
+	@PostMapping("/novelDelete")
+	public String novelDelete(long novel_num) {
+		novelservice.deleteNovel(novel_num);
+		return "redirect:/novel/allList";
 	}
 	
-	@PostMapping(value="/novelUpdateForm")
+	@PostMapping("/novelUpdateForm")
 	public String updateForm(long novel_num, Model model) {
-		NovelVO novel = service.select(novel_num);
+		NovelVO novel = novelservice.detailNovel(novel_num);
 		model.addAttribute("novel", novel);
 		return "novel/novelUpdateForm";
 	}
 	
 	@PostMapping("/novelUpdate")
-	public String novelUpdate(NovelVO novel, SearchCriteria cri, RedirectAttributes rttr){
+	public String novelUpdate(NovelVO vo) {
+		novelservice.updateNovel(vo);
 		
-		log.info("수정로직입니다." + novel);
-		log.info("검색어 : " + cri.getKeyword());
-		log.info("검색조건 : " + cri.getSearchType());
-		log.info("페이지번호 : " + cri.getPageNum());
-		service.update(novel);
+		return "redirect:/novel/novelDetail/" + vo.getNovel_num();
+	}
+	
 		
-		rttr.addAttribute("pageNum",cri.getPageNum());
-		rttr.addAttribute("searchType",cri.getSearchType());
-		rttr.addAttribute("keyword",cri.getKeyword());
 		
-		return "redirect:/novel/novelDetail/" + novel.getNovel_num();
-		
-	 }
 }

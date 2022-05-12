@@ -3,48 +3,31 @@
 	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.novel.novel.mapper.NovelMapper">
-	
-	<!-- 검색 -->
-	<sql id="search">
-		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">
-				(Title like '%'||#{keyword}||'%') AND
-			</if>
-			<if test="searchType == 'c'.toString()">
-				(Content like '%'||#{keyword}||'%') AND
-			</if>
-			<if test="searchType == 'w'.toString()">
-				(Writer like '%'||#{keyword}||'%') AND
-			</if>
-			<if test="searchType == 'tc'.toString()">
-				((Title like '%'||#{keyword}||'%')
-					or
-				(Content like '%'||#{keyword}||'%')) AND
-			</if>
-			<if test="searchType == 'cw'.toString()">
-				((Content like '%'||#{keyword}||'%')
-					or
-				(Writer like '%'||#{keyword}||'%')) AND
-			</if>
-			<if test="searchType == 'tcw'.toString()">
-				((Title like '%'||#{keyword}||'%')
-					or
-				(Content like '%'||#{keyword}||'%')
-					or
-				(Writer like '%'||#{keyword}||'%')) AND
-			</if>
-		</if>	
-	</sql>
+		
+			<sql id="search">
+				<if test="searchType != null">
+					<if test="searchType == 't'.toString()">
+						(novel_Title like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'c'.toString()">
+						(novel_Category like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'w'.toString()">
+						(novel_Writer like '%'||#{keyword}||'%') AND
+					</if>
+				</if>	
+			</sql>
+		
+		
+		<select id="getNovelList" resultType="com.novel.novel.domain.NovelVO">
 			
-		<!--  -->
-		<select id="getList" resultType="com.novel.novel.domain.NovelVO">
 			<![CDATA[
 			SELECT * FROM
 				(SELECT /*+ INDEX_DESC(novel_tbl pk_novel) */
 				ROWNUM rn, novel_tbl.* FROM novel_tbl WHERE 
 			]]>	
 			
-				<include refid="search"></include>
+			<include refid="search"></include>
 			
 			<![CDATA[		
 				ROWNUM <= #{pageEnd})
@@ -52,40 +35,37 @@
 			]]>
 		</select>
 		
-		<!-- novel_tbl 글 갯수 -->
 		<select id="countPageNum" resultType="int">
 			<![CDATA[
-			SELECT COUNT(*) FROM novel_tbl WHERE
+				SELECT COUNT(*) FROM novel_tbl WHERE
 			]]>
 			
-				<include refid="search"></include>
+			<include refid="search"></include>
 				
 			<![CDATA[
-			novel_num > 0
+				novel_num > 0
 			]]>
 		</select>
 		
-		<!-- 소설등록 -->
-		<insert id="insert">
-			INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) VALUES
-                      		  (novel_num.nextval, #{novel_writer}, #{novel_title}, #{novel_tsnum}, #{novel_category}, #{novel_week})
+		<insert id="insertNovel">
+			INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
 		</insert>
 		
-		<!-- 소설 상세 조회 -->
-		<select id="select" resultType="com.novel.novel.domain.NovelVO">
-			SELECT * FROM novel_tbl WHERE novel_num = #{novel_num}
-		</select>
-		
-		<!-- 소설 삭제 -->
-		<delete id="delete">
+		<delete id="deleteNovel">
 			DELETE FROM novel_tbl WHERE novel_num = #{novel_num}
 		</delete>
 		
-		<!-- 소설 수정 -->
-		<update id="update">
-			UPDATE novel_tbl 
-			SET 
+		<select id="detailNovel" resultType="com.novel.novel.domain.NovelVO">
+			SELECT * FROM novel_tbl WHERE novel_num = #{novel_num}
+		</select>
+		
+		<update id="updateNovel">
+			UPDATE novel_tbl SET 
 			novel_title = #{novel_title}, novel_tsnum = #{novel_tsnum}, novel_category = #{novel_category}, novel_week = #{novel_week}, novel_end = #{novel_end} 
 			WHERE novel_num = #{novel_num}
 		</update>
+		
+		
+		
 	</mapper>

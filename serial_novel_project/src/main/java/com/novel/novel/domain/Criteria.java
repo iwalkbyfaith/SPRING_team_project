@@ -14,4 +14,5 @@ public class Criteria {
 	public int getPageEnd() {
 		return(this.pageNum * number);
 	}
+	
 }
