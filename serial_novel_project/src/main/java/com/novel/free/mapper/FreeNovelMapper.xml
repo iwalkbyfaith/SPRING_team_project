@@ -58,9 +58,9 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	]]>
 	</select>
 	
-	<select id="getListAll" resultType="com.novel.free.domain.FreeNovelJoinVO">
-	SELECT f.free_num,n.novel_title,n.novel_writer,n.novel_num
-	 FROM free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num
+	<select id="selectList" resultType="com.novel.free.domain.FreeNovelJoinVO">
+	SELECT n.novel_title , n.novel_num FROM novel_tbl n INNER JOIN free_tbl f ON n.novel_num = f.novel_num 
+WHERE n.novel_category = #{novelCategory} GROUP BY n.novel_title, n.novel_num
 	</select>
 	
 	
@@ -76,8 +76,14 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	
 	<select id="select" resultType="com.novel.free.domain.FreeNovelJoinVO">
 	
-		SELECT f.free_num,n.novel_title,n.novel_writer,n.novel_num FROM free_tbl f INNER JOIN 
-	novel_tbl n ON f.novel_num = n.novel_num WHERE free_num = #{free_num} 
+	SELECT n.novel_num,n.novel_title,n.novel_writer,f.free_snum,f.free_title,f.free_rdate,f.free_mdate FROM 
+free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num =#{novelNum}
+	</select>
+	<select id="selectDetail" resultType="com.novel.free.domain.FreeNovelJoinVO">
+	
+		SELECT n.novel_title,n.novel_writer,n.novel_end,n.novel_category,f.free_content,f.free_rdate,f.free_hit,f.free_rec
+		 FROM free_tbl f INNER JOIN 
+	novel_tbl n ON f.novel_num = n.novel_num WHERE free_snum =#{freeSNum} and f.novel_num=#{novelNum} 
 	</select>
 	<delete id="delete">
 	

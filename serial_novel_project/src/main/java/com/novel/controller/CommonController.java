@@ -1,4 +1,4 @@
-/*package com.novel.controller;
+package com.novel.controller;
 
 
 import org.springframework.security.core.Authentication;
@@ -59,4 +59,3 @@ public class CommonController {
 			}
 	
 }
-*/

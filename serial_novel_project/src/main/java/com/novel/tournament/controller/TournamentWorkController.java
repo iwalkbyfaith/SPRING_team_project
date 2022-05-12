@@ -51,6 +51,30 @@ public class TournamentWorkController {
 	}
 	
 	
+	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
+	@GetMapping(value="/checkRec/{to_num}/{user_id}",
+				produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<TournamentWorkRecVO> checkRec(@PathVariable("user_id") String user_id, @PathVariable("to_num") long to_num){  
+		
+		log.info("들어온 유저 아이디 -> " + user_id);
+		log.info("들어온 토너먼트 번호 -> " + to_num);
+		
+		
+		ResponseEntity<TournamentWorkRecVO> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(service.checkRec(to_num, user_id), HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+ 	}
+	
+	
+	
 	// ■ 8강 토너먼트 대회 참여 작품 리스트 조회
 	@GetMapping(value="/toWork8", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	public ResponseEntity<List<TournamentJoinVO>> tournaList2(){

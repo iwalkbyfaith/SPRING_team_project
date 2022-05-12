@@ -16,15 +16,15 @@
 	</div>
 	<div class="container">
 		<div class="container1">
-			<table>
+			<table class="table table-striped">
 				<tr>
-					<th>소설번호<th>
+					<th>번호</th>
 					<th>제목</th>
 					<th>글쓴이</th>
 					<th>총 편</th>
 					<th>장르</th>
 					<th>연재요일</th>
-					<th>완결 유무</th>
+					<th>완결유무</th>
 				</tr>
 				<c:forEach var="novel" items="${novelList }">
 					<tr>
@@ -35,8 +35,13 @@
 					<c:if test="${novel.novel_category eq 'fantasy'}"><td>판타지</td></c:if>
 					<c:if test="${novel.novel_category eq 'romance'}"><td>로맨스</td></c:if>
 					<c:if test="${novel.novel_category eq 'wuxia'}"><td>무협</td></c:if>
-						
-						<td>${novel.novel_week }</td>
+					
+					<c:if test="${novel.novel_week eq 'Mon'}"><td>월</td></c:if>
+					<c:if test="${novel.novel_week eq 'Tue'}"><td>화</td></c:if>
+					<c:if test="${novel.novel_week eq 'Wen'}"><td>수</td></c:if>
+					<c:if test="${novel.novel_week eq 'Thu'}"><td>목</td></c:if>
+					<c:if test="${novel.novel_week eq 'Fri'}"><td>금</td></c:if>
+					<c:if test="${novel.novel_week eq 'Free'}"><td>자유</td></c:if>
 						<td>${novel.novel_end eq true ? '완결' : '연재중'}</td>
 					</tr>
 				</c:forEach>

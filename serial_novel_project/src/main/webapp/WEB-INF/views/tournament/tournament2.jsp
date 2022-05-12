@@ -138,6 +138,7 @@
 				$(data).each(function(){
 					
 					str += "<div class='tourna-list' data-tno='" + this.to_num + "'>" + this.to_name + "</div>";
+
 				});
 				
 				$("#tournament").html(str);
@@ -168,6 +169,7 @@
 							+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
 							+ "<button type='button'>추천</button>"
 						+ "</div>";
+
 				});
 				
 				$("#tournamentWork").html(str);
@@ -197,6 +199,7 @@
 							+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
 							+ "<button type='button'>추천</button>"
 						+ "</div>";
+
 				});
 				
 				$("#tournament2").html(str);
@@ -237,6 +240,7 @@
 							+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
 							+ "<button type='button'>추천</button>"
 						+ "</div>";
+
 				});
 				
 				$("#tournament4").html(str);
@@ -254,6 +258,7 @@
 		})
 		
 		
+
 		
 		
 		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 (코드 수정중) -->
@@ -602,6 +607,7 @@
 					});
 				});
 		
+
 		
 		
 		

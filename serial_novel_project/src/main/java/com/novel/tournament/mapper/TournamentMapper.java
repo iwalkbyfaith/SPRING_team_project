@@ -14,6 +14,9 @@ public interface TournamentMapper {
 	// ■ 전체 리스트 가져오기
 		public List<TournamentVO> getList();
 		
+	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
+		public TournamentWorkRecVO checkRec(@Param("to_num")long to_num, @Param("user_id")String user_id);
+		
 	// ■ 특정 토너먼트 참여 작품 가져오기('시작' 버튼 클릭시 적재하는 버전)
 		public List<TournamentJoinVO> getToWorkList(long to_num);
 		
