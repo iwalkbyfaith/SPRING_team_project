@@ -42,7 +42,14 @@ ul li a{
 float:right;
 margin-right:10px;
 }
- 
+.articleInfo{
+float:right;
+
+}
+ .articleMain{
+text-align:center;
+
+} 
 }
 	
 	</style>
@@ -154,8 +161,17 @@ margin-right:10px;
 </div>
 <div class="content" style="display:none;">
 <div class="section-area-viewer">
-	<div class="viewer-header"></div>
-	<div class="view-detail-content"></div>
+	
+	<div class="articleInfo">
+		
+		<div class="articleWriter"></div>
+		<div class="articleDate">2022-05-12 22:49</div>
+		<div class="articleHit"><strong>조회: </strong>83	&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천:</strong> <span id="rec"></span></div>
+		</div>
+	<div class="articleMain">
+	<div class="articleTitle"></div>
+	<div class="articleContent"></div>
+	</div>
 </div>
 </div>
 				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
@@ -515,13 +531,31 @@ $.getJSON(url, function(data){
 	
 	let str = "";
 	let str1 = "";
+	let str2 =	"";
+	let str3 =	"";
+	let str4 =	"";
+	let str5 =	"";
+	
 	console.log(data);
 	
 	$(data).each(
 			function(){
-				str+= "<p>내용 : "+this.free_content+"</p>"
+				let timestamp = this.free_rdate;
+				let date = new Date(timestamp);
+				let formattedTime = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+				
+				str2+= "<p>작가 :"+ this.novel_writer +"</p>";
+				str3+= "<p>작성일 : " + formattedTime + "</p>"; 
+				str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+				str5+= "<h2>제목 :"+ this.novel_title+"</h2>";
+				str+= "<h4>내용 : "+this.free_content+"</h4>";
 				str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"'>회차목록</button>";
-				$(".view-detail-content").html(str);
+				
+				$(".articleWriter").html(str2);
+				$(".articleDate").html(str3);
+				$(".articleHit").html(str4);
+				$(".articleTitle").html(str5);
+				$(".articleContent").html(str);
 				$(".series").html(str1);
 			});
 });
