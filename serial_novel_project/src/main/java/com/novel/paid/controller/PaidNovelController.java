@@ -18,7 +18,7 @@ public class PaidNovelController {
 	@Autowired
 	private PaidNovelService paidservice;
 	
-	@GetMapping(value="/List")
+	@GetMapping(value="/novelList")
 	public String getPaidList() {
 		
 		return "paid/paidList";
