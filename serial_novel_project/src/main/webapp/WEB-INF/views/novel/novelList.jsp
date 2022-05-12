@@ -32,7 +32,10 @@
 						<td><a href="/novel/novelDetail/${novel.novel_num}?pageNum=${pageMaker.cri.pageNum }&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">${novel.novel_title }</a></td>
 						<td>${novel.novel_writer }</td>
 						<td>${novel.novel_tsnum }</td>
-						<td>${novel.novel_category }</td>
+					<c:if test="${novel.novel_category eq 'fantasy'}"><td>판타지</td></c:if>
+					<c:if test="${novel.novel_category eq 'romance'}"><td>로맨스</td></c:if>
+					<c:if test="${novel.novel_category eq 'wuxia'}"><td>무협</td></c:if>
+						
 						<td>${novel.novel_week }</td>
 						<td>${novel.novel_end eq true ? '완결' : '연재중'}</td>
 					</tr>

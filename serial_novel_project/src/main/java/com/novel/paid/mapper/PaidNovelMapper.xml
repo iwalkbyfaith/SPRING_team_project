@@ -30,11 +30,16 @@
 		</insert>
 		
 		<select id="selectDetail" resultType="com.novel.paid.domain.PaidVO">
-			SELECT n.novel_title, n.novel_writer, n.novel_end, n.novel_category, p.paid_week, p.paid_content, p.paid_rdate, p.paid_hit, p.paid_rec
+			SELECT n.novel_title, n.novel_writer, n.novel_end, n.novel_category, n.novel_week, p.paid_content, p.paid_rdate, p.paid_hit, p.paid_rec
 			 FROM paid_tbl p INNER JOIN 
 			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_snum = #{paidSNum} and p.novel_num = #{novelNum} 
 		</select>
 		
+		<select id="select" resultType="com.novel.paid.domain.PaidVO">
+			SELECT n.novel_num,n.novel_title,n.novel_writer, p.paid_snum, p.paid_title, p.paid_rdate, p.paid_mdate FROM 
+				paid_tbl p INNER JOIN novel_tbl n ON p.novel_num = n.novel_num where n.novel_num =#{novelNum}
+		</select>
+	
 		<delete id="delete">
 			DELETE FROM paid_tbl WHERE paid_snum = #{paid_snum}
 		</delete>
@@ -49,7 +54,6 @@
 			SELECT count(*) FROM paid_tbl WHERE
 			
 			]]> 
-			<include refid="search"></include>
 			
 			<![CDATA[
 			paid_num > 0

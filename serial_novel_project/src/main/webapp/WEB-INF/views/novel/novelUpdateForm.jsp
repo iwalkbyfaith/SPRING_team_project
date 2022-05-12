@@ -18,9 +18,11 @@
 				<label><input type="radio" name="novel_week" value="Wen">수</label>
 				<label><input type="radio" name="novel_week" value="Thu">목</label>
 				<label><input type="radio" name="novel_week" value="Fri">금</label>
-				<label><input type="radio" name="novel_week" value="Sat">토</label>
 				<label><input type="radio" name="novel_week" value="Free">자유</label><br>
-			장르<input type="text" name="novel_category" value="${novel.novel_category }"><br>
+				
+			장르	<label><input type="radio" name="novel_category" value="fantasy" required>판타지</label>
+				<label><input type="radio" name="novel_category" value="romance">로맨스</label>
+				<label><input type="radio" name="novel_category" value="wuxia">무협지</label><br>
 			연재유무<label><input type="radio" name="novel_end" value=0>연재</label>
 				<label><input type="radio" name="novel_end" value=1>완결</label><br>
 			

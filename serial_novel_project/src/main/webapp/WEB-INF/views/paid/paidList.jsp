@@ -25,27 +25,28 @@ ul li a{
 .footer{
 	height:150px;
 }
-#headerMonLi,#headerThuLi,#headerWenLi,#headerTurLi,#headerFriLi{
+#headerMonLi,#headerTueLi,#headerWenLi,#headerThuLi,#headerFriLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
 	font-size:30px;
 	outline:solid 1px;
 }
-.fantasyLi , .romanceLi , .wuxiaLi{
+.monLi , .thuLi , .wenLi, .thuLi, .friLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
 	outline:solid 1px;
 }
-.write{
+.writebtn,.List,.series{
 float:right;
+margin-right:10px;
 }
  
 }
 	
 	</style>
-  <title>무료 소설</title>
+  <title>유료 소설</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -105,14 +106,13 @@ float:right;
       </nav>
       </div>
 <div class="container">
-  <div class="weekheader">
+  <div class="weekheader" style="display:show;">
 <ul>
 <li id="headerMonLi">월요일</li>
 <li id="headerThuLi">화요일</li>
 <li id="headerWenLi">수요일</li>
-<li id="headerTurLi">목요일</li>
+<li id="headerThuLi">목요일</li>
 <li id="headerFriLi">금요일</li>
-
 </ul>
 </div>
 
@@ -127,11 +127,10 @@ float:right;
 <br/>
 <div class="series" style="display:none;">
 </div>
-<br/>
 <div class="List" style="display:none;">
 </div>
-<br/>
-<div class="write" style="display:none;">
+
+<div class="writebtn" style="display:none;">
 </div>
 <br/>
 <br/>
@@ -160,14 +159,91 @@ float:right;
 	<div class="view-detail-content"></div>
 </div>
 </div>
+				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
+                <tr>
+                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        <tr>
+                        <td>작성자</td>
+                        <td><input type = text name = name size=20> </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td><input type = text name = title size=60></td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용</td>
+                        <td>
+                        <textarea name="contents" onKeyUp="javascript:fnChkByte(this,'4000')"></textarea>
+						<span id="byteInfo">0</span> /4000bytes
+                        
+                        </td>
+                        </tr>
+ 
+                        
+                     </table>
+ 
+                </td>
+                </tr>
+        </table>
+
+
+
+
+
+
 
 </div>
+
 <div class="footer"></div>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+function fnChkByte(obj, maxByte)
+{
+    var str = obj.value;
+    var str_len = str.length;
+
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 2;                                         //한글2Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        fnChkByte(obj, maxByte);
+     }
+     else
+     {
+        document.getElementById('byteInfo').innerText = rbyte;
+     }
+}
+
 $(document).ready(function () {
 $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
@@ -175,10 +251,11 @@ $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
     });
 });
+////////
 function getMonList(){
 	  var novelWeek = "Mon";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 	
 	$.getJSON("/paid/novel/"+ novelWeek , function(data){
@@ -199,14 +276,12 @@ function getMonList(){
 	});
 	
 }
-function getThuList(){
-		var novelWeek = "Thu";
+function getTueList(){
+	  var novelWeek = "Tue";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 		
-		
-	
 	$.getJSON("/paid/novel/"+ novelWeek , function(data){
 			
 						
@@ -216,7 +291,7 @@ function getThuList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='thuLi' data-novelNum='" + this.novel_num + "'>" + 
+					str += "<div class='TueLi' data-novelNum='" + this.novel_num + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -226,14 +301,13 @@ function getThuList(){
 	
 }
 function getWenList(){
-		var novelWeek = "Wen";
+	  var novelWeek = "Wen";
 	  	$(".List").hide();
-		$(".write").hide();
+		$(".writebtn").hide();
 		$(".series").hide();
 	
 	$.getJSON("/paid/novel/"+ novelWeek , function(data){
-			
-						
+				
 		let str = "";
 		console.log(data);
 		
@@ -250,7 +324,55 @@ function getWenList(){
 	
 }
 
+function getThuList(){
+	  var novelWeek = "Thu";
+	  	$(".List").hide();
+		$(".writebtn").hide();
+		$(".series").hide();
+	
+	$.getJSON("/paid/novel/"+ novelWeek , function(data){
+				
+		let str = "";
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					
+					str += "<div class='thuLi' data-novelNum='" + this.novel_num + "'>" + 
+					this.novel_title + "</div>";
 
+				});
+		
+		$("#novellist").html(str);
+	});
+	
+}
+
+function getFriList(){
+	  var novelWeek = "Fri";
+	  	$(".List").hide();
+		$(".writebtn").hide();
+		$(".series").hide();
+	
+	$.getJSON("/paid/novel/"+ novelWeek , function(data){
+				
+		let str = "";
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					
+					str += "<div class='friLi' data-novelNum='" + this.novel_num + "'>" + 
+					this.novel_title + "</div>";
+
+				});
+		
+		$("#novellist").html(str);
+	});
+	
+}
+
+//
 $("#headerMonLi").on("click",function(){
 
 	
@@ -279,7 +401,27 @@ $(".table").hide();
 getWenList();
 	
 });
-/////////////////
+
+$("#headerThuLi").on("click",function(){
+
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".table").hide();
+
+	getThuList();
+		
+	});
+	
+$("#headerFriLi").on("click",function(){
+
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".table").hide();
+
+	getFriList();
+		
+	});
+
 $("#novellist").on("click",".monLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelWeek = "Mon";
@@ -287,54 +429,6 @@ console.log(novelNum);
 
 	$("#novellist").empty();
 	
-
-	$.getJSON("/paid/novel/select/"+ novelNum , function(data){
-	
-	
-	let str = "";
-	let str1 = "";
-	let str2 = "";
-	console.log(data);
-	
-	$(data).each(
-			function(){
-				let timestamp1 = this.paid_rdate;
-				let timestamp2 = this.paid_mdate;
-				let date1 = new Date(timestamp1);
-				let date2 = new Date(timestamp2);
-				
-				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
-				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
-				
-				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
-					+ "<td>"+this.novel_writer+"</td>"
-					+ "<td>"+formattedTime1+"</td>"
-					+ "<td>"+formattedTime2+"</td></tr>"
-					console.log(this);
-				
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
-				
-					
-				
-				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
-});
-});
-	$(".table").show("slow");
-	$(".write").show("slow");
-	$(".List").show("slow");
-});
-
-$("#novellist").on("click",".thuLi", function(){
-var novelNum = $(this).attr("data-novelNum");
-var novelWeek = "Tue";
-console.log(novelNum);
-
-	$("#novellist").empty();
-	
 	
 	$.getJSON("/paid/novel/select/"+ novelNum , function(data){
 	
@@ -342,6 +436,10 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -361,18 +459,65 @@ console.log(novelNum);
 					+ "<td>"+formattedTime2+"</td></tr>"
 					console.log(this);
 				
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+				
 				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
+	
+		});
+});
+	$(".table").show("slow");
+	$(".writebtn").show("slow");
+	$(".List").show("slow");
+});
+
+
+$("#novellist").on("click",".tusLi", function(){
+var novelNum = $(this).attr("data-novelNum");
+var novelWeek = "Tue";
+console.log(novelNum);
+
+	$("#novellist").empty();
+	
+	
+	$.getJSON("/paid/novel/select/"+ novelNum , function(data){
+	
+	
+	let str = "";
+	let str1 = "";
+	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
+	console.log(data);
+	
+	$(data).each(
+			function(){
+				let timestamp1 = this.paid_rdate;
+				let timestamp2 = this.paid_mdate;
+				let date1 = new Date(timestamp1);
+				let date2 = new Date(timestamp2);
+				
+				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				
+				str+= "<tr><td>"+this.paid_snum+"</td>"
+					+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+					+ "<td>"+this.novel_writer+"</td>"
+					+ "<td>"+formattedTime1+"</td>"
+					+ "<td>"+formattedTime2+"</td></tr>"
+					console.log(this);
+				
+				
+				$(".tbody").html(str);
+				
 });		
 });
 	$(".table").show("slow");
-	$(".write").show("slow");
+	$(".writebtn").show("slow");
 	$(".List").show("slow");
 	
 });
+
 $("#novellist").on("click",".wenLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelWeek = "Wen";
@@ -387,6 +532,10 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -407,28 +556,119 @@ console.log(novelNum);
 					
 				console.log(this);
 					
-				str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-				str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 				
 				$(".tbody").html(str);
-				$(".write").html(str1);
-				$(".List").html(str2);
 });
 });
 	$(".table").show("slow");
-	$(".write").show("slow");
+	$(".writebtn").show("slow");
 	$(".List").show("slow");
 });
 
+$("#novellist").on("click",".thuLi", function(){
+	var novelNum = $(this).attr("data-novelNum");
+	var novelWeek = "Thu";
+	console.log(novelNum);
+
+		$("#novellist").empty();
+			
+		
+		$.getJSON("/paid/novel/select/"+ novelNum , function(data){
+		
+		
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+		str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+		$(".writebtn").html(str1);
+		$(".List").html(str2);
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					let timestamp1 = this.paid_rdate;
+					let timestamp2 = this.paid_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
+					str+= "<tr><td>"+this.paid_snum+"</td>"
+						+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+						+ "<td>"+this.novel_writer+"</td>"
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
+						
+					console.log(this);
+						
+					
+					$(".tbody").html(str);
+		});
+	});
+		$(".table").show("slow");
+		$(".writebtn").show("slow");
+		$(".List").show("slow");
+	});
+
+$("#novellist").on("click",".friLi", function(){
+	var novelNum = $(this).attr("data-novelNum");
+	var novelWeek = "Fri";
+	console.log(novelNum);
+
+		$("#novellist").empty();
+			
+		
+		$.getJSON("/paid/novel/select/"+ novelNum , function(data){
+		
+		
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+		str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
+		$(".writebtn").html(str1);
+		$(".List").html(str2);
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					let timestamp1 = this.paid_rdate;
+					let timestamp2 = this.paid_mdate;
+					let date1 = new Date(timestamp1);
+					let date2 = new Date(timestamp2);
+					
+					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					
+					str+= "<tr><td>"+this.paid_snum+"</td>"
+						+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+						+ "<td>"+this.novel_writer+"</td>"
+						+ "<td>"+formattedTime1+"</td>"
+						+ "<td>"+formattedTime2+"</td></tr>"
+						
+					console.log(this);
+						
+					
+					$(".tbody").html(str);
+			});
+		});
+		$(".table").show("slow");
+		$(".writebtn").show("slow");
+		$(".List").show("slow");
+	});
+	
+
 $(".tbody").on("click",".title",function(){
 var paidSNum =  $(this).attr("data-paidSNum");
-console.log(paidSNum);
+
 var novelNum =  $(this).attr("data-novelNum");
 console.log(novelNum);
 $("#novellist").empty();
 $(".content").hide();
 $(".table").hide();
-$(".write").hide();
+$(".writebtn").hide();
 
 var url = "/paid/novel/detail/"+ paidSNum +"/"+novelNum;
 console.log(url);
@@ -451,11 +691,12 @@ $.getJSON(url, function(data){
 $(".content").show("slow");
 $(".series").show("slow");
 });
+
 $(".List").on("click",".novelList",function(){
 
 	$("#novellist").empty();
 	$(".content").hide();
-	$(".write").hide();
+	$(".writebtn").hide();
 	$(".table").hide();
 	$(".List").hide();
 	$(".series").hide();
@@ -481,11 +722,12 @@ var novelWeek = $(this).attr("data-novelWeek");
 	
 		
 	});
+	
 $(".series").on("click",".novelSeries",function(){
 
 	$("#novellist").empty();
 	$(".content").hide();
-	$(".write").hide();
+	$(".writebtn").hide();
 	$(".table").hide();
 	$(".List").hide();
 	$(".series").hide();
@@ -496,8 +738,8 @@ $(".series").on("click",".novelSeries",function(){
 
 		$("#novellist").empty();
 			
-/////////////////////		
-		$.getJSON("/free/novel/select/"+ novelNum , function(data){
+		
+		$.getJSON("/paid/novel/select/"+ novelNum , function(data){
 		
 		
 		let str = "";
@@ -507,37 +749,49 @@ $(".series").on("click",".novelSeries",function(){
 		
 		$(data).each(
 				function(){
-					let timestamp1 = this.free_rdate;
-					let timestamp2 = this.free_mdate;
+					let timestamp1 = this.paid_rdate;
+					let timestamp2 = this.paid_mdate;
 					let date1 = new Date(timestamp1);
 					let date2 = new Date(timestamp2);
 					
 					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
 					
-					str+= "<tr><td>"+this.free_snum+"</td>"
-						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+					str+= "<tr><td>"+this.paid_snum+"</td>"
+						+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
 						+ "<td>"+this.novel_writer+"</td>"
 						+ "<td>"+formattedTime1+"</td>"
 						+ "<td>"+formattedTime2+"</td></tr>"
 						
 					console.log(this);
 						
-					str1+= "<button class='writenovel' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
-					str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+					str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+					str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 					
 					$(".tbody").html(str);
-					$(".write").html(str1);
+					$(".writebtn").html(str1);
 					$(".List").html(str2);
 	});
 	});
 		$(".table").show("slow");
-		$(".write").show("slow");
+		$(".writebtn").show("slow");
 		$(".List").show("slow");
 	});
+$(".writebtn").on("click",".writenovelbtn",function(){
+	
+	$("#novellist").empty();
+	$(".content").hide();
+	$(".writebtn").hide();
+	$(".table").hide();
+	$(".List").hide();
+	$(".series").hide();
+	$(".work").show();
+	$(".weekheader").hide();
+	
+});
 		
 	
-getFantasyList();
+
 
 </script>
       
