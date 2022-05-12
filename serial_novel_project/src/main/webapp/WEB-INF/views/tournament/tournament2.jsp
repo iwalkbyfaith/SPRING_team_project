@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	 <!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 -->
+	 <!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 ( 검색 키워드 : ▣ )-->
 		 <!-- ▣ 1. <head>태그 사이에 아래 <meta> 태그 두 줄 추가 -->
 		 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
 	 	 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
