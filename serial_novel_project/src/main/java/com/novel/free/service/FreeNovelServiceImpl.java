@@ -19,8 +19,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	private FreeNovelMapper freeMapper;
 
 	@Override
-	public List<FreeNovelJoinVO> selectList(String novel_category){
-			return freeMapper.selectList(novel_category);
+	public List<FreeNovelJoinVO> selectList(String novelCategory){
+			return freeMapper.selectList(novelCategory);
 	}
 	
 	@Override
@@ -36,9 +36,14 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	}
 
 	@Override
-	public FreeNovelJoinVO select(long free_num) {
+	public List<FreeNovelJoinVO> selectDetail(long freeSNum , long novelNum) {
 
-		return freeMapper.select(free_num);
+		return freeMapper.selectDetail(freeSNum , novelNum);
+	}
+	@Override
+	public List<FreeNovelJoinVO> select(long novelNum) {
+		
+		return freeMapper.select(novelNum);
 	}
 
 	@Override
