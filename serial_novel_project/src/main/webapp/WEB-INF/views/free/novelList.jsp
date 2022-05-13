@@ -25,14 +25,14 @@ ul li a{
 .footer{
 	height:150px;
 }
-#headerfLi,#headerwLi,#headerrLi,#headerdLi{
+#headerfLi,#headerwLi,#headerrLi,#headermLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
 	font-size:30px;
 	outline:solid 1px;
 }
-.fantasyLi , .romanceLi , .wuxiaLi{
+.fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
@@ -118,7 +118,7 @@ text-align:center;
 <li id="headerfLi">판타지</li>
 <li id="headerwLi">무협지</li>
 <li id="headerrLi">로맨스</li>
-<li id="headerdLi">추리</li>
+<li id="headermLi">미스터리</li>
 </ul>
 </div>
 
@@ -165,7 +165,7 @@ text-align:center;
 	<div class="articleInfo">
 		
 		<div class="articleWriter"></div>
-		<div class="articleDate">2022-05-12 22:49</div>
+		<div class="articleDate"></div>
 		<div class="articleHit"><strong>조회: </strong>83	&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천:</strong> <span id="rec"></span></div>
 		</div>
 	<div class="articleMain">
@@ -183,23 +183,50 @@ text-align:center;
                 <table class = "table2">
                         <tr>
                         <td>작성자</td>
-                        <td><input type = text name = name size=20> </td>
+                        <td id="nWriter"></td>
                         </tr>
  
                         <tr>
                         <td>제목</td>
-                        <td><input type = text name = title size=60></td>
+                        <td id="nTitle"></td>
                         </tr>
- 
-                        <tr>
-                        <td>내용</td>
-                        <td>
-                        <textarea name="contents" onKeyUp="javascript:fnChkByte(this,'4000')"></textarea>
-						<span id="byteInfo">0</span> /4000bytes
                         
+                        <tr>
+                        <td>회차제목</td>
+                        <td>
+                        <textarea class="fTitle" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>n회차</td>
+                        <td>
+                        <input class="fSNum" type="number" min="1">
                         </td>
                         </tr>
  
+                        <tr>
+                        <td>내용1</td>
+                        <td>
+                        <textarea class="contents1" onKeyUp="javascript:fnChkByte1(this,'4000')" style="width: 100%; height: 6.25em; resize: none;"></textarea>
+						<span id="byteInfo1">0</span> /4000bytes
+                        
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>내용2</td>
+                        <td>
+                        <textarea class="contents2" onKeyUp="javascript:fnChkByte2(this,'4000')" style="width: 100%; height: 6.25em; resize: none;"></textarea>
+						<span id="byteInfo2">0</span> /4000bytes
+                        
+                        </td>
+                        </tr>
+ 						
+ 						<tr>
+ 						<td>
+ 						<button class="nCancel">취소</button><button class="nSubmit">등록</button>
+ 						</td>
+ 						</tr>
                         
                      </table>
  
@@ -221,7 +248,9 @@ text-align:center;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-function fnChkByte(obj, maxByte)
+
+// 글쓰기 로직 실행시 4000바이트 제한 거는 로직
+function fnChkByte1(obj, maxByte)
 {
     var str = obj.value;
     var str_len = str.length;
@@ -255,10 +284,49 @@ function fnChkByte(obj, maxByte)
      }
      else
      {
-        document.getElementById('byteInfo').innerText = rbyte;
+        document.getElementById('byteInfo1').innerText = rbyte;
+     }
+}
+//글쓰기 로직 실행시 4000바이트 제한 거는 로직
+function fnChkByte2(obj, maxByte)
+{
+    var str = obj.value;
+    var str_len = str.length;
+
+
+    var rbyte = 0;
+    var rlen = 0;
+    var one_char = "";
+    var str2 = "";
+
+
+    for(var i=0; i<str_len; i++)
+    {
+        one_char = str.charAt(i);
+        if(escape(one_char).length > 4) {
+            rbyte += 2;                                         //한글2Byte
+        }else{
+            rbyte++;                                            //영문 등 나머지 1Byte
+        }
+        if(rbyte <= maxByte){
+            rlen = i+1;                                          //return할 문자열 갯수
+        }
+     }
+     if(rbyte > maxByte)
+     {
+        // alert("한글 "+(maxByte/2)+"자 / 영문 "+maxByte+"자를 초과 입력할 수 없습니다.");
+        alert("메세지는 최대 " + maxByte + "byte를 초과할 수 없습니다.")
+        str2 = str.substr(0,rlen);                                  //문자열 자르기
+        obj.value = str2;
+        fnChkByte(obj, maxByte);
+     }
+     else
+     {
+        document.getElementById('byteInfo2').innerText = rbyte;
      }
 }
 
+// 대충 CSS 긁어오면서 딸려온 로직.
 $(document).ready(function () {
 $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
@@ -266,6 +334,7 @@ $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
     });
 });
+	// 판타지 카테고리 리스트 가져오기.
 function getFantasyList(){
 	  var novelCategory = "fantasy";
 	  	$(".List").hide();
@@ -290,6 +359,7 @@ function getFantasyList(){
 	});
 	
 }
+	//로맨스 카테고리 리스트 가져오기.
 function getRomanceList(){
 	  var novelCategory = "romance";
 	  	$(".List").hide();
@@ -316,6 +386,7 @@ function getRomanceList(){
 	});
 	
 }
+	//무협지 카테고리 리스트 가져오기.
 function getWuxiaList(){
 	  var novelCategory = "wuxia";
 	  	$(".List").hide();
@@ -332,6 +403,31 @@ function getWuxiaList(){
 				function(){
 					
 					str += "<div class='wuxiaLi' data-novelNum='" + this.novel_num + "'>" + 
+					this.novel_title + "</div>";
+
+				});
+		
+		$("#novellist").html(str);
+	});
+	
+}
+	//미스터리 카테고리 리스트 가져오기.
+function getMysteryList(){
+	  var novelCategory = "mystery";
+	  	$(".List").hide();
+		$(".writebtn").hide();
+		$(".series").hide();
+	
+	$.getJSON("/free/novel/"+ novelCategory , function(data){
+			
+						
+		let str = "";
+		console.log(data);
+		
+		$(data).each(
+				function(){
+					
+					str += "<div class='mysteryLi' data-novelNum='" + this.novel_num + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -370,6 +466,15 @@ $(".table").hide();
 getWuxiaList();
 	
 });
+$("#headermLi").on("click",function(){
+
+$("#novellist").empty();
+$(".content").hide();
+$(".table").hide();
+
+getMysteryList();
+	
+});
 
 $("#novellist").on("click",".fantasyLi", function(){
 var novelNum = $(this).attr("data-novelNum");
@@ -385,7 +490,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -434,7 +539,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -481,7 +586,53 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
+	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	$(".writebtn").html(str1);
+	$(".List").html(str2);
+	console.log(data);
+	
+	$(data).each(
+			function(){
+				let timestamp1 = this.free_rdate;
+				let timestamp2 = this.free_mdate;
+				let date1 = new Date(timestamp1);
+				let date2 = new Date(timestamp2);
+				
+				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
+				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				
+				str+= "<tr><td>"+this.free_snum+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+					+ "<td>"+this.novel_writer+"</td>"
+					+ "<td>"+formattedTime1+"</td>"
+					+ "<td>"+formattedTime2+"</td></tr>"
+					
+				console.log(this);
+					
+				
+				$(".tbody").html(str);
+});
+});
+	$(".table").show("slow");
+	$(".writebtn").show("slow");
+	$(".List").show("slow");
+});
+$("#novellist").on("click",".mysteryLi", function(){
+var novelNum = $(this).attr("data-novelNum");
+var novelCategory = "mystery";
+console.log(novelNum);
+
+	$("#novellist").empty();
+		
+	
+	$.getJSON("/free/novel/select/"+ novelNum , function(data){
+	
+	
+	let str = "";
+	let str1 ="";
+	let str2 = "";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -649,6 +800,20 @@ $(".series").on("click",".novelSeries",function(){
 	});
 $(".writebtn").on("click",".writenovelbtn",function(){
 	
+	var novelNum = $(this).attr("data-novelNum");
+	$.getJSON("/free/novel/select/"+ novelNum , function(data){
+		$(data).each(
+				function(){
+					let str1="";
+					let str2="";
+					
+					str1+="<strong>"+this.novel_writer+"</strong>"
+					str2+="<strong>"+this.novel_title+"</strong>"
+					
+					$("#nWriter").html(str1);
+					$("#nTitle").html(str2);
+		});		
+	});
 	$("#novellist").empty();
 	$(".content").hide();
 	$(".writebtn").hide();
@@ -657,8 +822,48 @@ $(".writebtn").on("click",".writenovelbtn",function(){
 	$(".series").hide();
 	$(".work").show();
 	$(".categoryheader").hide();
+});
+
+$(".nSubmit").on("click",function(){
+	var csrfHeaderName ="${_csrf.headerName}";
+	var csrfTokenValue ="${_csrf.token}";
+	
+	var novelNum =$(this).attr("novelNum");
+	var freeSNum = $(".fSNum").val();
+	var freeTitle = $(".fTitle").val();
+	var freecontent1 = $(".contents1").val();
+	var freecontent2 = $(".contents2").val();
+	$.ajax({
+		type : 'post',
+		url: '/free',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		header:{
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
+		},
+		dataType : 'text',
+		data : JSON.stringify({
+			novel_num : novelNum,
+			free_snum : freeSNum,
+			free_title : freeTitle,
+			free_content1 : freecontent1,
+			free_content2 : freecontent2
+		}),
+		success : function(result){
+			if(result == 'SUCCESS'){
+				alert("등록 되었습니다.");
+				$(".fSNum").val(null);
+				$(".fTitle").val(null);
+				$(".contents1").val(null);
+				$(".contents2").val(null);
+			}
+		}
+		});
 	
 });
+
 		
 	
 getFantasyList();
