@@ -32,7 +32,7 @@ ul li a{
 	font-size:30px;
 	outline:solid 1px;
 }
-.monLi , .thuLi , .wenLi, .thuLi, .friLi{
+.monLi , .tueLi , .wenLi, .thuLi, .friLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
@@ -109,7 +109,7 @@ margin-right:10px;
   <div class="weekheader" style="display:show;">
 <ul>
 <li id="headerMonLi">월요일</li>
-<li id="headerThuLi">화요일</li>
+<li id="headerTueLi">화요일</li>
 <li id="headerWenLi">수요일</li>
 <li id="headerThuLi">목요일</li>
 <li id="headerFriLi">금요일</li>
@@ -383,13 +383,13 @@ $("#headerMonLi").on("click",function(){
 getMonList();
 });
 
-$("#headerThuLi").on("click",function(){
+$("#headerTueLi").on("click",function(){
 
 	$("#novellist").empty();
 	$(".content").hide();
 	$(".table").hide();
 
-getThuList();
+getTueList();
 });
 
 $("#headerWenLi").on("click",function(){
@@ -470,7 +470,7 @@ console.log(novelNum);
 });
 
 
-$("#novellist").on("click",".tusLi", function(){
+$("#novellist").on("click",".tueLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelWeek = "Tue";
 console.log(novelNum);

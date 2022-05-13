@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http:/mybatis.rg/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.novel.freeboard.mapper.ReplyMapper">
+	
+	<select id = "getList" resultType = "com.novel.freeboard.domain.ReplyVO">
+	
+	SELECT * FROM repl_tbl WHERE free_board_num = #{free_board_num} ORDER BY repl_num desc
+	
+	</select>
+	
+	<insert id = "create">
+	
+	INSERT INTO repl_tbl
+		(repl_num,free_board_num,repl_content,repl_writer)
+		VALUES
+		(repl_num.nextval,#{free_board_num},#{repl_content},#{repl_writer})
+	
+	</insert>
+	
+	<update id = "update">
+	
+	UPDATE repl_tbl
+	SET
+	repl_content = #{repl_content}, repl_mdate = SYSDATE 
+	WHERE
+	repl_num = #{repl_num}
+	
+	</update>
+	
+	<delete id = "delete">
+	
+	DELETE FROM repl_tbl
+	WHERE
+	repl_num = #{repl_num}
+	
+	</delete>
+	
+	<delete id = "replyAllDelete">
+	
+	DELETE FROM repl_tbl
+	WHERE
+	free_board_tbl = #{free_board_tbl}
+	
+	</delete>
+	
+	</mapper>
+	
