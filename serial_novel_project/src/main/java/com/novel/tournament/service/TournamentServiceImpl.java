@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.novel.tournament.domain.TournamentJoinVO;
 import com.novel.tournament.domain.TournamentVO;
 import com.novel.tournament.domain.TournamentWorkRecVO;
+import com.novel.tournament.domain.TournamentWorkVO;
 import com.novel.tournament.mapper.TournamentMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -27,7 +28,37 @@ public class TournamentServiceImpl implements TournamentService{
 		
 		return mapper.getList();
 	}
-
+	
+	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
+		@Override
+		public List<Integer> select8ToworkRecord() {
+			return mapper.select8ToworkRecord();
+		}
+	
+		@Override
+		public void insert8Towork(TournamentWorkVO vo) {
+			mapper.insert8Towork(vo);
+		}
+		
+	// ■ 05.14 토너먼트 조회(이미 추가되었는지 확인하기 위해)
+	@Override
+	public List<TournamentWorkVO> getTournamentData(long to_num) {
+		return mapper.getTournamentData(to_num);
+	}
+	
+	// ■ 05.14 특정 토너먼트 대상 작품 가져오기
+	@Override
+	public List<TournamentJoinVO> getTowork2or4or8(long to_num) {
+		return mapper.getTowork2or4or8(to_num);
+	}
+	
+	//■ 05.14 토너먼트 2강 or 4강에 들어갈 작품 적재하기
+		// 4강 적재시 to_num=1, rownum=4 / 2강 적재시 to_num=2, rownum=2
+	@Override
+	public void insertTowork2or4(long to_num, int rownum) {
+		mapper.insertTowork2or4(to_num, rownum);	
+	}
+	
 	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
 	@Override
 	public TournamentWorkRecVO checkRec(long to_num, String user_id) {
@@ -81,6 +112,14 @@ public class TournamentServiceImpl implements TournamentService{
 	public TournamentJoinVO getWinner() {
 		return mapper.getWinner();
 	}
+
+
+
+	
+
+
+
+
 
 
 

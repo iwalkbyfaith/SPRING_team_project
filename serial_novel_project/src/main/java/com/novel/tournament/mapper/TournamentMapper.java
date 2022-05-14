@@ -14,13 +14,27 @@ public interface TournamentMapper {
 	// ■ 전체 리스트 가져오기
 		public List<TournamentVO> getList();
 		
+	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
+		public List<Integer> select8ToworkRecord();	// 8강에 들어갈 작품번호(novel_num) 리스트 반환
+		public void insert8Towork(TournamentWorkVO vo);
+		
+	// ■ 05.14 토너먼트 조회(이미 추가되었는지 확인하기 위해)
+		public List<TournamentWorkVO> getTournamentData(long to_num);
+	
+	// ■ 05.14 특정 토너먼트 대상 작품 가져오기
+		public List<TournamentJoinVO> getTowork2or4or8(long to_num);
+		
+	// ■ 05.14 토너먼트 2강 or 4강에 들어갈 작품 적재하기
+		// 4강 적재시 to_num=1, rownum=4 / 2강 적재시 to_num=2, rownum=2
+		public void insertTowork2or4(@Param("to_num") long to_num, @Param("rownum")int rownum);
+		
 	// ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기
 		public TournamentWorkRecVO checkRec(@Param("to_num")long to_num, @Param("user_id")String user_id);
 		
 	// ■ 특정 토너먼트 참여 작품 가져오기('시작' 버튼 클릭시 적재하는 버전)
 		public List<TournamentJoinVO> getToWorkList(long to_num);
 		
-		// ■ 새로운 토너먼트 참여시 상위 n개의 row를 적재하기 
+		// ● 새로운 토너먼트 참여시 상위 n개의 row를 적재하기 
 		//	 1) 토너먼트 번호(2:4강, 3:2강)
 		//   2) 상위 n개를 자를 rownum(8강시 8, 4강시 4, 2강시 2)
 		public void insertNewRow(@Param("to_num") long to_num, @Param("rownum")int rownum);

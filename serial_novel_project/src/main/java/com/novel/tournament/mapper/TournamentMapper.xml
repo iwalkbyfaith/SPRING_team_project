@@ -9,55 +9,77 @@
 		SELECT * FROM tourna_tbl
 	</select>
 	
+	<!-- ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기 (select로 조건에 맞게 가져와서 insert로 넣어줌) -->
+		<select id="select8ToworkRecord" resultType="int">
+			<![CDATA[
+			SELECT novel_num FROM (SELECT fb.novel_num FROM free_tbl fb GROUP BY fb.novel_num ORDER BY sum(fb.free_rec)*10 + sum(fb.free_hit) DESC) WHERE rownum <= 8
+			]]>
+		</select>
 	
-	<!-- ■ 특정 토너먼트 참여 작품 가져오기 -->
-	<select id="getToWorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">
-		SELECT tt.QCSJ_C000000000400000 as to_num, tt.to_name, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec
-	    FROM 
-	        (SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
-	    INNER JOIN 
-	        novel_tbl nt 
-	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = #{to_num}
+		<insert id="insert8Towork">
+			INSERT INTO towork_tbl (towork_num, to_num, novel_num) 
+				VALUES
+            (towork_num.nextval,#{to_num}, #{novel_num})
+			
+		</insert>
+		
+	<!-- ■ 05.14 토너먼트 조회(이미 추가되었는지 확인하기 위해) -->
+	<select id="getTournamentData" resultType="com.novel.tournament.domain.TournamentWorkVO">
+		SELECT * FROM towork_tbl WHERE to_num = #{to_num}
 	</select>
 	
-		<!-- ■ 새로운 토너먼트 참여시 상위 n개의 row를 적재하기  -->
-		<insert id="insertNewRow">
-			<![CDATA[
-   			    INSERT INTO towork_tbl(towork_num, to_num, novel_num, towork_rec)
-       				SELECT 
-   				towork_num.nextval, #{to_num}, novel_num, towork_rec
-       				 FROM 
-   				(SELECT * FROM (SELECT * FROM towork_tbl WHERE to_num = #{to_num}- 1 ORDER BY towork_rec DESC) 
-   					WHERE 
-   				rownum <= #{rownum})
-			
-			]]>
-		</insert>
-			
+	<!-- ■ 05.14 특정 토너먼트 대상 작품 가져오기 -->
+	<select id="getTowork2or4or8" resultType="com.novel.tournament.domain.TournamentJoinVO">
+		SELECT tt1.*, nt.novel_title, nt.novel_writer
+            FROM
+        (SELECT tt.to_num, tt.to_name, tot.towork_num, tot.novel_num, tot.towork_rec FROM towork_tbl tot
+            LEFT JOIN tourna_tbl tt
+            ON tt.to_num = tot.to_num) tt1
+         LEFT JOIN
+                novel_tbl nt
+         ON 
+         	tt1.novel_num = nt.novel_num
+         WHERE 
+         	tt1.to_num=#{to_num}
+	</select>
+	
+	<!-- ■ 05.14 토너먼트 2강 or 4강에 들어갈 작품 적재하기-->
+	<insert id="insertTowork2or4"> <!-- to_num=1 리스트에서 상위 4개 / to_num=2 리스트에서 상위 2개를 선정해서 insert 함. -->
+		<![CDATA[
+        INSERT INTO towork_tbl(towork_num, to_num, novel_num, towork_rec)
+        	SELECT 
+        		towork_num.nextval, #{to_num}+1, novel_num, towork_rec 
+        	FROM
+     			(SELECT tot.towork_num, tot.to_num, tot.novel_num, tot.towork_rec, jt.hit_total_sum FROM towork_tbl tot     
+            		LEFT JOIN 
+      					(SELECT fb.novel_num, sum(fb.free_hit) as hit_total_sum FROM free_tbl fb GROUP BY fb.novel_num) jt
+          			ON
+      					tot.novel_num = jt.novel_num
+            		ORDER BY 
+            			towork_rec DESC, hit_total_sum DESC)
+      		WHERE
+          		to_num=#{to_num} AND rownum <= #{rownum}
+        ]]>
+	</insert>
+
 			
 	<!-- ■ 각 토너먼트 작품 조회 전, 이미 추천한 기록이 있는지 확인하기  -->
 	<select id="checkRec" resultType="com.novel.tournament.domain.TournamentWorkRecVO">
 		 SELECT towork_num, user_id FROM torec_tbl WHERE to_num=#{to_num} AND user_id = #{user_id}
 	</select>
-		
-	<!-- ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기) = 4강, 2강 데이터 가져오기 -->
-	<select id="get2and4WorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">		
-		 SELECT * 
-		 	FROM 
-		 (SELECT tt.to_num, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec FROM towork_tbl tt INNER JOIN novel_tbl nt ON tt.novel_num = nt.novel_num) 
-		 	WHERE 
-		 to_num=#{to_num}
-	</select>
 	
 	
-	<!-- ■ 8강 토너먼트 참여 작품 가져오기 -->
+	<!-- ■ 05.14 8강 토너먼트 참여 작품 가져오기 -->
 	<select id="getToWorkList2" resultType="com.novel.tournament.domain.TournamentJoinVO">
-		SELECT tt.QCSJ_C000000000400000 as to_num, tt.to_name, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec
-	    FROM 
-	        (SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
-	    INNER JOIN 
-	        novel_tbl nt 
-	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = 1
+		 SELECT tt1.*, nt.novel_title, nt.novel_writer
+            FROM
+         (SELECT tt.to_num, tt.to_name, tot.towork_num, tot.novel_num, tot.towork_rec FROM towork_tbl tot
+            LEFT JOIN tourna_tbl tt
+            ON tt.to_num = tot.to_num) tt1
+         LEFT JOIN
+                novel_tbl nt
+         ON tt1.novel_num = nt.novel_num
+         WHERE tt1.to_num=1
 	</select>
 	
 	<!-- ■ 대회 참여 작품 추천수 +1 하기 -->
@@ -71,9 +93,9 @@
 	
 			<!-- ■ 추천수 +1 할 때, 해당 추천 기록 적재하기 -->
 			<insert id="insertUpRecRecord">
-				 INSERT INTO torec_tbl (torec_num, user_id, to_num, towork_num) 
+				 INSERT INTO torec_tbl (torec_num, user_id, to_num, towork_num, novel_num) 
        				 VALUES 
-       			 (torec_num.nextval, #{user_id}, #{to_num}, #{towork_num})
+       			 (torec_num.nextval, #{user_id}, #{to_num}, #{towork_num}, #{novel_num})
 			</insert>
 	
 	
@@ -86,6 +108,52 @@
             WHERE 
         rownum <= 1
 		]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<!-- ■ 특정 토너먼트 참여 작품 가져오기 -->
+	<select id="getToWorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">
+		SELECT tt.QCSJ_C000000000400000 as to_num, tt.to_name, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec
+	    FROM 
+	        (SELECT * FROM tourna_tbl INNER JOIN towork_tbl ON tourna_tbl.to_num = towork_tbl.to_num) tt
+	    INNER JOIN 
+	        novel_tbl nt 
+	    ON tt.novel_num = nt.novel_num WHERE tt.QCSJ_C000000000400000 = #{to_num}
+	</select>
+		
+	
+		<!-- ● 새로운 토너먼트 참여시 상위 n개의 row를 적재하기  -->
+		<insert id="insertNewRow">
+			<![CDATA[
+   			    INSERT INTO towork_tbl(towork_num, to_num, novel_num, towork_rec)
+       				SELECT 
+   				towork_num.nextval, #{to_num}, novel_num, towork_rec
+       				 FROM 
+   				(SELECT * FROM (SELECT * FROM towork_tbl WHERE to_num = #{to_num}- 1 ORDER BY towork_rec DESC) 
+   					WHERE 
+   				rownum <= #{rownum})
+			
+			]]>
+		</insert>
+		
+		
+		<!-- ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기) = 4강, 2강 데이터 가져오기 -->
+	<select id="get2and4WorkList" resultType="com.novel.tournament.domain.TournamentJoinVO">		
+		 SELECT * 
+		 	FROM 
+		 (SELECT tt.to_num, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec FROM towork_tbl tt INNER JOIN novel_tbl nt ON tt.novel_num = nt.novel_num) 
+		 	WHERE 
+		 to_num=#{to_num}
 	</select>
 	
 
