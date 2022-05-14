@@ -8,7 +8,8 @@ import lombok.Data;
 public class FreeNovelJoinVO {
 	private long free_snum;					// 무료 소설 회차
     private Date free_rdate;				// 게시일
-    private String free_content; 		 	// 무료 소설 내용
+    private String free_content1; 		 	// 무료 소설 내용1
+    private String free_content2; 		 	// 무료 소설 내용2
     private String free_hit; 		  		// 조회수
     private String free_rec; 		  		// 추천수
     private int novel_end;					// 완결 여부

@@ -71,7 +71,8 @@ WHERE n.novel_category = #{novelCategory} GROUP BY n.novel_title, n.novel_num
 	</insert>
 	<insert id="insertFree">
 	INSERT INTO free_tbl (free_num, novel_num, free_snum, free_title, free_content) values
-                        (free_num.nextval, #{novel_num},#{free_snum},#{free_title},#{free_content}) 
+                        (free_num.nextval, '#{novelNum}',#{freeSNum},'#{freeTitle}',TO_CLOB(#{contents1})
+|| TO_CLOB(#{contents2}); 
 	</insert>
 	
 	<select id="select" resultType="com.novel.free.domain.FreeNovelJoinVO">
