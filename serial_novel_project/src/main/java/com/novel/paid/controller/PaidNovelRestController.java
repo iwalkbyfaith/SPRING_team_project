@@ -91,7 +91,7 @@ public class PaidNovelRestController {
 		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	return entity;
-	}
+	} */
 	
 	
 
@@ -101,7 +101,7 @@ public class PaidNovelRestController {
 			
 		ResponseEntity<String> entity = null;
 	try {
-		paidservice.get
+		paidservice.insertPaid(vo);
 		entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e) {
 	
@@ -110,6 +110,6 @@ public class PaidNovelRestController {
 		}
 		return entity;
 	}
-	*/
+	
 	
 }

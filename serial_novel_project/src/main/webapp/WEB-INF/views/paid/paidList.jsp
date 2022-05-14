@@ -137,7 +137,7 @@ margin-right:10px;
 <table class="table" style="display:none;">
   <thead class="table-dark">
    <tr>
-   <th>글번호</th>
+   <th>회차</th>
    <th>글제목</th>
    <th>글쓴이</th>
    <th>게시일</th>
@@ -159,38 +159,46 @@ margin-right:10px;
 	<div class="view-detail-content"></div>
 </div>
 </div>
-				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
-                <tr>
-                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
-                </tr>
-                <tr>
-                <td bgcolor=white>
-                <table class = "table2">
-                        <tr>
-                        <td>작성자</td>
-                        <td><input type = text name = name size=20> </td>
-                        </tr>
- 
-                        <tr>
-                        <td>제목</td>
-                        <td><input type = text name = title size=60></td>
-                        </tr>
- 
-                        <tr>
-                        <td>내용</td>
-                        <td>
-                        <textarea name="contents" onKeyUp="javascript:fnChkByte(this,'4000')"></textarea>
-						<span id="byteInfo">0</span> /4000bytes
-                        
-                        </td>
-                        </tr>
- 
-                        
-                     </table>
- 
-                </td>
-                </tr>
-        </table>
+	<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
+           <tr>
+           <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+           </tr>
+           <tr>
+           <td bgcolor=white>
+           <table class = "table2">
+    		
+    		<tr>
+				<td>소설번호</td>
+				<td><input type ="number" id="newNovelNum" size=40></td>
+			</tr>
+			
+			<tr>
+				<td>제목</td>
+				<td><input type ="text" id="newPaidTitle" size=40></td>
+			</tr>
+			
+			<tr>
+				<td>회차</td>
+				<td><input type ="number" id="newPaidSnum" size=10> </td>
+			</tr>
+			
+			<tr>
+				<td>가격</td>
+				<td><input type ="number" id="newPaidPrice" size=10> </td>
+			</tr>
+			<tr>
+				<td>내용</td>
+             	<td>
+             		<textarea id="newPaidContent" onKeyUp="javascript:fnChkByte(this,'4000')"></textarea>
+					<span id="byteInfo">0</span> /4000bytes
+				</td>
+			</tr>
+			       
+            </table>
+			<button type="button" id="paidAddBtn">소설 추가</button>
+           </td>
+           </tr>
+   </table>
 
 
 
@@ -251,7 +259,7 @@ $('.navbar-light .dmenu').hover(function () {
         $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
     });
 });
-////////
+
 function getMonList(){
 	  var novelWeek = "Mon";
 	  	$(".List").hide();
@@ -372,7 +380,47 @@ function getFriList(){
 	
 }
 
-//
+/////////////////////////////////////////////////////////////////////////
+
+
+// 소설 추가
+$('#paidAddBtn').on("click",function(){
+	
+	var csrfHeaderName = "${_csrf.headerName}"
+	var csrfTokenValue="${_csrf.token}"
+	
+	var novelNum = $("#newNovelNum").val();
+	var paidTitle = $("#newPaidTitle").val();
+	var paidSnum = $("#newPaidSnum").val();
+	var paidPrice = $("#newPaidPrice").val();
+	var paidContent = $("#newPaidContent").val();
+	
+	$.ajax({
+		type : 'post',
+		url : '/paid',
+		headers:{
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
+		},
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+		dataType : 'text',
+		data : JSON.stringify({
+			novel_num : novelNum,
+			paid_title : paidTitle,
+			paid_snum : paidSnum,
+			paid_price : paidPrice, 
+			paid_content : paidContent
+		}),
+		success : function(result){
+			if(result == 'SUCCESS'){
+				alert("등록 되었습니다.");
+			}
+		}
+	});
+});
+
 $("#headerMonLi").on("click",function(){
 
 	
@@ -436,7 +484,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -662,8 +710,8 @@ $("#novellist").on("click",".friLi", function(){
 
 $(".tbody").on("click",".title",function(){
 var paidSNum =  $(this).attr("data-paidSNum");
-
 var novelNum =  $(this).attr("data-novelNum");
+
 console.log(novelNum);
 $("#novellist").empty();
 $(".content").hide();
@@ -687,6 +735,10 @@ $.getJSON(url, function(data){
 				$(".series").html(str1);
 			});
 });
+
+
+
+
 
 $(".content").show("slow");
 $(".series").show("slow");
