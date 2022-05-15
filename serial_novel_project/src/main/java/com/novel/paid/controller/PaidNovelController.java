@@ -1,10 +1,13 @@
 package com.novel.paid.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +25,14 @@ public class PaidNovelController {
 	public String getPaidList() {
 		
 		return "paid/paidList";
+	}
+	
+	@GetMapping("/detail/{novel_num}/{paid_snum}")
+	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_snum, Model model ) {
+		PaidVO novel = paidservice.selectDetail(paid_snum, novel_num);
+		model.addAttribute("novel",novel);
+		
+		return "paid/paidDetail";
 	}
 
 }

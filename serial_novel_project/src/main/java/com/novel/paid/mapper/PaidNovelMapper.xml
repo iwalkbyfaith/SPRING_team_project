@@ -30,7 +30,7 @@
 		</insert>
 		
 		<select id="selectDetail" resultType="com.novel.paid.domain.PaidVO">
-			SELECT n.novel_title, n.novel_writer, n.novel_end, n.novel_category, n.novel_week, p.paid_content, p.paid_rdate, p.paid_hit, p.paid_rec
+			SELECT *
 			 FROM paid_tbl p INNER JOIN 
 			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_snum = #{paidSNum} and p.novel_num = #{novelNum} 
 		</select>

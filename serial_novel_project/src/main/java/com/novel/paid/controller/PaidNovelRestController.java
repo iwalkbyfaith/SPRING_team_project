@@ -60,6 +60,7 @@ public class PaidNovelRestController {
 		
 	}
 	
+	/*
 	@GetMapping(value="/novel/detail/{paidSNum}/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<PaidVO>> selectDetail(@PathVariable("paidSNum") long paidSNum

@@ -47,6 +47,7 @@ margin-right:10px;
 	
 	</style>
   <title>유료 소설</title>
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -299,7 +300,7 @@ function getTueList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='TueLi' data-novelNum='" + this.novel_num + "'>" + 
+					str += "<div class='tueLi' data-novelNum='" + this.novel_num + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -416,6 +417,7 @@ $('#paidAddBtn').on("click",function(){
 		success : function(result){
 			if(result == 'SUCCESS'){
 				alert("등록 되었습니다.");
+				$(".weekheader").show();
 			}
 		}
 	});
@@ -660,6 +662,7 @@ $("#novellist").on("click",".thuLi", function(){
 		$(".List").show("slow");
 	});
 
+
 $("#novellist").on("click",".friLi", function(){
 	var novelNum = $(this).attr("data-novelNum");
 	var novelWeek = "Fri";
@@ -691,7 +694,7 @@ $("#novellist").on("click",".friLi", function(){
 					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
 					
 					str+= "<tr><td>"+this.paid_snum+"</td>"
-						+ "<td class='title' data-paidSNum='"+this.paid_snum+"'data-novelNum='"+this.novel_num+"'>"+this.novel_title+"</td>"
+						+ "<td><a href = '/paid/detail/" + (novelNum) + "/" + (this.paid_snum) + "'>" + this.novel_title+ "</a></td>" 
 						+ "<td>"+this.novel_writer+"</td>"
 						+ "<td>"+formattedTime1+"</td>"
 						+ "<td>"+formattedTime2+"</td></tr>"
@@ -736,13 +739,11 @@ $.getJSON(url, function(data){
 			});
 });
 
-
-
-
-
 $(".content").show("slow");
 $(".series").show("slow");
 });
+
+
 
 $(".List").on("click",".novelList",function(){
 

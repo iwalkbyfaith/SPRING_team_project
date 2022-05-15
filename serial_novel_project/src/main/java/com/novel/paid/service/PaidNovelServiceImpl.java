@@ -33,7 +33,7 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public List<PaidVO> selectDetail(long paidSNum, long novelNum) {
+	public PaidVO selectDetail(long paidSNum, long novelNum) {
 		return paidMapper.selectDetail(paidSNum,novelNum);
 	}
 

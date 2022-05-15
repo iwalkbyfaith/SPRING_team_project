@@ -15,7 +15,7 @@ public interface PaidNovelService {
 	
 	public void insertPaid(PaidVO vo);	
 	
-	public List<PaidVO> selectDetail(
+	public PaidVO selectDetail(
 			@Param("paidSNum")long paidSNum ,@Param("novelNum") long novelNum); 
 	
 	public List<PaidVO> select(long novelNum);
