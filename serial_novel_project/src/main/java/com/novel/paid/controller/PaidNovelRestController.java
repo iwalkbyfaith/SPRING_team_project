@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,24 +76,22 @@ public class PaidNovelRestController {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
 		}
 		return entity;
-	}
+	}*/
 	
-	
-	
-	/*
-	@GetMapping(value="/allList", 
-			produces= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<PaidVO>> paidList(){
+	@DeleteMapping(value="/d/{paidNum}",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("paidNum") Long paidNum){
+		ResponseEntity<String> entity = null;
 		
-		ResponseEntity<List<PaidVO>> entity = null;
-	try {
-		entity = new ResponseEntity<>(paidservice.getPaidList(), HttpStatus.OK);
-	}catch(Exception e) {
-		e.printStackTrace();
-		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		try {
+			paidservice.delete(paidNum);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e) {
+			entity = new ResponseEntity<String>(
+					e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-	return entity;
-	} */
+		return entity;
+	}
 	
 	
 
@@ -112,5 +111,19 @@ public class PaidNovelRestController {
 		return entity;
 	}
 	
+	
+	@GetMapping(value="/{paidnum}",
+					produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<PaidVO> list(@PathVariable("paidnum") Long paidnum){
+		
+		ResponseEntity<PaidVO> entity = null;
+	try {
+		entity = new ResponseEntity<PaidVO>(paidservice.detailCon(paidnum), HttpStatus.OK);
+	}catch(Exception e) {
+		e.printStackTrace();
+		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	return entity;
+}
 	
 }

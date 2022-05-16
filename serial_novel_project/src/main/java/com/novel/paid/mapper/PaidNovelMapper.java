@@ -21,9 +21,11 @@ public interface PaidNovelMapper {
 	
 	public List<PaidVO> select(long novelNum);
 	
-	public void delete(long paid_snum);
+	public void delete(long paidsnum);
 	
 	public void update(PaidVO vo); 
 	
 	public int countPageNum(SearchCriteria cri);
+	
+	public PaidVO detailCon(long paidNnum); 
 }

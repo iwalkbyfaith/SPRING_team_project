@@ -41,7 +41,7 @@
 		</select>
 	
 		<delete id="delete">
-			DELETE FROM paid_tbl WHERE paid_snum = #{paid_snum}
+			DELETE FROM paid_tbl WHERE paid_snum = #{paidsnum}
 		</delete>
 		
 		<update id="update">
@@ -59,4 +59,10 @@
 			paid_num > 0
 			]]>
 		</select>
+		
+		
+		<select id="detailCon" resultType="com.novel.paid.domain.PaidVO">
+			SELECT paid_content FROM paid_tbl WHERE paid_num = #{paidNum}
+		</select>
+		
 	</mapper>

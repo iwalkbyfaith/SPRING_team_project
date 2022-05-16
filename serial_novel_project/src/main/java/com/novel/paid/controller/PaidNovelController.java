@@ -34,5 +34,6 @@ public class PaidNovelController {
 		
 		return "paid/paidDetail";
 	}
+	
 
 }

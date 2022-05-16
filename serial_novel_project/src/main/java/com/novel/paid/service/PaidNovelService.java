@@ -25,4 +25,6 @@ public interface PaidNovelService {
 	public void update(PaidVO vo); 
 	
 	public int countPageNum(SearchCriteria cri);
+	
+	public PaidVO detailCon(long paidNum); 
 }

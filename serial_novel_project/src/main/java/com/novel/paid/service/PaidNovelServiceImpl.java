@@ -56,6 +56,11 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	public int countPageNum(SearchCriteria cri) {
 		return paidMapper.countPageNum(cri);
 	}
+
+	@Override
+	public PaidVO detailCon(long paidNum) {
+		return paidMapper.detailCon(paidNum);
+	}
 	
 	
 }

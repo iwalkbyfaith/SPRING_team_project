@@ -87,40 +87,50 @@ ul li a{
 	${novel}
 		<h1 class="text text-info">${novel.novel_title }</h1>
 		<div class="row">
-			<div class="col-md-1">글제목</div>
-			<div class="col-md-5">
+			<div class="col-md-1">소제목</div>
+			<div class="col-md-4">
 				<input type="text" class="form-control" value="${novel.paid_title }" readonly>
 			</div>
 			<div class="col-md-1">글쓴이</div>
-			<div class="col-md-5">
+			<div class="col-md-2">
 				<input type="text" class="form-control" value="${novel.novel_writer }" readonly>
 			</div>
+			<div class="col-md-1">조회수</div>
+			<div class="col-md-1">
+				<input type="text" class="form-control" value="${novel.paid_hit }" readonly>
+			</div>
+			<div class="col-md-1">추천</div>
+			<div class="col-md-1">
+				<input type="text" class="form-control" value="${novel.paid_rec }" readonly>
+			</div>
 		</div>
-			<textarea class="form-control" rows="10" readonly>${novel.paid_content}</textarea>
+	
 		<div class="row">
-			<div class="col-md-3">쓴날짜 : </div>
-			<div class="col-md-3">${novel.paid_rdate }</div>
-			<div class="col-md-3">수정날짜 : </div>
-			<div class="col-md-3">${novel.paid_mdate }</div>
+			<div class="col-md-1">작성일</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control" value="${novel.paid_rdate }" readonly>
+			</div>
+			<div class="col-md-1">수정일</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control" value="${novel.paid_mdate}" readonly>
+			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3">장르 : </div>
-			<div class="col-md-3">${novel.novel_category}</div>
-			<div class="col-md-3">회차 :</div>
-			<div class="col-md-3">${novel.paid_snum }</div>
+			<div class="col-md-1">장르</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control" value="${novel.novel_category}" readonly>
+			</div>
+			<div class="col-md-1">회차</div>
+			<div class="col-md-1">
+				<input type="text" class="form-control" value="${novel.paid_snum }" readonly>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-1">
 				<a href="/board/boardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-info btn-sm">목록</a>
 			</div>
 			<div class="col-md-1">
-				<form action="/board/boardDelete" method="post">
-					<input type="hidden" name="bno" value="${board.bno }">
-					<input type="hidden" name="pageNum" value="${param.pageNum }">
-					<input type="hidden" name="searchType" value="${param.searchType }">
-					<input type="hidden" name="keyword" value="${param.keyword }">
-					<input type="submit" value="삭제" class="btn btn-danger btn-sm">
-				</form>
+				<button class="dBtn" type="button" id="paidDelBtn">삭제z</button>
 			</div>
 			<div class="col-md-1">
 				<form action="/board/boardUpdateForm" method="post">
@@ -128,12 +138,75 @@ ul li a{
 					<input type="hidden" name="pageNum" value="${param.pageNum }">
 					<input type="hidden" name="searchType" value="${param.searchType }">
 					<input type="hidden" name="keyword" value="${param.keyword }">
-					<input type="submit" value="수정" class="btn btn-warning btn-sm">
+					<input type="submit" value="수정" class="btn-sm">
 				</form>
 			</div>
 		</div>
+		<div class="container2">
+			<hr>
+			
+			<ul id="Pcon">
+			
+			</ul>
+			
+			<!-- jquery cdn -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+			
+	<script type="text/javascript">
+		var paidnum = ${novel.paid_num}
 		
-	</div>
+		function getContent(){ // ■ 해당 소설의 상세 본문 가져오기
+			
+			var url = "/paid/" + paidnum;
+			
+			$.getJSON(url, function(data){
+				
+				var str = "";
+				
+				$(data).each(function(){
+					
+					str+= "<textarea class='form-control' readonly>"+this.paid_content+"</textarea>"
+					
+				});
+			
+				$("#Pcon").html(str);
+			});
+		}
+		getContent();
+		
+		// 삭제
+		$("#dBtn").on("click", function(){
+			
+			var paidNum = ${novel.paid_num};
+			console.log(paidNum);
+			var csrfHeaderName = "${_csrf.headerName}"
+			var csrfTokenValue="${_csrf.token}"
+			
+			$.ajax({
+				type : 'delete',
+				url : '/paid/d/' + paidNum,
+				
+				header : {
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				dataType : 'text',
+				success : function(result){
+					console.log("result : " + result);
+					if(result == 'SUCCESS'){
+						alert("삭제 되었습니다.");
+						
+					}
+				}
+			});
+		});
+		
+		
+	</script>
+		</div><!-- container2 -->
+	</div><!-- container -->
 	<div class="footer">
 	
 	</div>

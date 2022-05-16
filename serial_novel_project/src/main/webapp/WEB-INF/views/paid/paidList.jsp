@@ -168,10 +168,6 @@ margin-right:10px;
            <td bgcolor=white>
            <table class = "table2">
     		
-    		<tr>
-				<td>소설번호</td>
-				<td><input type ="number" id="newNovelNum" size=40></td>
-			</tr>
 			
 			<tr>
 				<td>제목</td>
@@ -390,7 +386,7 @@ $('#paidAddBtn').on("click",function(){
 	var csrfHeaderName = "${_csrf.headerName}"
 	var csrfTokenValue="${_csrf.token}"
 	
-	var novelNum = $("#newNovelNum").val();
+	var novelNum = $(this).attr("data-novelNum");
 	var paidTitle = $("#newPaidTitle").val();
 	var paidSnum = $("#newPaidSnum").val();
 	var paidPrice = $("#newPaidPrice").val();
@@ -534,7 +530,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -582,7 +578,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -629,7 +625,7 @@ $("#novellist").on("click",".thuLi", function(){
 		let str = "";
 		let str1 ="";
 		let str2 = "";
-		str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
@@ -677,7 +673,7 @@ $("#novellist").on("click",".friLi", function(){
 		let str = "";
 		let str1 ="";
 		let str2 = "";
-		str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
@@ -818,7 +814,7 @@ $(".series").on("click",".novelSeries",function(){
 						
 					console.log(this);
 						
-					str1+= "<button class='writenovelbtn' data-novelNum='"+this.novel_num+"'>글쓰기</button>";
+					str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
 					str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 					
 					$(".tbody").html(str);
