@@ -33,8 +33,8 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public PaidVO selectDetail(long paidSNum, long novelNum) {
-		return paidMapper.selectDetail(paidSNum,novelNum);
+	public PaidVO selectDetail(long paidNum, long novelNum) {
+		return paidMapper.selectDetail(paidNum,novelNum);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public void delete(long paid_snum) {
-		paidMapper.delete(paid_snum);
+	public void delete(long paidnum) {
+		paidMapper.delete(paidnum);
 	}
 
 	@Override

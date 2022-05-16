@@ -16,11 +16,11 @@ public interface PaidNovelService {
 	public void insertPaid(PaidVO vo);	
 	
 	public PaidVO selectDetail(
-			@Param("paidSNum")long paidSNum ,@Param("novelNum") long novelNum); 
+			@Param("paidNum")long paidNum ,@Param("novelNum") long novelNum); 
 	
 	public List<PaidVO> select(long novelNum);
 	
-	public void delete(long paid_snum);
+	public void delete(long paidnum);
 	
 	public void update(PaidVO vo); 
 	

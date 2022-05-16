@@ -61,22 +61,7 @@ public class PaidNovelRestController {
 		
 	}
 	
-	/*
-	@GetMapping(value="/novel/detail/{paidSNum}/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<PaidVO>> selectDetail(@PathVariable("paidSNum") long paidSNum
-			,@PathVariable("novelNum") long novelNum){
-		
-		ResponseEntity<List<PaidVO>> entity = null;
-		
-		try {
-			entity = new ResponseEntity<>(paidservice.selectDetail(paidSNum, novelNum), HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
-		}
-		return entity;
-	}*/
+	
 	
 	@DeleteMapping(value="/d/{paidNum}",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
@@ -95,7 +80,7 @@ public class PaidNovelRestController {
 	
 	
 
-	@PostMapping(value="", consumes="application/json",
+	@PostMapping(value="/insert", consumes="application/json",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> insertPaid(@RequestBody PaidVO vo){
 			

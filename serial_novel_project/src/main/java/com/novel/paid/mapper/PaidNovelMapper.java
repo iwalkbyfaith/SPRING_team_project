@@ -17,15 +17,15 @@ public interface PaidNovelMapper {
 	public void insertPaid(PaidVO vo);	
 	
 	public PaidVO selectDetail(
-			@Param("paidSNum")long paidSNum ,@Param("novelNum") long novelNum); 
+			@Param("paidNum")long paidNum ,@Param("novelNum") long novelNum); 
 	
 	public List<PaidVO> select(long novelNum);
 	
-	public void delete(long paidsnum);
+	public void delete(long paidnum);
 	
 	public void update(PaidVO vo); 
 	
 	public int countPageNum(SearchCriteria cri);
 	
-	public PaidVO detailCon(long paidNnum); 
+	public PaidVO detailCon(long paidNnum); // paidDetail 에서 본문 가져오기
 }

@@ -130,7 +130,7 @@ ul li a{
 				<a href="/board/boardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-info btn-sm">목록</a>
 			</div>
 			<div class="col-md-1">
-				<button class="dBtn" type="button" id="paidDelBtn">삭제z</button>
+				<button id="paidDelBtn" type="button" >삭제z</button>
 			</div>
 			<div class="col-md-1">
 				<form action="/board/boardUpdateForm" method="post">
@@ -165,7 +165,7 @@ ul li a{
 				
 				$(data).each(function(){
 					
-					str+= "<textarea class='form-control' readonly>"+this.paid_content+"</textarea>"
+					str+= "<textarea class='form-control' readonly>"+this.paid_content1 + this.paid_content2 + "</textarea>"
 					
 				});
 			
@@ -175,12 +175,12 @@ ul li a{
 		getContent();
 		
 		// 삭제
-		$("#dBtn").on("click", function(){
+		$("#paidDelBtn").on("click", function(){
 			
 			var paidNum = ${novel.paid_num};
 			console.log(paidNum);
-			var csrfHeaderName = "${_csrf.headerName}"
-			var csrfTokenValue="${_csrf.token}"
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue="${_csrf.token}";
 			
 			$.ajax({
 				type : 'delete',

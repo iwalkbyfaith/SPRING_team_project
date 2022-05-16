@@ -27,9 +27,9 @@ public class PaidNovelController {
 		return "paid/paidList";
 	}
 	
-	@GetMapping("/detail/{novel_num}/{paid_snum}")
-	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_snum, Model model ) {
-		PaidVO novel = paidservice.selectDetail(paid_snum, novel_num);
+	@GetMapping("/detail/{novel_num}/{paid_num}")
+	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, Model model ) {
+		PaidVO novel = paidservice.selectDetail(paid_num, novel_num);
 		model.addAttribute("novel",novel);
 		
 		return "paid/paidDetail";

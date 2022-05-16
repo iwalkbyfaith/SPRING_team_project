@@ -5,8 +5,8 @@
 	<mapper namespace="com.novel.paid.mapper.PaidNovelMapper">
 	
 		<select id="selectList" resultType="com.novel.paid.domain.PaidVO">
-		SELECT n.novel_title , n.novel_num FROM novel_tbl n INNER JOIN paid_tbl p ON n.novel_num = p.novel_num 
-			WHERE n.novel_week = #{novelWeek} GROUP BY n.novel_title, n.novel_num
+		SELECT n.novel_title , n.novel_num, p.paid_num FROM novel_tbl n INNER JOIN paid_tbl p ON n.novel_num = p.novel_num 
+			WHERE n.novel_week = #{novelWeek} GROUP BY n.novel_title, n.novel_num, p.paid_num
 		</select>
 		
 		<select id="getJoinList" resultType="com.novel.paid.domain.PaidVO">
@@ -32,7 +32,7 @@
 		<select id="selectDetail" resultType="com.novel.paid.domain.PaidVO">
 			SELECT *
 			 FROM paid_tbl p INNER JOIN 
-			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_snum = #{paidSNum} and p.novel_num = #{novelNum} 
+			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_num = #{paidNum} and p.novel_num = #{novelNum} 
 		</select>
 		
 		<select id="select" resultType="com.novel.paid.domain.PaidVO">
@@ -41,7 +41,7 @@
 		</select>
 	
 		<delete id="delete">
-			DELETE FROM paid_tbl WHERE paid_snum = #{paidsnum}
+			DELETE FROM paid_tbl WHERE paid_num = #{paidnum}
 		</delete>
 		
 		<update id="update">
@@ -62,7 +62,7 @@
 		
 		
 		<select id="detailCon" resultType="com.novel.paid.domain.PaidVO">
-			SELECT paid_content FROM paid_tbl WHERE paid_num = #{paidNum}
+			SELECT paid_content1,paid_content2 FROM paid_tbl WHERE paid_num = #{paidNum}
 		</select>
 		
 	</mapper>
