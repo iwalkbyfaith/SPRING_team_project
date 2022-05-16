@@ -69,7 +69,7 @@ public class TournamentTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void insertTowork2or4Test() {
 		
 		long to_num=1;
@@ -86,20 +86,89 @@ public class TournamentTest {
 		log.info("들어온 rownum 번호 -> " + rownum);
 		
 		
-	// 2 or 4강에 적재된 데이터가 있는지 확인
-		List<TournamentWorkVO> record = mapper.getTournamentData(to_num+1);
-		log.info("▼ 4강 혹은 2강의 데이터가 있다면");
-		log.info(record);
-	
-	// 데이터가 없다면 적재
-		if(record.isEmpty()) {
-			log.info("▶ 4강 혹은 2강의 데이터가 없어서 DB에 적재");
-			mapper.insertTowork2or4(to_num, rownum);
-		}
-	
-	// 적재된 데이터 리턴
-		log.info(mapper.getTowork2or4or8(to_num+1));
+		// 2 or 4강에 적재된 데이터가 있는지 확인
+			List<TournamentWorkVO> record = mapper.getTournamentData(to_num+1);
+			log.info("▼ 4강 혹은 2강의 데이터가 있다면");
+			log.info(record);
+		
+		// 데이터가 없다면 적재
+			if(record.isEmpty()) {
+				log.info("▶ 4강 혹은 2강의 데이터가 없어서 DB에 적재");
+				mapper.insertTowork2or4(to_num, rownum);
+			}
+		
+		// 적재된 데이터 리턴
+			log.info(mapper.getTowork2or4or8(to_num+1));
 	}
+	
+	
+	
+	// ■ 05.16 대회 우승시 사후처리 관련 테스트
+		
+		// ● 작품 관련
+			//@Test
+			public void winnerTest() {
+				
+				// 1)
+//				mapper.updateWeek("mon", 59);
+				
+				// 2-1)
+				long winnersNovelNum = mapper.getWinnersNovelNum();
+				log.info("우승 작품 novel_num -> " + winnersNovelNum);
+				
+				// 2-2)
+				String winnersUserId = mapper.getWinnersUserId(winnersNovelNum);
+				log.info("우승 작품 user_id -> " + winnersUserId);
+				
+				// 2-3)
+				mapper.updateWinnersAuth(winnersUserId);
+				
+				// 3)
+				mapper.deleteWinnersFreeData(winnersNovelNum);
+			}
+	
+			
+		// ● 대회 관련
+				//@Test
+				public void TournaTest() {
+					// 1)
+						// 1-1) 8강 업데이트
+						mapper.updateTournaDate(1, 8, 1);
+						
+						// 1-2) 4강 업데이트
+						mapper.updateTournaDate(9, 16, 2);
+						
+						// 1-3) 2강 업데이트
+						mapper.updateTournaDate(17, 24, 3);
+						
+						// 1-4) 준비기간 업데이트
+						mapper.updateTournaDate(25, 32, 4);
+				}
+	
+				@Test
+				public void deleteTorecTblAndToworkTblTest() {
+					// torec_tbl 데이터 먼저 삭제
+					mapper.deleteTorecTbl();
+					// towork_tbl 데이터 삭제
+					mapper.deleteToworkTbl();
+				}
+				
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

@@ -64,35 +64,6 @@ public class TournamentServiceImpl implements TournamentService{
 	public TournamentWorkRecVO checkRec(long to_num, String user_id) {
 		return mapper.checkRec(to_num, user_id);
 	}
-	
-	// ■ 특정 토너먼트 참여 작품 가져오기 ( 4강, 2강 )
-	@Transactional
-	@Override
-	public List<TournamentJoinVO> listTournamentWork(long to_num) {
-		int rownum = 0;
-			log.info("여기까지 동작");
-			if(to_num == 2) {
-				rownum = 4;
-			}else if(to_num == 3) {
-				rownum = 2;
-			}
-			log.info("TournamentServiceImple) 현재 rownum ->" + rownum);
-			mapper.insertNewRow(to_num, rownum);
-		return mapper.getToWorkList(to_num);
-	}
-	
-	// ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기)
-	@Override
-	public List<TournamentJoinVO> get2and4WorkList(long to_num) {
-		return mapper.get2and4WorkList(to_num);
-	}
-	
-	
-	// ■ 8강 토너먼트 참여 작품 가져오기
-	@Override
-	public List<TournamentJoinVO> listTournamentWork2() {
-		return mapper.getToWorkList2();
-	}
 
 	// ■ 대회 참여 작품 추천수 +1 하기
 	@Override
@@ -112,6 +83,41 @@ public class TournamentServiceImpl implements TournamentService{
 	public TournamentJoinVO getWinner() {
 		return mapper.getWinner();
 	}
+	
+	
+	
+	
+	
+	
+	
+//	// ■ 특정 토너먼트 참여 작품 가져오기 ( 4강, 2강 )
+//	@Transactional
+//	@Override
+//	public List<TournamentJoinVO> listTournamentWork(long to_num) {
+//		int rownum = 0;
+//			log.info("여기까지 동작");
+//			if(to_num == 2) {
+//				rownum = 4;
+//			}else if(to_num == 3) {
+//				rownum = 2;
+//			}
+//			log.info("TournamentServiceImple) 현재 rownum ->" + rownum);
+//			mapper.insertNewRow(to_num, rownum);
+//		return mapper.getToWorkList(to_num);
+//	}
+//	
+//	// ■ 특정 토너먼트 참여 작품 가져오기(단순 가져오기)
+//	@Override
+//	public List<TournamentJoinVO> get2and4WorkList(long to_num) {
+//		return mapper.get2and4WorkList(to_num);
+//	}
+//	
+//	
+//	// ■ 8강 토너먼트 참여 작품 가져오기
+//	@Override
+//	public List<TournamentJoinVO> listTournamentWork2() {
+//		return mapper.getToWorkList2();
+//	}
 
 
 
