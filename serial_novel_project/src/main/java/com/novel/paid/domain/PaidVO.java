@@ -10,7 +10,7 @@ public class PaidVO {
 	private long paid_snum; 			// 유료 소설 현재 회차 
 	private String paid_title; 			// 유료 제목 (소제목)
 	private String paid_content1; 		// 유료 내용1
-	private String free_content2;		// 유료 내용2
+	private String paid_content2;		// 유료 내용2
 	private Date paid_rdate; 			// 등록일
 	private Date paid_mdate; 			// 수정일
 	private long paid_hit; 				// 조회수

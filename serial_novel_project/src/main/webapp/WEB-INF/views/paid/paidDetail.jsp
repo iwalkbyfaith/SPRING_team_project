@@ -24,6 +24,17 @@ ul li a{
 	height:150px;
 }
 
+#modDiv{
+	 	width : 1000px;
+	 	height : 500px;
+	 	position : absolute;
+	 	top : 50%;
+	 	left : 50%;
+	 	margin-top : -50px;	/*height의 절반(음수) 중앙위치*/
+	 	margin-left : -150px; /*width의 절반(음수) 중앙위치*/
+	 	padding : 10px;
+	 	z-index : 1000; /*무조건 1보다 클것*/
+}
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -89,7 +100,7 @@ ul li a{
 		<div class="row">
 			<div class="col-md-1">소제목</div>
 			<div class="col-md-4">
-				<input type="text" class="form-control" value="${novel.paid_title }" readonly>
+				<input type="text" id="pTitle" class="form-control" value="${novel.paid_title }" readonly>
 			</div>
 			<div class="col-md-1">글쓴이</div>
 			<div class="col-md-2">
@@ -127,28 +138,37 @@ ul li a{
 		</div>
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/board/boardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-info btn-sm">목록</a>
+				<a href="/paid/novelList" class="btn-sm">목록</a>
 			</div>
 			<div class="col-md-1">
-				<button id="paidDelBtn" type="button" >삭제z</button>
+				<button id="paidDelBtn" type="button" >삭제</button>
 			</div>
 			<div class="col-md-1">
-				<form action="/board/boardUpdateForm" method="post">
-					<input type="hidden" name="bno" value="${board.bno }">
-					<input type="hidden" name="pageNum" value="${param.pageNum }">
-					<input type="hidden" name="searchType" value="${param.searchType }">
-					<input type="hidden" name="keyword" value="${param.keyword }">
-					<input type="submit" value="수정" class="btn-sm">
-				</form>
+				<button id="paidModBtn" type="button">수정</button>
 			</div>
 		</div>
+		<hr>
 		<div class="container2">
-			<hr>
 			
 			<ul id="Pcon">
 			
 			</ul>
-			
+		<!-- 수정 모달 -->
+		<div id="modDiv" style="display:none;">
+			<div class="modal-title"></div>
+			<div>
+				<input type="text" id="pTitle" value="${novel.paid_title }">
+				<input type="number" id="pNum" value="${novel.paid_Num }">
+				<input type="number" id="pPrice" value="${novel.paid_price }">
+				<input type="Text" id="pContent1" value="${novel.paid_content1 }">
+				<input type="Text" id="pContent2" value="${novel.paid_content2 }">
+			</div>
+			<div>
+				<button type="button" id="paidModBtn">수정</button>
+				<button type="button" id="closeBtn">닫기</button>
+			</div>
+		</div> 
+		
 			<!-- jquery cdn -->
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 			
@@ -174,7 +194,7 @@ ul li a{
 		}
 		getContent();
 		
-		// 삭제
+		// ■ 삭제
 		$("#paidDelBtn").on("click", function(){
 			
 			var paidNum = ${novel.paid_num};
@@ -203,7 +223,51 @@ ul li a{
 			});
 		});
 		
-		
+		// modal 열림
+		$("#paidModBtn").on("click", function(){
+			
+			$("#modDiv").show("slow"); 
+		});
+			
+		// 모달창 닫기
+		$("#closeBtn").on("click",function(){
+			$("#modDiv").hide("slow");
+		});
+		 
+		// 수정 내일
+		$("#paidModBtn").on("click", function(){
+			var rno = $(".modal-title").html();
+			var reply = $("#reply").val();
+			
+			$.ajax({
+				type : 'put',
+				url : '/free/' + freeNum,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PUT"
+				},
+				contentType : "application/json",
+				dataType : 'text',
+				data: JSON.stringify({
+					novel_num : novelNum,
+					free_snum : freeSNum,
+					free_title : freeTitle,
+					free_content1 : content1,
+					free_content2 : content2
+					}),
+				success : function(result){
+					console.log("result : " + result);
+					if(result == 'SUCCESS'){
+						alert("수정 되었습니다.");
+						$("#modDiv").hide("slow");
+						getContent();
+					}
+				}
+			});
+		});
 	</script>
 		</div><!-- container2 -->
 	</div><!-- container -->
