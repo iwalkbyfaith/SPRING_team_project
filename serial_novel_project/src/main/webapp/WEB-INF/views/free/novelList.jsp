@@ -243,6 +243,67 @@ text-align:center;
                 </td>
                 </tr>
         </table>
+				
+				<!-- ■ 위의 class="update"을 눌렀을때 나오게 되는 소설수정 페이지 (넘어오면서 novelNum을 가지고와서 기본적인 내용{작가,제목}은 받아옴.) -->
+				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="uwork">
+                <tr>
+                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        <tr>
+                        <td>작가</td>
+                        <td id="uWriter"></td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td id="uTitle"></td>
+                        </tr>
+                        
+                        <tr>
+                        <td>회차제목</td>
+                        <td>
+ 	                     <textarea class="uTitle" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>n회차</td>
+                        <td>
+                        <input class="uSNum" type="number" min="1" value="">
+                        </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용1</td>
+                        <td>
+                        <textarea class="ucontents1" onKeyUp="javascript:fnChkByte1(this,'4000')" style="width: 100%; height: 6.25em; resize: none;"></textarea>
+						<span id="byteInfo1">0</span> /4000bytes
+                        
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>내용2</td>
+                        <td>
+                        <textarea class="ucontents2" onKeyUp="javascript:fnChkByte2(this,'4000')" style="width: 100%; height: 6.25em; resize: none;"></textarea>
+						<span id="byteInfo2">0</span> /4000bytes
+                        
+                        </td>
+                        </tr>
+ 						
+ 						<tr>
+ 						<td id="uBtn">
+ 						
+ 						</td>
+ 						</tr>
+                        
+                     </table>
+ 
+                </td>
+                </tr>
+        </table>
 
 
 
@@ -1128,9 +1189,9 @@ $(".update").on("click",".nUpdate",function(){
 				str7 += this.free_content2;
 				});
 		
-		$(".fTitle").html(str5);
-		$(".contents1").html(str6);
-		$(".contents2").html(str7);
+		$(".uTitle").html(str5);
+		$(".ucontents1").html(str6);
+		$(".ucontents2").html(str7);
 	});
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
@@ -1145,16 +1206,16 @@ $(".update").on("click",".nUpdate",function(){
 					
 					str1+="<strong>"+this.novel_writer+"</strong>"
 					str2+="<strong>"+this.novel_title+"</strong>"
-					str3+=	"<button class='mCancel' data-novelNum='"+ novelNum +"' data-novelCategory='"+this.novel_category+"' data-freeNum='"+ this.free_num +"' data-freeSNum='"+ freeSNum +"'>취소</button><button class='nModify' data-novelNum='"+ novelNum +"' data-novelCategory='"+this.novel_category+"' data-freeNum='"+ this.free_num +"' data-freeSNum='"+ freeSNum +"'>수정</button>";
+					str3+=	"<button class='uCancel' data-novelNum='"+ novelNum +"' data-novelCategory='"+this.novel_category+"' data-freeNum='"+ this.free_num +"' data-freeSNum='"+ freeSNum +"'>취소</button><button class='uModify' data-novelNum='"+ novelNum +"' data-novelCategory='"+this.novel_category+"' data-freeNum='"+ this.free_num +"' data-freeSNum='"+ freeSNum +"'>수정</button>";
 					
 					
 					
 					
 					
-					$("#nWriter").html(str1);
-					$("#nTitle").html(str2);
-					$("#nBtn").html(str3);
-					$(".fSNum").attr('value',freeSNum);
+					$("#uWriter").html(str1);
+					$("#uTitle").html(str2);
+					$("#uBtn").html(str3);
+					$(".uSNum").attr('value',freeSNum);
 					
 		});		
 	});
@@ -1166,22 +1227,23 @@ $(".update").on("click",".nUpdate",function(){
 	$(".series").hide();
 	$(".update").hide();
 	$(".delete").hide();
-	$(".work").show();
+	$(".uwork").show();
 	$(".categoryheader").hide();
 });
 
 // ■ 글 수정창에서 취소 버튼을 클릭시 보고있던 디테일 페이지로 돌아감.
-$("#nBtn").on("click",".mCancel",function(){
+$("#uBtn").on("click",".uCancel",function(){
 	var novelNum = $(this).attr("data-novelNum");
 	var freeSNum = $(this).attr("data-freeSNum");
 	var freeNum = $(this).attr("data-freeNum");
 	var novelCategory = $(this).attr("data-novelCategory");
 	
+	
 	$("#novellist").empty();
 	$(".content").hide();
 	$(".table").hide();
 	$(".writebtn").hide();
-	$(".work").hide();
+	$(".uwork").hide();
 
 	let str6 =	"";
 	let str7 =	"";
@@ -1241,7 +1303,7 @@ $("#nBtn").on("click",".mCancel",function(){
 					
 				});
 	});
-
+	
 	$(".content").show("slow");
 	$(".series").show("slow");
 	$(".delete").show("slow");
@@ -1251,7 +1313,7 @@ $("#nBtn").on("click",".mCancel",function(){
 });	
 
 // ■ 글 수정창에서 수정 버튼을 누를시 수정한 내용을 반영한 디테일 페이지를 보여줌
-$("#nBtn").on("click",".nModify",function(){
+$("#uBtn").on("click",".uModify",function(){
 
 	
 		var freeNum = $(this).attr("data-freeNum");
@@ -1259,10 +1321,10 @@ $("#nBtn").on("click",".nModify",function(){
 		var novelNum = $(this).attr("data-novelNum");
 		var novelCategory = $(this).attr("data-novelCategory");
 		
-		var freeSNum = $(".fSNum").val();
-		var freeTitle = $(".fTitle").val();
-		var content1 = $(".contents1").val();
-		var content2 = $(".contents2").val();
+		var freeSNum = $(".uSNum").val();
+		var freeTitle = $(".uTitle").val();
+		var content1 = $(".ucontents1").val();
+		var content2 = $(".ucontents2").val();
 		
 		$.ajax({
 			type : 'put',
@@ -1287,13 +1349,10 @@ $("#nBtn").on("click",".nModify",function(){
 				
 				if(result == 'SUCCESS'){
 					alert("글이 수정 되었습니다."); 
-					$(".fSNum").val(null);
-					$(".fTitle").val(null);
-					$(".contents1").val(null);
-					$(".contents2").val(null);
+					
 					// 여기까지 수정 로직
 // =======================================================================================================================				
-					$(".work").hide();
+					$(".uwork").hide();
 					$("#novellist").empty();
 					$(".content").hide();
 					$(".table").hide();
