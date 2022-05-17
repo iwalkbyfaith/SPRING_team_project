@@ -100,7 +100,7 @@ ul li a{
 		<div class="row">
 			<div class="col-md-1">소제목</div>
 			<div class="col-md-4">
-				<input type="text" id="pTitle" class="form-control" value="${novel.paid_title }" readonly>
+				<input type="text" id="pTitle1" class="form-control" value="${novel.paid_title }" readonly>
 			</div>
 			<div class="col-md-1">글쓴이</div>
 			<div class="col-md-2">
@@ -146,6 +146,9 @@ ul li a{
 			<div class="col-md-1">
 				<button id="paidModBtn" type="button">수정</button>
 			</div>
+				<input type="hidden" id="pContent1" value="${novel.paid_content1 }">
+				<input type="hidden" id="pContent2" value="${novel.paid_content2 }">
+
 		</div>
 		<hr>
 		<div class="container2">
@@ -157,11 +160,11 @@ ul li a{
 		<div id="modDiv" style="display:none;">
 			<div class="modal-title"></div>
 			<div>
-				<input type="text" id="pTitle" value="${novel.paid_title }">
-				<input type="number" id="pNum" value="${novel.paid_Num }">
-				<input type="number" id="pPrice" value="${novel.paid_price }">
-				<input type="Text" id="pContent1" value="${novel.paid_content1 }">
-				<input type="Text" id="pContent2" value="${novel.paid_content2 }">
+				<input type="text" id="pTitle" value="${novel.paid_title }"><br>
+				<input type="number" id="pNum" value="${novel.paid_num }"><br>
+				<input type="number" id="pPrice" value="${novel.paid_price }"><br>
+				<input type="Text" id="pContent1" value="${novel.paid_content1 }"><br>
+				<input type="Text" id="pContent2" value="${novel.paid_content2 }"><br>
 			</div>
 			<div>
 				<button type="button" id="paidModBtn">수정</button>
@@ -236,27 +239,36 @@ ul li a{
 		 
 		// 수정 내일
 		$("#paidModBtn").on("click", function(){
-			var rno = $(".modal-title").html();
-			var reply = $("#reply").val();
 			
+			var novelNum = ${novel.novel_num};
+			var paidNum = ${novel.paid_num};
+			var paidTitle = $("#pTitle1").val();
+			var paidPrice = $("#pPrice").val();
+			var paidContent1 = $("#pContent1").val();
+			var paidContent2 = $("#pContent2").val();
+			
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue="${_csrf.token}";
+		
 			$.ajax({
-				type : 'put',
-				url : '/free/' + freeNum,
+				type : 'patch',
+				url : '/paid/m/' + paidNum,
 				beforeSend : function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
 				header : {
 					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "PUT"
+					"X-HTTP-Method-Override" : "patch"
 				},
 				contentType : "application/json",
 				dataType : 'text',
 				data: JSON.stringify({
 					novel_num : novelNum,
-					free_snum : freeSNum,
-					free_title : freeTitle,
-					free_content1 : content1,
-					free_content2 : content2
+					paid_num : paidNum,
+					paid_title : paidTitle,
+					paid_price : paidPrice,
+					paid_content1 : paidContent1,
+					paid_content2 : paidContent2
 					}),
 				success : function(result){
 					console.log("result : " + result);

@@ -45,8 +45,8 @@
 		</delete>
 		
 		<update id="update">
-			UPDATE paid_tbl SET paid_title =#{paid_title}, paid_content = #{paid_content},
-			paid_mdate = sysdate, paid_price = #{paid_price} WHERE paid_snum = #{paid_snum}
+			UPDATE paid_tbl SET paid_title = #{paid_title}, paid_snum = #{paid_snum}, paid_content1 = #{paid_content1}, paid_content2 = #{paid_content2}
+			paid_mdate = sysdate, paid_price = #{paid_price} WHERE paid_num = #{paid_num}
 		</update>
 		
 		<select id="countPageNum" resultType="int">

@@ -47,10 +47,6 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 		paidMapper.delete(paidnum);
 	}
 
-	@Override
-	public void update(PaidVO vo) {
-		paidMapper.update(vo);
-	}
 
 	@Override
 	public int countPageNum(SearchCriteria cri) {
@@ -60,6 +56,11 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	@Override
 	public PaidVO detailCon(long paidNum) {
 		return paidMapper.detailCon(paidNum);
+	}
+
+	@Override
+	public void update(PaidVO vo, long paidNum) {
+		paidMapper.update(vo, paidNum);
 	}
 	
 	
