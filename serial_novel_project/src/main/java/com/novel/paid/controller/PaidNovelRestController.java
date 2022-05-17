@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.service.PaidNovelService;
 
+import lombok.extern.log4j.Log4j;
+
 @RestController
 @RequestMapping("/paid")
+@Log4j
 public class PaidNovelRestController {
 	
 	@Autowired
@@ -114,11 +117,14 @@ public class PaidNovelRestController {
 	
 	
 	@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
-			value="/m/{paidNum}",
-			consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+			value=	"/m/{paidNum}",
+			consumes="application/json", 
+			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody PaidVO vo, @PathVariable("paidNum") Long paidNum){
 		ResponseEntity<String> entity = null;
 		try {	
+			log.info("vo : " + vo);
+			log.info("paidNum : " + paidNum);
 			paidservice.update(vo, paidNum);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		}catch(Exception e) {

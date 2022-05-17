@@ -53,7 +53,7 @@ text-align:center;
 }
 	
 	</style>
-  <title>무료 소설</title>
+  <title>유료 소설</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -393,7 +393,7 @@ function getTueList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='monLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
+					str += "<div class='tueLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -417,7 +417,7 @@ function getWenList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='monLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
+					str += "<div class='wenLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -441,7 +441,7 @@ function getThuList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='monLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
+					str += "<div class='thuLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -466,7 +466,7 @@ function getFriList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='monLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
+					str += "<div class='friLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -576,10 +576,12 @@ console.log(novelNum);
 
 //■ 화요일의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".tueLi", function(){
-var novelNum = $(this).attr("data-novelNum");
-var paidNum = $(this).attr("data-paidNum");
-var novelWeek = "Tue";
-console.log(novelNum);
+	var novelNum = $(this).attr("data-novelNum");
+	var paidNum = $(this).attr("data-paidNum");
+	var novelWeek = "Tue";;
+	console.log(novelNum);
+	console.log(novelWeek);
+
 
 	$("#novellist").empty();
 	
@@ -587,10 +589,11 @@ console.log(novelNum);
 	$.getJSON("/paid/novel/select/"+ novelNum , function(data){
 	
 	
+	
 	let str = "";
 	let str1 = "";
 	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"'>글쓰기</button>";
+	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelWeek='"+novelWeek+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelWeek='"+novelWeek+"'>글목록</button>";
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
@@ -607,7 +610,7 @@ console.log(novelNum);
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
 				
 				str+= "<tr><td>"+this.paid_snum+"</td>"
-				+ "<td><a href = '/paid/detail/" + (novelNum) + "/" + (paidNum) + "'>" + this.novel_title+ "</a></td>" 
+				+ "<td><a href = '/paid/detail/" + novelNum + "/" + paidNum + "'>" + this.novel_title+ "</a></td>" 
 				+ "<td>"+this.novel_writer+"</td>"
 				+ "<td>"+formattedTime1+"</td>"
 				+ "<td>"+formattedTime2+"</td></tr>"
@@ -905,7 +908,7 @@ $("#nBtn").on("click",".nSubmit",function(){
 	var novelNum =$(this).attr("data-novelNum");
 	var paidSNum = $(".pSNum").val();
 	var paidTitle = $(".pTitle").val();
-	var paidPirce = $(".pPrice").val();
+	var paidPrice = $(".pPrice").val();
 	var content1 = $(".contents1").val();
 	var content2 = $(".contents2").val();
 	$.ajax({
@@ -925,7 +928,7 @@ $("#nBtn").on("click",".nSubmit",function(){
 			paid_title : paidTitle,
 			paid_content1 : content1,
 			paid_content2 : content2,
-			paid_price : paidPirce
+			paid_price : paidPrice
 		}),
 		success : function(result){
 			if(result == 'SUCCESS'){

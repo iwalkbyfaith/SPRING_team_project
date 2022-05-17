@@ -176,6 +176,8 @@ ul li a{
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 			
 	<script type="text/javascript">
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue="${_csrf.token}";
 		var paidnum = ${novel.paid_num}
 		
 		function getContent(){ // ■ 해당 소설의 상세 본문 가져오기
@@ -202,8 +204,7 @@ ul li a{
 			
 			var paidNum = ${novel.paid_num};
 			console.log(paidNum);
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue="${_csrf.token}";
+		
 			
 			$.ajax({
 				type : 'delete',
@@ -247,21 +248,29 @@ ul li a{
 			var paidContent1 = $("#pContent1").val();
 			var paidContent2 = $("#pContent2").val();
 			
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue="${_csrf.token}";
+			console.log(novelNum);
+			console.log(paidNum);
+			console.log(paidTitle);
+			console.log(paidPrice);
+			console.log(paidContent1);
+			console.log(paidContent2);
+			
+			
+			
+			
 		
 			$.ajax({
 				type : 'patch',
 				url : '/paid/m/' + paidNum,
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PATCH"
+				},
+				dataType : 'text',
 				beforeSend : function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
-				header : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "patch"
-				},
 				contentType : "application/json",
-				dataType : 'text',
 				data: JSON.stringify({
 					novel_num : novelNum,
 					paid_num : paidNum,
@@ -274,11 +283,15 @@ ul li a{
 					console.log("result : " + result);
 					if(result == 'SUCCESS'){
 						alert("수정 되었습니다.");
+						
 						$("#modDiv").hide("slow");
 						getContent();
 					}
 				}
 			});
+			
+			
+			
 		});
 	</script>
 		</div><!-- container2 -->
