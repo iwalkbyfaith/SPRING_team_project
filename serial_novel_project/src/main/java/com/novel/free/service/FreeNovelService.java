@@ -23,7 +23,7 @@ public interface FreeNovelService {
 	
 	public void insertFree(FreeNovelVO vo);						// 무료 소설 Detail입력(내용,소제목 등등)
 	
-	public void delete(long free_snum);							// 무료 소설 n회차 삭제 
+	public void delete(long freeNnum);							// 무료 소설 n회차 삭제 
 	
 	public void update(FreeNovelVO vo);							// 무료 소설 수정
 	
