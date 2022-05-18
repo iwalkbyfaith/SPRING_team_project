@@ -9,22 +9,14 @@ import com.novel.paid.domain.SearchCriteria;
 
 public interface PaidNovelService {
 	
-	public List<PaidVO> selectList(String novelWeek);
+	public List<PaidVO> selectList(String novelWeek); // ■ paidList에서 쓸것 
 	
-	public List<PaidVO> getJoinList(SearchCriteria cri);
-	
-	public void insertPaid(PaidVO vo);	
+	public List<PaidVO> selectWeekList(String novelWeek); // ■ paidWeek
 	
 	public PaidVO selectDetail(
-			@Param("paidNum")long paidNum ,@Param("novelNum") long novelNum); 
+			@Param("paidNum")long paidNum ,@Param("novelNum") long novelNum);  // ■ paidDetail로 넘어감
 	
-	public List<PaidVO> select(long novelNum);
+	public PaidVO detailCon(long paidNnum); // ■ paidDetail 에서 본문 가져오기
 	
-	public void delete(long paidnum);
-	
-	public void update(@Param("vo") PaidVO vo, @Param("paidNum") long paidNum); 
-	
-	public int countPageNum(SearchCriteria cri);
-	
-	public PaidVO detailCon(long paidNum); 
+	public List<PaidVO> selectPaidList(String novelNum); // ■ paidList (해당요일별소설(공통)의 하위리스트(snum))
 }
