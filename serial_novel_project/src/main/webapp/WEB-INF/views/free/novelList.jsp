@@ -49,6 +49,13 @@ float:right;
  .articleMain{
 text-align:center;
 
+}
+.articlecontent{
+	margin-bottom:300px;
+}
+#commentLi{
+text-align:left;
+list-style-type:none;
 } 
 }
 	
@@ -180,6 +187,11 @@ text-align:center;
 	<div class="articleMain">
 	<div class="articleTitle"></div>
 	<div class="articleContent"></div>
+	<div class="commentinfo">
+	<ul class="commentheader">
+	<li id="commentLi">댓글1</li>
+	</ul>
+	</div>
 	</div>
 </div>
 </div>
