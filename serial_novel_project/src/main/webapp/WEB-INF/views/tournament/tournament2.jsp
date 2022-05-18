@@ -102,6 +102,9 @@
 	
 	<!-- ■ jqueryCDN 추가 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script> -->
+
 
 	<!-- ■ 상단 네비바 : 네비바 적용3) -->
 	<div class="header">
@@ -157,10 +160,15 @@
 	     </script>
      
 	 
-	<h3>★ 나중에 추가 할 것 : 작품이름 클릭하면 해당 작품 페이지로 이동하도록, 이미지 삽입</h3> <br/>
+	<h3>★ 나중에 추가 할 것 : </h3>
+		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, <br/>
+		2. 이미지 삽입, <br/>
+		3. 토너먼트 완료 후 로직 추가(현재 매퍼에만 코드 작성 후, 테스트 코드 완료한 상태) <br/>
+	
+	 <hr/>
 	 
 	<div class="row">
-		<h3 class="text-primary">예상 우승 작품 #winner (코드 수정중)</h3>
+		<h3 class="text-primary">예상 우승 작품 #winner</h3>
 		<div id="winner"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
@@ -180,7 +188,7 @@
 		<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
-
+	<button type="button" id="test">클릭</button>
 	
 	
 	<hr/>
@@ -188,7 +196,7 @@
 			
 	
 	
-	<script>
+	<script type="application/javascript">
 	
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■ 스크립트 순서 ■■■■■■■■■■■■■■■■■■■■■■■■ -->
 					<!-- ■ 변수 설정 -->
@@ -225,13 +233,23 @@
 	 			
 	 		// 날짜 설정
 	 		let now = new Date();
+	 		
+	 		// 우승자 노블 번호
+	 		let winnersNovelNum = 0;
  			
 
-	 	// 2강, 4강, 8강 불러오기
- 		getTournamentWorkList1(); // 8
-		getTournament4List();	  // 4
-		getTournament2List();	  // 2
+
+		 	// 2강, 4강, 8강 불러오기
+	 		getTournamentWorkList1(); // 8
+			getTournament4List();	  // 4
+			getTournament2List();	  // 2
 			
+			// 우승작품
+			getWinner();
+			
+			// 토너먼트 사후처리
+			//afterTournament();
+
 			
 		
 		
@@ -724,7 +742,7 @@
 			
 			$.getJSON("/tournament/toWork/winner", function(data){
 				
-				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"'>"
+				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"' data-novel-num='"+ data.novel_num +"'>"
 						+ 	 "<div class='tourna-work-winner-div'>나중에 이미지 넣을 자리</div>"
 						+	 "<div class='tourna-work-winner-div'>" + data.novel_title + "</div>"
 						+ 	 "<div class='tourna-work-winner-div'>" + data.novel_writer + "</div>"
@@ -732,11 +750,31 @@
 						+ "</div>";
 				
 				$("#winner").html(str);
+				
+				winnersNovelNum = data.novel_num;
+				console.log("예상우승작품) 우승자 노블 번호 --> " + winnersNovelNum);
 			});
 		}
 		<!-- ● setInterval 3초에 한번씩-->
-		getWinner();
+		//getWinner(); 위로 올라감
 		setInterval(getWinner, 3000);
+		
+		
+		
+		
+		<!-- ■ 05.18 토너먼트 사후처리 -->
+		function afterTournament(){
+			
+			$.ajax({})
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

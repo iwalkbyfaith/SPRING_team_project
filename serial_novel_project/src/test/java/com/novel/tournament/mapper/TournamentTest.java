@@ -1,4 +1,4 @@
-package com.novel.tournament.mapper;
+ package com.novel.tournament.mapper;
 
 import java.util.List;
 

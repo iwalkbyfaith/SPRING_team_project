@@ -82,7 +82,64 @@ public class TournamentServiceImpl implements TournamentService{
 	@Override
 	public TournamentJoinVO getWinner() {
 		return mapper.getWinner();
+  	}
+ 
+	// ■ 05.17 대회 우승시 사후처리 1) 작품 & 작가 관련
+	@Transactional
+	@Override
+	public void afterTowork1(long novel_num) {
+		// 1) novel_tbl에서 week=free인 것을 변경해준다
+		mapper.updateWeek("mon", novel_num);
+		
+		// 2) auth_tbl에서 작가의 등급을 ROLE_PAID_WRITER로 변경하기
+			// 2-1) 우승 작품의 작품번호(novel_num)을 얻어와서
+			long winnersNovelNum = mapper.getWinnersNovelNum();
+			
+			// 2-2) novel_tbl에서 해당 작품 번호의 아이디를 가져온 후
+			String winnersUserId = mapper.getWinnersUserId(winnersNovelNum);
+			
+			// 2-3) auth_tbl에서 해당 유저의 등급을 변경한다.
+			mapper.updateWinnersAuth(winnersUserId);
+		
+		// 3) free_tbl에서 연재했던 데이터 삭제
+		mapper.deleteWinnersFreeData(winnersNovelNum);
+		
 	}
+	
+		// ■ 우승 작품 노블 번호 가져오기
+		@Override
+		public long getWinnersNovelNum() {
+			return mapper.getWinnersNovelNum();
+		}
+
+	// ■ 05.17 대회 우승시 사후처리 2) 대회 관련
+	@Transactional
+	@Override
+	public void afterTowork2() {
+		
+		// 1) 다음 토너먼트를 위해서 tourna_tbl의 to_sdate(시작일), to_edate(종료일)를 업데이트 해줌
+			// 1-1) 8강 업데이트
+			mapper.updateTournaDate(1, 8, 1);
+			
+			// 1-2) 4강 업데이트
+			mapper.updateTournaDate(9, 16, 2);
+			
+			// 1-3) 2강 업데이트
+			mapper.updateTournaDate(17, 24, 3);
+			
+			// 1-4) 준비기간 업데이트
+			mapper.updateTournaDate(25, 32, 4);
+			
+		// 2) torec_tbl 데이터 먼저 삭제
+			mapper.deleteTorecTbl();
+			
+		// 3) towork_tbl 데이터 삭제
+			mapper.deleteToworkTbl();
+		
+		
+	}
+
+	
 	
 	
 	

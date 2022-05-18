@@ -42,6 +42,20 @@ public interface TournamentService {
 	
 	
 	
+	// ■ 05.17 대회 우승시 사후처리 1) 작품 & 작가 관련 // 파라미터 : novel_num
+	public void afterTowork1(long novel_num);
+		// ■ 우승 작품 노블 번호 가져오기
+		public long getWinnersNovelNum();
+	
+	// ■ 05.17 대회 우승시 사후처리 2) 대회 관련 // 파라미터 : 없음 
+	public void afterTowork2();
+	
+	
+	
+	
+	
+	
+	
 	
 	
 //	// ■ 특정 토너먼트 리스트 가져오기('시작' 버튼 클릭시 적재하는 버전)
