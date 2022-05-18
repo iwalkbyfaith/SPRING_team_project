@@ -53,7 +53,7 @@ text-align:center;
 }
 .listsize{
 width:500px;
-height:1000px;
+height:150px;
 border:solid 1px;
 }
 }
