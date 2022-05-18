@@ -36,6 +36,7 @@ ul li a{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
+	
 	outline:solid 1px;
 }
 .writebtn,.List,.series,.delete,.update{
@@ -50,6 +51,7 @@ float:right;
 text-align:center;
 
 }
+
 .articlecontent{
 	margin-bottom:300px;
 }
@@ -57,6 +59,13 @@ text-align:center;
 text-align:left;
 list-style-type:none;
 } 
+
+.listsize{
+width:500px;
+height:1000px;
+border:solid 1px;
+}
+
 }
 	
 	</style>
@@ -77,7 +86,7 @@ list-style-type:none;
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">About</a>
@@ -87,15 +96,15 @@ list-style-type:none;
               소설 선택
             </a>
             <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">무료소설</a>
-              <a class="dropdown-item" href="#">유료소설</a>
-              </div>
+              <a class="dropdown-item" href="/free/novelList">무료소설</a>
+              <a class="dropdown-item" href="/paid/novel/mon">유료소설</a>
+             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">자유게시판</a>
+	            <a class="nav-link" href="#">작가 신청 게시판</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">토너먼트</a>
+	            <a class="nav-link" href="/tourna/list2">토너먼트</a>
           </li>
            <!-- <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -136,7 +145,7 @@ list-style-type:none;
 <br/>
 <br/>
 <!-- ■ 해당 카테고리(class="categoryheader"의 자식들)를 눌렀을때 나타낼 리스트 -->
-<div>
+<div class="listsize">
 <ul id="novellist">
 </ul>
 </div>
@@ -590,9 +599,16 @@ console.log(novelNum);
 				let timestamp2 = this.free_mdate;
 				let date1 = new Date(timestamp1);
 				let date2 = new Date(timestamp2);
+				let testDate = new Date(1970,0,1);
 				
 				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
+				
+				if(formattedTime2 == formattedTime3){
+					formattedTime2 = "";
+				
+				 }
 				
 				str+= "<tr><td>"+this.free_snum+"</td>"
 					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
@@ -640,10 +656,16 @@ console.log(novelNum);
 				let timestamp2 = this.free_mdate;
 				let date1 = new Date(timestamp1);
 				let date2 = new Date(timestamp2);
+				let testDate = new Date(1970,0,1);
 				
 				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
 				
+				if(formattedTime2 == formattedTime3){
+					formattedTime2 = "";
+				
+				 }
 				str+= "<tr><td>"+this.free_snum+"</td>"
 					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
@@ -689,10 +711,16 @@ console.log(novelNum);
 				let timestamp2 = this.free_mdate;
 				let date1 = new Date(timestamp1);
 				let date2 = new Date(timestamp2);
+				let testDate = new Date(1970,0,1);
 				
 				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
 				
+				if(formattedTime2 == formattedTime3){
+					formattedTime2 = "";
+				
+				 }
 				str+= "<tr><td>"+this.free_snum+"</td>"
 					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
@@ -737,10 +765,16 @@ console.log(novelNum);
 				let timestamp2 = this.free_mdate;
 				let date1 = new Date(timestamp1);
 				let date2 = new Date(timestamp2);
+				let testDate = new Date(1970,0,1);
 				
 				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+				let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
 				
+				if(formattedTime2 == formattedTime3){
+					formattedTime2 = "";
+				
+				 }				
 				str+= "<tr><td>"+this.free_snum+"</td>"
 					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"

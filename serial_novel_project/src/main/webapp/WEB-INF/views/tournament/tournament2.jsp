@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
+	 <!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 ( 검색 키워드 : ▣ )-->
+		 <!-- ▣ 1. <head>태그 사이에 아래 <meta> 태그 두 줄 추가 -->
+		 <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	 	 <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	
 	
 	<!-- ★ 부트스트랩 1. css 복붙 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -25,45 +32,154 @@
 		    border : solid 3px black;
 		}
 		
-		.tourna-work-list{ background-color : whitesmoke;}
+		<%--.tourna-work-list-div-img{
+			background-position: center;
+            height: 180px;
+            border-radius: 10px;
+            border: 1px solid green;
+			}
+		--%>
+		.tourna-work-list{ 
+			background-color : whitesmoke;
+			width : 160px;
+			}
+			
+		<!-- 여기부터 네비바 : 네비바 적용1) -->
+		.social-part .fa{
+		    	padding-right:20px;
+			}
+			
+			ul li a{
+		    	margin-right: 20px;
+			}
+			.header{
+				height:100px;
+			}
+			.container{
+				height:1000px;
+			}
+			.footer{
+				height:150px;
+			}
+			#headerfLi,#headerwLi,#headerrLi,#headermLi{
+				list-style-type:none;
+				float:left;
+				margin-left:20px;
+				font-size:30px;
+				outline:solid 1px;
+			}
+			.fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
+				list-style-type:none;
+				float:left;
+				margin-left:20px;
+				outline:solid 1px;
+			}
+			.writebtn,.List,.series{
+				float:right;
+				margin-right:10px;
+			}
+			.articleInfo{
+				float:right;
+			}
+			.articleMain{
+				text-align:center;
+			} 
 		
 	
 	</style>
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- 네비바 적용2) -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
+<title>토너먼트 게시판</title>
 </head>
+
 <body>
 
 	
 	<!-- ■ jqueryCDN 추가 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script> -->
 
-	<!-- ■ 리스트가 추가될 공간 -->
- 	<div class="row">
- 		<h3 class="text-primary">전체 대회 리스트 #tournament / (나중에)클릭시 해당 위치로 이동하게</h3>
-		<div id="tournament"><!-- 리스트가 들어갈 위치 --></div>
-	</div>
+
+	<!-- ■ 상단 네비바 : 네비바 적용3) -->
+	<div class="header">
+	    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
 	
+        	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			            <li class="nav-item">
+			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
+			            </li>
+			            <li class="nav-item">
+			              	<a class="nav-link" href="#">About</a>
+			            </li>
+			            <li class="nav-item dropdown dmenu">
+			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			              		소설 선택
+			            	</a>
+			            	<div class="dropdown-menu sm-menu">
+			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
+			              		<a class="dropdown-item" href="/paid/novel/mon">유료소설</a>
+			              	</div>
+			          	</li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="#">작가 신청 게시판</a>
+			          </li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
+			          </li>
+		          </ul><!-- ul 태그 끝 -->
+		          <div class="social-part">
+		            <i class="fa fa-facebook" aria-hidden="true"></i>
+		            <i class="fa fa-twitter" aria-hidden="true"></i>
+		            <i class="fa fa-instagram" aria-hidden="true"></i>
+		          </div>
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
+     </div><!-- header 끝 (하단의 스크립트 태그까지 가져와야 함) --> 
+          
+	     <script>
+	     
+			  // 네비 메뉴바 마우스 호버하는 경우 (소설 선택 -> 유료/무료 소설 페이지 뜨도록)
+			     $(document).ready(function () {
+			     $('.navbar-light .dmenu').hover(function () {
+			             $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+			         }, function () {
+			             $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+			         });
+			     });
+	     
+	     </script>
+     
+	 
+	<h3>★ 나중에 추가 할 것 : </h3>
+		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, <br/>
+		2. 이미지 삽입, <br/>
+		3. 토너먼트 완료 후 로직 추가(현재 매퍼에만 코드 작성 후, 테스트 코드 완료한 상태) <br/>
+	
+	 <hr/>
+	 
 	<div class="row">
 		<h3 class="text-primary">예상 우승 작품 #winner</h3>
 		<div id="winner"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
-	<%--
-		<div class="row">
-	 		<h3 class="text-primary">대회 참여 리스트 #tournamentWork</h3>
-			<div id="tournamentWork"><!-- 리스트가 들어갈 위치 --></div>
-		</div>
-	 --%>  
 	
 	<div class="row">
-		<h3 class="text-primary">대회 참여 리스트 2강(결승) #tournament2 <button type="button" id="tournament2Btn">참여하기</button> 참여하기 버튼 -> 버튼 없애고 해당하는 날짜에만 나오는 기능으로 바꿔야함</h3>
+		<h3 class="text-primary">대회 참여 리스트 2강(결승) #tournament2</h3>
 		<div id="tournament2"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
 	<div class="row">
- 		<h3 class="text-primary">대회 참여 리스트 4강 #tournament4 <button type="button" id="tournament4Btn">참여하기</button></h3>
+ 		<h3 class="text-primary">대회 참여 리스트 4강 #tournament4</h3>
 		<div id="tournament4"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
@@ -72,91 +188,626 @@
 		<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
 	</div>
 	
+	<button type="button" id="test">클릭</button>
 	
 	
-
+	<hr/>
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/>
+			
 	
 	
-	<script>
+	<script type="application/javascript">
 	
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■ 스크립트 순서 ■■■■■■■■■■■■■■■■■■■■■■■■ -->
-					<!-- ■ 전체 리스트를 불러오는 함수 -->
-					<!-- ■ 토너먼트 전체 참여 리스트를 불러오는 함수 -->
-					<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
-					<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
-					<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 (코드 수정중) -->
-					<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (코드 수정중) -->
-					<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (코드 수정중) -->
-					<!-- ■ 추천 버튼 클릭시 +1 되는 함수 (나중에 아이디 받아와야 함) -->
-						<!-- ● 8강 --><!-- ● 4강 --><!-- ● 2강 -->
+					<!-- ■ 변수 설정 -->
+					<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 -->
+					<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 -->
+					<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 -->
+					<!-- ■ 추천 버튼 클릭시 +1 되는 함수 -->
+					<!-- ● 8강 --><!-- ● 4강 --><!-- ● 2강 -->
 					<!-- ■ 예상 우승 작품 -->
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 	
 		
 		<!-- ■ 변수 설정 -->
 			
-			// 로그인 아이디
-			let id = "id012";
+			// ● 로그인 아이디
+			//let userInfo = "<sec:authentication property="principal.user"/>";
+				//console.log("유저 정보 ▼");
+				//console.log(userInfo);
+				
+			let id = "<sec:authentication property="principal.user.user_id"/>";
+			//let id = "id012";
+				console.log("변수 설정) sec로 받아온 아이디 -> " + id);
 			
 			// 추천한 아이디
-			let userId = "id012"; 
+			//let userId = "id012"; 
+			
+			<!-- ▣ 2. <script> 태그에서 변수로 받아준다. -->
+			// ● csrf 토큰
+			let token = $("meta[name='_csrf']").attr("content");
+ 			let header = $("meta[name='_csrf_header']").attr("content");
+	 			//console.log("토큰, 헤더 ▼");
+	 			//console.log(token);
+	 			//console.log(header);
+	 			
+	 		// 날짜 설정
+	 		let now = new Date();
+	 		
+	 		// 우승자 노블 번호
+	 		let winnersNovelNum = 0;
+ 			
+
+
+		 	// 2강, 4강, 8강 불러오기
+	 		getTournamentWorkList1(); // 8
+			getTournament4List();	  // 4
+			getTournament2List();	  // 2
+			
+			// 우승작품
+			getWinner();
+			
+			// 토너먼트 사후처리
+			//afterTournament();
+
+			
 		
-		<!-- ■ 전체 리스트를 불러오는 함수 -->
-		function getTournamentList(){
+		
+		
+
+		
+		
+
+		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 -->
+		function getTournamentWorkList1(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			// 0. 아이디 받아오기
+			
+				console.log("8강 로그인 아이디 -> " + id);
+				
+				// ● 버튼 초기 세팅
+					// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
+					let hideBtn = false;
+					let deactivation = "";
+				
+				// ● 8강 시작일 & 종료일
+				let sdate8;
+				let edate8;
+				
+			
+			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 1(8강)인 경우 데이터를 가져옴 
+			$.getJSON("/tournament/checkRec/1/" + id, function(data){
+				//console.log("▼ 8강 추천 기록 받아오기");
+				//console.log(data);
+				
+				//console.log("▼ 가져온 데이터 유무");
+				//console.log(data != null);
+				
+				// 받아온 추천 기록이 있다면 추천 버튼을 숨긴다(hideBtn을 false -> true로 만듦)
+				if(data != null){
+					hideBtn = true;
+					console.log("hideBtn 상태 -> " + hideBtn);
+				}
+			});
+			
+			
+			// 2. 현재 시간 구하기
+			
+			console.log("▼ 8강) 현재 시간")
+			console.log(now);
 			
 			$.getJSON("/tournament/all", function(data){
+				//console.log(data);							// 모든 대회 정보
+				//console.log(data[0]);						// 웹소설 최강자 8강전
+				//console.log(data[0].to_sdate);				// 웹소설 최강자 8강전 시작일
 				
-				let str = "";
-				console.log("전체 대회 리스트 -> " + data);
+				let sdate = new Date(data[0].to_sdate);		// 시작일 sdate
+				sdate8 = new Date(data[0].to_sdate);
+				//console.log(sdate8);
+				//console.log(now > sdate);	 				// 오늘이 시작일을 지났으면 true
 				
-				$(data).each(function(){
-					
-					str += "<div class='tourna-list' data-tno='" + this.to_num + "'>" + this.to_name + "</div>";
-
-				});
+				edate8 = new Date(data[0].to_edate);			// 종료일 edate
+				//console.log(edate8);
+				//console.log(now < edate8);					// 오늘이 종료
 				
-				$("#tournament").html(str);
 			});
 			
-		}
-		
-		getTournamentList();
-		
-		
-		
-		
-		<!-- ■ 토너먼트 전체 참여 리스트를 불러오는 함수 -->
-		function getAllTournamentWorkList(){
+			// 3. 데이터 뿌리기
 			
-			$.getJSON("/tournament/toWork2", function(data){
+				$.getJSON("/tournament/get8list", function(data){ 
+					
+					let str = "";
+					console.log("▼ 8강 참여 리스트");
+					console.log(data);
+					
+					// ● 추천 버튼 비활성화 유무
+						// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
+					//deactivation  = (hideBtn == true ? 'disabled' : '');
+					
+					console.log("현재 시간이 8강 종료일을 지났는지?");
+					console.log(now > edate8);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
+					
+					/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
+					// 추천 버튼을 눌렀거나 or 종료일이 지난 상태라면 '추천' 비활성화
+					if(hideBtn == true || (now > edate8)){	
+							deactivation = "disabled";
+					}
+					
+					console.log("현재 시간이 8강 시작일을 지났는지?");
+					console.log(now >= sdate8);
+					
+					// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
+					// (나중에 주석 풀어야 함)
+					if(now >= sdate8){
+						$(data).each(function(){
+								
+								str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
+										+ "<div class='tourna-work-list-div-img'>" + "</div>"
+										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
+										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
+										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
+										+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+									+ "</div>";
+								
+							});
+							
+							$("#tournament8").html(str);
+					}<!-- if 종료 -->
+				});
+			
+		}<!-- □ 8강 불러오기 끝 -->
+		
+		
+		//getTournamentWorkList1();
+		
+
+		
+		<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 -->
+		function getTournament4List(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			
+			// 0. 아이디 받아오기
+			
+			console.log("4강 로그인 아이디 -> " + id);
+			
+			// ● 버튼 초기 세팅
+				// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
+				let hideBtn = false;
+				let deactivation = "";
+			
+			// ● 8강 시작일 & 종료일
+			let sdate4;
+			let edate4;
+				
+			
+			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 2(4강)인 경우 데이터를 가져옴 
+			$.getJSON("/tournament/checkRec/2/" + id, function(data){
+				//console.log("▼ 4강 추천 기록 받아오기");
+				//console.log(data);
+				
+				//console.log("▼ 가져온 데이터 유무");
+				//console.log(data != null);
+				
+				// 받아온 추천 기록이 있다면 추천 버튼을 숨긴다(hideBtn을 false -> true로 만듦)
+				if(data != null){
+					hideBtn = true;
+					console.log("hideBtn 상태 -> " + hideBtn);
+				}
+			});
+			
+			
+			// 2. 현재 시간 구하기
+			
+			console.log("▼ 4강) 현재 시간")
+			console.log(now);
+			
+			$.getJSON("/tournament/all", function(data){
+				//console.log(data);							// 모든 대회 정보
+				//console.log(data[1]);						// 웹소설 최강자 8강전
+				//console.log(data[1].to_sdate);				// 웹소설 최강자 8강전 시작일
+				
+				sdate4 = new Date(data[1].to_sdate);		// 시작일 sdate
+				//sdate = new Date(data[1].to_sdate);
+				//console.log(sdate4);
+				//console.log(now > sdate4);	 				// 오늘이 시작일을 지났으면 true
+				
+				edate4 = new Date(data[1].to_edate);			// 종료일 edate
+				//console.log(edate4);
+				//console.log(now < edate4);					// 오늘이 종료
+				
+			});
+			
+			// 3. 데이터 뿌리기
+			
+				$.getJSON("/tournament/getList/1", function(data){
+					
+					let str = "";
+					console.log("▼ 4강 참여 리스트");
+					console.log(data);
+					
+					// ● 추천 버튼 비활성화 유무
+					// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
+					//deactivation  = (hideBtn == true ? 'disabled' : '');
+					
+					console.log("현재 시간이 4강 종료일을 지났는지?");
+					console.log(now > edate4);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
+					
+					/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
+					// 추천 버튼을 눌렀거나 or 종료일이 지난 상태라면 '추천' 비활성화
+					if(hideBtn == true || (now > edate4)){	
+							deactivation = "disabled";
+					}
+					
+					console.log("현재 시간이 4강 시작일을 지났는지?");
+					console.log(now >= sdate4);
+					
+					// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
+					// (나중에 주석 풀어야 함)
+					if(now >= sdate4){
+						$(data).each(function(){
+							
+							str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
+									+ "<div class='tourna-work-list-div-img'>" + "</div>"
+									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
+									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
+									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
+									+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+								+ "</div>";
+							
+						});
+						
+						$("#tournament4").html(str);
+					}<!-- if 종료 -->
+				});
+				
+		}<!-- □ 4강 불러오기 끝 -->
+		
+		
+		//getTournament4List();
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 -->
+		function getTournament2List(){
+			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			
+			// 0. 아이디 받아오기 
+			
+			console.log("2강 로그인 아이디 -> " + id);
+			
+			// ● 버튼 초기 세팅
+				// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
+				let hideBtn = false;
+				let deactivation = "";
+			
+			// ● 2강 시작일 & 종료일
+			let sdate2;
+			let edate2;
+		
+	
+			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 3(2강)인 경우 데이터를 가져옴 
+			$.getJSON("/tournament/checkRec/3/" + id, function(data){
+				//console.log("▼ 2강 추천 기록 받아오기");
+				//console.log(data);
+				
+				//console.log("▼ 가져온 데이터 유무");
+				//console.log(data != null);
+				
+				// 받아온 추천 기록이 있다면 추천 버튼을 숨긴다(hideBtn을 false -> true로 만듦)
+				if(data != null){
+					hideBtn = true;
+					console.log("hideBtn 상태 -> " + hideBtn);
+				}
+			});
+			
+			
+			// 2. 현재 시간 구하기
+			console.log("▼ 2강) 현재 시간")
+			console.log(now);
+			
+			$.getJSON("/tournament/all", function(data){
+				//console.log(data);							// 모든 대회 정보
+				//console.log(data[2]);						// 웹소설 최강자 8강전
+				//console.log(data[2].to_sdate);				// 웹소설 최강자 8강전 시작일
+				
+				sdate2 = new Date(data[2].to_sdate);		// 시작일 sdate
+				//sdate = new Date(data[2].to_sdate);
+				//console.log("2강 시작일 : " + sdate2);
+				//console.log(now >= sdate2);	 				// 오늘이 시작일을 지났으면 true
+				
+				edate2 = new Date(data[2].to_edate);		// 종료일 edate
+				//console.log("2강 종료일 : " + edate2);
+				//console.log(now < edate2);					// 오늘이 종료
+				
+			});
+			
+			// 3. 데이터 뿌리기
+			$.getJSON("/tournament/getList/2", function(data){ // "/tournament/toWork/get/3
 				
 				let str = "";
-				console.log("▼ 전체 대회 리스트");
+				console.log("▼ 2강 참여 리스트");
 				console.log(data);
 				
-				$(data).each(function(){
+				// ● 추천 버튼 비활성화 유무
+				// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
+				//deactivation  = (hideBtn == true ? 'disabled' : '');
+				
+				console.log("현재 시간이 2강 종료일을 지났는지?");
+				console.log(now > edate2);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
+				
+				/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
+				// 추천 버튼을 눌렀거나 or 종료일이 지난 상태라면 '추천' 비활성화
+				if(hideBtn == true || (now > edate2)){	
+					  deactivation = "disabled";
+				}
+				
+				console.log("현재 시간이 2강 시작일을 지났는지?");
+				console.log(now >= sdate2);
+				
+				// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
+				// (나중에 주석 풀어야 함)
+				if(now >= sdate2){
+					$(data).each(function(){
+						
+						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
+								+ "<div class='tourna-work-list-div-img'>" + "</div>"
+								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
+								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
+								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
+								+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+							+ "</div>";
+						
+					});
 					
-					str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"'>"
-							+ "<div class='tourna-work-list-div'>나중에 이미지 넣을 자리</div>"
-							+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
-							+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
-							+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-							+ "<button type='button'>추천</button>"
-						+ "</div>";
-
+					$("#tournament2").html(str);
+				}<!-- if 종료 -->
+			});
+			
+		}<!-- □ 2강 불러오기 끝 -->
+		
+		//getTournament2List();
+		
+		
+		
+		
+		<!-- ■ 추천 버튼 클릭시 +1 되는 함수 -->
+				
+			<!-- ● 8강 -->
+			$("#tournament8").on("click", "button", function(){
+				
+				//if(confirm("8강 작품) 정말 추천하시겠습니까?")){
+				
+					// ○ 컨트롤러의 vo로 보낼 정보 (아이디, 대회 번호, 작품 번호)
+				
+						// 작품 번호
+						let toworkNum = $(this).parent().attr("data-twno");	
+						console.log("8강 작품 대회 번호 -> " + toworkNum);
+						
+						// 대회 번호
+						let toNum = $(this).parent().attr("data-tno");
+						console.log("8강 대회 번호 -> " + toNum);
+						
+						// 소설 번호
+						let novelNum = $(this).parent().attr("data-novel-num");
+						console.log("8강 소설 번호-> " + novelNum);
+						
+						// sec 태그로 받아온 아이디 확인
+						console.log("8강 추천한 아이디 -> " + id);
+						
+						
+					$.ajax({
+						type : 'post',
+						url : '/tournament/up2',
+						header : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "POST"
+						},
+						dataType : 'text',
+						beforeSend : function(xhr){					// <!-- ▣ 3. post로 보내기 전 beforeSend를 추가해줌 -->
+							xhr.setRequestHeader(header, token);
+						},
+						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
+						data : JSON.stringify({ 
+							towork_num : toworkNum,
+							to_num : toNum,
+							user_id : id,
+							novel_num : novelNum
+						}),
+						success : function(result){
+							console.log("result: " + result);
+							if(result == 'SUCCESS'){
+								alert("8강 작품을 추천했습니다11");
+								
+								// 리스트 다시 가져오기
+								getTournamentWorkList1();
+							}
+						}			
+					});
+					
+					//$(".button8").attr("disabled", true);				
+				//};
+				
+			});
+			
+				
+			<!-- ● 4강 -->
+			$("#tournament4").on("click", "button", function(){
+					
+					// 작품 번호
+					let toworkNum = $(this).parent().attr("data-twno");	
+					console.log("4강 작품 대회 번호 -> " + toworkNum);
+					
+					// 대회 번호
+					let toNum = $(this).parent().attr("data-tno");
+					console.log("4강 대회 번호 -> " + toNum);
+					
+					// 소설 번호
+					let novelNum = $(this).parent().attr("data-novel-num");
+					console.log("8강 소설 번호-> " + novelNum);
+					
+					// sec 태그로 받아온 아이디 확인
+					console.log("4강 추천한 아이디 -> " + id);
+					
+					
+					$.ajax({
+						type : 'post',
+						url : '/tournament/up2',
+						header : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "POST"
+						},
+						dataType : 'text',
+						beforeSend : function(xhr){					
+							xhr.setRequestHeader(header, token);
+						},
+						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
+						data : JSON.stringify({ 
+							towork_num : toworkNum,
+							to_num : toNum,
+							user_id : id,
+							novel_num : novelNum
+						}),
+						success : function(result){
+							console.log("result: " + result);
+							if(result == 'SUCCESS'){
+								alert("4강 작품을 추천했습니다");
+								// 4강 리스트 가져오기
+								getTournament4List();
+								
+							}
+						}			
+					});
 				});
 				
-				$("#tournamentWork").html(str);
+				
+				
+			<!-- ● 2강 -->
+			$("#tournament2").on("click", "button", function(){
+					
+					// 작품 번호
+					let toworkNum = $(this).parent().attr("data-twno");	
+					console.log("2강 작품 대회 번호 -> " + toworkNum);
+					
+					// 대회 번호
+					let toNum = $(this).parent().attr("data-tno");
+					console.log("2강 대회 번호 -> " + toNum);
+					
+					// 소설 번호
+					let novelNum = $(this).parent().attr("data-novel-num");
+					console.log("8강 소설 번호-> " + novelNum);
+					
+					// sec 태그로 받아온 아이디 확인
+					console.log("2강 추천한 아이디 -> " + id);
+					
+					
+					$.ajax({
+						type : 'post',
+						url : '/tournament/up2',
+						header : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "POST"
+						},
+						dataType : 'text',
+						beforeSend : function(xhr){					
+							xhr.setRequestHeader(header, token);
+						},
+						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
+						data : JSON.stringify({ 
+							towork_num : toworkNum,
+							to_num : toNum,
+							user_id : id,
+							novel_num : novelNum
+						}),
+						success : function(result){
+							console.log("result: " + result);
+							if(result == 'SUCCESS'){
+								alert("2강 작품을 추천했습니다");
+								getTournament2List();
+							}
+						}			
+					});
+				});
+		
+
+		
+		
+		
+		<!-- ■ 예상 우승 작품 -->
+		function getWinner(){
+			
+			$.getJSON("/tournament/toWork/winner", function(data){
+				
+				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"' data-novel-num='"+ data.novel_num +"'>"
+						+ 	 "<div class='tourna-work-winner-div'>나중에 이미지 넣을 자리</div>"
+						+	 "<div class='tourna-work-winner-div'>" + data.novel_title + "</div>"
+						+ 	 "<div class='tourna-work-winner-div'>" + data.novel_writer + "</div>"
+						+ 	 "<div class='tourna-work-winner-div'>" + data.towork_rec + "</div>"
+						+ "</div>";
+				
+				$("#winner").html(str);
+				
+				winnersNovelNum = data.novel_num;
+				console.log("예상우승작품) 우승자 노블 번호 --> " + winnersNovelNum);
 			});
+		}
+		<!-- ● setInterval 3초에 한번씩-->
+		//getWinner(); 위로 올라감
+		setInterval(getWinner, 3000);
+		
+		
+		
+		
+		<!-- ■ 05.18 토너먼트 사후처리 -->
+		function afterTournament(){
+			
+			$.ajax({})
 			
 		}
 		
-		//getAllTournamentWorkList();
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<%-- 
 		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
 		function getTournamentWorkList3(){
 			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			
+			// 4강 기록이 있나 확인하기
+			$.getJSON("/tournament/toWork/get/3", function(data){
+				console.log("▼ 2강 기록이 있다면");
+				console.log(data);
+				console.log(data[1] == null);		// data가 DB에 없더라도 data==null이 false가 나오므로 인덱스 번호를 붙여야함
+				
+				if(data[1] == null){				// 기록이 없다면
+					addTournamentWorkList3();		// -> 적재
+				}else if(data[1] != null){			// 기록이 있다면
+					getTournament2List();			// -> DB에서 불러오기
+				}
+				
+			});
+			
+		}	
+		
+		function addTournamentWorkList3(){
 			$.getJSON("/tournament/toWork/3", function(data){
 				
 				let str = "";
@@ -181,23 +832,38 @@
 			
 		}
 		
-		$("#tournament2Btn").on("click", function(){
+		//$("#tournament2Btn").on("click", function(){
 			getTournamentWorkList3();
 			// 클릭시 버튼 안 보이게
-			let target = document.getElementById('tournament2Btn');
-			target.style.display = "none";
-		})
+		//	let target = document.getElementById('tournament2Btn');
+		//	target.style.display = "none";
+		//})
+		--%>
 		
+		<%-- 
+		<!-- ■ 토너먼트 4강 참여 리스트가 DB에 없는 경우는 '적재', 있는 경우는 '가져오기'-->
+			<!-- getTournamentWorkList2() & addTournamentWorkList2()-->
 		
-		
-		<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
 		function getTournamentWorkList2(){
 			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			// 1. 만약 이미 추천한 기록이 있다면, '참여하기' 버튼을 눌렀을 때 또 다시 적재하지 말아야 함. ( 그냥 데이터 불러오기만 )
 			
-				//let id = "id012";
+			// 4강 기록이 있나 확인하기
+			$.getJSON("/tournament/toWork/get/2", function(data){
+				console.log("▼ 4강 기록이 있다면");
+				console.log(data);
+				console.log(data[1] == null);		// data가 DB에 없더라도 data==null이 false가 나오므로 인덱스 번호를 붙여야함
+				
+				if(data[1] == null){				// 기록이 없다면
+					addTournamentWorkList2();		// -> 적재
+				}else if(data[1] != null){			// 기록이 있다면
+					getTournament4List();			// -> DB에서 불러오기
+				}
+				
+			});
+		}
+		
+		function addTournamentWorkList2(){
 			
-			// 2.
 			$.getJSON("/tournament/toWork/2", function(data){
 				
 				let str = "";
@@ -219,103 +885,41 @@
 				
 				$("#tournament4").html(str);
 			});
-			
-		}
+		} // 함수 addTournamentWorkList2() 끝
 		
-		$("#tournament4Btn").on("click", function(){
+		
+		
+		//$("#tournament4Btn").on("click", function(){
 			getTournamentWorkList2();
 			
 			// 클릭시 버튼 안 보이게
-			let target = document.getElementById('tournament4Btn');
+		//	let target = document.getElementById('tournament4Btn');
 			//target.disabled = true; (얘는 남아 있는 상태로 비활성화)
-			target.style.display = "none";
-		})
+		//	target.style.display = "none";
+		//})
 		
+		--%>
 		
-
-		
-		
-		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 (코드 수정중) -->
-		function getTournamentWorkList1(){
-			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
-			
-				// (임시)나중에 로그인한 아이디 받아오기
-				//let id = "id012";	   
-				console.log("8강 로그인 아이디 -> " + id);
-				
-				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
-				let hideBtn = false;
-				
-			
-			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 1(8강)인 경우 데이터를 가져옴 
-			$.getJSON("/tournament/checkRec/1/" + id, function(data){
-				console.log("▼ 8강 추천 기록 받아오기");
-				console.log(data);
-				
-				console.log("▼ 가져온 데이터 유무");
-				console.log(data != null);
-				
-				// 받아온 추천 기록이 있다면 추천 버튼을 숨긴다(hideBtn을 false -> true로 만듦)
-				if(data != null){
-					hideBtn = true;
-					console.log("hideBtn 상태 -> " + hideBtn);
-				}
-			});
-			
-			
-			// 2. 현재 시간 구하기
-			
-			// 3. 데이터 뿌리기
-			
-				$.getJSON("/tournament/toWork8", function(data){
-					
-					let str = "";
-					console.log("▼ 8강 참여 리스트");
-					console.log(data);
-					
-					// ● 비활성화 유무
-						// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
-					let deactivation  = (hideBtn == true ? 'disabled' : '');
-					
-					$(data).each(function(){
-						
-						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"'>"
-								+ "<div class='tourna-work-list-div'>나중에 이미지 넣을 자리</div>"
-								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
-								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
-								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-								+ "<button type='button' class='button8' " + deactivation +">추천</button>"
-							+ "</div>";
-						
-					});
-					
-					$("#tournament8").html(str);
-				});
-			
-		}<!-- □ 8강 불러오기 끝 -->
-		
-		
-		getTournamentWorkList1();
-		
-		
-	
-		
+		<%-- 
 		<!-- ■ 토너먼트 4강 참여 리스트를 불러오는 함수 (코드 수정중) -->
 		function getTournament4List(){
 			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			
-			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
+			// 0. 아이디 받아오기
 			
-				// (임시)나중에 로그인한 아이디 받아오기
-				//let id = "id012";	     	 
-				console.log("4강 로그인 아이디 -> " + id);
-				
-				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
+			console.log("4강 로그인 아이디 -> " + id);
+			
+			// ● 버튼 초기 세팅
+				// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
+				let deactivation = "";
+			
+			// ● 8강 시작일 & 종료일
+			let sdate4;
+			let edate4;
 				
 			
-			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 1(8강)인 경우 데이터를 가져옴 
+			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 2(4강)인 경우 데이터를 가져옴 
 			$.getJSON("/tournament/checkRec/2/" + id, function(data){
 				console.log("▼ 4강 추천 기록 받아오기");
 				console.log(data);
@@ -333,6 +937,25 @@
 			
 			// 2. 현재 시간 구하기
 			
+			console.log("▼ 4강) 현재 시간")
+			console.log(now);
+			
+			$.getJSON("/tournament/all", function(data){
+				console.log(data);							// 모든 대회 정보
+				console.log(data[1]);						// 웹소설 최강자 8강전
+				console.log(data[1].to_sdate);				// 웹소설 최강자 8강전 시작일
+				
+				sdate4 = new Date(data[1].to_sdate);		// 시작일 sdate
+				//sdate = new Date(data[1].to_sdate);
+				console.log(sdate4);
+				console.log(now > sdate4);	 				// 오늘이 시작일을 지났으면 true
+				
+				edate4 = new Date(data[1].to_edate);			// 종료일 edate
+				console.log(edate4);
+				console.log(now < edate4);					// 오늘이 종료
+				
+			});
+			
 			// 3. 데이터 뿌리기
 			
 				$.getJSON("/tournament/toWork/get/2", function(data){
@@ -341,259 +964,136 @@
 					console.log("▼ 4강 참여 리스트");
 					console.log(data);
 					
-					// ● 비활성화 유무
-						// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
-					let deactivation  = (hideBtn == true ? 'disabled' : '');
+					// ● 추천 버튼 비활성화 유무
+					// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
+					//deactivation  = (hideBtn == true ? 'disabled' : '');
 					
-					$(data).each(function(){
-						
-						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"'>"
-								+ "<div class='tourna-work-list-div'>나중에 이미지 넣을 자리</div>"
-								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
-								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
-								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-								+ "<button type='button' class='button8' " + deactivation +">추천</button>"
-							+ "</div>";
-						
-					});
+					console.log("현재 시간이 4강 종료일을 지났는지?");
+					console.log(now > edate4);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
 					
-					$("#tournament4").html(str);
+					/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
+					// 추천 버튼을 눌렀거나 or 종료일이 지난 상태라면 '추천' 비활성화
+					if(hideBtn == true || (now > edate4)){	
+							deactivation = "disabled";
+					}
+					
+					console.log("현재 시간이 4강 시작일을 지났는지?");
+					console.log(now >= sdate4);
+					
+					// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
+					// (나중에 주석 풀어야 함)
+					if(now >= sdate4){
+						$(data).each(function(){
+							
+							str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"'>"
+									+ "<div class='tourna-work-list-div'>나중에 이미지 넣을 자리</div>"
+									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
+									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
+									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
+									+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+								+ "</div>";
+							
+						});
+						
+						$("#tournament4").html(str);
+					}<!-- if 종료 -->
 				});
-			
+				
 		}<!-- □ 4강 불러오기 끝 -->
 		
 		
 		//getTournament4List();
 		
-		
-		
-		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (코드 수정중) -->
-		function getTournament2List(){
-			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-			
-			// 0. 아이디 받아오기 (로그인한 유저가 8강을 추천한 경우 값이 존재)
-			
-				// (임시)나중에 로그인한 아이디 받아오기
-				//let id = "id012";
-				console.log("2강 로그인 아이디 -> " + id);	
-			
-				// (버튼 초기 세팅)추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
-				let hideBtn = false;
-		
-	
-			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 1(8강)인 경우 데이터를 가져옴 
-			$.getJSON("/tournament/checkRec/3/" + id, function(data){
-				console.log("▼ 2강 추천 기록 받아오기");
-				console.log(data);
 				
-				console.log("▼ 가져온 데이터 유무");
-				console.log(data != null);
-				
-				// 받아온 추천 기록이 있다면 추천 버튼을 숨긴다(hideBtn을 false -> true로 만듦)
-				if(data != null){
-					hideBtn = true;
-					console.log("hideBtn 상태 -> " + hideBtn);
-				}
-			});
+		<div class="row">
+	 		<h3 class="text-primary">대회 참여 리스트 #tournamentWork</h3>
+			<div id="tournamentWork"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
+	 
+		
+		<!-- ■ 토너먼트 전체 참여 리스트를 불러오는 함수 -->
+		function getAllTournamentWorkList(){
 			
-			
-			// 2. 현재 시간 구하기
-			
-			// 3. 데이터 뿌리기
-			$.getJSON("/tournament/toWork/get/3", function(data){
+			$.getJSON("/tournament/toWork2", function(data){
 				
 				let str = "";
-				console.log("▼ 2강 참여 리스트");
+				console.log("▼ 전체 대회 리스트");
 				console.log(data);
-				
-				// ● 비활성화 유무
-					// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
-				let deactivation  = (hideBtn == true ? 'disabled' : '');
 				
 				$(data).each(function(){
 					
-					str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"'>"
+					str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
 							+ "<div class='tourna-work-list-div'>나중에 이미지 넣을 자리</div>"
 							+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 							+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 							+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-							+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+							+ "<button type='button'>추천</button>"
 						+ "</div>";
-					
+
 				});
 				
-				$("#tournament2").html(str);
+				$("#tournamentWork").html(str);
 			});
 			
-		}<!-- □ 2강 불러오기 끝 -->
+		}
+		
+		//getAllTournamentWorkList();
 		
 		
 		
-		
-		
-		
-		<!-- ■ 추천 버튼 클릭시 +1 되는 함수 (나중에 아이디 받아와야 함)-->
-				
-			<!-- ● 8강 -->
-			$("#tournament8").on("click", "button", function(){
-				
-				//if(confirm("8강 작품) 정말 추천하시겠습니까?")){
-				
-					// ○ 컨트롤러의 vo로 보낼 정보 (아이디, 대회 번호, 작품 번호)
-				
-						// 작품 번호
-						let toworkNum = $(this).parent().attr("data-twno");	
-						console.log("8강 작품 대회 번호 -> " + toworkNum);
-						
-						// 대회 번호
-						let toNum = $(this).parent().attr("data-tno");
-						console.log("8강 대회 번호 -> " + toNum);
-						
-						// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-						//let userId = "id012"; // 8강추천아이디
-						console.log("8강 추천한 아이디 -> " + userId);
-						
-						
-					$.ajax({
-						type : 'post',
-						url : '/tournament/up2',
-						header : {
-							"Content-Type" : "application/json",
-							"X-HTTP-Method-Override" : "POST"
-						},
-						dataType : 'text',
-						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
-						data : JSON.stringify({ 
-							towork_num : toworkNum,
-							to_num : toNum,
-							user_id : userId
-						}),
-						success : function(result){
-							console.log("result: " + result);
-							if(result == 'SUCCESS'){
-								alert("8강 작품을 추천했습니다11");
-								
-								// 리스트 다시 가져오기
-								getTournamentWorkList1();
-							}
-						}			
-					});
-					
-					//$(".button8").attr("disabled", true);				
-				//};
-				
-			});
-			
-				
-				<!-- ● 4강 -->
-				$("#tournament4").on("click", "button", function(){
-					
-					// 작품 번호
-					let toworkNum = $(this).parent().attr("data-twno");	
-					console.log("4강 작품 대회 번호 -> " + toworkNum);
-					
-					// 대회 번호
-					let toNum = $(this).parent().attr("data-tno");
-					console.log("4강 대회 번호 -> " + toNum);
-					
-					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-					//let userId = "id012"; // 4강추천아이디
-					console.log("4강 추천한 아이디 -> " + userId);
-					
-					
-					$.ajax({
-						type : 'post',
-						url : '/tournament/up2',
-						header : {
-							"Content-Type" : "application/json",
-							"X-HTTP-Method-Override" : "POST"
-						},
-						dataType : 'text',
-						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
-						data : JSON.stringify({ 
-							towork_num : toworkNum,
-							to_num : toNum,
-							user_id : userId
-						}),
-						success : function(result){
-							console.log("result: " + result);
-							if(result == 'SUCCESS'){
-								alert("4강 작품을 추천했습니다");
-								// 4강 리스트 가져오기
-								getTournament4List();
-								
-							}
-						}			
-					});
-				});
-				
-				
-				
-				<!-- ● 2강 -->
-				$("#tournament2").on("click", "button", function(){
-					
-					// 작품 번호
-					let toworkNum = $(this).parent().attr("data-twno");	
-					console.log("2강 작품 대회 번호 -> " + toworkNum);
-					
-					// 대회 번호
-					let toNum = $(this).parent().attr("data-tno");
-					console.log("2강 대회 번호 -> " + toNum);
-					
-					// 아이디 어떻게 받을지 질문(ajax에서도 세션을 사용하는지?) -> 나중에 배움
-					//let userId = "id012"; // 2강추천아이디
-					console.log("2강 추천한 아이디 -> " + userId);
-					
-					
-					$.ajax({
-						type : 'post',
-						url : '/tournament/up2',
-						header : {
-							"Content-Type" : "application/json",
-							"X-HTTP-Method-Override" : "POST"
-						},
-						dataType : 'text',
-						contentType: 'application/json',			// ★ post 415에러 떴을때 코드 추가 했더니 됐음
-						data : JSON.stringify({ 
-							towork_num : toworkNum,
-							to_num : toNum,
-							user_id : userId
-						}),
-						success : function(result){
-							console.log("result: " + result);
-							if(result == 'SUCCESS'){
-								alert("2강 작품을 추천했습니다");
-								getTournament2List();
-								// 한 번 누른 버튼 비활성화 시키기. 다른 작품들까지
-							}
-						}			
-					});
-				});
-		
+			<!-- ■ 리스트가 추가될 공간 -->
+
+ 		<div class="row">
+ 			<h3 class="text-primary">전체 대회 리스트 #tournament</h3>
+			<div id="tournament"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
 
 		
-		
-		
-		<!-- ■ 예상 우승 작품 -->
-		function getWinner(){
+		<!-- ■ 전체 리스트를 불러오는 함수 -->
+		function getTournamentList(){
 			
-			$.getJSON("/tournament/toWork/winner", function(data){
+			$.getJSON("/tournament/all", function(data){
 				
-				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"'>"
-						+ 	 "<div class='tourna-work-winner-div'>나중에 이미지 넣을 자리</div>"
-						+	 "<div class='tourna-work-winner-div'>" + data.novel_title + "</div>"
-						+ 	 "<div class='tourna-work-winner-div'>" + data.novel_writer + "</div>"
-						+ 	 "<div class='tourna-work-winner-div'>" + data.towork_rec + "</div>"
-						+ "</div>";
+				let str = "";
+				//console.log("전체 대회 리스트 -> " + data);
 				
-				$("#winner").html(str);
+				$(data).each(function(){
+					
+					str += "<div class='tourna-list' data-tno='" + this.to_num + "'>" + 
+								this.to_name + //"! 시작일 : " + this.to_sdate + ", 종료일 : " + this.to_edate +
+						   "</div>";
+
+				/** 테스트
+					// 현재시간
+					let now = new Date();
+						console.log("▼ 전체대회리스트) 현재 시간");
+						console.log(now);
+					// 각 대회별 기간
+					let timestamp1 = this.to_sdate;
+					let timestamp2 = this.to_edate;
+					
+					let startDate = new Date(timestamp1);
+						console.log("▼ 전체대회리스트)" + this.to_name + "시작일");
+						console.log(startDate);
+					let endDate = new Date(timestamp2);
+						console.log("▼ 전체대회리스트)" + this.to_name + " 종료일");
+						console.log(endDate);
+						
+					// 날짜 비교
+					console.log(now > startDate);
+					console.log(now < startDate);
+					*/	 
+				});
+				
+				$("#tournament").html(str);
 			});
+			
 		}
-		<!-- ● setInterval 3초에 한번씩-->
-		getWinner();
-		setInterval(getWinner, 3000);
+		
+		getTournamentList();
 		
 		
+		--%>
 		
 		
 		

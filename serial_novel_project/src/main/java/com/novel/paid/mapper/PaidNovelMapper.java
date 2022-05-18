@@ -2,24 +2,28 @@ package com.novel.paid.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
-import com.novel.paid.domain.PaidNovelInnerVO;
-import com.novel.paid.domain.PaidNovelVO;
+
+import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
 
 public interface PaidNovelMapper {
 	
-	public List<PaidNovelVO> getList(SearchCriteria cri);
+	public List<PaidVO> selectList(String novelWeek);
 	
-	public void insert(PaidNovelVO vo);
+	public List<PaidVO> getJoinList(SearchCriteria cri);
 	
-	public PaidNovelInnerVO select(long paid_num);
+	public void insertPaid(PaidVO vo);	
 	
-	public void delete(long paid_num);
+	public List<PaidVO> selectDetail(
+			@Param("paidSNum")long paidSNum ,@Param("novelNum") long novelNum); 
 	
-	public void update(PaidNovelVO vo);
+	public List<PaidVO> select(long novelNum);
+	
+	public void delete(long paid_snum);
+	
+	public void update(PaidVO vo); 
 	
 	public int countPageNum(SearchCriteria cri);
-	
-	
 }

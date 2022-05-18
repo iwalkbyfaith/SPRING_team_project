@@ -10,5 +10,12 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+	<a href="/secu/join">join</a>
+	<a href="/customLogin">login</a>
+	<a href="/tourna/list2">tournament</a>
+	<a href="/free/novelList">free novel</a>
+	<a href="/paid/novelList">paid novel</a>
+	<a href="#"></a>
 </body>
 </html>
