@@ -59,8 +59,8 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	</select>
 	
 	<select id="selectList" resultType="com.novel.free.domain.FreeNovelJoinVO">
-	SELECT n.novel_title , n.novel_num FROM novel_tbl n INNER JOIN free_tbl f ON n.novel_num = f.novel_num 
-WHERE n.novel_category = #{novelCategory} GROUP BY n.novel_title, n.novel_num
+	SELECT n.novel_title , n.novel_num FROM novel_tbl n 
+WHERE n.novel_category = #{novelCategory} and n.novel_week='free' GROUP BY n.novel_title, n.novel_num
 	</select>
 	
 	

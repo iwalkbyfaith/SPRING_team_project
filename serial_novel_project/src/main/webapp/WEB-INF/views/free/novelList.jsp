@@ -60,12 +60,6 @@ text-align:left;
 list-style-type:none;
 } 
 
-.listsize{
-width:500px;
-height:1000px;
-border:solid 1px;
-}
-
 }
 	
 	</style>
@@ -587,6 +581,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
+	
 	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 	$(".writebtn").html(str1);
@@ -618,15 +613,19 @@ console.log(novelNum);
 					console.log(this);
 				
 				
+				
 					
 				
 				$(".tbody").html(str);
+				
 	
 });
 });
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
+		
 });
 //■ 로맨스 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".romanceLi", function(){
@@ -681,6 +680,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
 	
 });
 //■ 무협지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
@@ -736,6 +736,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
 });
 //■ 미스터리 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".mysteryLi", function(){
@@ -863,11 +864,30 @@ $.getJSON(url, function(data){
 			});
 });
 
-$(".content").show("slow");
-$(".series").show("slow");
-$(".delete").show("slow");
-$(".update").show("slow");
+
+	$.getJSON("/replies/detail/"+ freeNum, function(data){
+	let repl="";
+	console.data
+	$(data).each(
+		function(){
+			var timestamp = this.free_rdate;
+			var date = new Date(timestamp);
+			var formattedTime = "작성일 : " + date.getFullYear()
+			+"/" + (date.getMonth()+1)+
+			+"/" + date.getDate();
+			repl += "<li id='commentLi' data-freeNum='" + this.free_num +"'>"+this.user_id+" :"+this.frepl_content+"</li>";
+		});
+	$(".commentheader").html(repl);
 });
+	
+	$(".content").show("slow");
+	$(".series").show("slow");
+	$(".delete").show("slow");
+	$(".update").show("slow");
+});
+
+
+
 
 // ■ 글목록 버튼을 누르면 보고있던 카테고리에 해당하는 글목록을 보여줌
 $(".List").on("click",".novelList",function(){
@@ -959,6 +979,7 @@ $(".series").on("click",".novelSeries",function(){
 		$(".table").show("slow");
 		$(".writebtn").show("slow");
 		$(".List").show("slow");
+		
 		
 	});
 // ■ 글쓰기 버튼을 누르면 보고있던 작품의 정보를 받아서 작가,제목은 기입된채로 소설 쓰기창이 나옴 (추후에는 해당하는 작가만 보이게끔 만들예정) 

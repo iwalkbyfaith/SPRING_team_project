@@ -8,5 +8,6 @@ public class NovelVO {					// ■ 소설 연재 껍데기
 	    private String novel_category;	// 소설 장르
 	    private String novel_week; 		// 소설 연재 요일
 	    private long novel_end; 		// 소설 완결 유무 (char(1) default ‘0’)
+	    private String user_id;			// 유저 아이디
 	
 }

@@ -19,6 +19,7 @@ public class FreeNovelJoinVO {
     private long novel_num; 			  	// 소설 번호 (fk)
     private String novel_title; 	  	  	// 소설 제목
     private String free_title; 	  	  		// 소설 소제목
+    private String user_id;					// 유저 아이디
     
     
 }
