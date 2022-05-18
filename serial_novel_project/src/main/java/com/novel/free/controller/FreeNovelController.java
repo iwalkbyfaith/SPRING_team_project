@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -77,6 +79,7 @@ public class FreeNovelController {
 		}
 		return entity;
 	}
+	
 	@PostMapping(value="", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	// produces에 TEXT_PLAIN_VALUES를 줬으므로 결과코드와 문자열을 넘김
 	public ResponseEntity<String> register(
@@ -84,7 +87,8 @@ public class FreeNovelController {
 			// @RequestBody 어노테이션이 붙어야
 			// consumes와 연결됨
 			@RequestBody FreeNovelVO vo){
-		// 깡통 entity를 먼저 생성
+		// 깡통entity를 먼저 생성
+		log.info(vo);
 		ResponseEntity<String> entity = null;
 		try {
 			// 먼저 글쓰기 로직 실행 후 에러가 없다면...
@@ -98,5 +102,50 @@ public class FreeNovelController {
 		// 위의 try블럭이나 catch블럭에서 얻어온 entity변수 리턴
 		return entity;
 	}
+	
+	@DeleteMapping(value="/{free_num}",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("free_num") Long free_num){
+
+		ResponseEntity<String> entity = null;
+
+		try {
+			service.delete(free_num);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			} catch(Exception e) {
+				entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+				return entity;
+}
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
+			value="/{freeNum}",
+			consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> modify(
+	// VO는 우선 payload에 적힌 데이터(json)로 받아옵니다.
+	// @ReuqestBody가 붙은 vo는
+	// payload에 적힌 데이터를 vo로 환산해서 가져옵니다.
+		@RequestBody FreeNovelVO vo,
+		// 단, 댓글번호는 PathVariable로 받아옵니다.
+		@PathVariable("freeNum") Long freeNum){
+
+		ResponseEntity<String> entity = null;
+		try {
+	// payload에는 reply만 넣어줘도 되는데 그 이유는
+	// rno는 요청주소로 받아오기 때문입니다.
+	// 단, rno를 주소를 받아오는 경우는 아직 replyVO에
+	// rno가 세팅이 되지 않은 상태이므로 setter로 rno까지 지정을 해줍ㄴ다.
+	
+	vo.setFree_num(freeNum);
+	
+	service.update(vo);
+	
+		entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+}
 }
 

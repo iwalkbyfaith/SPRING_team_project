@@ -24,7 +24,7 @@ public interface FreeNovelMapper {
 	
 	public List<FreeNovelJoinVO> select(long novelNum); 							// 원하는 작품정보 가져오기 
 	
-	public void delete(long free_snum); 											// 작품 n회차 지우기 
+	public void delete(long freeNum); 												// 작품 n회차 지우기 
 	
 	public void update(FreeNovelVO vo); 											// 작품 수정하기
 		

@@ -102,14 +102,97 @@
 	<!-- ■ 예상 우승 작품 가져오기 -->
 	<select id="getWinner" resultType="com.novel.tournament.domain.TournamentJoinVO">
 		<![CDATA[
-		SELECT * 
-            FROM 
-        (SELECT tt.to_num, tt.towork_num, nt.novel_title, nt.novel_writer, tt.towork_rec FROM towork_tbl tt INNER JOIN novel_tbl nt ON tt.novel_num = nt.novel_num ORDER BY towork_rec DESC) 
-            WHERE 
-        rownum <= 1
+
+        SELECT * FROM (
+	        SELECT tt2.* FROM ( 
+	            SELECT tt1.to_num, tt1.to_name, tt1.towork_num, nt.novel_title, nt.novel_writer, tt1.towork_rec, nt.novel_num FROM
+	                (SELECT tt.to_num, tt.to_name, tot.towork_num, tot.towork_rec, tot.novel_num FROM
+	                    towork_tbl tot
+	                LEFT JOIN
+	                    tourna_tbl tt
+	                ON
+	                    tot.to_num = tt.to_num) tt1
+	            LEFT JOIN
+	                novel_tbl nt
+	            ON 
+	                tt1.novel_num = nt.novel_num
+	            ) tt2
+	        LEFT JOIN
+	            (
+	            SELECT novel_num, sum(free_hit) as totalrec FROM free_tbl group by novel_num
+	            ) tt3
+	        ON tt2.novel_num = tt3.novel_num
+	        ORDER BY to_num DESC, towork_rec DESC, totalrec DESC
+	       )
+       WHERE rownum <= 1
+        
 		]]>
 	</select>
 	
+	
+	<!-- ■ 05.16 대회 우승시 사후처리  -->
+		<!-- ● 작품 관련 -->
+			<!-- 1) novel_tbl에서 week=free -> week=mon(예시)로 바꿈 -->
+			<update id="updateWeek">
+				UPDATE novel_tbl SET novel_week = #{week} WHERE novel_num=#{novel_num}
+			</update>
+	
+			<!-- 2) auth_tbl에서 작가의 등급을 ROLE_PAID_WRITER로 변경하기 -->
+				<!-- 2-1) 우승 작품의 작품번호(novel_num)을 얻어와서 -->
+				<select id="getWinnersNovelNum" resultType="long">
+					<![CDATA[
+						SELECT tt2.novel_num FROM(
+			                SELECT tt1.* FROM (
+			                    SELECT tot.*, ft.totalrec FROM towork_tbl tot
+			                        LEFT JOIN
+			                    (SELECT novel_num, sum(free_hit) as totalrec FROM free_tbl group by novel_num) ft
+			                        ON tot.novel_num = ft.novel_num
+			                	) tt1
+			                ORDER BY 
+			                    to_num DESC, towork_rec DESC, totalrec DESC
+			            ) tt2
+			        	WHERE rownum <= 1
+					]]>
+				</select>
+				
+				<!-- 2-2) novel_tbl에서 해당 작품 번호의 아이디를 가져온 후 -->
+				<select id="getWinnersUserId" resultType="string">
+					SELECT user_id FROM novel_tbl WHERE novel_num = #{novel_num} 
+				</select>
+				
+				<!-- 2-3) auth_tbl에서 해당 유저의 등급을 변경한다. -->
+				<update id="updateWinnersAuth">
+					UPDATE auth_tbl SET auth = 'ROLE_PAID_WRITER' WHERE user_id = #{user_id}
+				</update>
+				
+			<!-- 3) free_tbl에서 연재했던 데이터 삭제 -->
+				<delete id="deleteWinnersFreeData">
+					DELETE FROM free_tbl where novel_num = #{novel_num}
+				</delete>
+		
+		
+		
+		<!-- ● 대회 관련 -->
+			<!-- 1) 다음 토너먼트를 위해서 tourna_tbl의 to_sdate(시작일), to_edate(종료일)를 업데이트 해줌 -->
+				<update id="updateTournaDate">
+					UPDATE 
+                		tourna_tbl 
+            		SET 
+		                to_sdate = (SELECT to_edate FROM tourna_tbl WHERE to_num=4) + #{addSdate},
+		                to_edate = (SELECT to_edate FROM tourna_tbl WHERE to_num=4) + #{addEdate}
+            		WHERE
+                		to_num=#{to_num}
+				</update>
+				
+			<!-- 2) torec_tbl(추천 기록)의 데이터를 비워줌 -->
+				<delete id="deleteTorecTbl">
+					DELETE FROM torec_tbl
+				</delete>
+				
+			<!-- 3) towork_tbl(대회 출전 기록)의 데이터를 비워줌 -->
+				<delete id="deleteToworkTbl">
+					DELETE FROM towork_tbl
+				</delete>
 	
 	
 	

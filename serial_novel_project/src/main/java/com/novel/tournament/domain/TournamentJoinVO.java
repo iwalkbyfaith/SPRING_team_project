@@ -13,5 +13,7 @@ public class TournamentJoinVO {	// ◀ 토너먼트&토너먼트작품&노블 �
 	private long towork_rec;		// 토너먼트 작품 추천수							- 토너먼트 작품
 
 	// 05.14
-	private long novel_num;			// 토너먼트 소설 번호							- 
+	private long novel_num;			// 토너먼트 소설 번호							- 노블
+	
+
 }
