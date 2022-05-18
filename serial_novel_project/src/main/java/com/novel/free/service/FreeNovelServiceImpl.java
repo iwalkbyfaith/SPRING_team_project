@@ -45,6 +45,11 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 		
 		return freeMapper.select(novelNum);
 	}
+	@Override
+	public List<NovelVO> selecttitle(long novelNum) {
+		
+		return freeMapper.selecttitle(novelNum);
+	}
 
 	@Override
 	public void insertNovel(NovelVO vo) {

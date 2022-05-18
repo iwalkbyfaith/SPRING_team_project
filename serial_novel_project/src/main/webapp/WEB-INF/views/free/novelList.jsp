@@ -58,6 +58,9 @@ text-align:center;
 #commentLi{
 text-align:left;
 list-style-type:none;
+}
+#writeNovel{
+float:right;
 } 
 
 }
@@ -133,7 +136,9 @@ list-style-type:none;
 <li id="headermLi">미스터리</li>
 </ul>
 </div>
-
+<div id="writeNovel">
+<button id="novelWriteBtn">소설글쓰기</button>
+</div>
 
 <br/>
 <br/>
@@ -198,6 +203,57 @@ list-style-type:none;
 	</div>
 </div>
 </div>
+				<!-- ■ 위의 id="novelwriteBtn"을 눌렀을때 나오게 되는 소설작성 페이지 (기본적인 작가,카테고리,제목 등을 적는페이지) -->
+				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="novelwork">
+                <tr>
+                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        <tr>
+                        <td>작가</td>
+                        <td>
+                        <textarea id="novelWriter" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td>
+                        <textarea id="novelTitle" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>카테고리</td>
+                        <td>
+                        <select id="category">
+                        	<option value="fantasy">판타지</option>
+                        	<option value="romance">로맨스</option>
+                        	<option value="wuxia">무협지</option>
+                        	<option value="mystery">미스터리</option>
+                        </select>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>n부작</td>
+                        <td>
+                        <input class="nSum" type="number" min="1" value="">
+                        </td>
+                        </tr>
+ 						<tr>
+ 						<td id="nBtn">
+ 						
+ 						</td>
+ 						</tr>
+                        
+                     </table>
+ 
+                </td>
+                </tr>
+        </table>
 				<!-- ■ 위의 class="writebtn"을 눌렀을때 나오게 되는 소설작성 페이지 (넘어오면서 novelNum을 가지고와서 기본적인 내용{작가,제목}은 받아옴.) -->
 				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
                 <tr>
@@ -562,6 +618,17 @@ $(".content").hide();
 $(".table").hide();
 
 getMysteryList();
+	
+});
+//■ 소설 글쓰기를 클릭시 소설 글쓰기 창을 보여줌.
+$("#novelWriteBtn").on("click",function(){
+
+$("#novellist").empty();
+$(".novelwork").show();
+
+
+
+str3+=	"<button class='novelCancel' data-novelCategory='fantasy'>취소</button><button class='novelSubmit' data-novelCategory='"+novelCategory+"'>등록</button>";
 	
 });
 
@@ -988,7 +1055,7 @@ $(".writebtn").on("click",".writenovelbtn",function(){
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
 	
-	$.getJSON("/free/novel/select/"+ novelNum , function(data){
+	$.getJSON("/free/novel/selecttitle/"+ novelNum , function(data){
 		
 		$(data).each(
 				function(){

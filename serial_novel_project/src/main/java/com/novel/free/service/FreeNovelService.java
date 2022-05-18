@@ -18,6 +18,8 @@ public interface FreeNovelService {
 	public List<FreeNovelJoinVO> selectDetail(long freeSNum, long novelNum);	// 원하는 무료소설 디테일 선택
 	
 	public List<FreeNovelJoinVO> select(long novelNum);			// 원하는 무료소설 정보선택
+	
+	public List<NovelVO> selecttitle(long novelNum);			// 글쓰기창에 넣어줄 작가,제목 선택전용
 
 	public void insertNovel(NovelVO vo);						// 소설 정보 입력
 	

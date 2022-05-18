@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.free.domain.NovelVO;
 import com.novel.free.service.FreeNovelService;
 
 
@@ -31,6 +32,7 @@ public class FreeNovelController {
 
 	@Autowired
 	private FreeNovelService service;
+	
 	
 	@GetMapping(value="/novel/{novelCategory}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE} )
@@ -56,6 +58,22 @@ public class FreeNovelController {
 		
 		try {
 			entity = new ResponseEntity<>(service.select(novelNum), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
+	}
+	@GetMapping(value="/novel/selecttitle/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<NovelVO>> selecttitle(@PathVariable("novelNum") long novelNum){
+		
+		ResponseEntity<List<NovelVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(service.selecttitle(novelNum), HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	

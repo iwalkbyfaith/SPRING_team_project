@@ -1,5 +1,8 @@
 package com.novel.free.domain;
 
+import lombok.Data;
+
+@Data
 public class NovelVO {					// ■ 소설 연재 껍데기 
 	 	private long novel_num; 		// 소설 번호
 	    private String novel_writer;	// 소설 작가
