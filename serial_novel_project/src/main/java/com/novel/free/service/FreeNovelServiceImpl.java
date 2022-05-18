@@ -60,8 +60,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	}
 	
 	@Override
-	public void delete(long free_snum) {
-			freeMapper.delete(free_snum);
+	public void delete(long freeNnum) {
+			freeMapper.delete(freeNnum);
 		
 	}
 

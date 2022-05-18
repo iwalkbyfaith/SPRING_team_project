@@ -29,7 +29,7 @@ public class PaidNovelRestController {
 	@Autowired
 	private PaidNovelService paidservice;
 	
-	
+	// ■ paidList에서 요일별로 출력
 	@GetMapping(value="/novel/{novelWeek}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	public ResponseEntity<List<PaidVO>> novelList(@PathVariable("novelWeek") String novelWeek){
@@ -46,64 +46,11 @@ public class PaidNovelRestController {
 		return entity;
 
 	}
-	
-	
-	@GetMapping(value="/novel/select/{novelNum}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<PaidVO>> select(@PathVariable("novelNum") long novelNum){
-		
-		ResponseEntity<List<PaidVO>> entity = null;
-		
-		try {
-			entity = new ResponseEntity<>(paidservice.select(novelNum), HttpStatus.OK);
-		}catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
-		}
-		
-		return entity;
-		
-	}
-	
-	
-	
-	@DeleteMapping(value="/d/{paidNum}",
-			produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> remove(@PathVariable("paidNum") long paidNum){
-		ResponseEntity<String> entity = null;
-		
-		try {
-			paidservice.delete(paidNum);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e) {
-			entity = new ResponseEntity<String>(
-					e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-	
-	
 
-	@PostMapping(value="/insert", consumes="application/json",
-			produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> insertPaid(@RequestBody PaidVO vo){
-			
-		ResponseEntity<String> entity = null;
-	try {
-		paidservice.insertPaid(vo);
-		entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e) {
-	
-		entity = new ResponseEntity<String>(
-			e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-	
-	
+	// ■ paidDetail에서 본문 가져오기
 	@GetMapping(value="/{paidnum}",
 					produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<PaidVO> list(@PathVariable("paidnum") long paidnum){
+	public ResponseEntity<PaidVO> DetailCon(@PathVariable("paidnum") long paidnum){
 		
 		ResponseEntity<PaidVO> entity = null;
 	try {
@@ -115,23 +62,5 @@ public class PaidNovelRestController {
 	return entity;
 }
 	
-	
-	@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
-			value=	"/m/{paidNum}",
-			consumes="application/json", 
-			produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody PaidVO vo, @PathVariable("paidNum") Long paidNum){
-		ResponseEntity<String> entity = null;
-		try {	
-			log.info("vo : " + vo);
-			log.info("paidNum : " + paidNum);
-			paidservice.update(vo, paidNum);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		}catch(Exception e) {
-			entity = new ResponseEntity<String>(
-					e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
 	
 }
