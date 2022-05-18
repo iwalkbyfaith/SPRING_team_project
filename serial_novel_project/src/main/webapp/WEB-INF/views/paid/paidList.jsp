@@ -252,12 +252,6 @@ text-align:center;
                 </tr>
         </table>
 
-
-
-
-
-
-
 </div>
 
 <div class="footer"></div>

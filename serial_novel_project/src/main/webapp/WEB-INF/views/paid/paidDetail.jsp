@@ -255,10 +255,6 @@ ul li a{
 			console.log(paidContent1);
 			console.log(paidContent2);
 			
-			
-			
-			
-		
 			$.ajax({
 				type : 'patch',
 				url : '/paid/m/' + paidNum,
