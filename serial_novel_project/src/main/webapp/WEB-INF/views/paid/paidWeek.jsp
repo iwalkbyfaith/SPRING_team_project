@@ -24,7 +24,7 @@
 			<c:forEach var="week" items="${weekList }">
 					<tr>
 						<td>${week.novel_num }</td>
-						<td><a href="">${week.novel_title }</a></td>
+						<td><a href="/paid/List/${week.novel_num }">${week.novel_title }</a></td>
 						<td>${week.novel_writer }</td>
 						<td>${week.novel_tsnum }</td>
 					<c:if test="${week.novel_category eq 'fantasy'}"><td>판타지</td></c:if>

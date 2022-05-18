@@ -18,5 +18,5 @@ public interface PaidNovelService {
 	
 	public PaidVO detailCon(long paidNnum); // ■ paidDetail 에서 본문 가져오기
 	
-	public List<PaidVO> selectPaidList(String novelNum); // ■ paidList (해당요일별소설(공통)의 하위리스트(snum))
+	public List<PaidVO> selectPaidList(long novelNum); // ■ paidList (해당요일별소설(공통)의 하위리스트(snum))
 }

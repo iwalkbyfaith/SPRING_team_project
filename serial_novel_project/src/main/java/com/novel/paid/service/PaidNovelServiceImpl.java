@@ -38,7 +38,7 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public List<PaidVO> selectPaidList(String novelNum) {
+	public List<PaidVO> selectPaidList(long novelNum) {
 		return paidMapper.selectPaidList(novelNum);
 	}
 

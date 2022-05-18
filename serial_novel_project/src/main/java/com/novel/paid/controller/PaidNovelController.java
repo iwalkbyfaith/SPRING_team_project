@@ -41,7 +41,7 @@ public class PaidNovelController {
 	@GetMapping(value="/List/{novelNum}")
 	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
 		
-		List<PaidVO> paidList = paidservice.selectPaidList(getPaidList());
+		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
 		model.addAttribute("paidList" ,paidList);
 		
 		return "paid/paidsList";
