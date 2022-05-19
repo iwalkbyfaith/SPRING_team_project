@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.novel.tournament.domain.TournamentJoinVO;
 import com.novel.tournament.domain.TournamentWorkVO;
 
 import lombok.extern.log4j.Log4j;
@@ -145,13 +146,28 @@ public class TournamentTest {
 						mapper.updateTournaDate(25, 32, 4);
 				}
 	
-				@Test
+				//@Test
 				public void deleteTorecTblAndToworkTblTest() {
 					// torec_tbl 데이터 먼저 삭제
 					mapper.deleteTorecTbl();
 					// towork_tbl 데이터 삭제
 					mapper.deleteToworkTbl();
 				}
+				
+				
+				
+				
+		@Test
+		public void getWinnersXXTest() {
+			
+			// 0) 우승 작품 번호
+			TournamentJoinVO winner = mapper.getWinner();
+			log.info("사후처리) 우승 작품 정보 -> " + winner);
+			
+			long novel_num = winner.getNovel_num();
+			log.info("사후처리) 우승 작품 노블 번호 -> " + novel_num);
+			
+		}
 				
 	
 	

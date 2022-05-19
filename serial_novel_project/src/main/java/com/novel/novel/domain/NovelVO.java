@@ -11,4 +11,7 @@ public class NovelVO {
 	private String novel_category; // 소설 장르
 	private String novel_week; // 소설 연재요일
 	private boolean novel_end; // 소설 완결유무
+	
+	// 05.16
+	private String user_id;
 }
