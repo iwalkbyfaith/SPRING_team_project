@@ -83,11 +83,11 @@
 			            	</a>
 			            	<div class="dropdown-menu sm-menu">
 			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
-			              		<a class="dropdown-item" href="/paid/novel/mon">유료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
 			              	</div>
 			          	</li>
 			          <li class="nav-item">
-				            <a class="nav-link" href="#">작가 신청 게시판</a>
+				            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
 			          </li>
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
@@ -118,6 +118,9 @@
      
      
      <h1> 메인 </h1>
+     
+     <a href="/secu/join">join</a>
+	<a href="/customLogin">login</a>
      
      <h3>0. 공지바(사진 바뀌는거)</h3>
      <h3>1. 무료소설 베스트</h3>

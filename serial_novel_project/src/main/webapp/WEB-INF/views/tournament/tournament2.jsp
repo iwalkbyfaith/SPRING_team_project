@@ -127,11 +127,11 @@
 			            	</a>
 			            	<div class="dropdown-menu sm-menu">
 			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
-			              		<a class="dropdown-item" href="/paid/novel/mon">유료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
 			              	</div>
 			          	</li>
 			          <li class="nav-item">
-				            <a class="nav-link" href="#">작가 신청 게시판</a>
+				            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
 			          </li>
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
@@ -161,34 +161,41 @@
      
 	 
 	<h3>★ 나중에 추가 할 것 : </h3>
-		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, <br/>
-		2. 이미지 삽입, <br/>
-		3. 토너먼트 완료 후 로직 추가(현재 매퍼에만 코드 작성 후, 테스트 코드 완료한 상태) <br/>
+		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) <br/>
+		2. 썸네일 이미지 삽입 <br/>
 	
 	 <hr/>
 	 
-	<div class="row">
-		<h3 class="text-primary">예상 우승 작품 #winner</h3>
-		<div id="winner"><!-- 리스트가 들어갈 위치 --></div>
+	<button type="button" id="afterTournamentBtn">초기화 버튼</button><br/>
+		+ 추가
+		1. to_num=4의 기간에만 활성화 (완) <br/>
+		2. 관리자에게만 활성화 <br/>
+		3. (Q)한번 누르면 다음 to_num=4 기간까지 안보이게 하기를 어떻게..? (완)<br/>
+	
+	<hr>
+	<div id="container">
+		<div class="row">
+			<h3 class="text-primary">예상 우승 작품 #winner</h3>
+			<div id="winner"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
+		
+		
+		<div class="row">
+			<h3 class="text-primary">대회 참여 리스트 2강(결승) #tournament2</h3>
+			<div id="tournament2"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
+		
+		<div class="row">
+	 		<h3 class="text-primary">대회 참여 리스트 4강 #tournament4</h3>
+			<div id="tournament4"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
+		
+		<div class="row">
+	 		<h3 class="text-primary">대회 참여 리스트 8강 #tournament8</h3>
+			<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
+		</div>
 	</div>
-	
-	
-	<div class="row">
-		<h3 class="text-primary">대회 참여 리스트 2강(결승) #tournament2</h3>
-		<div id="tournament2"><!-- 리스트가 들어갈 위치 --></div>
-	</div>
-	
-	<div class="row">
- 		<h3 class="text-primary">대회 참여 리스트 4강 #tournament4</h3>
-		<div id="tournament4"><!-- 리스트가 들어갈 위치 --></div>
-	</div>
-	
-	<div class="row">
- 		<h3 class="text-primary">대회 참여 리스트 8강 #tournament8</h3>
-		<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
-	</div>
-	
-	<button type="button" id="test">클릭</button>
+	<div id="end"></div>
 	
 	
 	<hr/>
@@ -196,7 +203,9 @@
 			
 	
 	
-	<script type="application/javascript">
+	<script>
+	
+	$(document).ready(function(){
 	
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■ 스크립트 순서 ■■■■■■■■■■■■■■■■■■■■■■■■ -->
 					<!-- ■ 변수 설정 -->
@@ -206,6 +215,7 @@
 					<!-- ■ 추천 버튼 클릭시 +1 되는 함수 -->
 					<!-- ● 8강 --><!-- ● 4강 --><!-- ● 2강 -->
 					<!-- ■ 예상 우승 작품 -->
+					<!-- ■ 대회 우승시 사후처리 -->
 			<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 	
 		
@@ -236,26 +246,50 @@
 	 		
 	 		// 우승자 노블 번호
 	 		let winnersNovelNum = 0;
- 			
 
+	 		
+		
+		<!-- ■ 05.18 함수 컨트롤러 -->
+		
+		function controller(){
+		
+			$.getJSON("/tournament/all", function(data){
+				console.log("▼▼▼ controller 진입 후 '대회 준비기간' 출력")
+				let controllerSdate = new Date(data[3].to_sdate);
+				console.log(controllerSdate);
+				
+				// ● 아직 대회가 진행중이라면
+				if(now < controllerSdate){
+					console.log("controller()진입 ) 준비 기간 시작일이 되지 않았음");
+					$("#afterTournamentBtn").hide();
+					
+					
+				 	// * 2강, 4강, 8강 불러오기
+			 		getTournamentWorkList1(); // 8
+					getTournament4List();	  // 4
+					getTournament2List();	  // 2
+					
+					// * 우승작품 출력
+					getWinner();
+					setInterval(getWinner, 3000); // 간격 : 3초
 
-		 	// 2강, 4강, 8강 불러오기
-	 		getTournamentWorkList1(); // 8
-			getTournament4List();	  // 4
-			getTournament2List();	  // 2
-			
-			// 우승작품
-			getWinner();
-			
-			// 토너먼트 사후처리
-			//afterTournament();
-
-			
+				// ● 대회가 끝나고 대음 대회 준비 기간이 시작되었다면
+				}else if(now >= controllerSdate){
+					console.log("controller()진입 ) 준비 기간 시작일이 지났음");
+					$("#afterTournamentBtn").show();
+					
+					// * 화면 비우고 메세지 출력
+						// div 태그들을 감싸는 #container를 비워줌
+						$("#container").remove();
+					
+						// 메세지 출력 				
+						$("#end").html("<h1>다음 대회를 준비 중입니다.</h1>");
+				}
+				
+			});
 		
-		
-		
-
-		
+		}
+		controller();
 		
 
 		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 -->
@@ -625,6 +659,7 @@
 								
 								// 리스트 다시 가져오기
 								getTournamentWorkList1();
+								getWinner();
 							}
 						}			
 					});
@@ -678,6 +713,7 @@
 								alert("4강 작품을 추천했습니다");
 								// 4강 리스트 가져오기
 								getTournament4List();
+								getWinner();
 								
 							}
 						}			
@@ -728,6 +764,7 @@
 							if(result == 'SUCCESS'){
 								alert("2강 작품을 추천했습니다");
 								getTournament2List();
+								getWinner();
 							}
 						}			
 					});
@@ -757,36 +794,113 @@
 		}
 		<!-- ● setInterval 3초에 한번씩-->
 		//getWinner(); 위로 올라감
-		setInterval(getWinner, 3000);
+		//setInterval(getWinner, 3000);
 		
 		
 		
+		
+		
+		
+		<!-- ■ 대회 우승시 사후처리 -->
+		$("#afterTournamentBtn").on("click", function(){
+	
+			let sdateREADY ;
+			let edateREADY ;
+			
+				
+			if(confirm("다음 대회를 준비하시겠습니까?")){
+					// 1. 대회준비(to_num=4) 시작일, 종료일을 받아옴
+					$.getJSON("/tournament/all", function(data){
+						
+						console.log("▼▼▼▼▼▼▼▼ 전체 대회 리스트");
+						console.log(data);
+						console.log(data[3]);
+						console.log(data[3].to_sdate);
+						console.log(data[3].to_edate);
+						
+						sdateREADY = new Date(data[3].to_sdate);		// 대회준비 시작일 sdate
+						edateREADY = new Date(data[3].to_edate);		// 대회준비 종료일 edate
+						
+						console.log("대회 준비 시작일 -> " + sdateREADY);
+						console.log("대회 준비 종료일 -> " + edateREADY);
+						
+						console.log("현재 시간 -> " + now);
+	
+						console.log(sdateREADY >= now);
+						console.log(sdateREADY == now);
+						
+	
+					});
+					
+				// 2. 오늘이 대회 준비 시작일 이상이면 아래 코드 실행
+				//if(sdateREADY >= now){
+					console.log("▶▶▶ afterTournament 진입");
+						
+					$.getJSON("/tournament/after", function(data){
+						console.log("▼▼▼ /after");
+						console.log(data);
+						
+					});// end getJSON
+
+				//}// end if
+				
+				$("#afterTournamentBtn").hide();
+				
+				// 화면 비우기?
+				//$("#container").remove();
+				//$("#end").html("<h1>다음 대회를 준비 중입니다.</h1>");
+				
+				
+			}// end if-confirm
+			
+		});// end #afterTournamentBtn click
+		
+	});// end $(document).ready
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<%-- 		
 		
 		<!-- ■ 05.18 토너먼트 사후처리 -->
 		function afterTournament(){
+			console.log("afterTournament() 진입");
 			
-			$.ajax({})
-			
-		}
+			$.ajax({
+				
+				type : 'put',
+				url : '/tournament/after',
+				header : {"X-HTTP-Method-Override" : "PUT"},
+				success : function(result){
+					console.log("result: " + result);
+					if(result == 'SUCCESS'){
+						alert("/after 완료");
+					}
+				}
+				
+			}); // end ajax
+		}// end afterTournament()
+		
+		afterTournament();
 		
 		
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<%-- 
 		<!-- ■ 토너먼트 2강 참여 리스트를 불러오는 함수 (테이블 적재 버전)-->
 		function getTournamentWorkList3(){
 			console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");

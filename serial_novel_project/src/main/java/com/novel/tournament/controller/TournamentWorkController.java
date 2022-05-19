@@ -215,16 +215,12 @@ public class TournamentWorkController {
 	
 	
 	
-	
-	
-	
 	// ■ 05.17 대회 우승시 사후처리 (novel_num, user_id)
-	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, 
-			 value="/after", // /{novel_num}",
-			 produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> afterTournament(){ // @PathVariable("novel_num")long novel_num){
+	@GetMapping(value="/after", // /{novel_num}",
+			    produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<TournamentJoinVO> afterTournament(){ // @PathVariable("novel_num")long novel_num){
 		
-		ResponseEntity<String> entity = null;
+		ResponseEntity<TournamentJoinVO> entity = null;
 		
 		try {
 			// 자세한 변경 사항은 서비스임플에서 확인할 수 있음
@@ -241,14 +237,50 @@ public class TournamentWorkController {
 				// 2) 대회 관련
 					service.afterTowork2();
 
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			entity = new ResponseEntity<>(winner, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;
 	}
+	
+	
+	
+	
+	
+//	// ■ 05.17 대회 우승시 사후처리 (novel_num, user_id)
+//	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, 
+//			 value="/after", // /{novel_num}",
+//			 produces= {MediaType.TEXT_PLAIN_VALUE})
+//	public ResponseEntity<String> afterTournament(){ // @PathVariable("novel_num")long novel_num){
+//		
+//		ResponseEntity<String> entity = null;
+//		
+//		try {
+//			// 자세한 변경 사항은 서비스임플에서 확인할 수 있음
+//			
+//				// 0) 우승 작품 번호
+//					TournamentJoinVO winner = service.getWinner();
+//					log.info("사후처리) 우승 작품 정보 -> " + winner);
+//					
+//					long novel_num = winner.getNovel_num();
+//					log.info("사후처리) 우승 작품 노블 번호 -> " + novel_num);
+//			
+//				// 1) 작품 & 작가 관련
+//					service.afterTowork1(novel_num);
+//				// 2) 대회 관련
+//					service.afterTowork2();
+//
+//			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		return entity;
+//	}
 	
 	
 //		// ■ 05.17 우승 작품 노블 번호 얻어오기 (우승자 정보)

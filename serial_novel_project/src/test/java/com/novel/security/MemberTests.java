@@ -62,7 +62,7 @@ public class MemberTests {
 	
 	
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (일반회원, 무료작가, 유료작가, 관리자)
-	//@Test
+	@Test
 	public void testCrptCustomDB() {
 		try {
 			

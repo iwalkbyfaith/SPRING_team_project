@@ -53,6 +53,7 @@ text-align:center;
 
 }
 
+
 .articlecontent{
 	margin-bottom:300px;
 }
@@ -95,11 +96,11 @@ float:right;
             </a>
             <div class="dropdown-menu sm-menu">
               <a class="dropdown-item" href="/free/novelList">무료소설</a>
-              <a class="dropdown-item" href="/paid/novel/mon">유료소설</a>
+              <a class="dropdown-item" href="/paid/novelList">유료소설</a>
              </div>
           </li>
           <li class="nav-item">
-	            <a class="nav-link" href="#">작가 신청 게시판</a>
+	            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
           </li>
           <li class="nav-item">
 	            <a class="nav-link" href="/tourna/list2">토너먼트</a>
