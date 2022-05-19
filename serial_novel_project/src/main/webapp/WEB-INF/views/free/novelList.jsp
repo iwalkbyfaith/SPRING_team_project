@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -51,11 +52,19 @@ float:right;
 text-align:center;
 
 }
-.listsize{
-width:500px;
-height:150px;
-border:solid 1px;
+
+
+.articlecontent{
+	margin-bottom:300px;
 }
+#replLi{
+text-align:left;
+list-style-type:none;
+}
+#writeNovel,#replInsert{
+float:right;
+} 
+
 }
 	
 	</style>
@@ -129,7 +138,9 @@ border:solid 1px;
 <li id="headermLi">미스터리</li>
 </ul>
 </div>
-
+<div id="writeNovel">
+<button id="novelWriteBtn">소설등록</button>
+</div>
 
 <br/>
 <br/>
@@ -187,8 +198,72 @@ border:solid 1px;
 	<div class="articleTitle"></div>
 	<div class="articleContent"></div>
 	</div>
+	
+	<div class="repl" style="display:none;">
+	<h2>댓글</h2>
+	<ul class="replheader">
+	</ul>
+	<h2>댓글 작성</h2>
+	<div class="replyContainer">
+	<textarea id="replyWrite" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+	
+	<button id="replInsert">등록</button>
+	</div>
+	</div>
 </div>
 </div>
+				<!-- ■ 위의 id="novelwriteBtn"을 눌렀을때 나오게 되는 소설작성 페이지 (기본적인 작가,카테고리,제목 등을 적는페이지) -->
+				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="novelwork">
+                <tr>
+                <td height=20 align= center bgcolor=#ccc><font color=white> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        
+                        <tr>
+                        <td>작가</td>
+                        <td>
+                        <textarea id="novelWriter" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td>
+                        <textarea id="novelTitle" style="width: 100%; height: 2.0em; resize: none;"></textarea>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>카테고리</td>
+                        <td>
+                        <select id="category">
+                        	<option value="fantasy">판타지</option>
+                        	<option value="romance">로맨스</option>
+                        	<option value="wuxia">무협지</option>
+                        	<option value="mystery">미스터리</option>
+                        </select>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td>n부작</td>
+                        <td>
+                        <input class="nSnum" type="number" min="1" value="">
+                        </td>
+                        </tr>
+ 						<tr>
+ 						<td id="novelBtn">
+ 						
+ 						</td>
+ 						</tr>
+                        
+                     </table>
+ 
+                </td>
+                </tr>
+        </table>
 				<!-- ■ 위의 class="writebtn"을 눌렀을때 나오게 되는 소설작성 페이지 (넘어오면서 novelNum을 가지고와서 기본적인 내용{작가,제목}은 받아옴.) -->
 				<table  style="padding-top:50px; display:none;" align = center width=700 border=0 cellpadding=2 class="work">
                 <tr>
@@ -328,6 +403,14 @@ border:solid 1px;
 // csrf 토큰 
 var csrfHeaderName ="${_csrf.headerName}";
 var csrfTokenValue ="${_csrf.token}";
+
+let id = "<sec:authentication property="principal.user.user_id"/>";
+console.log("▼▼▼▼▼▼▼▼");
+console.log(id);
+
+
+
+
 // 글쓰기 로직 실행시 4000바이트 제한 거는 로직
 function fnChkByte1(obj, maxByte)
 {
@@ -555,6 +638,85 @@ $(".table").hide();
 getMysteryList();
 	
 });
+//■ 소설 글쓰기를 클릭시 소설 글쓰기 창을 보여줌.
+$("#novelWriteBtn").on("click",function(){
+
+$("#novellist").empty();
+$(".novelwork").show();
+
+
+let str="";
+str+="<button class='novelCancel'>취소</button><button class='novelSubmit'>등록</button>";
+$("#novelBtn").html(str);
+	
+});
+$("#novelBtn").on("click",".novelCancel",function(){
+	$(".novelwork").hide();
+	getFantasyList();
+});
+$("#novelBtn").on("click",".novelSubmit",function(){
+	
+	var novelWriter = $("#novelWriter").val();
+	var novelTitle = $("#novelTitle").val();
+	var novelCategory = $("#category").val();
+	var novelTSnum = $(".nSnum").val();
+	var novelWeek = "free";
+	
+	console.log(novelWriter);
+	console.log(novelTitle);
+	console.log(novelCategory);
+	console.log(novelTSnum);
+	
+	
+	$.ajax({
+		type : 'post',
+		url: '/free/novel',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		headers:{
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
+		},
+		dataType : 'text',
+		data : JSON.stringify({
+			
+			novel_tsnum : novelTSnum,
+			novel_title : novelTitle,
+			novel_writer : novelWriter,
+			novel_category : novelCategory,
+			novel_week : novelWeek
+	}),
+		success : function(result){
+			if(result == 'SUCCESS'){
+				alert("소설이 등록 되었습니다.");// 소설 등록 로직 끝남 . 
+// ===================================================================================
+				$.getJSON("/free/novel/"+ novelCategory , function(data){
+					
+					
+					let str = "";
+					console.log(data);
+					
+					$(data).each(
+							function(){
+						
+						str += "<div class='"+novelCategory+"Li' data-novelNum='" + this.novel_num + "'>" + 
+						this.novel_title + "</div>";
+
+					});
+					
+					$("#novellist").html(str);
+				});
+				$(".novelwork").hide();
+				$(".categoryheader").show();
+					
+				
+			
+		} 
+		}	// success 끝나는부분 
+});	// ajax 끝나는부분 
+});
+	
 
 // ■ 판타지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌 
 $("#novellist").on("click",".fantasyLi", function(){
@@ -572,6 +734,7 @@ console.log(novelNum);
 	let str = "";
 	let str1 = "";
 	let str2 = "";
+	
 	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
 	$(".writebtn").html(str1);
@@ -603,15 +766,19 @@ console.log(novelNum);
 					console.log(this);
 				
 				
+				
 					
 				
 				$(".tbody").html(str);
+				
 	
 });
 });
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
+		
 });
 //■ 로맨스 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".romanceLi", function(){
@@ -666,6 +833,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
 	
 });
 //■ 무협지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
@@ -721,6 +889,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
 });
 //■ 미스터리 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".mysteryLi", function(){
@@ -848,11 +1017,34 @@ $.getJSON(url, function(data){
 			});
 });
 
-$(".content").show("slow");
-$(".series").show("slow");
-$(".delete").show("slow");
-$(".update").show("slow");
+
+	$.getJSON("/replies/detail/"+ freeNum, function(data){
+	let repl="";
+	console.data
+	$(data).each(
+		function(){
+			var timestamp = this.free_rdate;
+			var date = new Date(timestamp);
+			var formattedTime = "작성일 : " + date.getFullYear()
+			
+			+"/" + (date.getMonth()+1)+
+			+"/" + date.getDate();
+			repl += "<li id='replLi' data-freeNum='" + this.free_num +"'>"+this.user_id+" :"+this.frepl_content+"</li>"
+			
+			; 
+		});
+	$(".replheader").html(repl);
 });
+	
+	$(".content").show("slow");
+	$(".series").show("slow");
+	$(".delete").show("slow");
+	$(".update").show("slow");
+	$(".repl").show("slow");
+});
+
+
+
 
 // ■ 글목록 버튼을 누르면 보고있던 카테고리에 해당하는 글목록을 보여줌
 $(".List").on("click",".novelList",function(){
@@ -945,6 +1137,7 @@ $(".series").on("click",".novelSeries",function(){
 		$(".writebtn").show("slow");
 		$(".List").show("slow");
 		
+		
 	});
 // ■ 글쓰기 버튼을 누르면 보고있던 작품의 정보를 받아서 작가,제목은 기입된채로 소설 쓰기창이 나옴 (추후에는 해당하는 작가만 보이게끔 만들예정) 
 $(".writebtn").on("click",".writenovelbtn",function(){
@@ -952,7 +1145,7 @@ $(".writebtn").on("click",".writenovelbtn",function(){
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
 	
-	$.getJSON("/free/novel/select/"+ novelNum , function(data){
+	$.getJSON("/free/novel/selecttitle/"+ novelNum , function(data){
 		
 		$(data).each(
 				function(){

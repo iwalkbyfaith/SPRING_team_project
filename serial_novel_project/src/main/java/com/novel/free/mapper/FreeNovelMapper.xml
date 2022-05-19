@@ -59,15 +59,15 @@ n.novel_end FROM (free_tbl f INNER JOIN
 	</select>
 	
 	<select id="selectList" resultType="com.novel.free.domain.FreeNovelJoinVO">
-	SELECT n.novel_title , n.novel_num FROM novel_tbl n INNER JOIN free_tbl f ON n.novel_num = f.novel_num 
-WHERE n.novel_category = #{novelCategory} GROUP BY n.novel_title, n.novel_num
+	SELECT n.novel_title , n.novel_num FROM novel_tbl n 
+WHERE n.novel_category = #{novelCategory} and n.novel_week='free' GROUP BY n.novel_title, n.novel_num
 	</select>
 	
 	
 	
 	<insert id="insertNovel">
 	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
-                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category},#{novel_week})
 	</insert>
 	<insert id="insertFree">
 	INSERT INTO free_tbl (free_num, novel_num, free_snum, free_title, free_content1,free_content2) values
@@ -78,6 +78,11 @@ WHERE n.novel_category = #{novelCategory} GROUP BY n.novel_title, n.novel_num
 	
 	SELECT n.novel_num,n.novel_category,n.novel_title,n.novel_writer,f.free_snum,f.free_title,f.free_rdate,f.free_mdate,f.free_num FROM 
 free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num =#{novelNum}
+	</select>
+	<select id="selecttitle" resultType="com.novel.free.domain.NovelVO">
+	
+	SELECT novel_title, novel_writer FROM novel_tbl where novel_num = #{novel_num} 
+
 	</select>
 	<select id="selectDetail" resultType="com.novel.free.domain.FreeNovelJoinVO">
 	
