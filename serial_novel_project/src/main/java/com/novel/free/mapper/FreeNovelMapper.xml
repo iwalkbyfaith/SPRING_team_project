@@ -67,7 +67,7 @@ WHERE n.novel_category = #{novelCategory} and n.novel_week='free' GROUP BY n.nov
 	
 	<insert id="insertNovel">
 	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
-                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category},#{novel_week})
 	</insert>
 	<insert id="insertFree">
 	INSERT INTO free_tbl (free_num, novel_num, free_snum, free_title, free_content1,free_content2) values

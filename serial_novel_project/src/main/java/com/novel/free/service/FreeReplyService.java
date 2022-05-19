@@ -2,7 +2,10 @@ package com.novel.free.service;
 
 import java.util.List;
 
+
+
 import com.novel.free.domain.FreeReplyVO;
+
 
 public interface FreeReplyService {
 
