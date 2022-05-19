@@ -163,6 +163,7 @@
 	<h3>★ 나중에 추가 할 것 : </h3>
 		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) <br/>
 		2. 썸네일 이미지 삽입 <br/>
+		3. 각 대회 리스트 안 뜨는거 코드 조정해서 뜨게하기 <br/>
 	
 	 <hr/>
 	 
@@ -358,7 +359,8 @@
 						// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
 					//deactivation  = (hideBtn == true ? 'disabled' : '');
 					
-					console.log("현재 시간이 8강 종료일을 지났는지?");
+					console.log("★8★현재 시간이 8강 종료일을 지났는지?");
+					console.log("edate8" + edate8);
 					console.log(now > edate8);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
 					
 					/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
@@ -367,7 +369,8 @@
 							deactivation = "disabled";
 					}
 					
-					console.log("현재 시간이 8강 시작일을 지났는지?");
+					console.log("★8★현재 시간이 8강 시작일을 지났는지?");
+					console.log("sdate8" + sdate8);
 					console.log(now >= sdate8);
 					
 					// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
@@ -463,7 +466,8 @@
 					// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
 					//deactivation  = (hideBtn == true ? 'disabled' : '');
 					
-					console.log("현재 시간이 4강 종료일을 지났는지?");
+					console.log("★4★ 현재 시간이 4강 종료일을 지났는지?");
+					console.log("edate4" + edate4);
 					console.log(now > edate4);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
 					
 					/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
@@ -472,7 +476,8 @@
 							deactivation = "disabled";
 					}
 					
-					console.log("현재 시간이 4강 시작일을 지났는지?");
+					console.log("★4★ 현재 시간이 4강 시작일을 지났는지?");
+					console.log("sdate4" + sdate4);
 					console.log(now >= sdate4);
 					
 					// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
@@ -571,7 +576,8 @@
 				// 해당 토너먼트의 작품을 추천한 기록(아이디)이 있다면 버튼 태그가 disabled가 되게 함
 				//deactivation  = (hideBtn == true ? 'disabled' : '');
 				
-				console.log("현재 시간이 2강 종료일을 지났는지?");
+				console.log("★2★ 현재 시간이 2강 종료일을 지났는지?");
+				console.log("edate2" + edate2);
 				console.log(now > edate2);				// true면 이미 대회 종료일을 지났다는 뜻 (-> 추천 버튼 비활성화)
 				
 				/* (나중에 주석 풀어야 함) -> 3항연산자는 주석처리*/
@@ -580,7 +586,8 @@
 					  deactivation = "disabled";
 				}
 				
-				console.log("현재 시간이 2강 시작일을 지났는지?");
+				console.log("★2★ 현재 시간이 2강 시작일을 지났는지?");
+				console.log("sdate2" + sdate2);
 				console.log(now >= sdate2);
 				
 				// ● 현재 시간이 대회의 시작 날짜보다 크거나 같아야 데이터를 화면에 뿌림
