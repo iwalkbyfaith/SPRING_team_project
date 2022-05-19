@@ -5,58 +5,26 @@
 	<mapper namespace="com.novel.paid.mapper.PaidNovelMapper">
 	
 		<select id="selectList" resultType="com.novel.paid.domain.PaidVO">
-		SELECT n.novel_title , n.novel_num FROM novel_tbl n INNER JOIN paid_tbl p ON n.novel_num = p.novel_num 
-			WHERE n.novel_week = #{novelWeek} GROUP BY n.novel_title, n.novel_num
+		SELECT n.novel_title , n.novel_num, p.paid_num FROM novel_tbl n INNER JOIN paid_tbl p ON n.novel_num = p.novel_num 
+			WHERE n.novel_week = #{novelWeek} GROUP BY n.novel_title, n.novel_num, p.paid_num
 		</select>
 		
-		<select id="getJoinList" resultType="com.novel.paid.domain.PaidVO">
-			<![CDATA[ 
-			SELECT /* + INDEX_DESC(paid_tbl paid_num) */
-			rownum rn, p.paid_num, p.paid_rec, n.novel_title , n.novel_category, n.novel_week 
-			n.novel_end FROM (paid_tbl p INNER JOIN 
-			novel_tbl n ON p.novel_num = n.novel_num) WHERE 		
-			]]>
-			
-			
-			<![CDATA[
-			rownum <= #{pageEnd})
-			WHERE rn > #{pageStart}
-			]]>
+		<select id="selectWeekList" resultType="com.novel.paid.domain.PaidVO">
+			SELECT * FROM novel_tbl WHERE novel_week = #{novelWeek}
 		</select>
-		
-		<insert id="insertPaid">
-			INSERT INTO paid_tbl (paid_num, novel_num, paid_snum, paid_title, paid_content, paid_price) values
-                        (paid_num.nextval, #{novel_num},#{paid_snum},#{paid_title},#{paid_content},#{paid_price}) 
-		</insert>
 		
 		<select id="selectDetail" resultType="com.novel.paid.domain.PaidVO">
-			SELECT n.novel_title, n.novel_writer, n.novel_end, n.novel_category, n.novel_week, p.paid_content, p.paid_rdate, p.paid_hit, p.paid_rec
+			SELECT *
 			 FROM paid_tbl p INNER JOIN 
-			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_snum = #{paidSNum} and p.novel_num = #{novelNum} 
+			novel_tbl n ON p.novel_num = n.novel_num WHERE paid_num = #{paidNum} and p.novel_num = #{novelNum} 
 		</select>
 		
-		<select id="select" resultType="com.novel.paid.domain.PaidVO">
-			SELECT n.novel_num,n.novel_title,n.novel_writer, p.paid_snum, p.paid_title, p.paid_rdate, p.paid_mdate FROM 
-				paid_tbl p INNER JOIN novel_tbl n ON p.novel_num = n.novel_num where n.novel_num =#{novelNum}
+		<select id="detailCon" resultType="com.novel.paid.domain.PaidVO">
+			SELECT paid_content1,paid_content2 FROM paid_tbl WHERE paid_num = #{paidNum}
 		</select>
-	
-		<delete id="delete">
-			DELETE FROM paid_tbl WHERE paid_snum = #{paid_snum}
-		</delete>
 		
-		<update id="update">
-			UPDATE paid_tbl SET paid_title =#{paid_title}, paid_content = #{paid_content},
-			paid_mdate = sysdate, paid_price = #{paid_price} WHERE paid_snum = #{paid_snum}
-		</update>
-		
-		<select id="countPageNum" resultType="int">
-			<![CDATA[ 
-			SELECT count(*) FROM paid_tbl WHERE
-			
-			]]> 
-			
-			<![CDATA[
-			paid_num > 0
-			]]>
+		<select id="selectPaidList" resultType="com.novel.paid.domain.PaidVO">
+			SELECT * FROM paid_tbl WHERE novel_num = #{novelNum}
 		</select>
+		
 	</mapper>
