@@ -138,17 +138,22 @@ ul li a{
 		</div>
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/paid/novelList" class="btn-sm">목록</a>
+				<a href="/paid/List/${novel.novel_num }" class="btn-sm">목록</a>
 			</div>
 			<div class="col-md-1">
-				<button id="paidDelBtn" type="button" >삭제</button>
+				<button  type="button" >삭제</button>
 			</div>
 			<div class="col-md-1">
-				<button id="paidModBtn" type="button">수정</button>
+				<button type="button">수정</button>
 			</div>
 				<input type="hidden" id="pContent1" value="${novel.paid_content1 }">
 				<input type="hidden" id="pContent2" value="${novel.paid_content2 }">
-
+			<div class="col-md-1">
+				<button type="button">구매</button>
+			</div>
+			<div class="col-md-1">
+				<button type="button">선호</button>
+			</div>
 		</div>
 		<hr>
 		<div class="container2">
@@ -156,28 +161,10 @@ ul li a{
 			<ul id="Pcon">
 			
 			</ul>
-		<!-- 수정 모달 -->
-		<div id="modDiv" style="display:none;">
-			<div class="modal-title"></div>
-			<div>
-				<input type="text" id="pTitle" value="${novel.paid_title }"><br>
-				<input type="number" id="pNum" value="${novel.paid_num }"><br>
-				<input type="number" id="pPrice" value="${novel.paid_price }"><br>
-				<input type="Text" id="pContent1" value="${novel.paid_content1 }"><br>
-				<input type="Text" id="pContent2" value="${novel.paid_content2 }"><br>
-			</div>
-			<div>
-				<button type="button" id="paidModBtn">수정</button>
-				<button type="button" id="closeBtn">닫기</button>
-			</div>
-		</div> 
-		
 			<!-- jquery cdn -->
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 			
 	<script type="text/javascript">
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue="${_csrf.token}";
 		var paidnum = ${novel.paid_num}
 		
 		function getContent(){ // ■ 해당 소설의 상세 본문 가져오기
@@ -198,101 +185,7 @@ ul li a{
 			});
 		}
 		getContent();
-		
-		// ■ 삭제
-		$("#paidDelBtn").on("click", function(){
-			
-			var paidNum = ${novel.paid_num};
-			console.log(paidNum);
-		
-			
-			$.ajax({
-				type : 'delete',
-				url : '/paid/d/' + paidNum,
-				
-				header : {
-					"X-HTTP-Method-Override" : "DELETE"
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					},
-				dataType : 'text',
-				success : function(result){
-					console.log("result : " + result);
-					if(result == 'SUCCESS'){
-						alert("삭제 되었습니다.");
-						
-					}
-				}
-			});
-		});
-		
-		// modal 열림
-		$("#paidModBtn").on("click", function(){
-			
-			$("#modDiv").show("slow"); 
-		});
-			
-		// 모달창 닫기
-		$("#closeBtn").on("click",function(){
-			$("#modDiv").hide("slow");
-		});
-		 
-		// 수정 내일
-		$("#paidModBtn").on("click", function(){
-			
-			var novelNum = ${novel.novel_num};
-			var paidNum = ${novel.paid_num};
-			var paidTitle = $("#pTitle1").val();
-			var paidPrice = $("#pPrice").val();
-			var paidContent1 = $("#pContent1").val();
-			var paidContent2 = $("#pContent2").val();
-			
-			console.log(novelNum);
-			console.log(paidNum);
-			console.log(paidTitle);
-			console.log(paidPrice);
-			console.log(paidContent1);
-			console.log(paidContent2);
-			
-			
-			
-			
-		
-			$.ajax({
-				type : 'patch',
-				url : '/paid/m/' + paidNum,
-				header : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "PATCH"
-				},
-				dataType : 'text',
-				beforeSend : function(xhr){
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				contentType : "application/json",
-				data: JSON.stringify({
-					novel_num : novelNum,
-					paid_num : paidNum,
-					paid_title : paidTitle,
-					paid_price : paidPrice,
-					paid_content1 : paidContent1,
-					paid_content2 : paidContent2
-					}),
-				success : function(result){
-					console.log("result : " + result);
-					if(result == 'SUCCESS'){
-						alert("수정 되었습니다.");
-						
-						$("#modDiv").hide("slow");
-						getContent();
-					}
-				}
-			});
-			
-			
-			
-		});
+					
 	</script>
 		</div><!-- container2 -->
 	</div><!-- container -->

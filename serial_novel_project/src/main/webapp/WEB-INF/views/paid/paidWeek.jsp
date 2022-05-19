@@ -14,7 +14,7 @@
 	${weekList}
 		 	<table class="table table-bordered border-info">
 			<tr>
-				<th>번호</th>
+				<th>소설번호</th>
 				<th>제목</th>
 				<th>작가</th>
 				<th>총 편</th>
