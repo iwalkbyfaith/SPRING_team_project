@@ -135,24 +135,36 @@ ul li a{
 			<div class="col-md-1">
 				<input type="text" class="form-control" value="${novel.paid_snum }" readonly>
 			</div>
+			<div class="col-md-1">가격</div>
+			<div class="col-md-1">
+				<input type="text" class="form-control" value="${novel.paid_price }" readonly>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-1">
 				<a href="/paid/List/${novel.novel_num }" class="btn-sm">목록</a>
 			</div>
 			<div class="col-md-1">
-				<button  type="button" >삭제</button>
-			</div>
-			<div class="col-md-1">
-				<button type="button">수정</button>
-			</div>
-				<input type="hidden" id="pContent1" value="${novel.paid_content1 }">
-				<input type="hidden" id="pContent2" value="${novel.paid_content2 }">
-			<div class="col-md-1">
 				<button type="button">구매</button>
 			</div>
 			<div class="col-md-1">
 				<button type="button">선호</button>
+			</div>
+			<div class="col-md-1">
+				<form action="/paid/updateS" method="POST">
+					<input type="hidden" name="paid_num" value="${novel.paid_num}">
+					<input type="hidden" name="novel_num" value="${novel.novel_num}">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					<input type="submit" value="수정" class="btn-sm">
+				</form>
+			</div>
+			<div class="col-md-1">
+				<form action="/paid/DeleteS" method="POST">
+					<input type="hidden" name="paid_snum" value="${novel.paid_snum}">
+					<input type="hidden" name="novel_num" value="${novel.novel_num}">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+					<input type="submit" value="삭제" class="btn-sm">
+				</form>
 			</div>
 		</div>
 		<hr>

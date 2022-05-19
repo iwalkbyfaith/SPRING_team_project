@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>상세 회차들</h1>
-	${paidList }
-	${novelNum }
 		<table class="table table-bordered border-info">
 			<tr>
 				<th>회차</th>
@@ -33,5 +33,7 @@
 		</table>
 		<a href="/paid/novelList">요일별 목록</a><br>
 		<a href="/paid/insertS/${novelNum}">회차 글쓰기</a>
+		${pageMaker }
+		
 </body>
 </html>

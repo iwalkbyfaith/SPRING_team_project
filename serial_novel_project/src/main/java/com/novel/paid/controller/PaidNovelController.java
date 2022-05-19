@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.novel.novel.domain.NovelVO;
 import com.novel.novel.service.NovelService;
+import com.novel.paid.domain.PageMaker;
 import com.novel.paid.domain.PaidVO;
+import com.novel.paid.domain.SearchCriteria;
 import com.novel.paid.service.PaidNovelService;
+
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/paid")
+@Log4j
 public class PaidNovelController {
 	
 	@Autowired
@@ -44,12 +49,18 @@ public class PaidNovelController {
 	
 	//
 	@GetMapping(value="/List/{novelNum}")
-	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
+	public String paidList(SearchCriteria cri, @PathVariable("novelNum") long novelNum, Model model) {
 		
-		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
+		List<PaidVO> paidList = paidservice.selectPaidList(cri, novelNum);
 		
 		model.addAttribute("novelNum", novelNum);
 		model.addAttribute("paidList", paidList);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		long countPage = paidservice.countPageNum(cri, novelNum);
+		pageMaker.setTotalBoard(countPage);
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "paid/paidsList";
 	}
@@ -74,12 +85,31 @@ public class PaidNovelController {
 	}
 	
 	// ■ 유료소설 상세 소설 작성
-		@PostMapping("/insertS")
-		public String insertS(PaidVO paidvo) {
-			
-			paidservice.
-			model.addAttribute("novel", novel);
-			return "paid/paidSform";
-		}
-		
+	@PostMapping("/insertS")
+	public String insertS(PaidVO paidvo) {
+		paidservice.insert(paidvo);
+		return "redirect:/paid/List/" + paidvo.getNovel_num();
+	}
+	
+	// ■ 유료소설 회차 삭제
+	@PostMapping("/DeleteS")
+	public String deleteS(long paid_snum, long novel_num) {
+		paidservice.delete(paid_snum);
+		return "redirect:/paid/List/" + novel_num; 
+	}
+	
+	// ■ 유료소설 상세 수정페이지 폼
+	@PostMapping(value="/updateS")
+	public String updateForm(long novel_num, long paid_num, Model model) {
+		PaidVO vo = paidservice.selectDetail(paid_num, novel_num);
+		model.addAttribute("vo", vo);
+		return "paid/paidUform";
+	}
+	
+	// ■ 유료소설 회차 수정
+	@PostMapping("/paidUpdate")
+	public String updateS(PaidVO vo, long novel_num){
+		paidservice.update(vo);
+	return "redirect:/paid/detail/" + novel_num + "/" + vo.getPaid_num();
+	}
 }
