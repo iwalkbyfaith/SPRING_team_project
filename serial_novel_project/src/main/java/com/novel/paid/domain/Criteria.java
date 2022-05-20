@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class Criteria {
-	private int pageNum = 1;
-	private int number = 10;
+	private long pageNum = 1;
+	private long number = 10;
 	
-	public int getPageStart() {
+	public long getPageStart() {
 		return(this.pageNum - 1) * number;
 	}
 	
-	public int getPageEnd() {
+	public long getPageEnd() {
 		return(this.pageNum * number);
 	}
 }

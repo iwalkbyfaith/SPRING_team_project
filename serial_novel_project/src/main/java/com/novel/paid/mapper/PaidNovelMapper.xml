@@ -24,9 +24,11 @@
 		</select>
 		
 		<select id="selectPaidList" resultType="com.novel.paid.domain.PaidVO">
-			<!-- SELECT * FROM paid_tbl WHERE novel_num = #{novelNum}  -->
+			SELECT * FROM paid_tbl WHERE novel_num = #{novelNum}
+			
+			<!--  
 			<![CDATA[
-			select * from (SELECT * FROM
+			 select * from (SELECT * FROM
 				( SELECT /*+ INDEX_DESC(paid_tbl pk_paid) */
 				  ROWNUM rn, paid_tbl.* FROM paid_tbl WHERE 
 			]]>	
@@ -35,17 +37,17 @@
 			<![CDATA[
 				  rownum <= #{pageEnd})
 				    WHERE rn > #{pageStart}) where novel_num = #{novelNum}
-			]]>
+			]]>  -->
 		</select>
 		
-		<select id="countPageNum" resultType="int">
+		<select id="countPageNum" resultType="long">
 			<![CDATA[
 				SELECT COUNT(*) FROM paid_tbl WHERE
 			]]>
 			
 				
 			<![CDATA[
-				novel_num = #{novel_num}
+				novel_num = #{novelNum}
 			]]>
 		</select>
 		

@@ -20,9 +20,9 @@ public interface PaidNovelMapper {
 	
 	public PaidVO detailCon(long paidNnum); // ■ paidDetail 에서 본문 가져오기
 	
-	public List<PaidVO> selectPaidList(SearchCriteria cri ,long novelNum); // ■ paidList (해당요일별소설(공통)의 하위리스트(snum))
+	public List<PaidVO> selectPaidList(long novelNum); // ■ paidList (해당요일별소설(공통)의 하위리스트(snum))
 	
-	public int countPageNum(SearchCriteria cri, long novelNum); // ■ 페이징을 위한 글 갯수
+	public int countPageNum(@Param("cri")SearchCriteria cri, @Param("novelNum")long novelNum); // ■ 페이징을 위한 글 갯수
 	
 	public void insert(PaidVO vo); // ■ paid 상세 회차 작성
 	

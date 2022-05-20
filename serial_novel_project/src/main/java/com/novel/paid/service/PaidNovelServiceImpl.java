@@ -39,8 +39,8 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public List<PaidVO> selectPaidList(SearchCriteria cri, long novelNum) {
-		return paidMapper.selectPaidList(cri, novelNum);
+	public List<PaidVO> selectPaidList(long novelNum) {
+		return paidMapper.selectPaidList(novelNum);
 	}
 
 	@Override

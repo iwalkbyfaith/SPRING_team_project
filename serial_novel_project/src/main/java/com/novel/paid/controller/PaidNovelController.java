@@ -49,18 +49,14 @@ public class PaidNovelController {
 	
 	//
 	@GetMapping(value="/List/{novelNum}")
-	public String paidList(SearchCriteria cri, @PathVariable("novelNum") long novelNum, Model model) {
+	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
 		
-		List<PaidVO> paidList = paidservice.selectPaidList(cri, novelNum);
+		
+		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
 		
 		model.addAttribute("novelNum", novelNum);
 		model.addAttribute("paidList", paidList);
-		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		long countPage = paidservice.countPageNum(cri, novelNum);
-		pageMaker.setTotalBoard(countPage);
-		model.addAttribute("pageMaker", pageMaker);
+
 		
 		return "paid/paidsList";
 	}
