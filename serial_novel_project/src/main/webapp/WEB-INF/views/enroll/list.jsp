@@ -176,7 +176,7 @@
 						+ "<td>"+ this.user_id +"</td>"
 						+ "<td>"+ result +"</td>" + 
 					  "</tr>"
-			});// end .each
+			});// end .eachs
 			
 			$("#allList").html(str);
 			
