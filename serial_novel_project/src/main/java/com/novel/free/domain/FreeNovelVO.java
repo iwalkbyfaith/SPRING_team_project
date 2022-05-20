@@ -1,6 +1,7 @@
 package com.novel.free.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,6 +17,11 @@ public class FreeNovelVO {
     private Date free_mdate; 		  // 무료 소설 수정일
     private long free_hit; 			  // 무료 소설 조회수
     private long free_rec; 			  // 무료 소설 추천수
+    
+    
+	// 05.20 EnrollVO에 첨부파일이 있는지 확인하는 변수 추가
+		// 첨부파일을 여러개 할 수 있으므로 List로 받는다.
+    private List<FreeAttachVO> attachList;
     
     
 }

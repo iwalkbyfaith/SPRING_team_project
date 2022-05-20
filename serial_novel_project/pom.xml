@@ -206,20 +206,21 @@
 		    <version>2.12.2</version>
 		</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
-<dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjweaver</artifactId>
-    <version>1.9.0</version>
-    <scope>runtime</scope>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
- <dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjrt</artifactId>
-    <version>1.9.0</version>
-    <!--  <scope>runtime</scope> -->
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.0</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+		 <dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>1.9.0</version>
+		    <!--  <scope>runtime</scope> -->
+		</dependency>
 
 		
 		<!-- POST에서 415떠서 추가해본 것. 나중에 삭제해야할수도 -->
@@ -264,6 +265,15 @@
 			    <artifactId>spring-security-taglibs</artifactId>
 			    <version>5.0.7.RELEASE</version>
 			</dependency>
+			
+			
+		<!-- ■ 05.20 파일 업로드를 위한 썸네일 추가 -->
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.17</version>
+		</dependency>
 
 		
 		
