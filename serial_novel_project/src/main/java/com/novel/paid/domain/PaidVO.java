@@ -1,6 +1,8 @@
 package com.novel.paid.domain;
 
 import java.sql.Date;
+import java.util.List;
+
 
 import lombok.Data;
 
@@ -26,5 +28,10 @@ public class PaidVO {
 	private boolean novel_end; 			// 소설 완결유무
 	
 	private String user_id; 			// 유저 id
+	
+	
+	// 05.20 EnrollVO에 첨부파일이 있는지 확인하는 변수 추가
+		// 첨부파일을 여러개 할 수 있으므로 List로 받는다.
+    private List<PaidAttachVO> attachList;
 	
 }
