@@ -25,11 +25,11 @@ public class TournamentController {
 
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
-		return "tournament/tournament2";
+		return "tournament/tournament2_test";
 	}
 	
 	@GetMapping("/test")
 	public String test() {
-		return "tournament/test";
+		return "tournament/tournament2_test";
 	}
 }

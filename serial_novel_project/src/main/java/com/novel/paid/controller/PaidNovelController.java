@@ -77,8 +77,8 @@ public class PaidNovelController {
 		@PostMapping("/insertS")
 		public String insertS(PaidVO paidvo) {
 			
-			paidservice.
-			model.addAttribute("novel", novel);
+			//paidservice.
+			//model.addAttribute("novel", novel);
 			return "paid/paidSform";
 		}
 		

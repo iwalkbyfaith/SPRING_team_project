@@ -243,9 +243,21 @@
 	 			//console.log("토큰, 헤더 ▼");
 	 			//console.log(token);
 	 			//console.log(header);
-	 			
-	 		// 날짜 설정
+
+	 	<!-- ◈ 변경점 -->
+	 		// 오늘 날짜 설정
 	 		let now = new Date();
+	 		
+	 		// tourna_tbl에서 날짜 받아오기
+	 		let sdate8;
+	 		let edate8;
+	 		
+	 		let sdate4;
+			let edate4;
+			
+			let sdate2;
+			let edate2;
+	 		
 	 		
 	 		// 우승자 노블 번호
 	 		let winnersNovelNum = 0;
@@ -259,7 +271,17 @@
 			$.getJSON("/tournament/all", function(data){
 				console.log("▼▼▼ controller 진입 후 '대회 준비기간' 출력")
 				let controllerSdate = new Date(data[3].to_sdate);
-				console.log(controllerSdate);
+				console.log("준비기간 시작 날짜 -> " + controllerSdate);
+				
+				// ◈ 변경점
+				sdate8 = new Date(data[0].to_sdate);
+				edate8 = new Date(data[0].to_edate);
+				
+				sdate4 = new Date(data[1].to_sdate);
+				edate4 = new Date(data[1].to_edate);
+				
+				sdate2 = new Date(data[2].to_sdate);
+				edate2 = new Date(data[2].to_edate);
 				
 				// ● 아직 대회가 진행중이라면
 				if(now < controllerSdate){
@@ -307,10 +329,6 @@
 					let hideBtn = false;
 					let deactivation = "";
 				
-				// ● 8강 시작일 & 종료일
-				let sdate8;
-				let edate8;
-				
 			
 			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 1(8강)인 경우 데이터를 가져옴 
 			$.getJSON("/tournament/checkRec/1/" + id, function(data){
@@ -327,27 +345,6 @@
 				}
 			});
 			
-			
-			// 2. 현재 시간 구하기
-			
-			console.log("▼ 8강) 현재 시간")
-			console.log(now);
-			
-			$.getJSON("/tournament/all", function(data){
-				//console.log(data);							// 모든 대회 정보
-				//console.log(data[0]);						// 웹소설 최강자 8강전
-				//console.log(data[0].to_sdate);				// 웹소설 최강자 8강전 시작일
-				
-				let sdate = new Date(data[0].to_sdate);		// 시작일 sdate
-				sdate8 = new Date(data[0].to_sdate);
-				//console.log(sdate8);
-				//console.log(now > sdate);	 				// 오늘이 시작일을 지났으면 true
-				
-				edate8 = new Date(data[0].to_edate);			// 종료일 edate
-				//console.log(edate8);
-				//console.log(now < edate8);					// 오늘이 종료
-				
-			});
 			
 			// 3. 데이터 뿌리기
 			
@@ -413,10 +410,6 @@
 				// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
 				let deactivation = "";
-			
-			// ● 8강 시작일 & 종료일
-			let sdate4;
-			let edate4;
 				
 			
 			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 2(4강)인 경우 데이터를 가져옴 
@@ -434,27 +427,6 @@
 				}
 			});
 			
-			
-			// 2. 현재 시간 구하기
-			
-			console.log("▼ 4강) 현재 시간")
-			console.log(now);
-			
-			$.getJSON("/tournament/all", function(data){
-				//console.log(data);							// 모든 대회 정보
-				//console.log(data[1]);						// 웹소설 최강자 8강전
-				//console.log(data[1].to_sdate);				// 웹소설 최강자 8강전 시작일
-				
-				sdate4 = new Date(data[1].to_sdate);		// 시작일 sdate
-				//sdate = new Date(data[1].to_sdate);
-				//console.log(sdate4);
-				//console.log(now > sdate4);	 				// 오늘이 시작일을 지났으면 true
-				
-				edate4 = new Date(data[1].to_edate);			// 종료일 edate
-				//console.log(edate4);
-				//console.log(now < edate4);					// 오늘이 종료
-				
-			});
 			
 			// 3. 데이터 뿌리기
 			
@@ -525,10 +497,6 @@
 				// 추천 버튼 숨기기 = false 상태 (추천한 기록이 없기 때문에 추천 버튼은 활성화 된 상태)
 				let hideBtn = false;
 				let deactivation = "";
-			
-			// ● 2강 시작일 & 종료일
-			let sdate2;
-			let edate2;
 		
 	
 			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 3(2강)인 경우 데이터를 가져옴 
@@ -546,26 +514,6 @@
 				}
 			});
 			
-			
-			// 2. 현재 시간 구하기
-			console.log("▼ 2강) 현재 시간")
-			console.log(now);
-			
-			$.getJSON("/tournament/all", function(data){
-				//console.log(data);							// 모든 대회 정보
-				//console.log(data[2]);						// 웹소설 최강자 8강전
-				//console.log(data[2].to_sdate);				// 웹소설 최강자 8강전 시작일
-				
-				sdate2 = new Date(data[2].to_sdate);		// 시작일 sdate
-				//sdate = new Date(data[2].to_sdate);
-				//console.log("2강 시작일 : " + sdate2);
-				//console.log(now >= sdate2);	 				// 오늘이 시작일을 지났으면 true
-				
-				edate2 = new Date(data[2].to_edate);		// 종료일 edate
-				//console.log("2강 종료일 : " + edate2);
-				//console.log(now < edate2);					// 오늘이 종료
-				
-			});
 			
 			// 3. 데이터 뿌리기
 			$.getJSON("/tournament/getList/2", function(data){ // "/tournament/toWork/get/3
