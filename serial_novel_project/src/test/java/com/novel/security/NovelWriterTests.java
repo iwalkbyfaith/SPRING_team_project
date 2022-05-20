@@ -61,7 +61,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (일반회원)
-	//@Test
+	@Test
 	public void testuserCustomDB() {
 		try {
 			
@@ -92,7 +92,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER)
-	@Test
+	//@Test
 	public void testInsertuserAuth() {
 		
 		try {
