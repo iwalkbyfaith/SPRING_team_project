@@ -17,29 +17,36 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	@Autowired
 	private PaidNovelMapper paidMapper;
 
+	
 	@Override
 	public List<PaidVO> selectList(String novelWeek) {
 		return paidMapper.selectList(novelWeek);
 	}
 
 	@Override
-	public List<PaidVO> getJoinList(SearchCriteria cri) {
-		return paidMapper.getJoinList(cri);
+	public PaidVO selectDetail(long paidNum, long novelNum) {
+		return paidMapper.selectDetail(paidNum,novelNum);
 	}
 
 	@Override
-	public void insertPaid(PaidVO vo) {
-		paidMapper.insertPaid(vo);
+	public PaidVO detailCon(long paidNum) {
+		return paidMapper.detailCon(paidNum);
 	}
 
 	@Override
-	public List<PaidVO> selectDetail(long paidSNum, long novelNum) {
-		return paidMapper.selectDetail(paidSNum,novelNum);
+	public List<PaidVO> selectWeekList(String novelWeek) {
+		return paidMapper.selectWeekList(novelWeek);
 	}
 
 	@Override
-	public List<PaidVO> select(long novelNum) {
-		return paidMapper.select(novelNum);
+	public List<PaidVO> selectPaidList(long novelNum) {
+		return paidMapper.selectPaidList(novelNum);
+	}
+
+	@Override
+	public void insert(PaidVO vo) {
+		paidMapper.insert(vo);
+		
 	}
 
 	@Override
@@ -50,12 +57,17 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	@Override
 	public void update(PaidVO vo) {
 		paidMapper.update(vo);
+		
 	}
 
 	@Override
-	public int countPageNum(SearchCriteria cri) {
-		return paidMapper.countPageNum(cri);
+	public int countPageNum(SearchCriteria cri, long novelNum) {
+		return paidMapper.countPageNum(cri, novelNum);
 	}
-	
+
+
+
+
+
 	
 }

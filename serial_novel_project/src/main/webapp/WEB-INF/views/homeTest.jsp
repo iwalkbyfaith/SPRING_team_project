@@ -8,9 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<style>
-			.social-part .fa{
+		.social-part .fa{
 		    	padding-right:20px;
 			}
 			
@@ -50,9 +49,9 @@
 				text-align:center;
 			} 
 	</style>
-
 <meta charset="UTF-8">
 <meta charset="utf-8">
+<!--<link rel="styleshett" href="header-navi.css"> ◀ 헤더 네비바 css -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -119,7 +118,7 @@
      
      <h1> 메인 </h1>
      
-     <a href="/secu/join">join</a>
+    <a href="/secu/join">join</a>
 	<a href="/customLogin">login</a>
      
      <h3>0. 공지바(사진 바뀌는거)</h3>
