@@ -6,19 +6,19 @@
 	SELECT * FROM free_repl_tbl where free_num=#{free_num}
 	</select>
 	<insert id="create">
-	INSERT INTO free_repl_tbl (frepl_num,novel_num,frepl_free_num_content,user_id) values 
+	INSERT INTO free_repl_tbl (frepl_num,novel_num,free_num,frepl_content,user_id) values 
                         (frepl_num.nextval,#{novel_num},#{free_num},#{frepl_content},#{user_id})
 	</insert>
 	<update id="update">
 	UPDATE free_repl_tbl SET frepl_content = #{frepl_content} WHERE frepl_num = #{frepl_num}
 	</update>
 	<delete id="delete">
-			DELETE FROM free_reply_tbl WHERE frepl_num=#{frepl_num}
+			DELETE FROM free_repl_tbl WHERE frepl_num=#{frepl_num}
 	</delete>
 	<select id="getBno" resultType="long">
-	 	SELECT free_num FROM free_reply_tbl WHERE frepl_num = #{frepl_num}
+	 	SELECT free_num FROM free_repl_tbl WHERE frepl_num = #{frepl_num}
 	</select>
 	<delete id="deleteAll">
-			DELETE FROM free_reply_tbl WHERE free_num=#{free_num}
+			DELETE FROM free_repl_tbl WHERE free_num=#{free_num}
 	</delete>
 	</mapper>

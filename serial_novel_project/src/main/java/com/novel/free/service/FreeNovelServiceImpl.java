@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 import com.novel.free.mapper.FreeNovelMapper;
+import com.novel.free.mapper.FreeReplyMapper;
 
 
 @Service
@@ -17,9 +19,11 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	
 	@Autowired
 	private FreeNovelMapper freeMapper;
+	@Autowired
+	private FreeReplyMapper replyMapper;
 
 	@Override
-	public List<FreeNovelJoinVO> selectList(String novelCategory){
+	public List<NovelVO> selectList(String novelCategory){
 			return freeMapper.selectList(novelCategory);
 	}
 	
@@ -50,7 +54,7 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 		
 		return freeMapper.selecttitle(novelNum);
 	}
-
+	
 	@Override
 	public void insertNovel(NovelVO vo) {
 			freeMapper.insertNovel(vo);
@@ -64,9 +68,12 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 		
 	}
 	
+	@Transactional
 	@Override
-	public void delete(long freeNnum) {
-			freeMapper.delete(freeNnum);
+	public void delete(long freeNum) {
+		replyMapper.deleteAll(freeNum);
+		
+		freeMapper.delete(freeNum);
 		
 	}
 
