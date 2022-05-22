@@ -27,4 +27,10 @@ public class EnrollServiceImpl implements EnrollService{
 		return mapper.getEnrollDetail(enroll_num);
 	}
 
+	// ■ 신청 폼에 입력한 데이터를 DB에 적재하기
+	@Override
+	public void insertEnrollFormData(EnrollVO vo) {
+		mapper.insertEnrollFormData(vo);	
+	}
+
 }

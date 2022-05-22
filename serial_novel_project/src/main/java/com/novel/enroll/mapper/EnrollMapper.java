@@ -11,5 +11,8 @@ public interface EnrollMapper {
 	
 	// ■ 상세 리스트 가져오기
 	public EnrollVO getEnrollDetail(long enroll_num);
+	
+	// ■ 신청 폼에 입력한 데이터를 DB에 적재하기
+	public void insertEnrollFormData(EnrollVO vo);
 
 }

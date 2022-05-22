@@ -32,9 +32,25 @@ public class EnrollTest {
 	
 	
 	// ■ 디테일 가져오기
-	@Test
+	//@Test
 	public void getDetailTest() {
 		log.info(mapper.getEnrollDetail(1));
 	}
+	
+	// ■ 신청 폼에 입력한 데이터를 DB에 적재하기
+	@Test
+	public void insertFormDateTest() {
+		
+		EnrollVO vo = new EnrollVO();
+		
+		vo.setNovel_title("test로 넣는 제목");
+		vo.setNovel_writer("test로 넣는 필명");
+		vo.setNovel_category("romance");
+		vo.setUser_id("admin0");
+		vo.setEnroll_intro("진짜 재밌는데 어케 설며앻야할쥐");
+		
+		mapper.insertEnrollFormData(vo);
+	}
+	
 
 }

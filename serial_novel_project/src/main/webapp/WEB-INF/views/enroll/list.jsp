@@ -89,6 +89,9 @@
 	
 	<!-- ■ div 모음 -->
 	
+		<!-- ● 글쓰기 버튼 -->
+		<button type="button" id="enrollBtn">작가 신청 '#enrollBtn'</button>
+	
 		<!-- ● 모든 리스트 출력하는 테이블 -->
 		<div id="divAllList">
 			<h3 class="text-primary">모든 리스트 출력 #allList</h3>
@@ -108,22 +111,62 @@
 			</table>
 		</div>
 		
+
 		<!-- ● 디테일 출력 -->
-		<div id="detail">
-			<h3>여기 #detail</h3>
-			<div id="enroll_num"></div>
-			<div id="novel_title"></div>
-			<div id="novel_writer"></div>
-			<div id="novel_category"></div>
-			<div id="user_id"></div>
-			<div id="enroll_intro"></div>
-			<div id="enroll_result"></div>
-			<div id="enroll_msg"></div>
+		<div class="row box-box-success" id="divDetail"> <!-- id="detail"> test 하느라 잠깐 아래로 내림 -->
+			<div class="box-header">
+				<h3>여기 디테일 #detail</h3>
+			</div><!-- header 끝 -->
+			<div>
+				<button type="button" id="goAllList">리스트로 돌아가기 '#goAllList'</button>
+			</div>
+			<div class="box-body" id="detail">
+				<!-- 디테일이 들어갈 자리 -->
+			</div><!-- body 끝 -->
+			<div class="box-footer">
+				<button type="button" id="updateForm">수정 '#updateForm'</button>
+				<button type="button" id="deleteForm">삭제 '#deleteForm'</button>
+			</div>
+			<div class="box-footer2">
+				<h4>여기는 관리자 영역</h4>
+				<select class="enroll_result" class="form-select" aria-label="Default select example">
+                  	<option value="0">승인 대기</option>
+                  	<option value="1">승인 거부</option>
+                  	<option value="2">무료 승인</option>
+                  	<option value="3">유료 승인</option>
+                </select>
+                <button type="button" id="updateEnrollResult">선택하기</button>
+			</div>
+		</div>
+
+		
+		<!-- ● 글쓰기 폼 출력 -->
+		<div class="row box-box-success" id="enrollForm">
+			<div class="box-header">
+				<h3>여기 글쓰기 폼 #enrollForm </h3>
+			</div><!-- header 끝 -->
+			<div class="box-body">
+				<input type="text" id="novel_title" placeholder="소설 제목" class="form-control"/>
+				<input type="text" id="novel_writer" placeholder="사용할 필명" class="form-control"/>
+				<select id="novel_category" class="form-select" aria-label="Default select example">
+                  	<option value="fantasy">판타지</option>
+                  	<option value="romance">로맨스</option>
+                  	<option value="wuxia">무협지</option>
+                  	<option value="mystery">미스터리</option>
+                 </select>
+				<input type="text" id="user_id" value="<sec:authentication property="principal.user.user_id"/>" class="form-control" readonly />
+                <textarea id="enroll_intro" style="width: 100%; height: 6.25em; resize: none;">시놉시스 및 예상 결말 입력</textarea>
+			</div><!-- body 끝 -->
+			<div class="box-footer">
+					<button type="button" class="btn btn-success" id="enrollFormAddBtn"> 작성 완료 '#enrollFormAddBtn' </button>
+			</div><!-- footer 끝 -->
 		</div>
 
 	<br/><br/><br/>
 	<hr/>
 	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/>
+	<hr/>
+	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기
 	
 	<script>
 		
@@ -133,55 +176,87 @@
 							<!-- ■ 변수 설정 -->
 							<!-- ■ 전체 리스트 가져오기 -->
 							<!-- ■ 디테일 가져오기 -->
+							<!-- ■ 디테일에서 리스트로 돌아가는 버튼(#goAllList) 클릭 -->
+							<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 -->
 					<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 		
 		
 		<!-- ■ 변수 설정 -->
 		
+		// ● 시큐리티
+		let csrfHeaderName = "${_csrf.headerName}"
+		let csrfTokenValue="${_csrf.token}"
+		
+		console.log("시큐리티 헤더-> " + csrfHeaderName);
+		console.log("시큐리티 밸류-> " + csrfTokenValue);
+		
+		// ● sec 태그로 가져올 데이터들
+		let id = "<sec:authentication property="principal.user.user_id"/>";
+		console.log("sec 태그로 얻어온 아이디 -> " + id);
+		
 		// ● 디테일 
 		let enroll_num;
 		
 		
+		<!-- ■ 페이지 첫 진입시 세팅할 함수 호출 -->
+		
+		// ● 모든 리스트 보여주기
+		getAllList();
+		
+		// ● 디테일 페이지(#divDetail) 숨기기
+		$("#divDetail").hide();
+		
+		// ● 글쓰기 폼 숨기기(#enrollForm)
+		$("#enrollForm").hide();
+		
+		// ● 리스트로 돌아가는 버튼(#goAllList) 숨기기
+		$("#goAllList").hide();
+		
 			
 		<!-- ■ 전체 리스트 가져오기 -->
-		$.getJSON("/enrollAjax/getAllList", function(data){
+		function getAllList(){
 			
-			console.log(data);
-			
-			// 테이블로 출력
-			let str = "";
-			
-			$(data).each(function(){
+			$.getJSON("/enrollAjax/getAllList", function(data){
 				
-				// 결과값(숫자)에 따른 의미
-				let result = "";
+				console.log(data);
 				
-				if(this.enroll_result == 0){
-					result = "승인 대기";	
-				}else if(this.enroll_result == 1){
-					result = "승인 거부";	
-				}else if(this.enroll_result == 2){
-					result = "무료 소설";	
-				}else if(this.enroll_result == 3){
-					result = "유료 소설";	
-				}
+				// ● 테이블로 출력
+				let str = "";
 				
-				str+= "<tr class='go_to_detail'>" 
-						+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
-						+ "<td>"+ this.novel_category +"</td>"
-						+ "<td>" + 
-							  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
-							  this.novel_title +
-						  "</td>"
-						+ "<td>"+ this.user_id +"</td>"
-						+ "<td>"+ result +"</td>" + 
-					  "</tr>"
-			});// end .eachs
+				$(data).each(function(){
+					
+					// ● 결과값(숫자)에 따른 의미
+					let result = "";
+					
+					if(this.enroll_result == 0){
+						result = "승인 대기";	
+					}else if(this.enroll_result == 1){
+						result = "승인 거부";	
+					}else if(this.enroll_result == 2){
+						result = "무료 소설";	
+					}else if(this.enroll_result == 3){
+						result = "유료 소설";	
+					}
+					
+					str+= "<tr class='go_to_detail'>" 
+							+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
+							+ "<td>"+ this.novel_category +"</td>"
+							+ "<td>" + 
+								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
+								  this.novel_title +
+							  "</td>"
+							+ "<td>"+ this.user_id +"</td>"
+							+ "<td>"+ result +"</td>" + 
+						  "</tr>"
+				});// end .eachs
+				
+				$("#allList").html(str);
+				
+				
+			}); // end getJSON
 			
-			$("#allList").html(str);
-			
-			
-		}); // end getJSON
+		}// end getAllList()
+		
 		
 		
 		
@@ -198,34 +273,212 @@
 					console.log("getDatail() 진입 ");
 					console.log(data);
 					console.log(data.enroll_num);
-				
-
-//				tags = "<input type='text' value='" + data.enroll_num + "'/><br/>" + 
-//					   "<input type='text' value='" + data.novel_writer + "'/><br/>" + 
-//					   "<input type='text' value='" + data.novel_title + "'/><br/>" + 
-//					   "<input type='text' value='" + data.novel_category + "'/><br/>" + 
-//					   "<input type='text' value='" + data.user_id + "'/><br/>";
-//			    $("#detail").html(tags);
 
 			
-				// 전체 리스트 숨기기   
+				// ● 전체 리스트 숨기기   
 				$("#divAllList").hide();
 				
-				// 디테일 넣기
-				$("#enroll_num").html(data.enroll_num);
-				$("#enroll_intro").html(data.enroll_intro);
-				$("#enroll_result").html(data.enroll_result);
-				$("#enroll_msg").html(data.enroll_msg);
-				$("#novel_title").html(data.novel_title);
-				$("#novel_writer").html(data.novel_writer);
-				$("#novel_category").html(data.novel_category);
-				$("#user_id").html(data.user_id);
+				// ● 디테일 보이기
+				$("#divDetail").show();
 				
-					
+				// ● 작가신청 버튼 숨기기
+				$("#enrollBtn").hide();
+				
+				// ● 전체 리스트로 가는 버튼 활성화
+				$("#goAllList").show();
+				
+				// ● str 세팅
+				let str = "";
+				
+				// ● 신청 결과값(정수)을 한글로
+				let result = "";
+			
+					if(data.enroll_result == 0){
+						result = "승인 대기";	
+					}else if(data.enroll_result == 1){
+						result = "승인 거부";	
+					}else if(data.enroll_result == 2){
+						result = "무료 소설";	
+					}else if(data.enroll_result == 3){
+						result = "유료 소설";	
+					}
+				
+				str += "<input type='text' id='enroll_num' class='form-control' value='" + data.enroll_num + "'/>"
+					+  "<input type='text' id='novel_title' class='form-control' value='" + data.novel_title + "'/>"
+					+  "<input type='text' id='novel_writer' class='form-control' value='" + data.novel_writer + "'/>"
+					+  "<input type='text' id='novel_category' class='form-control' value='" + data.novel_category + "'/>"
+					+  "<input type='text' id='user_id' class='form-control' value='" + id + "'/>"
+					+  "<textarea id='enroll_intro' style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+					+  "<input type='text' id='enroll_result' class='form-control' value='" + result + "'/>"
+					+  "<input type='text' id='enroll_msg' class='form-control' value='" + data.enroll_msg + "'/>"
+				;
+				
+				
+				$("#detail").html(str);
+				
+				
 				}); // end getJSON			
 			
 		}); // click all_list_novel_title
 		
+		
+		<!-- ■ 디테일에서 리스트로 돌아가는 버튼(#goAllList) 클릭 -->
+		$("#goAllList").on("click", function(){
+			
+			// ● 디테일 숨기기
+			$("#divDetail").hide();
+			
+			// ● 모든 리스트 보이기
+			$("#divAllList").show();
+			
+			// ● 글쓰기 폼은 없어야함.
+			$("#enrollForm").hide();
+			
+			// ● 작가 신청 버튼은 보여야함
+			$("#enrollBtn").show();
+			
+			
+			// ● 전체 리스트 보여주기
+				// ※ 버튼을 눌렀을때 생긴 리스트를 클릭하면 아무것도 안뜨는 문제를 방지하기 위해 getJSON을 사용해 또 넣어줌
+			$.getJSON("/enrollAjax/getAllList", function(data){
+				
+				console.log(data);
+				
+				// ● 테이블로 출력
+				let str = "";
+				
+				$(data).each(function(){
+					
+					// ● 결과값(숫자)에 따른 의미
+					let result = "";
+					
+					if(this.enroll_result == 0){
+						result = "승인 대기";	
+					}else if(this.enroll_result == 1){
+						result = "승인 거부";	
+					}else if(this.enroll_result == 2){
+						result = "무료 소설";	
+					}else if(this.enroll_result == 3){
+						result = "유료 소설";	
+					}
+					
+					str+= "<tr class='go_to_detail'>" 
+							+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
+							+ "<td>"+ this.novel_category +"</td>"
+							+ "<td>" + 
+								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
+								  this.novel_title +
+							  "</td>"
+							+ "<td>"+ this.user_id +"</td>"
+							+ "<td>"+ result +"</td>" + 
+						  "</tr>"
+				});// end .eachs
+				
+				$("#allList").html(str);
+				
+				
+			}); // end getJSON
+			
+			
+			
+		}); // end #goAllList
+		
+		
+		
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 -->
+		$("#enrollBtn").on("click", function(){
+			// ● 디테일 폼은 보여주고
+			$("#enrollForm").show();
+			
+			// ● 모든 리스트는 가리고
+			$("#divAllList").hide();
+			
+			// ● 작가신청 버튼도 가림
+			$("#enrollBtn").hide();
+		});// end click #enrollBtn
+		
+		
+		
+		<!-- ■ 글쓰기 폼에서 '작성완료'(#enrollFormAddBtn) 버튼을 눌러 데이터 전송하기 -->
+		$("#enrollFormAddBtn").on("click", function(){
+			
+			console.log("#enrollFormAddBtn 버튼 눌렀음");
+			
+			// ● 설명
+			//	=> #enrollFormAddBtn의 부모(.box-footer)의 형제(.box-body)의 자식(#novel_title)의 안의 값(val())을 가져옴
+			//console.log($(this).parent().siblings(".box-body").children("#novel_title").val());
+			
+			// ● 폼에 입력한 데이터 받아오기 
+			let novel_title = $(this).parent().siblings(".box-body").children("#novel_title").val();
+			let novel_writer = $(this).parent().siblings(".box-body").children("#novel_writer").val();
+			let novel_category = $(this).parent().siblings(".box-body").children("#novel_category").val();
+			let user_id = $(this).parent().siblings(".box-body").children("#user_id").val();
+			let enroll_intro = $(this).parent().siblings(".box-body").children("#enroll_intro").val();
+			
+			// ● 디버깅
+			console.log(novel_title);
+			console.log(novel_writer);
+			console.log(novel_category);
+			console.log(user_id);
+			console.log(enroll_intro);
+			
+			
+			// ● DB에 적재하기
+			$.ajax({
+				type : 'post',
+				url : '/enrollAjax/insertEnrollForm',
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				beforeSend : function(xhr) {
+					 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				 },
+				dataType : 'text',
+				contentType : 'application/json',
+				data : JSON.stringify({ 
+					novel_title : novel_title,
+					novel_writer : novel_writer,
+					novel_category : novel_category,
+					user_id : user_id,
+					enroll_intro : enroll_intro					
+				}),
+				success : function(result){
+					console.log("result: " + result);
+					if(result == 'SUCCESS'){
+						alert("데이터를 DB에 넣기 성공");
+						
+						// 폼 없애고
+						$("#enrollForm").hide();
+						// 리스트 보여주기
+						$("#divAllList").show();
+						getAllList();
+					}
+				}// end success				
+				
+			})// end ajax
+			
+		}); // end click #enrollFormAddBtn
+		
+		
+		
+		<!-- ■ 디테일 폼에서 관리자가 enroll_result를 선택해 DB에 update 하기 -->
+		$("#updateEnrollResult").on("click", function(){
+			console.log("#updateEnrollResult 버튼 클릭");
+			
+			// ● 결과값(0,1,2,3) 얻어오기
+			//console.log($(this).siblings(".enroll_result").val());
+			let enroll_result = $(this).siblings(".enroll_result").val();
+			console.log("관리자 '선택'번호 -> " + enroll_result);
+			
+			// ● update 할 enroll_num 얻어오기
+			//console.log($(this).parent().siblings("#detail").children("#enroll_num").val());
+			enroll_num = $(this).parent().siblings("#detail").children("#enroll_num").val();
+			console.log("관리자 '선택' 버튼 클릭시 들어온 enroll_num -> " + enroll_num);
+			
+			// ======>>> 여기부터!!! 이제 업데이트 해주면 됨
+			
+		}); // end click updateEnrollResult
 		
 		
 		

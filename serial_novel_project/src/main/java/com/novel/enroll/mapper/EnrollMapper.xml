@@ -15,5 +15,13 @@
 	<select id="getEnrollDetail" resultType="com.novel.enroll.domain.EnrollVO">
 		SELECT * FROM enroll_tbl WHERE enroll_num=#{enroll_num}
 	</select>
+	
+	<!-- ■ 신청 폼에 입력한 데이터를 DB에 적재하기 -->
+	<insert id="insertEnrollFormData">
+		INSERT INTO enroll_tbl(enroll_num, novel_title, novel_writer, novel_category, user_id, enroll_intro)
+        	VALUES
+    	(enroll_num.nextval, #{novel_title}, #{novel_writer}, #{novel_category}, #{user_id}, #{enroll_intro})
+	</insert>
+	
 
 </mapper>
