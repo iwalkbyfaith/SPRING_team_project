@@ -61,7 +61,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (일반회원)
-	@Test
+	//@Test
 	public void testuserCustomDB() {
 		try {
 			
@@ -92,7 +92,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER)
-	@Test
+	//@Test
 	public void testInsertuserAuth() {
 		
 		try {
@@ -122,7 +122,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (무료작가)
-	@Test
+	//@Test
 	public void testFreeWriterCustomDB() {
 		try {
 			
@@ -153,7 +153,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_FREE_WRITER)
-	@Test
+	//@Test
 	public void testInsertFreeWriterAuth() {
 		
 		try {
@@ -186,7 +186,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (유료작가)
-	@Test
+	//@Test
 	public void testPaidWriterCustomDB() {
 		try {
 			
@@ -216,8 +216,8 @@ public class NovelWriterTests {
 	}
 	
 	
-	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER, ROLE_FREE_WRITER, ROLE_PAID_WRITER, ROLE_ADMIN)
-	@Test
+	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_PAID_WRITER)
+	//@Test
 	public void testInsertPaidWriterAuth() {
 		
 		try {
@@ -247,8 +247,8 @@ public class NovelWriterTests {
 	
 	// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 	
-	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (유료작가)
-	@Test
+	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (관리자)
+	//@Test
 	public void testAdminCustomDB() {
 		try {
 			
@@ -278,8 +278,8 @@ public class NovelWriterTests {
 	}
 	
 	
-	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER, ROLE_FREE_WRITER, ROLE_PAID_WRITER, ROLE_ADMIN)
-	@Test
+	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_ADMIN)
+	//@Test
 	public void testInsertAuth() {
 		
 		try {
