@@ -109,5 +109,5 @@ public class PaidNovelController {
 		paidservice.update(vo);
 	return "redirect:/paid/detail/" + novel_num + "/" + vo.getPaid_num();
 	}
-
 }
+

@@ -57,14 +57,26 @@ text-align:center;
 .articlecontent{
 	margin-bottom:300px;
 }
-#replLi{
+#reply,#reply1{
 text-align:left;
-list-style-type:none;
+border:none;
+width:1000px;
+height:100px;
+font-size:20px;
+
 }
 #writeNovel,#replInsert{
 float:right;
 } 
-
+#replyWrite{
+width: 100%; 
+height: 5.0em; 
+resize: none;
+}
+#novelWriteBtn,.novellist,.novelseries,#replDelete,#replUpdateBtn,#replUpdate,#replInsert{
+border:none;
+margin-right:5px;
+}
 }
 	
 	</style>
@@ -201,13 +213,11 @@ float:right;
 	
 	<div class="repl" style="display:none;">
 	<h2>댓글</h2>
-	<ul class="replheader">
-	</ul>
+	<div class="replheader">
+	</div>
 	<h2>댓글 작성</h2>
 	<div class="replyContainer">
-	<textarea id="replyWrite" style="width: 100%; height: 2.0em; resize: none;"></textarea>
 	
-	<button id="replInsert">등록</button>
 	</div>
 	</div>
 </div>
@@ -512,7 +522,7 @@ function getFantasyList(){
 		$(data).each(
 				function(){
 			
-			str += "<div class='fantasyLi' data-novelNum='" + this.novel_num + "'>" + 
+			str += "<div class='fantasyLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
 			this.novel_title + "</div>";
 
 		});
@@ -539,7 +549,7 @@ function getRomanceList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='romanceLi' data-novelNum='" + this.novel_num + "'>" + 
+					str += "<div class='romanceLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -564,7 +574,7 @@ function getWuxiaList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='wuxiaLi' data-novelNum='" + this.novel_num + "'>" + 
+					str += "<div class='wuxiaLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -589,7 +599,7 @@ function getMysteryList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='mysteryLi' data-novelNum='" + this.novel_num + "'>" + 
+					str += "<div class='mysteryLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -609,7 +619,7 @@ $("#headerfLi").on("click",function(){
 
 getFantasyList();
 });
-//■ 로맨스 카테고리를 클릭시 로맨스 카테로리의 소설 리스트를 보여줌
+// ■ 로맨스 카테고리를 클릭시 로맨스 카테로리의 소설 리스트를 보여줌
 $("#headerrLi").on("click",function(){
 
 	$("#novellist").empty();
@@ -618,7 +628,7 @@ $("#headerrLi").on("click",function(){
 
 getRomanceList();
 });
-//■ 무협지 카테고리를 클릭시 무협지 카테로리의 소설 리스트를 보여줌
+// ■ 무협지 카테고리를 클릭시 무협지 카테로리의 소설 리스트를 보여줌
 $("#headerwLi").on("click",function(){
 
 $("#novellist").empty();
@@ -628,7 +638,7 @@ $(".table").hide();
 getWuxiaList();
 	
 });
-//■ 미스터리 카테고리를 클릭시 미스터리 카테고리의 소설 리스트를 보여줌
+// ■ 미스터리 카테고리를 클릭시 미스터리 카테고리의 소설 리스트를 보여줌
 $("#headermLi").on("click",function(){
 
 $("#novellist").empty();
@@ -638,7 +648,7 @@ $(".table").hide();
 getMysteryList();
 	
 });
-//■ 소설 글쓰기를 클릭시 소설 글쓰기 창을 보여줌.
+// ■ 소설 글쓰기를 클릭시 소설 글쓰기 창을 보여줌.
 $("#novelWriteBtn").on("click",function(){
 
 $("#novellist").empty();
@@ -691,6 +701,7 @@ $("#novelBtn").on("click",".novelSubmit",function(){
 			if(result == 'SUCCESS'){
 				alert("소설이 등록 되었습니다.");// 소설 등록 로직 끝남 . 
 // ===================================================================================
+					// 소설 등록 로직이 끝난후 등록한 소설의 카테고리 리스트를 보여줌 (등록한 소설이 해당 카테고리에 들어갔는지 보여주기위함)
 				$.getJSON("/free/novel/"+ novelCategory , function(data){
 					
 					
@@ -721,6 +732,7 @@ $("#novelBtn").on("click",".novelSubmit",function(){
 // ■ 판타지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌 
 $("#novellist").on("click",".fantasyLi", function(){
 var novelNum = $(this).attr("data-novelNum");
+var user_id = $(this).attr("data-userId");
 var novelCategory = "fantasy";
 console.log(novelNum);
 
@@ -728,17 +740,16 @@ console.log(novelNum);
 	$(".categoryheader").hide();
 	
 	
+	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
-	
-	let str = "";
-	let str1 = "";
-	let str2 = "";
-	
-	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
-	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
-	$(".writebtn").html(str1);
-	$(".List").html(str2);
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
+		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		$(".writebtn").html(str1);
+		$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -759,7 +770,7 @@ console.log(novelNum);
 				 }
 				
 				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
@@ -774,16 +785,20 @@ console.log(novelNum);
 	
 });
 });
+	if(id == user_id){
+		$(".writebtn").show("slow");
+	}
 	$(".table").show("slow");
-	$(".writebtn").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	
 		
 });
 //■ 로맨스 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".romanceLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelCategory = "romance";
+var user_id = $(this).attr("data-userId");
 console.log(novelNum);
 
 	$("#novellist").empty();
@@ -793,13 +808,13 @@ console.log(novelNum);
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
 	
-	let str = "";
-	let str1 = "";
-	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
-	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
-	$(".writebtn").html(str1);
-	$(".List").html(str2);
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
+		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		$(".writebtn").html(str1);
+		$(".List").html(str2);
 	console.log(data);
 	
 	$(data).each(
@@ -819,7 +834,7 @@ console.log(novelNum);
 				
 				 }
 				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
@@ -830,8 +845,10 @@ console.log(novelNum);
 				
 });		
 });
+	if(id == user_id){
+		$(".writebtn").show("slow");
+	}
 	$(".table").show("slow");
-	$(".writebtn").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
 	
@@ -840,26 +857,30 @@ console.log(novelNum);
 $("#novellist").on("click",".wuxiaLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelCategory = "wuxia";
+var user_id = $(this).attr("data-userId");
 console.log(novelNum);
 
 	$("#novellist").empty();
 	$(".categoryheader").hide();
-		
+	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
 	
-	let str = "";
-	let str1 ="";
-	let str2 = "";
-	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
-	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
-	$(".writebtn").html(str1);
-	$(".List").html(str2);
+		
+		let str = "";
+		let str1 ="";
+		let str2 = "";
+		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
+		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		$(".writebtn").html(str1);
+		$(".List").html(str2);
+	
 	console.log(data);
 	
 	$(data).each(
 			function(){
+								
 				let timestamp1 = this.free_rdate;
 				let timestamp2 = this.free_mdate;
 				let date1 = new Date(timestamp1);
@@ -875,7 +896,7 @@ console.log(novelNum);
 				
 				 }
 				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
@@ -886,8 +907,10 @@ console.log(novelNum);
 				$(".tbody").html(str);
 });
 });
+	if(id == user_id){
+		$(".writebtn").show("slow");
+	}
 	$(".table").show("slow");
-	$(".writebtn").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
 });
@@ -895,11 +918,12 @@ console.log(novelNum);
 $("#novellist").on("click",".mysteryLi", function(){
 var novelNum = $(this).attr("data-novelNum");
 var novelCategory = "mystery";
+var user_id = $(this).attr("data-userId");
 console.log(novelNum);
 
 	$("#novellist").empty();
 	$(".categoryheader").hide();
-		
+	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
@@ -930,7 +954,7 @@ console.log(novelNum);
 				
 				 }				
 				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"'>"+this.free_title+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
@@ -941,9 +965,12 @@ console.log(novelNum);
 				$(".tbody").html(str);
 });
 });
+	if(id == user_id){
+		$(".writebtn").show("slow");
+	}
 	$(".table").show("slow");
-	$(".writebtn").show("slow");
 	$(".List").show("slow");
+	$(".tbody").empty();
 });
 // ■ 특정 카테고리의 회차정보에서 제목을 클릭시 그 회차에 대한 디테일을 보여줌(작가, 내용 등등)
 $(".tbody").on("click",".title",function(){
@@ -952,7 +979,8 @@ console.log(freeSNum);
 var novelNum =  $(this).attr("data-novelNum");
 console.log(novelNum);
 var freeNum = $(this).attr("data-freeNum");
-var novelCategory =$(this).attr("data-novelCategory"); 
+var novelCategory =$(this).attr("data-novelCategory");
+var user_id = $(this).attr("data-userId");
 $("#novellist").empty();
 $(".content").hide();
 $(".table").hide();
@@ -1020,26 +1048,45 @@ $.getJSON(url, function(data){
 
 	$.getJSON("/replies/detail/"+ freeNum, function(data){
 	let repl="";
+	let replDelete="";
+	let replUpdate="";
+	let replInsert="";
+	let replContent="";
 	console.data
+	replContent+= "<textarea id='replyWrite'></textarea>";
+	replInsert += "<button id='replInsert' data-freeNum='"+freeNum+"' data-novelNum='"+novelNum+"'>등록</button>";
+	let reply = replContent + replInsert;
+	$(".replyContainer").html(reply);
 	$(data).each(
 		function(){
+			
+			if(id == this.user_id){
+				replUpdate += "<button id='replUpdateBtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"' data-novelNum='"+ novelNum +"'>수정</button>";
+				replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
+			}
+			
 			var timestamp = this.free_rdate;
 			var date = new Date(timestamp);
 			var formattedTime = "작성일 : " + date.getFullYear()
+										  +"/" + (date.getMonth()+1)
+										  +"/" + date.getDate();
+			repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.user_id+" :"+this.frepl_content+"' readonly/>" + replDelete + replUpdate;
+			replDelete="";
+			replUpdate="";
 			
-			+"/" + (date.getMonth()+1)+
-			+"/" + date.getDate();
-			repl += "<li id='replLi' data-freeNum='" + this.free_num +"'>"+this.user_id+" :"+this.frepl_content+"</li>"
-			
-			; 
 		});
 	$(".replheader").html(repl);
+	
+	
+	
 });
+	if(id == user_id){
+	$(".delete").show("slow");
+	$(".update").show("slow");
+	}
 	
 	$(".content").show("slow");
 	$(".series").show("slow");
-	$(".delete").show("slow");
-	$(".update").show("slow");
 	$(".repl").show("slow");
 });
 
@@ -1059,6 +1106,7 @@ $(".List").on("click",".novelList",function(){
 	$(".update").hide();
 	
 var novelCategory = $(this).attr("data-novelCategory");
+
 	
 	$.getJSON("/free/novel/"+ novelCategory , function(data){
 			
@@ -1069,7 +1117,7 @@ var novelCategory = $(this).attr("data-novelCategory");
 		$(data).each(
 				function(){
 			
-			str += "<div class='"+novelCategory+"Li' data-novelNum='" + this.novel_num + "'>" + 
+			str += "<div class='"+novelCategory+"Li' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
 			this.novel_title + "</div>";
 
 		});
@@ -1651,6 +1699,259 @@ $("#uBtn").on("click",".uModify",function(){
 			}
 		}); // ajax마무리
 });
+$(".repl").on("click","#replDelete",function(){
+	var frepl_num = $(this).attr("data-freplNum");
+	var freeNum = $(this).attr("data-freeNum");
+	
+	$.ajax({
+		type : 'delete',
+		url : '/replies/' + frepl_num,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		header : {
+			"X-HTTP-Method-Override" : "DELETE"
+		},
+		dataType : 'text',
+		success : function(result) {
+			if(result == 'SUCCESS'){
+				alert("댓글이 삭제 되었습니다."); 
+				// ■ 삭제 로직 끝나는 부분
+// ============================================================================================================
+	
+				// ■ 삭제로직 끝난후 남은 댓글 목록 불러오는 로직 				
+				$.getJSON("/replies/detail/"+ freeNum, function(data){
+					let repl="";
+					let replDelete="";
+					let replUpdate="";
+					console.data
+					$(data).each(
+						function(){
+							
+							if(id == this.user_id){
+								replUpdate+= "<button id='replUpdateBtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"'>수정</button>"
+								replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
+							}
+							
+							var timestamp = this.free_rdate;
+							var date = new Date(timestamp);
+							var formattedTime = "작성일 : " + date.getFullYear()
+														  +"/" + (date.getMonth()+1)
+														  +"/" + date.getDate();
+							repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.user_id+" :"+this.frepl_content+"' readonly/>" + replDelete + replUpdate;
+							replDelete="";
+							replUpdate="";
+							
+						});
+					$(".replheader").html(repl);
+					
+					
+				});			
+				} 
+		}
+	}); // ajax 끝나는부분
+});
+
+//■ 처음 수정버튼(#replUpdateBtn)을 누르면 해당 댓글을 수정하는 부분이 먼저나옴. 
+$(".repl").on("click","#replUpdateBtn",function(){
+	var freplNum = $(this).attr("data-freplNum");	
+	var freeNum = $(this).attr("data-freeNum");	
+	var userId = $(this).attr("data-userId");	
+	var novelNum = $(this).attr("data-novelNum");
+	
+	
+	$.getJSON("/replies/detail/"+ freeNum, function(data){
+		let repl="";
+		let replCancel="";
+		let replUpdate="";
+		console.data
+		$(data).each(
+			function(){
+				
+				if(freplNum == this.frepl_num){
+					replUpdate+= "<button id='replUpdate' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"'>수정</button>";
+					replCancel+= "<button id='replCancel' data-freeNum='"+ freeNum +"' data-novelNum='"+ novelNum +"'>취소</button>";
+					
+					repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.frepl_content+"'/>" + replCancel +replUpdate;
+					$(".replheader").html(repl);
+				}
+				
+			}); 
+		
+			 
+			
+	});			
+	
+	});
+
+// ■ 수정 도중 취소를 누르면 다시 원래있던 댓글목록을 뿌려줌.
+$(".repl").on("click","#replCancel",function(){
+	var freeNum = $(this).attr("data-freeNum");
+	var novelNum = $(this).attr("data-novelNum");
+	$.getJSON("/replies/detail/"+ freeNum, function(data){
+		let repl="";
+		let replDelete="";
+		let replUpdate="";
+		let replInsert="";
+		let replContent="";
+		console.data
+		replContent+= "<textarea id='replyWrite'></textarea>";
+		replInsert += "<button id='replInsert' data-freeNum='"+freeNum+"' data-novelNum='"+novelNum+"'>등록</button>";
+		let reply = replContent + replInsert;
+		$(".replyContainer").html(reply);
+		$(data).each(
+			function(){
+				
+				if(id == this.user_id){
+					replUpdate+= "<button id='replUpdateBtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"'>수정</button>"
+					replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
+				}
+				
+				var timestamp = this.free_rdate;
+				var date = new Date(timestamp);
+				var formattedTime = "작성일 : " + date.getFullYear()
+											  +"/" + (date.getMonth()+1)
+											  +"/" + date.getDate();
+				repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.user_id+" :"+this.frepl_content+"' readonly/>" + replDelete + replUpdate;
+				replDelete="";
+				replUpdate="";
+				
+			});
+		$(".replheader").html(repl);
+		
+		
+		
+	});
+	
+	
+});
+	
+// ■ (처음 수정버튼을 누르면 해당 댓글을 수정하는 부분이 먼저나옴 #replUpdateBtn) 수정 버튼(#replUpdate)을 눌렀을때 수정이 되는 로직.	
+$(".repl").on("click","#replUpdate",function(){
+	var frepl_num = $(this).attr("data-freplNum");
+	
+	var frepl_content = $("#reply").val();
+	var freeNum = $(this).attr("data-freeNum");
+	$.ajax({
+		type : 'put',
+		url : '/replies/' + frepl_num,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		header : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "PUT"
+		},
+		contentType : "application/json",
+		dataType : 'text',
+		data: JSON.stringify({
+			frepl_num : frepl_num,
+			frepl_content : frepl_content
+			}),
+		success : function(result) {
+			
+			if(result == 'SUCCESS'){
+				alert("글이 수정 되었습니다."); 
+				
+				// ■ 여기까지 수정 로직
+//=======================================================================================================================				
+			// ■ 수정로직 끝난후 남은 댓글 목록 불러오는 로직 				
+			$.getJSON("/replies/detail/"+ freeNum, function(data){
+					let repl="";
+					let replDelete="";
+					let replUpdate="";
+					console.data
+					$(data).each(
+						function(){
+							
+							if(id == this.user_id){
+								replUpdate+= "<button id='replUpdateBtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"'>수정</button>"
+								replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
+							}
+							
+							var timestamp = this.free_rdate;
+							var date = new Date(timestamp);
+							var formattedTime = "작성일 : " + date.getFullYear()
+														  +"/" + (date.getMonth()+1)
+														  +"/" + date.getDate();
+							repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.user_id+" :"+this.frepl_content+"' readonly/>" + replDelete + replUpdate;
+							replDelete="";
+							replUpdate="";
+							
+						});
+					$(".replheader").html(repl);
+					
+					
+				});			
+					
+				}
+		}
+	}); // ajax마무리
+	
+});
+
+// ■ 댓글 등록 버튼을 눌렀을때 실행되는 로직 
+$(".replyContainer").on("click","#replInsert",function(){
+	var novel_num = $(this).attr("data-novelNum");
+	var freeNum = $(this).attr("data-freeNum");
+	var frepl_content = $("#replyWrite").val();
+	
+	$.ajax({
+		type : 'post',
+		url: '/replies',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		headers:{
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
+		},
+		dataType : 'text',
+		data : JSON.stringify({
+			
+			novel_num : novel_num,
+			frepl_content : frepl_content,
+			free_num : 	freeNum,			
+			user_id : id
+	}),
+		success : function(result){
+			if(result == 'SUCCESS'){
+				alert("댓글이 등록 되었습니다.");
+				$("#replyWrite").val(null); // 댓글 등록 로직 끝남 .
+ // ===================================================================================================================
+	 				// 새로 쓴 댓글을 반영한 댓글모음을 불러와야함. 
+					$.getJSON("/replies/detail/"+ freeNum, function(data){
+						let repl="";
+						let replDelete="";
+						let replUpdate="";
+						console.data
+						$(data).each(
+							function(){
+								
+								if(id == this.user_id){
+									replUpdate+= "<button id='replUpdate' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.freeNum+"'>수정</button>"
+									replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
+								}
+								
+								var timestamp = this.free_rdate;
+								var date = new Date(timestamp);
+								var formattedTime = "작성일 : " + date.getFullYear()
+															  +"/" + (date.getMonth()+1)
+															  +"/" + date.getDate();
+								repl += "<input type='text' id='reply' data-freeNum='" + this.free_num +"' data-freplNum='" + this.frepl_num +"' value='"+this.user_id+" :"+this.frepl_content+"' readonly/>" + replDelete + replUpdate;
+								replDelete="";
+								replUpdate="";
+								
+							});
+						$(".replheader").html(repl);
+						
+						
+					});	// getJson <-- 댓글 불러오는 getJson	
+				}
+			}			// success 끝나는부분
+		}); 			// ajax 끝나는부분 
+		
+		});
 
 
 		
