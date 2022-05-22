@@ -4,6 +4,7 @@ package com.novel.paid.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,7 @@ public class PaidNovelController {
 	}
 	
 	// ■ 요일별 소설 목록 (paidWeek)
+	//@PreAuthorize("hasRole('ROLE_PAID_WRTIER')")
 	@GetMapping(value="/Week/{novelWeek}")
 	public String paidWeek(@PathVariable("novelWeek") String novelWeek, Model model) {
 		
@@ -48,6 +50,7 @@ public class PaidNovelController {
 	}
 	
 	//
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/List/{novelNum}")
 	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
 		
@@ -62,6 +65,7 @@ public class PaidNovelController {
 	}
 	
 	// ■ 유료소설 회자 상세 (paidDetail)
+	@PreAuthorize("hasRole('ROLE_PAID_WRTIER')")
 	@GetMapping("/detail/{novel_num}/{paid_num}")
 	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, Model model ) {
 		PaidVO novel = paidservice.selectDetail(paid_num, novel_num);

@@ -24,7 +24,8 @@
 		</select>
 		
 		<select id="selectPaidList" resultType="com.novel.paid.domain.PaidVO">
-			SELECT * FROM paid_tbl WHERE novel_num = #{novelNum}
+			SELECT * FROM paid_tbl p INNER JOIN novel_tbl n ON n.novel_num = p.novel_num 
+			WHERE p.novel_num = #{novelNum}
 			
 			<!--  
 			<![CDATA[
