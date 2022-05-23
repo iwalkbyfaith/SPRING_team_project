@@ -23,5 +23,29 @@
     	(enroll_num.nextval, #{novel_title}, #{novel_writer}, #{novel_category}, #{user_id}, #{enroll_intro})
 	</insert>
 	
+	<!-- ■ 관리자 승인 버튼에 따른 enroll_result 변경 -->
+	<update id="updateEnrollResult">
+		UPDATE enroll_tbl SET enroll_result = #{enroll_result}, enroll_msg = #{enroll_msg} WHERE enroll_num=#{enroll_num}
+	</update>
+	
+		<!-- ● 관리자 승인 버튼에 따른 novel_tbl 적재 -->
+		<insert id="insertEnrollResult">
+			INSERT INTO 
+				novel_tbl 
+			(novel_num, novel_writer, user_id, novel_title, novel_category, novel_week) 
+				VALUES
+            (novel_num.nextval, #{novel_writer}, #{user_id}, #{novel_title}, #{novel_category}, #{novel_week})
+		</insert>
+		
+	<!-- ■ enroll_result값에 따른 리스트 가져오기 -->
+	<select id="getEnrollxxList" resultType="com.novel.enroll.domain.EnrollVO">
+		SELECT * FROM enroll_tbl WHERE enroll_result=#{enroll_result}
+	</select>
+	
+	
+	
+	
+	
+	
 
 </mapper>

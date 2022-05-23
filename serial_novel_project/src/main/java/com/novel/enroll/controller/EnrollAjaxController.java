@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.novel.enroll.domain.EnrollVO;
@@ -88,6 +89,61 @@ public class EnrollAjaxController {
 			entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		
+		return entity;
+	}
+	
+	
+	// ■ 관리자 승인 버튼에 따른 enroll_result 변경 & 승인된 경우 novel_tbl에 적재
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, 
+  				    value="/updateEnrollResult",
+				    consumes="application/json",
+				    produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateEnrollResult(@RequestBody EnrollVO vo){
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			log.warn("/updateEnrollResult에서 받은 vo -> " + vo);
+			
+			// 1) enroll_tbl에 변경 사항을 업데이트
+			service.updateEnrollResult(vo);
+			
+			// 2) enroll_result가 2(무료 승인)라면 novel_tbl에 free로 적재
+				// 2-1) enroll_result 확인
+				log.warn("/updateEnrollResult에서 가져온 결과값 -> " + vo.getEnroll_result());
+				
+				// 2-2) novel_tbl에 적재 if사용
+				// 아직 메서드 안 만들었음
+			
+			// 3) enroll_result가 3(유료 승인)이라면 novel_tbl에 유료로 적재 (할지말지 고민)
+			entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	
+	
+	
+	// ■ enroll_result값에 따른 리스트 가져오기
+	@GetMapping(value="/getList/{enroll_result}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<EnrollVO>> getxxList(@PathVariable("enroll_result") long enroll_result){
+		
+		ResponseEntity<List<EnrollVO>> entity = null;
+		
+		try {
+			
+			log.warn("/getList) 들어온 enroll_result -> " + enroll_result);
+			entity = new ResponseEntity<>(service.getEnrollxxList(enroll_result), HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		return entity;
 	}
 

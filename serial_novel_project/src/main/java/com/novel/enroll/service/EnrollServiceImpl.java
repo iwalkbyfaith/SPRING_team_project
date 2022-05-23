@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.novel.enroll.domain.EnrollVO;
 import com.novel.enroll.mapper.EnrollMapper;
+import com.novel.free.domain.NovelVO;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class EnrollServiceImpl implements EnrollService{
 	
@@ -32,5 +36,55 @@ public class EnrollServiceImpl implements EnrollService{
 	public void insertEnrollFormData(EnrollVO vo) {
 		mapper.insertEnrollFormData(vo);	
 	}
+
+	// ■ 관리자 승인 버튼에 따른 enroll_result 변경 & 승인된 경우 novel_tbl에 적재
+	@Override
+	public void updateEnrollResult(EnrollVO vo) {
+		
+		// ● 업데이트 진행
+		mapper.updateEnrollResult(vo);	
+		
+		log.warn(vo.getNovel_writer());
+		log.warn(vo.getNovel_title());
+		log.warn(vo.getNovel_category());
+		log.warn(vo.getUser_id());
+		log.warn(vo.getEnroll_result());
+		
+		
+		// ● 승인된 경우 novel_tbl에 적재 (2 = 무료 연재 승인)
+		if(vo.getEnroll_result() == 2) {
+			
+			NovelVO novel = new NovelVO();
+			
+			novel.setNovel_writer(vo.getNovel_writer());
+			novel.setNovel_title(vo.getNovel_title());
+			novel.setNovel_category(vo.getNovel_category());
+			novel.setUser_id(vo.getUser_id());
+			novel.setNovel_week("free");
+			
+			log.warn("EnrollVO에서 NovelVO로 세팅한 vo ===> " + novel);
+			
+			mapper.insertEnrollResult(novel);
+		}
+	}
+
+	
+	// ■ enroll_result값에 따른 리스트 가져오기
+	@Override
+	public List<EnrollVO> getEnrollxxList(long enroll_result) {
+		return mapper.getEnrollxxList(enroll_result);
+	}
+	
+	
+
+//	// ■ enroll_result가 2(무료 승인)인 경우 novel_tbl에 free로 적재하기
+//	//   EnrollVO로 받은 내용들을 novelVO를 만들어서 세팅해줌
+//	@Override
+//	public void insertEnrollResult(EnrollVO vo) {
+//		
+//		
+//		
+//		
+//	}
 
 }

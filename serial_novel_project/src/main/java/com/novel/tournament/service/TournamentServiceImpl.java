@@ -89,7 +89,7 @@ public class TournamentServiceImpl implements TournamentService{
 	@Override
 	public void afterTowork1(long novel_num) {
 		// 1) novel_tbl에서 week=free인 것을 변경해준다
-		mapper.updateWeek("mon", novel_num);
+		mapper.updateWeek("Mon", novel_num);
 		
 		// 2) auth_tbl에서 작가의 등급을 ROLE_PAID_WRITER로 변경하기
 			// 2-1) 우승 작품의 작품번호(novel_num)을 얻어와서
