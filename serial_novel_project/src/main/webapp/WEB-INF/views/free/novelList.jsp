@@ -151,7 +151,9 @@ margin-right:5px;
 </ul>
 </div>
 <div id="writeNovel">
+<sec:authorize access="hasRole('ROLE_FREE_WRITER')">
 <button id="novelWriteBtn">소설등록</button>
+</sec:authorize>
 </div>
 
 <br/>
@@ -1021,7 +1023,7 @@ $.getJSON(url, function(data){
 					str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4>";
-					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"'>회차목록</button>";
+					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
 					
 				}
 				else{
@@ -1030,7 +1032,7 @@ $.getJSON(url, function(data){
 					str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
-					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"'>회차목록</button>";
+					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
 					
 				}
 				
@@ -1138,7 +1140,7 @@ $(".series").on("click",".novelSeries",function(){
 	$(".series").hide();
 	$(".update").hide();
 	$(".delete").hide();
-	
+	var userId = $(this).attr("data-userId")	
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
 	console.log(novelNum);
@@ -1162,10 +1164,18 @@ $(".series").on("click",".novelSeries",function(){
 					let timestamp2 = this.free_mdate;
 					let date1 = new Date(timestamp1);
 					let date2 = new Date(timestamp2);
+					let testDate = new Date(1970,0,1);
+					
+									
+									
 					
 					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
+					if(formattedTime2 == formattedTime3){
+						formattedTime2 = "";
 					
+					 }
 					str+= "<tr><td>"+this.free_snum+"</td>"
 						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.free_title+"</td>"
 						+ "<td>"+this.novel_writer+"</td>"
@@ -1181,8 +1191,10 @@ $(".series").on("click",".novelSeries",function(){
 					$(".List").html(str2);
 	});
 	});
+		if(id == userId){
+			$(".writebtn").show("slow");
+		}
 		$(".table").show("slow");
-		$(".writebtn").show("slow");
 		$(".List").show("slow");
 		
 		
@@ -1552,7 +1564,7 @@ $("#uBtn").on("click",".uCancel",function(){
 						str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 						str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 						str+= "<h4>"+this.free_content1+"</h4>";
-						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"'>회차목록</button>";
+						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"' data-userId='"+this.user_id+"'>회차목록</button>";
 						
 					}
 					else{
@@ -1561,7 +1573,7 @@ $("#uBtn").on("click",".uCancel",function(){
 						str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 						str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 						str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
-						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"'>회차목록</button>";
+						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"' data-userId='"+this.user_id+"'>회차목록</button>";
 						
 					}
 					
@@ -1665,7 +1677,7 @@ $("#uBtn").on("click",".uModify",function(){
 										str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 										str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 										str+= "<h4>"+this.free_content1+"</h4>";
-										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"'>회차목록</button>";
+										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>회차목록</button>";
 										
 									}
 									else{
@@ -1674,7 +1686,7 @@ $("#uBtn").on("click",".uModify",function(){
 										str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
 										str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 										str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
-										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"'>회차목록</button>";
+										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>회차목록</button>";
 										
 									}
 									

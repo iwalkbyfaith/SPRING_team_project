@@ -92,7 +92,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER)
-	@Test
+	//@Test
 	public void testInsertuserAuth() {
 		
 		try {
@@ -153,7 +153,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_FREE_WRITER)
-	@Test
+	//@Test
 	public void testInsertFreeWriterAuth() {
 		
 		try {
@@ -217,7 +217,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER, ROLE_FREE_WRITER, ROLE_PAID_WRITER, ROLE_ADMIN)
-	@Test
+	//@Test
 	public void testInsertPaidWriterAuth() {
 		
 		try {
@@ -279,7 +279,7 @@ public class NovelWriterTests {
 	
 	
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_USER, ROLE_FREE_WRITER, ROLE_PAID_WRITER, ROLE_ADMIN)
-	@Test
+	//@Test
 	public void testInsertAuth() {
 		
 		try {
