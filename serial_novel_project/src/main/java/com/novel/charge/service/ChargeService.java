@@ -1,5 +1,8 @@
 package com.novel.charge.service;
 
-public interface ChargeService {
+import com.novel.charge.domain.ChargeVO;
 
+public interface ChargeService {
+	
+	public void insertPay(ChargeVO vo);
 }
