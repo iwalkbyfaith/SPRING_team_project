@@ -74,6 +74,20 @@ public class EnrollServiceImpl implements EnrollService{
 	public List<EnrollVO> getEnrollxxList(long enroll_result) {
 		return mapper.getEnrollxxList(enroll_result);
 	}
+
+	
+	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함)
+	@Override
+	public void updateEnrollForm(EnrollVO vo) {
+		mapper.updateEnrollForm(vo);	
+	}
+
+	
+	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
+	@Override
+	public void deleteEnrollForm(long enroll_num) {
+		mapper.deleteEnrollForm(enroll_num);
+	}
 	
 	
 

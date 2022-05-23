@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -144,6 +145,53 @@ public class EnrollAjaxController {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		return entity;
+	}
+	
+	
+	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함 : 다른 리스트는 못보게 권한 설정 해놓을것)
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, 
+			    	value="/updateEnrollForm",
+				    consumes="application/json",
+				    produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> updateEnrollForm(@RequestBody EnrollVO vo){
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			log.warn("/updateEnrollForm으로 들어온 vo -> " + vo);
+			
+			// DB 데이터 수정
+			service.updateEnrollForm(vo);
+			entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	
+	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함 : 다른 리스트는 못보게 권한 설정 해놓을것)
+	@DeleteMapping(value="/deleteEnrollForm/{enroll_num}",
+				   produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("enroll_num") long enroll_num){
+		
+		ResponseEntity<String> entity = null;
+		
+		log.info("/deleteEnrollForm에 들어온 enroll_num -> " + enroll_num);
+		
+		try {
+			
+			service.deleteEnrollForm(enroll_num);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+		}catch(Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		
 		return entity;
 	}
 

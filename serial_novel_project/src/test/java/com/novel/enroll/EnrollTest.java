@@ -87,11 +87,35 @@ public class EnrollTest {
 	
 	
 	// ■ enroll_result값에 따른 리스트 가져오기
-	@Test
+	//@Test
 	public void selectEnrollxxList() {
 		log.info(mapper.getEnrollxxList(2));
 	}
 	
+	
+	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함)
+	//@Test
+	public void updateEnrollFormTest() {
+		
+		EnrollVO vo = new EnrollVO();
+		
+		vo.setNovel_title("테스트코드 타이틀");
+		vo.setNovel_writer("테스트코드 필명");
+		vo.setNovel_category("romance");
+		vo.setEnroll_intro("테스트코드 인트로");
+		vo.setUser_id("admin0");
+		vo.setEnroll_num(13);
+		
+		log.info("세팅된 vo : " + vo);
+		
+		mapper.updateEnrollForm(vo);
+	}
+	
+	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
+	@Test
+	public void deleteEnrollFormTest() {
+		mapper.deleteEnrollForm(16);
+	}
 	
 	
 	

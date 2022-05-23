@@ -231,12 +231,6 @@
 
 		<!-- ※ 밑의 관리자 영역을 모달로 바꾸는 테스트 중 -->
 		<div class="box-footer2">
-			<h4>여기는 관리자 영역 : 최상위 .box-footer2</h4>
-			<h5>
-				.box-footer2 > <br /> #modDiv > <br /> .modal-title /
-				div(#form_enroll_msg, #form_enroll_result) /
-				div(#updateEnrollResult, #closeBtn)
-			</h5>
 			<div id="modDiv" style="display: none;">
 				<div class="modal-title"></div>
 				<div id="modBody">
@@ -328,10 +322,11 @@
 	현재 로그인한 유저 정보 ->
 	<sec:authentication property="principal.user" />
 	<hr />
-	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 <br />
-	2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다' 이런 메세지 띄우기? <br />
-	 + 그리고 enroll_result가 2인 경우에는 novel_tbl에 free로 적재해야한다.(첨부파일을 받으면 유료도 할 생각 있음) <br />
-	 + 디테일 불러올 때 폼 창 수정 못하게 readonly 걸어야함.
+	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 (현재 승인 대기중입니다 이런거 띄워도 될 듯) <br />
+	2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다' 이런 메세지 띄우기? => result가 0일때만 고칠 수 있도록 <br />
+	3. 자잘한 권한 설정해주기 (일반 유저들은 승인 대기만 확인할 수 있음 => 그래서 승인 대기만 수정할 수 있음)
+	4. 첨부파일 넣기
+	5. 폼 스타일 태그로 정리해주기
 	
 
 	<script>
@@ -353,8 +348,9 @@
 		<!-- ■ 무료 승인 리스트 디테일 가져오기 -->					
 		<!-- ■ 디테일에서 리스트로 돌아가는 버튼(#goAllList) 클릭 -->
 		
-		<!-- ■ 디테일 폼 수정하기 (수정중) -->
-		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 (수정중) -->
+		<!-- ■ 디테일 수정 폼으로 넘어가기 -->
+		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 -->
+		<!-- ■ 삭제 버튼 눌렀을때 디테일 삭제하기 -->
 		
 		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 -->
 		<!-- ■ 글쓰기 폼에서 '작성완료'(#enrollFormAddBtn) 버튼을 눌러 데이터 전송하기 -->
@@ -367,6 +363,11 @@
 		
 		
 		<!-- ■ 변수 설정 -->
+		
+			// ● id 설정 예시
+				// insert_user_id => 신청 폼에 입력
+				// input_user_id  => 디테일에서 조회
+				// update_user_id => 수정폼
 		
 			// ● 시큐리티
 			let csrfHeaderName = "${_csrf.headerName}"
@@ -1051,7 +1052,7 @@
 			
 			
 			
-		<!-- ■ 디테일 폼 수정하기 (수정중) -->
+		<!-- ■ 디테일 수정 폼으로 넘어가기 -->
 		$("#updateForm").on("click", function(){
 			
 			console.log("수정#updateForm 버튼 클릭했음");
@@ -1127,7 +1128,7 @@
 		});//end click #updateForm
 		
 		
-		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 (수정중) -->
+		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 -->
 		$("#updateDetailBtn").on("click", function(){
 			
 			console.log("수정완료 버튼 #updateDetailBtn 클릭했음");
@@ -1136,7 +1137,186 @@
 			// 수정하고
 			// 수정이 완료되면 디테일 페이지로
 			
+			// ● 변수 받기			
+			let enroll_num = $(this).parent().siblings("#updateDetail").children("#update_enroll_num").val();
+			let novel_title= $(this).parent().siblings("#updateDetail").children("#update_novel_title").val();
+			let novel_writer= $(this).parent().siblings("#updateDetail").children("#update_novel_writer").val();
+			let novel_category= $(this).parent().siblings("#updateDetail").children("#update_novel_category").val();
+			let user_id= $(this).parent().siblings("#updateDetail").children("#update_user_id").val();
+			let enroll_intro= $(this).parent().siblings("#updateDetail").children("#update_enroll_intro").val();
+			
+				// 디버깅
+				console.log("수정완료 버튼으로 받은 enroll_num -> " + enroll_num);
+				console.log("수정완료 버튼으로 받은 novel_title -> " + novel_title);
+				console.log("수정완료 버튼으로 받은 novel_writer -> " + novel_writer);
+				console.log("수정완료 버튼으로 받은 novel_category -> " + novel_category);
+				console.log("수정완료 버튼으로 받은 user_id -> " + user_id);
+				console.log("수정완료 버튼으로 받은 enroll_intro -> " + enroll_intro);
+				
+			// ● 수정하기
+			
+				// 버튼 클릭시 경고창 띄움 (-> 확인을 눌러야 진입)
+				if(confirm("정말 수정하시겠습니까?")){
+				
+					// ● 업데이트 로직 실행
+					$.ajax({
+						
+						type : 'put',
+						url : '/enrollAjax/updateEnrollForm',
+						header : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "PUT"
+						},
+						beforeSend : function(xhr){
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+						contentType : "application/json",
+						data : JSON.stringify({
+							enroll_intro : enroll_intro,
+							enroll_num : enroll_num,
+							novel_title : novel_title,
+							novel_writer : novel_writer,
+							novel_category : novel_category,
+							user_id : user_id
+						}),
+						dataType : 'text',
+						success : function(result){
+							console.log("result: " + result);
+							if(result == 'SUCCESS'){
+								alert("수정이 완료되었습니다.");									
+								
+								// ● 성공시 디테일 페이지 다시 불러와야함(변경점 반영해야하니까)
+								
+									$.getJSON("/enrollAjax/getDetail/" + enroll_num, function(data){
+										console.log("디테일 페이지 진입 ");
+										console.log(data);
+										console.log(data.enroll_num);
+					
+										
+										// ● str 세팅
+										let str = "";
+										
+										// ● 신청 결과값(정수)을 한글로
+										let result = "";
+									
+											if(data.enroll_result == 0){
+												result = "승인 대기";	
+											}else if(data.enroll_result == 1){
+												result = "승인 거부";	
+											}else if(data.enroll_result == 2){
+												result = "무료 승인";	
+											}else if(data.enroll_result == 3){
+												result = "유료 승인";	
+											}
+											
+											console.log("관리자 메세지 ▼");
+											console.log("메세지가 있다? " + data.enroll_msg != null);
+											
+										// ● 관리자 메세지가 없으면 ""를 넣고(이렇게 처리 안하면 null값을 출력함), 아니면 그대로 출력
+											let msg;
+											
+												if(data.enroll_msg == null){
+													msg = "";
+												}else{
+													msg = data.enroll_msg;
+												}
+											
+											str += "<input type='text' id='input_enroll_num' class='form-control' value='" + data.enroll_num + "'/>"
+												+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "'/>"
+												+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "'/>"
+												+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "'/>"
+												+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "'/>"
+												+  "<textarea id='input_enroll_intro' style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+												+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "'/>"
+												+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "'/>" ;
+											
+											
+											$("#detail").html(str);
+									
+									
+									}); // end getJSON	
+									
+									// ● 숨기기
+										// * 업데이트 폼 숨기기
+										$("#divUpdateDetail")
+									
+									// ● 보이기
+										// * 디테일 보이기
+										$("#divDetail").show();
+									
+									
+							} // end ajax if	
+							
+						} // end success	
+						
+					}); // end ajax
+			
+				}// end confirm if	
+			
 		});// end click #updateDetailBtn
+		
+		
+		
+		<!-- ■ 삭제 버튼 눌렀을때 디테일 삭제하기 -->
+		$("#deleteForm").on("click", function(){
+			
+			console.log("#deleteForm 클릭했음");
+			
+			// ● 변수 받기
+			let enroll_num = $(this).parent().siblings("#detail").children("#input_enroll_num").val();
+			console.log("#deleteForm을 클릭해서 들어온 enroll_num -> " + enroll_num);
+			
+			// ● 삭제로직 실행
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+					
+					type : 'delete',
+					url : '/enrollAjax/deleteEnrollForm/' + enroll_num,
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					header : {
+						"X-HTTP-Method-Override" : "DELETE"
+					},
+					dataType : 'text',
+					success : function(result) {
+						if(result == 'SUCCESS'){
+							alert("삭제가 완료되었습니다.");
+							
+							// ● 숨기기
+								// * 디테일 페이지 숨기기
+								$("#divDetail").hide();
+							
+							// ● 보이기
+								// * 전체 리스트 보이기
+								getAllList();
+								$("#divAllList").show();
+					
+								// * 승인 대기 리스트 보이기
+								get0List();
+								$("#divResult0List").show();
+								
+								// * 승인 거부 리스트 보이기
+								get1List();
+								$("#divResult1List").show();
+								
+								// * 무료 승인 리스트 보이기
+								get2List();
+								$("#divResult2List").show();
+								
+								// * 작가신청 버튼 보이기
+								$("#enrollBtn").show();
+							
+							
+						}//end if	
+						
+					}// end success
+					
+				});//end ajax
+			
+			}// end confirm if
+			
+		});// on click #deleteForm
 		
 		
 		
@@ -1252,8 +1432,6 @@
 							// * 작가신청 버튼 보이기
 							$("#enrollBtn").show();
 											
-							// * 작가신청 버튼도 보이기
-							$("#enrollBtn").show();
 							
 						
 					}// end if

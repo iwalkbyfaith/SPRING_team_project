@@ -39,8 +39,24 @@
 		
 	<!-- ■ enroll_result값에 따른 리스트 가져오기 -->
 	<select id="getEnrollxxList" resultType="com.novel.enroll.domain.EnrollVO">
-		SELECT * FROM enroll_tbl WHERE enroll_result=#{enroll_result}
+		SELECT * FROM enroll_tbl WHERE enroll_result=#{enroll_result} ORDER BY enroll_num DESC
 	</select>
+	
+	
+	<!-- ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함) -->
+	<update id="updateEnrollForm">
+		UPDATE 
+        	enroll_tbl 
+    	SET 
+        	novel_title=#{novel_title}, novel_writer=#{novel_writer}, novel_category=#{novel_category}, enroll_intro=#{enroll_intro}
+    	WHERE 
+        	user_id=#{user_id} AND enroll_num=#{enroll_num}
+	</update>
+	
+	<!-- ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함) -->
+	<delete id="deleteEnrollForm">
+		DELETE FROM enroll_tbl WHERE enroll_num=#{enroll_num}
+	</delete>
 	
 	
 	

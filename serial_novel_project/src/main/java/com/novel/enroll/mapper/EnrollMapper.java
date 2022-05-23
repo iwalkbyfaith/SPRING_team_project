@@ -27,5 +27,11 @@ public interface EnrollMapper {
 	
 	// ■ enroll_result값에 따른 리스트 가져오기
 	public List<EnrollVO> getEnrollxxList(long enroll_result);
+	
+	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함)
+	public void updateEnrollForm(EnrollVO vo);
+	
+	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
+	public void deleteEnrollForm(long enroll_num);
 
 }
