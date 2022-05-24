@@ -49,6 +49,24 @@
 			.articleMain{
 				text-align:center;
 			} 
+	
+.menubar li ul {
+list-style:none;
+background: yellowgreen;
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+}
+.menubar li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}
+	
+
 	</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
@@ -93,15 +111,24 @@
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
 		          </ul><!-- ul 태그 끝 -->
-		          <div class="social-part">
-		            <sec:authorize access="isAuthenticated()">
-		            <i class="mypage" ><a href="/mypage/myInfo">내 정보</a></i>
-		            </sec:authorize>
-		            <sec:authorize access="isAnonymous()">
-		            <i class="join"><a href="/secu/join">join</a></i>
-					<i class="login"><a href="/customLogin">login</a></i>
-					</sec:authorize>
-		          </div>
+		          <div class="menubar">
+	   		
+    	 	<ul> 	
+    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
+        	 <ul>
+           <li><a href="/mypage/myInfo">계정정보</a></li>
+           <li><a href="/mypage/myFavor">선호작</a></li>
+           <li><a href="/mypage/bookmark">책갈피</a></li>
+           <li><a href="/secu/customLogout">로그아웃</a></li>
+           
+     	    </ul>
+   			   </li>
+      			</ul>
+      
+   
+</div>
+	
+
 	        </div><!-- div 끝 -->
 	    </nav><!-- 네비바 끝 -->
      </div><!-- header 끝 --> 
@@ -120,14 +147,27 @@
      
      </script>
      
-     
-     <h1> 메인 </h1>
+    <p>아이디  : <sec:authentication property="principal.user.user_id"/></p>					
+	
+	<p>이름 : <sec:authentication property="principal.user.user_name"/></p>					
+	
+	<p>핸드폰 : <sec:authentication property="principal.user.user_pnum"/></p>					
+	
+	<p>이메일 : <sec:authentication property="principal.user.user_email"/></p>					
+	
+	<p>보유 코인 : <sec:authentication property="principal.user.user_coin"/></p>					
+	
+	<p>보유 쿠폰 : <sec:authentication property="principal.user.user_coupon"/></p>					
+	
+	<p>가입일  : <sec:authentication property="principal.user.user_rdate"/></p>					
+						
+	
+	
+		
+    
+    
      
   
-     
-     <h3>0. 공지바(사진 바뀌는거)</h3>
-     <h3>1. 무료소설 베스트</h3>
-     <h3>2. 유료소설 베스트</h3>
 
 
 </body>
