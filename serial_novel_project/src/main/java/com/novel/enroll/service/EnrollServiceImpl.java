@@ -88,6 +88,12 @@ public class EnrollServiceImpl implements EnrollService{
 	public void deleteEnrollForm(long enroll_num) {
 		mapper.deleteEnrollForm(enroll_num);
 	}
+
+	// ■ 05.24 로그인 유저의 '승인대기(enroll_result=0)' 중인 데이터가 있는지 확인하기 -> 있으면 신청 못 함.
+	@Override
+	public EnrollVO getEnrollResult0(String user_id) {
+		return mapper.getEnrollResult0(user_id);
+	}
 	
 	
 

@@ -40,7 +40,7 @@
 			}
 			.writebtn,.List,.series{
 				float:right;
-				margin-right:10px;
+				margin-right:10px; 
 			}
 			.articleInfo{
 				float:right;

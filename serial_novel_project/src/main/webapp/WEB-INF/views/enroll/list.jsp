@@ -10,8 +10,7 @@
 <!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 ( 검색 키워드 : ▣ )-->
 <!-- ▣ 1. <head>태그 사이에 아래 <meta> 태그 두 줄 추가 -->
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header"
-	content="${_csrf.headerName}" />
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 
 
 <!-- ★ 부트스트랩 1. css 복붙 -->
@@ -27,21 +26,21 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 
-<style>
-#modDiv {
-	width: 500px;
-	height: 150px;
-	background-color: whitesmoke;
-	border: gray solid 1px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -250px;
-	padding: 10px;
-	z-index: 1000;
-}
-</style>
+	<style>
+		#modDiv {
+			width: 500px;
+			height: 150px;
+			background-color: whitesmoke;
+			border: gray solid 1px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -50px;
+			margin-left: -250px;
+			padding: 10px;
+			z-index: 1000;
+		}
+	</style>
 
 <meta charset="UTF-8">
 <!-- 네비바 적용2) -->
@@ -261,17 +260,13 @@
 			<h3>여기 디테일 수정하는 곳 #divUpdateDetail > .box-header</h3>
 		</div>
 		<!-- header 끝 -->
-		<div>
-			<button type="button" id="goAllList">리스트로 돌아가기 '#goAllList'</button>
-		</div>
 		<div class="box-body" id="updateDetail">
 			여기는 디테일 바디인 #updateDetail => 디테일들 들어갈 자리
 			<!-- 디테일이 들어갈 자리 -->
 		</div>
 		<!-- body 끝 -->
 		<div class="box-footer">
-			<button type="button" id="updateDetailBtn" class="btn btn-warning">수정완료
-				'#updateDetailBtn'</button>
+			<button type="button" id="updateDetailBtn" class="btn btn-warning">수정완료'#updateDetailBtn'</button>
 		</div>
 	</div>
 
@@ -315,18 +310,15 @@
 	<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ ▲ 위로 div 모음 ▲ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 
 
-	<br />
-	<br />
-	<br />
-	<hr />
-	현재 로그인한 유저 정보 ->
-	<sec:authentication property="principal.user" />
-	<hr />
-	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 (현재 승인 대기중입니다 이런거 띄워도 될 듯) <br />
-	2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다' 이런 메세지 띄우기? => result가 0일때만 고칠 수 있도록 <br />
-	3. 자잘한 권한 설정해주기 (일반 유저들은 승인 대기만 확인할 수 있음 => 그래서 승인 대기만 수정할 수 있음)
-	4. 첨부파일 넣기
-	5. 폼 스타일 태그로 정리해주기
+	<br/><br/><br/><hr/>
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user" />
+	<hr/>
+	ㅊㅊ추가사항
+	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 (현재 승인 대기중인 글이 있습니다 이런거 띄워도 될 듯) -> 완료 <br />
+	2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다' 이런 메세지 띄우기? => result가 0일때만 고칠 수 있도록 or result0만 만들지 못하도록?<br />
+	3. 자잘한 권한 설정해주기 (일반 유저들은 승인 대기만 확인할 수 있음 => 그래서 승인 대기만 수정할 수 있음) <br />
+	4. 첨부파일 넣기 <br />
+	5. 폼 스타일 태그로 정리해주기 <br />
 	
 
 	<script>
@@ -352,7 +344,7 @@
 		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 -->
 		<!-- ■ 삭제 버튼 눌렀을때 디테일 삭제하기 -->
 		
-		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 -->
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
 		<!-- ■ 글쓰기 폼에서 '작성완료'(#enrollFormAddBtn) 버튼을 눌러 데이터 전송하기 -->
 		
 		<!-- ■ 관리자 기능 모달 버튼으로 눌러서 나오게 만들기 -->
@@ -1238,7 +1230,7 @@
 									
 									// ● 숨기기
 										// * 업데이트 폼 숨기기
-										$("#divUpdateDetail")
+										$("#divUpdateDetail").hide();
 									
 									// ● 보이기
 										// * 디테일 보이기
@@ -1324,35 +1316,62 @@
 		
 		
 		
-		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 -->
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
 		$("#enrollBtn").on("click", function(){
 			
-			// ● 보이기
-				// * 디테일 폼
-				$("#enrollForm").show();
+			// ● 이미 작성한 신청(승인대기)가 있을 때는 '승인 대기중인 신청서가 있습니다' 뜨게 하기
+				// 1) 로그인한 유저 아이디 받아오고
+				// 2) DB에서 user_id=아이디 and enroll_result=0의 결과를 받아옴
+				// 3) data != null이라면 경고창alert
+				// 4) data == null이라면 진입 가능
+				
+			$.getJSON("/enrollAjax/checkUsersResult0List/" + id, function(data){
+				console.log("/checkUsersResult0List에서 확인된 sec user_id -> " + id);
+				console.log("/checkUsersResult0List에서 확인된 data ▼ ");
+				console.log(data);
+				
+				// 데이터가 없는 경우에만 디테일 폼으로 진입
+				if(data == null){
+					
+					// ● 보이기
+						// * 디테일 폼
+						$("#enrollForm").show();
 
+				
+					// ● 숨기기				
+						// ＊ 전체 리스트 숨기기   
+						$("#divAllList").hide();
 			
-			// ● 숨기기				
-				// ＊ 전체 리스트 숨기기   
-				$("#divAllList").hide();
-	
-				// * 승인 대기 리스트 숨기기
-				$("#divResult0List").hide();
+						// * 승인 대기 리스트 숨기기
+						$("#divResult0List").hide();
+						
+						// * 승인 거부 리스트 숨기기
+						$("#divResult1List").hide();
+						
+						// * 무료 승인 리스트 숨기기
+						$("#divResult2List").hide();
+						
+						// * 작가신청 버튼 숨기기
+						$("#enrollBtn").hide();
+										
+						// * 작가신청 버튼도 가림
+						$("#enrollBtn").hide();
+						
+						// * 디테일 수정창 숨기기
+						$("#divUpdateDetail").hide();
+					
 				
-				// * 승인 거부 리스트 숨기기
-				$("#divResult1List").hide();
+				// 데이터가 있는 경우에는
+				}else{ 		
+					alert("이미 승인 대기중인 신청서가 있습니다.");	
+				}
 				
-				// * 무료 승인 리스트 숨기기
-				$("#divResult2List").hide();
+			});// end getJSON
 				
-				// * 작가신청 버튼 숨기기
-				$("#enrollBtn").hide();
-								
-				// * 작가신청 버튼도 가림
-				$("#enrollBtn").hide();
+			
 				
-				// * 디테일 수정창 숨기기
-				$("#divUpdateDetail").hide();
+			
+			
 				
 		});// end click #enrollBtn
 		

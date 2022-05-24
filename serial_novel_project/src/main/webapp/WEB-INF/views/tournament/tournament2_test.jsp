@@ -379,7 +379,7 @@
 						$(data).each(function(){
 								
 								str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-										+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/test.png'>" +"</div>"
+										+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -461,7 +461,7 @@
 						$(data).each(function(){
 							
 							str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-								    + "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/test2.png'>" +"</div>"
+									+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -547,7 +547,7 @@
 					$(data).each(function(){
 						
 						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-								+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/test_3.png'>" +"</div>"
+								+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"

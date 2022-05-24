@@ -112,9 +112,17 @@ public class EnrollTest {
 	}
 	
 	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
-	@Test
+	//@Test
 	public void deleteEnrollFormTest() {
 		mapper.deleteEnrollForm(16);
+	}
+	
+	// ■ 05.24 로그인 유저의 '승인대기(enroll_result=0)' 중인 데이터가 있는지 확인하기 -> 있으면 신청 못 함.
+	//@Test
+	public void getUsersEnroll0List() {
+		String user_id = "admin0";
+		
+		log.info(mapper.getEnrollResult0(user_id));
 	}
 	
 	

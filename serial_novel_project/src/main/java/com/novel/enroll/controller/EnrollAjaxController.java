@@ -68,6 +68,29 @@ public class EnrollAjaxController {
 	}
 	
 	
+	
+	// ■ 05.24 로그인 유저의 '승인대기(enroll_result=0)' 중인 데이터가 있는지 확인하기 -> 있으면 신청 못 함.
+	@GetMapping(value="/checkUsersResult0List/{user_id}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<EnrollVO> checkUsersResult0List(@PathVariable("user_id") String user_id){
+		
+		ResponseEntity<EnrollVO> entity = null;
+		
+		try {
+			
+			log.warn("/checkUsersResult0List로 들어온 user_id -> " + user_id);
+			entity = new ResponseEntity<>(service.getEnrollResult0(user_id), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		return entity;
+	}
+	
+	
+	
+	
 	// ■ 신청 폼에 입력한 데이터를 DB에 적재하기
 	@PostMapping(value="/insertEnrollForm", 
 			     consumes="application/json",

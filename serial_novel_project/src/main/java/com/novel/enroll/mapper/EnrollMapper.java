@@ -15,6 +15,9 @@ public interface EnrollMapper {
 	// ■ 상세 리스트 가져오기
 	public EnrollVO getEnrollDetail(long enroll_num);
 	
+	// ■ 05.24 로그인 유저의 '승인대기(enroll_result=0)' 중인 데이터가 있는지 확인하기 -> 있으면 신청 못 함.
+	public EnrollVO getEnrollResult0(String user_id);
+	
 	// ■ 신청 폼에 입력한 데이터를 DB에 적재하기
 	public void insertEnrollFormData(EnrollVO vo);
 	
