@@ -50,7 +50,7 @@ public class PaidNovelController {
 	}
 	
 	//
-	@PreAuthorize("isAuthenticated()")
+	//@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/List/{novelNum}")
 	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
 		
@@ -65,7 +65,7 @@ public class PaidNovelController {
 	}
 	
 	// ■ 유료소설 회자 상세 (paidDetail)
-	@PreAuthorize("hasRole('ROLE_PAID_WRTIER')")
+	//@PreAuthorize("hasRole('ROLE_PAID_WRTIER')")
 	@GetMapping("/detail/{novel_num}/{paid_num}")
 	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, Model model ) {
 		PaidVO novel = paidservice.selectDetail(paid_num, novel_num);
