@@ -99,6 +99,9 @@ free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num
 	UPDATE free_tbl SET free_title =#{free_title}, free_snum=#{free_snum},free_content1 = #{free_content1}, free_content2 =#{free_content2},
 	free_mdate = sysdate WHERE free_num = #{free_num}
 	</update>
+	<update id="addhit">
+	UPDATE free_tbl SET free_hit=#{free_hit} WHERE free_num = #{free_num}
+	</update>
 	<select id="countPageNum" resultType="int">
 	<![CDATA[ 
 	SELECT count(*) FROM free_tbl WHERE

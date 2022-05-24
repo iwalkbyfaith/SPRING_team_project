@@ -31,4 +31,6 @@ public interface FreeNovelService {
 	
 	public void update(FreeNovelVO vo);							// 무료 소설 수정
 	
+	public void addhit(FreeNovelVO vo);							// 조회수 1 증가시키기
+	
 }

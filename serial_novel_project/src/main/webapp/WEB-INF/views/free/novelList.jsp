@@ -988,6 +988,29 @@ $(".content").hide();
 $(".table").hide();
 $(".writebtn").hide();
 
+//■ 조회수 올리는 로직.
+
+$.ajax({
+	type : 'put',
+	url : '/free/hit/' + freeNum,
+	beforeSend : function(xhr){
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	},
+	header : {
+		"Content-Type" : "application/json",
+		"X-HTTP-Method-Override" : "PUT"
+	},
+	contentType : "application/json",
+	dataType : 'text',
+	data: JSON.stringify({
+			
+	}),
+	success : function(result) {
+		
+		if(result == 'SUCCESS'){
+			}
+		}
+		});
 let str6 =	"";
 let str7 =	"";
 
@@ -1001,6 +1024,9 @@ var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
 console.log(url);
 $.getJSON(url, function(data){
 	
+		
+	
+
 	
 	let str = "";
 	let str1 = "";
@@ -1013,6 +1039,7 @@ $.getJSON(url, function(data){
 	
 	$(data).each(
 			function(){
+				
 				let timestamp = this.free_rdate;
 				let date = new Date(timestamp);
 				let formattedTime = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
