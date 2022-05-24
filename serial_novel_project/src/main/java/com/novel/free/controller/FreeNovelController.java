@@ -37,9 +37,9 @@ public class FreeNovelController {
 	
 	@GetMapping(value="/novel/{novelCategory}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE} )
-	public ResponseEntity<List<FreeNovelJoinVO>> novelList(@PathVariable("novelCategory") String novelCategory){
+	public ResponseEntity<List<NovelVO>> novelList(@PathVariable("novelCategory") String novelCategory){
 		
-		ResponseEntity<List<FreeNovelJoinVO>> entity = null;
+		ResponseEntity<List<NovelVO>> entity = null;
 		
 		try {
 			entity = new ResponseEntity<>(service.selectList(novelCategory), HttpStatus.OK);

@@ -163,7 +163,7 @@ public class TournamentWorkController {
 
 	
 	
-	// ■ 추천을 눌렀을 때, 작품의 추천수 +1 올리기(코드 변경 중)
+	// ■ 추천을 눌렀을 때, 작품의 추천수 +1 올리기(코드 변경 중) 
 	@PostMapping(value="/up2",
 					consumes="application/json",
 					produces= {MediaType.TEXT_PLAIN_VALUE})
