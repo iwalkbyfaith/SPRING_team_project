@@ -29,6 +29,8 @@ public interface FreeNovelMapper {
 	public void delete(long freeNum); 												// 작품 n회차 지우기 
 	
 	public void update(FreeNovelVO vo); 											// 작품 수정하기
+	
+	public void addhit(FreeNovelVO vo); 											// 조회수 올리기.
 		
 	public int countPageNum(SearchCriteria cri);									// 작품 페이지 
 

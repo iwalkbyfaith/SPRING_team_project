@@ -14,9 +14,12 @@ import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.service.FreeNovelService;
 import com.novel.service.SecurityService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
 @Service
 @RequestMapping("/free")
+@Log4j
 public class FreeNovelListController {
 	
 	@Autowired
@@ -28,7 +31,7 @@ public class FreeNovelListController {
 	@GetMapping(value="/novelList")
 	
 	public String novelList() {
-		
+		log.info("무료소설 접근");
 		return "free/novelList";	
 	}
 

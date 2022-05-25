@@ -278,6 +278,7 @@ public class NovelWriterTests {
 	}
 	
 	
+
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_ADMIN)
 	//@Test
 	public void testInsertAuth() {
