@@ -125,6 +125,9 @@
      
   
      
+    <a href="/secu/join">join</a>
+	<a href="/customLogin">login</a>
+    <a href="/charge">결제</a>
      <h3>0. 공지바(사진 바뀌는거)</h3>
      <h3>1. 무료소설 베스트</h3>
      <h3>2. 유료소설 베스트</h3>

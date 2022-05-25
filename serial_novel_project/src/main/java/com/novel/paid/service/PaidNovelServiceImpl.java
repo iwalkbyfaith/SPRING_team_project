@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
 import com.novel.paid.mapper.PaidNovelMapper;
+import com.novel.paid.mapper.PaidReplyMapper;
 
 
 @Service
@@ -16,6 +18,9 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	
 	@Autowired
 	private PaidNovelMapper paidMapper;
+	
+	@Autowired
+	private PaidReplyMapper replyMapper;
 
 	
 	@Override
@@ -48,10 +53,11 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 		paidMapper.insert(vo);
 		
 	}
-
+	
 	@Override
 	public void delete(long paid_snum) {
 		paidMapper.delete(paid_snum);
+		
 	}
 
 	@Override

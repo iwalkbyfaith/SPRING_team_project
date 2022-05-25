@@ -19,4 +19,6 @@ public interface UserMapper {	// 시큐리티 관련 ( 나중에 com.novel.user.
 	
 	// ■ 선호작 불러오기.
 	public List<FavorVO> selectFavList(String user_id); 		
+	// ■ 결제 성공시 해당 유저 코인 발급 로직
+	
 }

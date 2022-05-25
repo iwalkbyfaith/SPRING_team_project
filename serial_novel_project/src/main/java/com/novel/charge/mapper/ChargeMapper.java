@@ -1,5 +1,8 @@
 package com.novel.charge.mapper;
 
-public interface ChargeMapper {
+import com.novel.charge.domain.ChargeVO;
 
+public interface ChargeMapper {
+	
+	public void insertPay(ChargeVO vo);
 }
