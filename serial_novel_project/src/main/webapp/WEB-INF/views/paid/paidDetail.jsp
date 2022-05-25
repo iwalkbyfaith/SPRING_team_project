@@ -157,6 +157,9 @@ ul li a{
 			<div class="col-md-1">
 				<button type="button">선호</button>
 			</div>
+			<div class="col_md-1">
+				<button class="chargeBtn">결제</button>
+			</div>
 			<div class="col-md-1">
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/updateS" method="POST">
@@ -397,6 +400,57 @@ ul li a{
 						alert("수정 되었습니다.");
 						$("#modDiv").hide("slow");
 						getAllList();
+					}
+				}
+			});
+		});
+		
+		// ■ 결제시 코인 차감 
+		$(".chargeBtn").on("click", function(){
+			var coin = 100;
+			var userNum = 1;
+			
+			var useType = '코인';
+			
+			// 코인 차감
+			$.ajax({
+				type : 'patch', 
+				url : '/remove',
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PATCH" 
+				},
+				contentType : "application/json",
+				data : JSON.stringify({
+					user_coin : coin,
+					user_num : userNum
+					}),
+				dataType : 'text',
+				success : function(result){
+					if(result == 'SUCCESS'){
+						// use테이블 목록 추가
+						$.ajax({
+							type : 'post',
+							url : '/insertUse',
+							headers:{
+								"Content-Type" : "application/json",
+								"X-HTTP-Method-Override" : "POST"
+							},
+							dataType : 'text',
+							data : JSON.stringify({
+								user_num : userNum,
+								use_type : useType,
+								use_count : coin
+							}),
+							success : function(result){
+								if(result == 'SUCCESS'){
+									alert("결제 되었습니다.");
+								}
+							}
+						});// 목록 추가 ajax
 					}
 				}
 			});

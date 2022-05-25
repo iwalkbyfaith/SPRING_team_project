@@ -38,6 +38,7 @@
 	</div>	
 </div>
 
+<button class="addBtn">코인추가</button>
 
 <script type="text/javascript">
 	// 미리 받아와야할 정보를 변수에 전역변수처름 쓰기위해 선언
@@ -48,6 +49,9 @@
 	var itemTitle = "";
 	var merchant_uid = "";
 	var userNum = 1;
+	
+	var coin = 100;
+	var coupon = 1;
 	
 	// 위임처리로 어떤 상품을 클릭했을 때 그 상품에 대한
 	$(".itemSection").on("click",".orderBtn",function(){
@@ -84,6 +88,7 @@ function iamport(){
 					"Content-Type":"application/json",
 					"X-HTTP-Method-Override":"POST"
 				},
+				contentType : "application/json",
 				dataType:"text",
 				data: JSON.stringify({
 					itemname : itemTitle,
@@ -92,29 +97,10 @@ function iamport(){
 					user_num : userNum
 				}),
 				success:function(){
-					alert(itemTitle + "결제완료!");
-					// 결제 성공시 코인 추가
-					$.ajax({
-						type:'post',
-						url:'/order',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-							},
-						headers:{
-							"Content-Type":"application/json",
-							"X-HTTP-Method-Override":"POST"
-						},
-						dataType:"text",
-						data: JSON.stringify({
-							itemname : itemTitle,
-							charge_price : itemPrice,
-							merchant_uid : merchant_uid,
-							user_num : userNum
-						}),
-						success:functioin(){
-							
-						}// 코인 success end
-					});// 코인 end
+					
+							alert(itemTitle + "결제완료!");
+			
+					
 				} // 결제 success end	
 			}); // 결제 ajax end
 		} else {
@@ -124,6 +110,36 @@ function iamport(){
 	});
 }
 
+
+$(".addBtn").on("click", function(){
+	console.log(userNum)
+	console.log(coin)
+	console.log(coupon)
+	$.ajax({
+		type : 'patch', 
+		url : '/coinAdd',
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+		header : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "PATCH" 
+		},
+		contentType : "application/json",
+		data : JSON.stringify({
+			user_coin : coin,
+			user_coupon : coupon,
+			user_num : userNum
+			}),
+		dataType : 'text',
+		success : function(result){
+			console.log("result : " + result);
+			if(result == 'SUCCESS'){
+				alert("수정 되었습니다.");
+			}
+		}
+	});
+});
 </script>			
 </body>
 </html>
