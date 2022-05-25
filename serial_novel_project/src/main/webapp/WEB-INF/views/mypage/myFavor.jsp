@@ -148,8 +148,18 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
      </script>
      
      
+    <h1>선호작 : ${FavorList}</h1>
     
-    
+    	<table>
+    	<c:forEach items="${FavorList}" var="fav">               
+    	<tr>
+    	<td><c:out value="${fav.novel_title}"/></td>
+    	<td><c:out value="${fav.novel_writer}"/></td>
+    	<td><c:out value="${fav.novel_end}"/></td>
+    	<td><c:out value="${fav.novel_tsnum}"/></td>
+    	</tr> 
+    	</c:forEach>
+		</table>
      
   
 

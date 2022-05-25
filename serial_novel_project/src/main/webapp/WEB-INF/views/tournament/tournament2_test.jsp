@@ -21,7 +21,7 @@
 	
 		#tournament, #tournament8, #tournament4, #tournament2, #tournamentWork, #winner{
 			margin: 0px 50px 40px;
-		    column-gap: 60px;
+		    column-gap: 40px;
 		    padding-bottom: 16px;
 		    grid-auto-columns: max-content;
 		    display: grid;
@@ -165,15 +165,14 @@
 	<h3>★ 나중에 추가 할 것 : </h3>
 		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) <br/>
 		2. 썸네일 이미지 삽입 <br/>
-		3. 각 대회 리스트 안 뜨는거 코드 조정해서 뜨게하기 <br/>
 	
 	 <hr/>
-	 
-	<button type="button" id="afterTournamentBtn">초기화 버튼</button><br/>
-		+ 추가
-		1. to_num=4의 기간에만 활성화 (완) <br/>
-		2. 관리자에게만 활성화 (나중에 한번에)<br/>
-		3. (Q)한번 누르면 다음 to_num=4 기간까지 안보이게 하기를 어떻게..? (완)<br/>
+	
+	
+	<!-- ■ 05.22 관리자에게만 보이도록 변경 -->
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<button type="button" id="afterTournamentBtn">초기화 버튼</button><br/>
+	</sec:authorize>
 	
 	<hr>
 	<div id="container">
@@ -202,7 +201,8 @@
 	
 	
 	<hr/>
-	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/>
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/><hr/>
+	현재 로그인한 유저 권한 -> <sec:authentication property="principal.user.authList"/>
 			
 	
 	
@@ -296,7 +296,7 @@
 					
 					// * 우승작품 출력
 					getWinner();
-					setInterval(getWinner, 3000); // 간격 : 3초
+					
 
 				// ● 대회가 끝나고 대음 대회 준비 기간이 시작되었다면
 				}else if(now >= controllerSdate){
@@ -315,6 +315,7 @@
 		
 		}
 		controller();
+		setInterval(getWinner, 3000); // 간격 : 3초
 		
 
 		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 -->
@@ -378,7 +379,7 @@
 						$(data).each(function(){
 								
 								str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-										+ "<div class='tourna-work-list-div-img'>" + "</div>"
+										+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -460,7 +461,7 @@
 						$(data).each(function(){
 							
 							str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-									+ "<div class='tourna-work-list-div-img'>" + "</div>"
+									+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -546,7 +547,7 @@
 					$(data).each(function(){
 						
 						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-								+ "<div class='tourna-work-list-div-img'>" + "</div>"
+								+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -737,7 +738,8 @@
 			$.getJSON("/tournament/toWork/winner", function(data){
 				
 				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"' data-novel-num='"+ data.novel_num +"'>"
-						+ 	 "<div class='tourna-work-winner-div'>나중에 이미지 넣을 자리</div>"
+						+ "<div class='tourna-work-list-div-img'>"+ "이미지 넣으니까 난리법석이라서 주석처리" +"</div>"
+						//+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/test_winner.png'>" +"</div>"
 						+	 "<div class='tourna-work-winner-div'>" + data.novel_title + "</div>"
 						+ 	 "<div class='tourna-work-winner-div'>" + data.novel_writer + "</div>"
 						+ 	 "<div class='tourna-work-winner-div'>" + data.towork_rec + "</div>"

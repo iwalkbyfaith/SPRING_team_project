@@ -89,7 +89,7 @@ public class TournamentServiceImpl implements TournamentService{
 	@Override
 	public void afterTowork1(long novel_num) {
 		// 1) novel_tbl에서 week=free인 것을 변경해준다
-		mapper.updateWeek("mon", novel_num);
+		mapper.updateWeek("Mon", novel_num);
 		
 		// 2) auth_tbl에서 작가의 등급을 ROLE_PAID_WRITER로 변경하기
 			// 2-1) 우승 작품의 작품번호(novel_num)을 얻어와서
@@ -119,16 +119,16 @@ public class TournamentServiceImpl implements TournamentService{
 		
 		// 1) 다음 토너먼트를 위해서 tourna_tbl의 to_sdate(시작일), to_edate(종료일)를 업데이트 해줌
 			// 1-1) 8강 업데이트
-			mapper.updateTournaDate(1, 8, 1);
+			mapper.updateTournaDate(0, 7, 1);
 			
 			// 1-2) 4강 업데이트
-			mapper.updateTournaDate(9, 16, 2);
+			mapper.updateTournaDate(7, 14, 2);
 			
 			// 1-3) 2강 업데이트
-			mapper.updateTournaDate(17, 24, 3);
+			mapper.updateTournaDate(14, 21, 3);
 			
 			// 1-4) 준비기간 업데이트
-			mapper.updateTournaDate(25, 32, 4);
+			mapper.updateTournaDate(21, 28, 4);
 			
 		// 2) torec_tbl 데이터 먼저 삭제
 			mapper.deleteTorecTbl();

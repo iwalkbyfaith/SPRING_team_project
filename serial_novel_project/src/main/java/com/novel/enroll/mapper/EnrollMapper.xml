@@ -15,5 +15,59 @@
 	<select id="getEnrollDetail" resultType="com.novel.enroll.domain.EnrollVO">
 		SELECT * FROM enroll_tbl WHERE enroll_num=#{enroll_num}
 	</select>
+	
+	<!-- ■ 05.24 로그인 유저의 '승인대기(enroll_result=0)' 중인 데이터가 있는지 확인하기 -> 있으면 신청 못 함. -->
+	<select id="getEnrollResult0" resultType="com.novel.enroll.domain.EnrollVO">
+		SELECT * FROM enroll_tbl WHERE user_id=#{user_id} AND enroll_result=0
+	</select>
+	
+	
+	<!-- ■ 신청 폼에 입력한 데이터를 DB에 적재하기 -->
+	<insert id="insertEnrollFormData">
+		INSERT INTO enroll_tbl(enroll_num, novel_title, novel_writer, novel_category, user_id, enroll_intro)
+        	VALUES
+    	(enroll_num.nextval, #{novel_title}, #{novel_writer}, #{novel_category}, #{user_id}, #{enroll_intro})
+	</insert>
+	
+	<!-- ■ 관리자 승인 버튼에 따른 enroll_result 변경 -->
+	<update id="updateEnrollResult">
+		UPDATE enroll_tbl SET enroll_result = #{enroll_result}, enroll_msg = #{enroll_msg} WHERE enroll_num=#{enroll_num}
+	</update>
+	
+		<!-- ● 관리자 승인 버튼에 따른 novel_tbl 적재 -->
+		<insert id="insertEnrollResult">
+			INSERT INTO 
+				novel_tbl 
+			(novel_num, novel_writer, user_id, novel_title, novel_category, novel_week) 
+				VALUES
+            (novel_num.nextval, #{novel_writer}, #{user_id}, #{novel_title}, #{novel_category}, #{novel_week})
+		</insert>
+		
+	<!-- ■ enroll_result값에 따른 리스트 가져오기 -->
+	<select id="getEnrollxxList" resultType="com.novel.enroll.domain.EnrollVO">
+		SELECT * FROM enroll_tbl WHERE enroll_result=#{enroll_result} ORDER BY enroll_num DESC
+	</select>
+	
+	
+	<!-- ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함) -->
+	<update id="updateEnrollForm">
+		UPDATE 
+        	enroll_tbl 
+    	SET 
+        	novel_title=#{novel_title}, novel_writer=#{novel_writer}, novel_category=#{novel_category}, enroll_intro=#{enroll_intro}
+    	WHERE 
+        	user_id=#{user_id} AND enroll_num=#{enroll_num}
+	</update>
+	
+	<!-- ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함) -->
+	<delete id="deleteEnrollForm">
+		DELETE FROM enroll_tbl WHERE enroll_num=#{enroll_num}
+	</delete>
+	
+	
+	
+	
+	
+	
 
 </mapper>

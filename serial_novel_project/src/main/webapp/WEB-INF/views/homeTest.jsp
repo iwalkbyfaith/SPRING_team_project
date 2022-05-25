@@ -41,7 +41,7 @@
 			}
 			.writebtn,.List,.series{
 				float:right;
-				margin-right:10px;
+				margin-right:10px; 
 			}
 			.articleInfo{
 				float:right;
@@ -95,7 +95,7 @@
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <sec:authorize access="isAuthenticated()">
-		            <i class="mypage" ><a href="/mypage/myInfo">내 정보</a></i>
+		            <a href="/mypage/myInfo">내 정보</a></i>
 		            </sec:authorize>
 		            <sec:authorize access="isAnonymous()">
 		            <i class="join"><a href="/secu/join">join</a></i>
