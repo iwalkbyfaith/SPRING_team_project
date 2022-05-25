@@ -93,8 +93,30 @@ function iamport(){
 				}),
 				success:function(){
 					alert(itemTitle + "결제완료!");
-				}	
-			});
+					// 결제 성공시 코인 추가
+					$.ajax({
+						type:'post',
+						url:'/order',
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
+						headers:{
+							"Content-Type":"application/json",
+							"X-HTTP-Method-Override":"POST"
+						},
+						dataType:"text",
+						data: JSON.stringify({
+							itemname : itemTitle,
+							charge_price : itemPrice,
+							merchant_uid : merchant_uid,
+							user_num : userNum
+						}),
+						success:functioin(){
+							
+						}// 코인 success end
+					});// 코인 end
+				} // 결제 success end	
+			}); // 결제 ajax end
 		} else {
 			var msg = '결제에 실패하였습니다.';
 			msg += '에러내용 : ' + rsp.error_msg;

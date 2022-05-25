@@ -13,5 +13,7 @@ public interface UserMapper {	// 시큐리티 관련 ( 나중에 com.novel.user.
 			
 	// ■ 회원가입 로직 - 권한 목록 기입 ( ★ 다중 insert 구문은 update 태그로 처리한다 )
 	public void insertMemberAuth(UserVO vo); // MemberVO 내부에 authList가 있기 때문에 MemberVO로 받는다.
-
+	
+	// ■ 결제 성공시 해당 유저 코인 발급 로직
+	
 }

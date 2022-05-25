@@ -14,6 +14,8 @@
 	<sec:authentication property="principal.user" var="user"/>
 	<div>
 	${paidList }
+	<hr>
+	${user }
 		<h1>상세 회차들</h1>
 			<table class="table table-bordered border-info">
 				<tr>
