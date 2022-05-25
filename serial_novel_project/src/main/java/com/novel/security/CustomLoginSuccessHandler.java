@@ -43,15 +43,15 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			return;
 		}
 		if(roleList.contains("ROLE_PAID_WRITER")) {
-			response.sendRedirect("/secu/paidwriter");
+			response.sendRedirect("/");
 			return;
 		}
 		if(roleList.contains("ROLE_FREE_WRITER")) {
-			response.sendRedirect("/secu/freewriter");
+			response.sendRedirect("/");
 			return;
 		}
 		if(roleList.contains("ROLE_USER")) {
-			response.sendRedirect("/secu/user");
+			response.sendRedirect("/");
 			return;
 		}
 		
