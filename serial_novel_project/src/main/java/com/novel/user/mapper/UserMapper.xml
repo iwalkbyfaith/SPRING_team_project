@@ -79,9 +79,17 @@
 		
 		<select id="selectFavList" resultType="com.novel.user.domain.FavorVO">
 			
-			select * from novel_tbl where novel_num = 
-			(select novel_num from favorite_tbl where user_num = 
-			(select user_num from user_tbl where user_id=#{user_id})) 
+			select * from
+        		(select * from favorite_tbl where user_num=
+        		(select user_num from user_tbl where user_id= #{user_id})) ft
+    				LEFT JOIN
+        				novel_tbl nt
+    							on ft.novel_num = nt.novel_num
+		</select>
+		
+		<select id="selectFreeList" resultType="com.novel.free.domain.FreeNovelVO">
+			
+			select * from free_tbl where novel_num = #{novelNum}
 		</select>
 
 

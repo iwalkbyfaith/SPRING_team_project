@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.novel.free.domain.FreeNovelVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.service.UserService;
 
@@ -46,14 +48,31 @@ public class UserController {
 		System.out.println(FavorList);
 						
 		
-		return "mypage/myFavor";} 
+		return "mypage/myFavor";
+		} 
+	
+	
+	@GetMapping("/free/{novelNum}")
+	public String FavorDetail(@PathVariable long novelNum,Principal principal,Model model){
+				
+		service.selectFree(novelNum);
+		
+		List<FreeNovelVO> FreeList = service.selectFree(novelNum);
+		
+		model.addAttribute("FreeList",FreeList);
+		
+		
+		
+		return "mypage/free";
+		}
 	
 	@GetMapping("/bookmark")
 	public String bookmark(Principal principal,Model model){
 		log.info("책갈피 접근");
 		
 		
-		return "mypage/bookmark";}
+		return "mypage/bookmark";
+		}
 		
 
 }

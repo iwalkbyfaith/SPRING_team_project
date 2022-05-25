@@ -180,6 +180,9 @@ margin-right:5px;
 <!-- ■ 해당 카테고리에 해당 소설에 대한 글쓰기 (추후에 소설작가만 글쓰기 버튼을 볼수 있도록 설정할 예정) -->
 <div class="writebtn" style="display:none;">
 </div>
+<!-- ■ 해당 카테고리에 해당 소설에 대한 선호 표시 -->
+<div class="favor" style="display:none;">
+</div>
 <br/>
 <br/>
 <!-- ■ 위에 (id="novelList")안에 들어온 리스트를 클릭시 넘어오는 게시판 형식의 해당 소설 회차목록 -->
@@ -748,10 +751,14 @@ console.log(novelNum);
 		let str = "";
 		let str1 ="";
 		let str2 = "";
+		let str3 = "";
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		str3+= "<button id='favor'>선호</button>";
+		
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
+		$(".favor").html(str3);
 	console.log(data);
 	
 	$(data).each(
@@ -793,6 +800,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 	
 		
 });
@@ -813,10 +821,13 @@ console.log(novelNum);
 		let str = "";
 		let str1 ="";
 		let str2 = "";
+		let str3 = "";
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		str3+= "<button id='favor'>선호</button>";
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
+		$(".favor").html(str3);
 	console.log(data);
 	
 	$(data).each(
@@ -853,6 +864,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 	
 });
 //■ 무협지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
@@ -873,11 +885,14 @@ console.log(novelNum);
 		let str = "";
 		let str1 ="";
 		let str2 = "";
+		let str3 = "";
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		str3+= "<button id='favor'>선호</button>";
+		
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
-	
+		$(".favor").html(str3);
 	console.log(data);
 	
 	$(data).each(
@@ -915,6 +930,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 });
 //■ 미스터리 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".mysteryLi", function(){
@@ -933,10 +949,14 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
+	let str3 = "";
 	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	str3+= "<button id='favor'>선호</button>";
+	
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
+	$(".favor").html(str3);
 	console.log(data);
 	
 	$(data).each(
@@ -972,6 +992,7 @@ console.log(novelNum);
 	}
 	$(".table").show("slow");
 	$(".List").show("slow");
+	$(".favor").show("slow");
 	$(".tbody").empty();
 });
 // ■ 특정 카테고리의 회차정보에서 제목을 클릭시 그 회차에 대한 디테일을 보여줌(작가, 내용 등등)
