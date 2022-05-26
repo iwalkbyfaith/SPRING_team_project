@@ -38,7 +38,6 @@
 	</div>	
 </div>
 
-<button class="addBtn">코인추가</button>
 
 <script type="text/javascript">
 	// 미리 받아와야할 정보를 변수에 전역변수처름 쓰기위해 선언
@@ -50,21 +49,32 @@
 	var merchant_uid = "";
 	var userNum = 1;
 	
-	var coin = 100;
-	var coupon = 1;
+	var coin = "";
+	var coupon = "";
 	
-	// 위임처리로 어떤 상품을 클릭했을 때 그 상품에 대한
+	// 위임처리
 	$(".itemSection").on("click",".orderBtn",function(){
 		itemPrice = $(this).parent().siblings(".itemPrice").children().attr("data-price");
+		
+		if(itemPrice == 2000){
+			coupon = 2;
+			coin = 200;
+		}
+		else if(itemPrice == 1000){
+			coupon = 1;
+			coin = 100;
+		}	
 		itemTitle = $(this).parent().siblings(".itemTitle").children().text();
 		d = new Date();
 		merchant_uid = "order" + d.getTime();
+		
 		iamport();
+	
 	});
 
 
 function iamport(){
-	IMP.init('imp28027601'); //iamport 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
+	IMP.init('imp28027601'); 
 	IMP.request_pay({
 		pg : 'html5_inicis',
 		pay_method : 'card',
@@ -97,9 +107,8 @@ function iamport(){
 					user_num : userNum
 				}),
 				success:function(){
-					
-							alert(itemTitle + "결제완료!");
-			
+						alert(itemTitle + "결제완료!");
+						addCoin(); // ■ 코인추가를위해 addCoin 호출
 					
 				} // 결제 success end	
 			}); // 결제 ajax end
@@ -110,8 +119,8 @@ function iamport(){
 	});
 }
 
-
-$(".addBtn").on("click", function(){
+//■ 코인추가를위해 addCoin 선언
+function addCoin(){
 	console.log(userNum)
 	console.log(coin)
 	console.log(coupon)
@@ -135,11 +144,11 @@ $(".addBtn").on("click", function(){
 		success : function(result){
 			console.log("result : " + result);
 			if(result == 'SUCCESS'){
-				alert("수정 되었습니다.");
+				alert("코인이 추가되었습니다.");
 			}
 		}
 	});
-});
+};
 </script>			
 </body>
 </html>

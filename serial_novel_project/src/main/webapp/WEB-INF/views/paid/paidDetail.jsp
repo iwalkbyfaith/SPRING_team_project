@@ -198,7 +198,7 @@ ul li a{
 		</div><!-- header -->
 		<div class="box-body">
 			<strong>Writer : </strong>
-			<input type="text" id="newReplyWriter" placeholder="글쓴이" class="from-control">
+			<input type="text" id="newReplyWriter" value="${user.user_id }" class="from-control" readonly>
 			<strong>ReplyText : </strong>
 			<input type="text" id="newReplyText" placeholder="댓글내용" class="from-control">
 			<button type="button" class= "btn btn-success" id="replyAddBtn">댓글 추가</button>
@@ -291,6 +291,7 @@ ul li a{
 			var preplWriter = $("#newReplyWriter").val();
 			var preplContent = $("#newReplyText").val();
 			
+			
 			console.log(novelNum);
 			console.log(paidnum);
 			console.log(preplWriter);
@@ -317,7 +318,6 @@ ul li a{
 						alert("댓글이 등록 되었습니다.");
 						getAllList(); // 댓글 등록 성공시, 다시 목록 갱신
 						// 폼 태그 비우기.
-						$("#newReplyWriter").val("");
 						$("#newReplyText").val("");
 					}
 				}
@@ -405,12 +405,14 @@ ul li a{
 			});
 		});
 		
+		
 		// ■ 결제시 코인 차감 
 		$(".chargeBtn").on("click", function(){
-			var coin = 100;
-			var userNum = 1;
 			
-			var useType = '코인';
+			var coin = ${novel.paid_price}
+			var userNum = ${user.user_num};
+			
+			
 			
 			// 코인 차감
 			$.ajax({
@@ -431,30 +433,42 @@ ul li a{
 				dataType : 'text',
 				success : function(result){
 					if(result == 'SUCCESS'){
-						// use테이블 목록 추가
-						$.ajax({
-							type : 'post',
-							url : '/insertUse',
-							headers:{
-								"Content-Type" : "application/json",
-								"X-HTTP-Method-Override" : "POST"
-							},
-							dataType : 'text',
-							data : JSON.stringify({
-								user_num : userNum,
-								use_type : useType,
-								use_count : coin
-							}),
-							success : function(result){
-								if(result == 'SUCCESS'){
-									alert("결제 되었습니다.");
-								}
-							}
-						});// 목록 추가 ajax
+						alert("결제 되었습니다.");
+						addUse();
 					}
 				}
 			});
 		});
+		
+		// ■ 구매시 use테이블(구매목록) 테이블에 넣어주기
+		function addUse(){
+			
+			var coin = ${novel.paid_price}
+			var userNum = ${user.user_num};
+			var useType = '코인';
+			$.ajax({
+				type : 'post',
+				url : '/insertUse',
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				dataType : 'text',
+				data : JSON.stringify({
+					user_num : userNum,
+					use_type : useType,
+					use_count : coin
+				}),
+				success : function(result){
+					if(result == 'SUCCESS'){
+						alert("구매목록에 등록 되었습니다.");
+					}
+				}
+			});
+		}
 	</script>
 	<div class="footer">
 	
