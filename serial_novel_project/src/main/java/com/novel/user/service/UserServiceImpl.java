@@ -25,5 +25,17 @@ public class UserServiceImpl implements UserService{
 		
 		return mapper.selectFreeList(novelNum);
 	}
+	@Override
+	public void insertFav(FavorVO vo) {
+		
+		mapper.insertFav(vo);
+		
+	}
+	@Override
+	public void deleteFav(long novel_num,long user_num) {
+		
+		mapper.deleteFav(novel_num,user_num);
+		
+	}
 
 }

@@ -10,6 +10,7 @@
 <html>
 <head>
 	<style>
+	
 		.social-part .fa{
 		    	padding-right:20px;
 			}
@@ -20,35 +21,28 @@
 			.header{
 				height:100px;
 			}
-			.container{
-				height:1000px;
+	
+			.carousel{
+				width : 300vw;
+				transition : transform 0.5s;
+				
 			}
-			.footer{
-				height:150px;
+			
+			.innerCrs{
+				width : 100vw;
+				float : left;
+			}	
+			
+			.innerCrs img{
+				width : 100%
 			}
-			#headerfLi,#headerwLi,#headerrLi,#headermLi{
-				list-style-type:none;
-				float:left;
-				margin-left:20px;
-				font-size:30px;
-				outline:solid 1px;
+			
+			.btnList{
+				 text-align: center;
 			}
-			.fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
-				list-style-type:none;
-				float:left;
-				margin-left:20px;
-				outline:solid 1px;
-			}
-			.writebtn,.List,.series{
-				float:right;
-				margin-right:10px; 
-			}
-			.articleInfo{
-				float:right;
-			}
-			.articleMain{
-				text-align:center;
-			} 
+			
+			
+			
 	</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
@@ -58,9 +52,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
 
+<!-- ● 캐러셀 
+<link href="main.css" rel="stylesheet">
+-->
+
+
 <title>메인 만들기 test</title>
 </head>
-<body>
+<body style="margin:0">
 	
 	<!-- ■ 상단 네비바 -->
 	<div class="header">
@@ -121,13 +120,137 @@
      </script>
      
      
+     
+     
+     <!-- ● 캐러셀 시작 -->
+     
+     	<div style="overflow: hidden">
+	     	<div class="carousel">
+	     		<div class="innerCrs">
+	     			<a href="#"><img src="/resources/carousel/1.png"></a>
+	     		</div>
+	     		<div class="innerCrs">
+	     			<a href="http://localhost:8181/tourna/list2"><img src="/resources/carousel/2.png"></a>
+	     		</div>
+	     		<div class="innerCrs">
+	     			<a href="#"><img src="/resources/carousel/3.png"></a>
+	     		</div>
+	     	</div>
+     	</div>
+     
+     	<div class="btnList">
+	    	<button class="prev">이전</button>
+	     	<button class="crsBtn1">1</button>
+	     	<button class="crsBtn2">2</button>
+	     	<button class="crsBtn3">3</button>
+			<button class="next">다음</button>
+		</div>
+		
+		
+		
+		
+     	<script>
+     	
+     	let thisPic = 1;	
+     	
+     		// ● crsBtn2를 누르면 transform : translate(-100vw)
+	     		document.querySelector('.crsBtn2').addEventListener('click', function(){
+	     			
+	     			thisPic = 2;
+	     			
+	     			// 왼쪽으로 -100vw만큼 이동
+	     			document.querySelector('.carousel').style.transform = 'translate(-100vw)';
+	     		})
+	     		
+     		
+     		
+     		// ● crsBtn3를 누르면 transform : translate(-200vw)
+	     		document.querySelector('.crsBtn3').addEventListener('click', function(){
+	     			
+	     			thisPic = 3;
+	     			
+	     			// 왼쪽으로 -200vw만큼 이동
+	     			document.querySelector('.carousel').style.transform = 'translate(-200vw)';
+	     		})
+     		
+     		
+     		
+     		// ● crsBtn1를 누르면 transform : translate(0vw)
+	     		document.querySelector('.crsBtn1').addEventListener('click', function(){
+	     			
+	     			thisPic = 1;
+	     			
+	     			// 제자리로
+	     			document.querySelector('.carousel').style.transform = 'translate(0vw)';
+	     		})
+     		
+     		
+     		// ● 다음 버튼
+				  $('.next').on('click', function(){
+				    if (thisPic == 1) {
+				    	$('.carousel').css('transform', 'translateX(-100vw)');
+				    	thisPic += 1;
+				    	
+				    }else if (thisPic == 2){
+			    		$('.carousel').css('transform', 'translateX(-200vw)');
+			        	thisPic += 1;
+			        	
+				    }else if(thisPic == 3){
+				    	thisPic = 1;
+				    	$('.carousel').css('transform', 'translateX(0vw)');
+				    }
+				  }) // end click .next
+				  
+				  
+				  $('.prev').on('click', function(){
+					    if (thisPic == 3) {
+					    	$('.carousel').css('transform', 'translateX(-100vw)');
+					    	thisPic -= 1;
+					    	
+					    }else if (thisPic == 2){
+				    		$('.carousel').css('transform', 'translateX(0vw)');
+				        	thisPic -= 1;
+				        	
+					    }else if(thisPic == 1){
+					    	thisPic = 3;
+					    	$('.carousel').css('transform', 'translateX(-200vw)');
+					    }
+					  }) // end click .prev
+					  
+					  
+			  	  
+					  
+					  
+					  
+					  
+					  
+					  
+     	
+     	</script>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
      <h1> 메인 </h1>
 
      
     <a href="/secu/join">join</a>
 	<a href="/customLogin">login</a>
     <a href="/charge">결제</a>
-    <a href="/homeTest2">홈 테스트 중</a>
     
 
      <h3>0. 공지바(사진 바뀌는거)</h3>

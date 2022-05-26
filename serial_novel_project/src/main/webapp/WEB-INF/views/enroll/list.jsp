@@ -1,17 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
-
-<!-- ▣ ajax에 스프링 시큐리티 csrf 토큰 적용하기 ( 검색 키워드 : ▣ )-->
-<!-- ▣ 1. <head>태그 사이에 아래 <meta> 태그 두 줄 추가 -->
-<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
-
 
 <!-- ★ 부트스트랩 1. css 복붙 -->
 <link
@@ -26,21 +19,21 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 
-	<style>
-		#modDiv {
-			width: 500px;
-			height: 150px;
-			background-color: whitesmoke;
-			border: gray solid 1px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin-top: -50px;
-			margin-left: -250px;
-			padding: 10px;
-			z-index: 1000;
-		}
-	</style>
+<style>
+#modDiv {
+	width: 500px;
+	height: 150px;
+	background-color: whitesmoke;
+	border: gray solid 1px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -250px;
+	padding: 10px;
+	z-index: 1000;
+}
+</style>
 
 <meta charset="UTF-8">
 <!-- 네비바 적용2) -->
@@ -118,7 +111,7 @@
 	<!-- ■ div 모음 -->
 
 	<!-- ● 글쓰기 버튼 -->
-	<button type="button" id="enrollBtn">작가 신청 '#enrollBtn'</button>
+	<button type="button" id="enrollBtn">작품 신청 '#enrollBtn'</button>
 
 
 	<!-- ● 승인 대기(0) 출력하는 테이블 -->
@@ -141,67 +134,73 @@
 		</table>
 	</div>
 
-	<!-- ● 무료 승인(2) 출력하는 테이블 -->
-	<div id="divResult2List">
-		<h3 class="text-primary">무료 승인 리스트 출력 #divResult2List</h3>
-		<table class="table">
-			<!-- style="display:none;"> -->
-			<thead class="table-dark">
-				<tr>
-					<th>enroll_num</th>
-					<th>장르</th>
-					<th>제목</th>
-					<th>유저 아이디</th>
-					<th>결과값</th>
-				</tr>
-			</thead>
-			<tbody id="2List">
-				<!-- 리스트가 들어갈 위치 -->
-			</tbody>
-		</table>
-	</div>
 
-
-	<!-- ● 모든 리스트 출력하는 테이블 -->
-	<div id="divAllList">
-		<h3 class="text-primary">모든 리스트 출력 #allList</h3>
-		<table class="table">
-			<!-- style="display:none;"> -->
-			<thead class="table-dark">
-				<tr>
-					<th>enroll_num</th>
-					<th>장르</th>
-					<th>제목</th>
-					<th>유저 아이디</th>
-					<th>결과값</th>
-				</tr>
-			</thead>
-			<tbody id="allList">
-				<!-- 리스트가 들어갈 위치 -->
-			</tbody>
-		</table>
-	</div>
-
-
-	<!-- ● 승인 거부(1) 출력하는 테이블 -->
-	<div id="divResult1List">
-		<h3 class="text-primary">승인 거부 리스트 출력 #divResult1List</h3>
-		<table class="table">
-			<!-- style="display:none;"> -->
-			<thead class="table-dark">
-				<tr>
-					<th>enroll_num</th>
-					<th>장르</th>
-					<th>제목</th>
-					<th>유저 아이디</th>
-					<th>결과값</th>
-				</tr>
-			</thead>
-			<tbody id="1List">
-				<!-- 리스트가 들어갈 위치 -->
-			</tbody>
-		</table>
-	</div>
+	<!-- ● 관리자만 조회할 수 있는 태그-->	
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+			
+			<!-- ● 무료 승인(2) 출력하는 테이블 -->
+			<div id="divResult2List">
+				<h3 class="text-primary">무료 승인 리스트 출력 #divResult2List</h3>
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>enroll_num</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>유저 아이디</th>
+							<th>결과값</th>
+						</tr>
+					</thead>
+					<tbody id="2List">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+			</div>
+		
+		
+			<!-- ● 모든 리스트 출력하는 테이블 -->
+			<div id="divAllList">
+				<h3 class="text-primary">모든 리스트 출력 #allList</h3>
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>enroll_num</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>유저 아이디</th>
+							<th>결과값</th>
+						</tr>
+					</thead>
+					<tbody id="allList">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+			</div>
+		
+		
+			<!-- ● 승인 거부(1) 출력하는 테이블 -->
+			<div id="divResult1List">
+				<h3 class="text-primary">승인 거부 리스트 출력 #divResult1List</h3>
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>enroll_num</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>유저 아이디</th>
+							<th>결과값</th>
+						</tr>
+					</thead>
+					<tbody id="1List">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+			</div>
+	</sec:authorize><!-- 관리자만 조회할 수 있는 태그 끝 -->			
+			
 
 
 	<!-- ● 디테일 출력 -->
@@ -219,12 +218,14 @@
 		</div>
 		<!-- body 끝 -->
 		<div class="box-footer">
-			<button type="button" id="updateForm" class="btn btn-warning">수정
-				'#updateForm'</button>
-			<button type="button" id="deleteForm" class="btn btn-danger">삭제
-				'#deleteForm'</button>
-			<button type="button" id="adminBtn" class="btn btn-dark">관리자
-				버튼 '#adminBtn'</button>
+			<!-- * 글을 쓴 유저와 작성자가 같은 경우에만 확인 가능 -->
+			<button type="button" id="updateForm" class="btn btn-warning" style="display:none;">수정 '#updateForm'</button>
+			<button type="button" id="deleteForm" class="btn btn-danger" style="display:none;">삭제 '#deleteForm'</button>
+			
+			<!-- * 관리자만 확인 가능 -->	
+			<sec:authorize access="hasRole('ROLE_ADMIN')">	
+				<button type="button" id="adminBtn" class="btn btn-dark">관리자 버튼 '#adminBtn'</button>
+			</sec:authorize>
 		</div>
 		<br /> <br /> <br /> <br />
 
@@ -278,17 +279,20 @@
 		</div>
 		<!-- header 끝 -->
 		<div class="box-body">
-			<input type="text" id="insert_novel_title" placeholder="소설 제목" class="form-control" /> 
-				<input type="text" id="insert_novel_writer"	placeholder="사용할 필명" class="form-control" /> 
-			<select id="insert_novel_category" class="form-select" aria-label="Default select example">
+			<input type="text" id="insert_novel_title" placeholder="소설 제목"
+				class="form-control" /> <input type="text" id="insert_novel_writer"
+				placeholder="사용할 필명" class="form-control" /> <select
+				id="insert_novel_category" class="form-select"
+				aria-label="Default select example">
 				<option value="fantasy">판타지</option>
 				<option value="romance">로맨스</option>
 				<option value="wuxia">무협지</option>
 				<option value="mystery">미스터리</option>
-			</select> 
-			<input type="text" id="insert_user_id" value="<sec:authentication property="principal.user.user_id"/>"
+			</select> <input type="text" id="insert_user_id"
+				value="<sec:authentication property="principal.user.user_id"/>"
 				class="form-control" readonly />
-			<textarea id="insert_enroll_intro" style="width: 100%; height: 6.25em; resize: none;">시놉시스 및 예상 결말 입력</textarea>
+			<textarea id="insert_enroll_intro"
+				style="width: 100%; height: 6.25em; resize: none;">시놉시스 및 예상 결말 입력</textarea>
 		</div>
 		<!-- body 끝 -->
 		<div class="box-footer">
@@ -310,20 +314,27 @@
 	<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ ▲ 위로 div 모음 ▲ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 
 
-	<br/><br/><br/><hr/>
-	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user" />
-	<hr/>
-	ㅊㅊ추가사항
-	1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 (현재 승인 대기중인 글이 있습니다 이런거 띄워도 될 듯) -> 완료 <br />
-	2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다' 이런 메세지 띄우기? => result가 0일때만 고칠 수 있도록 or result0만 만들지 못하도록?<br />
-	3. 자잘한 권한 설정해주기 (일반 유저들은 승인 대기만 확인할 수 있음 => 그래서 승인 대기만 수정할 수 있음) <br />
-	4. 첨부파일 넣기 <br />
-	5. 폼 스타일 태그로 정리해주기 <br />
-	
+	<br />
+	<br />
+	<br />
+	<hr />
+	현재 로그인한 유저 정보 ->
+	<sec:authentication property="principal.user" />
+	<hr />
+	ㅊㅊ추가사항 1. 작가신청 눌렀을때 이미 작성한 글(승인 대기중인) 있으면 안되게 하기 (현재 승인 대기중인 글이 있습니다
+	이런거 띄워도 될 듯) -> 완료
+	<br /> 2. 디테일 불러올 때, 관리자 영역 이미 실행했다면 비활성화(없애지는 말고)하기. 혹은 '이미 처리하셨습니다'
+	이런 메세지 띄우기? => result가 0일때만 고칠 수 있도록 or result0만 만들지 못하도록? -> 완료
+	<br /> 3. 자잘한 권한 설정해주기 (일반 유저들은 승인 대기만 확인할 수 있음 => 그래서 승인 대기만 수정할 수
+	있음)
+	<br /> 4. 첨부파일 넣기
+	<br /> 5. 폼 스타일 태그로 정리해주기
+	<br />
+
 
 	<script>
 		
-	//$(document).ready(function(){
+	$(document).ready(function(){
 		
 	<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 스크립트 순서 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
 		<!-- ■ 변수 설정 -->
@@ -374,6 +385,7 @@
 			
 			// ● 디테일 
 			let enroll_num;
+			
 			
 		
 		
@@ -485,7 +497,7 @@
 								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
 								  this.novel_title +
 							  "</td>"
-							+ "<td>"+ this.user_id +"</td>"
+							+ "<td class='get_enroll_test_id'>"+ this.user_id +"</td>"
 							+ "<td>"+ result +"</td>" + 
 						  "</tr>"
 				});// end .eachs
@@ -494,6 +506,7 @@
 				
 				
 			}); // end getJSON
+			
 			
 		}// end get0List()
 		
@@ -668,7 +681,7 @@
 							+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "' readonly/>"
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
-							+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "' readonly/>"
+							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
 							+  "<textarea readonly id='input_enroll_intro' style='width: 100%; height: 6.25em; resize: none;' >" + data.enroll_intro + "</textarea>"
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
@@ -760,13 +773,20 @@
 							+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "' readonly/>"
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
-							+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "' readonly/>"
+							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
 							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 						
 						
 						$("#detail").html(str);
+						
+						
+						// ● 글을 쓴 유저와 작성자가 같은 경우에만 버튼 뿌려줌
+						if(id == data.user_id){
+							$("#updateForm").attr("style", "display:show;");
+							$("#deleteForm").attr("style", "display:show;");
+						}
 					
 					
 					}); // end getJSON			
@@ -852,7 +872,7 @@
 							+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "' readonly/>"
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
-							+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "' readonly/>"
+							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
 							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
@@ -944,7 +964,7 @@
 							+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "' readonly/>"
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
-							+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "'/>"
+							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "'readonly/>"
 							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
@@ -1311,11 +1331,110 @@
 		});// on click #deleteForm
 		
 		
+		<%--
+
+		function checkUserResult0List(){
+			
+			let check = false;
+
+			console.log("(● 함수 getJSON 진입 이전) checkUserResult0List의 check 상태 -> " + check)
+			
+			$.getJSON("/enrollAjax/checkUsersResult0List/"+id, function(data){
+				console.log("/checkUsersResult0List에서 확인된 sec user_id -> " + id);
+				console.log("/checkUsersResult0List에서 확인된 data ▼ ");
+				console.log(data);
+				
+				// 데이터가 없으면("", null, undefined, NaN은 false로 반환된다.)
+				if(!data){
+					check = false;
+					console.log("(● 함수 if) 함수 checkUserResult0List의 check 상태 (if:false)-> " + check)
+					
+				// 데이터가 있으면
+				}else{
+					check = true;
+					console.log("(● 함수 else)checkUserResult0List의 check 상태 (else:true)-> " + check)
+
+				}
+			
+			
+				//return check;
+			
+			});// end getJSON	
+			
+			
+			
+			console.log("(● 함수 return 전) checkUserResult0List의 check 상태 (리턴하기 바로 직전 )-> " + check)
+			
+			return check;
+			
+		}// end checkUserResult0List() 
 		
 		
 		
 		
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
+		$("#enrollBtn").on("click", function(){
+			
+			console.log("(● 버튼)enrollBtn 클릭");
+			// ● 이미 작성한 신청(승인대기)가 있을 때는 '승인 대기중인 신청서가 있습니다' 뜨게 하기
+				// 1) 로그인한 유저 아이디 받아오고
+				// 2) DB에서 user_id=아이디 and enroll_result=0의 결과를 받아옴
+				// 3) data != null이라면 경고창alert
+				// 4) data == null이라면 진입 가능
+				
+			alert("#enrollBtn 클릭하여 진입");
+			
+			let check = checkUserResult0List();
+			console.log("(● 버튼)checkUserResult0List()에서 리턴받은 check 상태-> " + check);
+					
+					// 데이터가 있는 경우
+					if(check){
+
+						alert("이미 승인 대기중인 신청서가 있습니다.");	
+						console.log("(● 버튼 if) 데이터가 있는 경우 check -> " + check);
+						
+					}else{ 	
+						
+						console.log("(● 버튼 else) 데이터가 없는 경우 check -> " + check);
+						
+						// ● 보이기
+							// * 디테일 폼
+							$("#enrollForm").show();
+					
+						// ● 숨기기				
+							// ＊ 전체 리스트 숨기기   
+							$("#divAllList").hide();
+				
+							// * 승인 대기 리스트 숨기기
+							$("#divResult0List").hide();
+							
+							// * 승인 거부 리스트 숨기기
+							$("#divResult1List").hide();
+							
+							// * 무료 승인 리스트 숨기기
+							$("#divResult2List").hide();
+							
+							// * 작가신청 버튼 숨기기
+							$("#enrollBtn").hide();
+											
+							// * 작가신청 버튼도 가림
+							$("#enrollBtn").hide();
+							
+							// * 디테일 수정창 숨기기
+							$("#divUpdateDetail").hide();
+						
+					}//end if~else
+				
+
+			
+				
+		});// end click #enrollBtn
 		
+		--%>
+
+		
+		<%--
+
 		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
 		$("#enrollBtn").on("click", function(){
 			
@@ -1325,18 +1444,10 @@
 				// 3) data != null이라면 경고창alert
 				// 4) data == null이라면 진입 가능
 				
-			$.getJSON("/enrollAjax/checkUsersResult0List/" + id, function(data){
-				console.log("/checkUsersResult0List에서 확인된 sec user_id -> " + id);
-				console.log("/checkUsersResult0List에서 확인된 data ▼ ");
-				console.log(data);
-				
-				// 데이터가 없는 경우에만 디테일 폼으로 진입
-				if(data == null){
-					
+			
 					// ● 보이기
 						// * 디테일 폼
 						$("#enrollForm").show();
-
 				
 					// ● 숨기기				
 						// ＊ 전체 리스트 숨기기   
@@ -1361,19 +1472,85 @@
 						$("#divUpdateDetail").hide();
 					
 				
-				// 데이터가 있는 경우에는
-				}else{ 		
-					alert("이미 승인 대기중인 신청서가 있습니다.");	
-				}
-				
-			});// end getJSON
-				
-			
-				
-			
-			
-				
+
+					
 		});// end click #enrollBtn
+		
+		--%>
+		
+		
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중 세번째 코드) -->
+		$("#enrollBtn").on("click", function(){
+			
+			// ※ getJSON으로 받아오면 컨트롤러 주소 진입 후 아무일도 일어나지 않아서(개발자도구 콘솔에도 안찍힘)
+			//   버튼 누르는 화면에서 보이는 아이디를 얻어오는 방법으로 바꾸었음.
+				
+			
+			// ● td.list 모음 ( 승인대기 리스트 전체 )
+			let data = $("#0List").children().children(".list");
+			console.log(data);
+			
+			// ● 로그인한 아이디와 같다면 변수에 저장해줌
+			let myId = "";
+			
+			
+			// ● td.list를 하나씩 꺼내서 data-user-id 속성에서 아이디를 가져온다.
+			data.each(function(){
+				
+				console.log($(this).attr("data-user-id"));
+				
+				// * 가져온 값이 로그인한 나의 아이디와 같다면 myId에 값을 넣어준다.
+				if(id == $(this).attr("data-user-id")){
+					myId = $(this).attr("data-user-id");
+					return;
+				}// end if
+				
+			}); // end each
+			
+			console.log(".each가 끝난 후 myId 상태 -> " + myId);
+			console.log("myId가 null인 경우에만 true -> " + !myId);
+			
+			
+			// ● 승인 대기 리스트에 내가 작성한 리스트가 없다면 신청 폼으로 진입
+			if(!myId){
+				//alert("폼으로 진입");
+				
+				// ● 보이기
+					// * 디테일 폼
+					$("#enrollForm").show();
+		
+				// ● 숨기기				
+					// ＊ 전체 리스트 숨기기   
+					$("#divAllList").hide();
+		
+					// * 승인 대기 리스트 숨기기
+					$("#divResult0List").hide();
+					
+					// * 승인 거부 리스트 숨기기
+					$("#divResult1List").hide();
+					
+					// * 무료 승인 리스트 숨기기
+					$("#divResult2List").hide();
+					
+					// * 작가신청 버튼 숨기기
+					$("#enrollBtn").hide();
+									
+					// * 작가신청 버튼도 가림
+					$("#enrollBtn").hide();
+					
+					// * 디테일 수정창 숨기기
+					$("#divUpdateDetail").hide();
+				
+			// ● 이미 작성했다면 경고창만 띄우고 같은 창에 머무르기.
+			}else{
+				alert("이미 작성한 승인 대기 신청서가 있습니다.");
+			}
+
+					
+		});// end click#enrollBtn
+		
+		
+		
 		
 		
 		
@@ -1424,7 +1601,7 @@
 				success : function(result){
 					console.log("result: " + result);
 					if(result == 'SUCCESS'){
-						alert("데이터를 DB에 넣기 성공");						
+						alert("작성을 완료했습니다.");						
 						
 						// ● 숨기기
 							// * 디테일 폼
@@ -1450,6 +1627,13 @@
 							
 							// * 작가신청 버튼 보이기
 							$("#enrollBtn").show();
+							
+							
+						// ● 작성한 폼 비우기
+							$("#insert_novel_title").val("");
+							$("#insert_novel_writer").val("");
+							$("#insert_enroll_intro").val("시놉시스 및 예상 결말 입력");
+							
 											
 							
 						
@@ -1466,9 +1650,28 @@
 			<!-- ● 모달 열기 -->
 			$("#adminBtn").on("click", function(){
 				
-				// 모달 열기
-				$("#modDiv").show("slow");
+				// * enroll_result가 무엇인지 확인하기
+				console.log($(this).parent().siblings("#detail").children("#input_enroll_result").val());	
+				let adminEnrollResult = $(this).parent().siblings("#detail").children("#input_enroll_result").val();
+				
+					// * 이미 변경 사항이 있다면(= '승인 대기'가 아니라면) 확인창 띄움
+					if(adminEnrollResult != "승인 대기"){
+						
+						if(confirm("이미 변경 사항이 있습니다. 다시 변경하시겠습니까?")){
+							
+							// 모달 열기
+							$("#modDiv").show("slow");
+							
+						}// end confirm id
 					
+					// * 승인 대기 상태(초기값)라면 바로 모달 열기
+					}else{
+						
+						// 모달 열기
+						$("#modDiv").show("slow");
+						
+					}
+									
 			})// end click #adminBtn
 			
 			<!-- ● 모달 닫기 -->
@@ -1515,7 +1718,7 @@
 					console.log("◈ 유저 아이디 -> " + user_id);
 					
 					// 버튼 클릭시 경고창 띄움 (-> 확인을 눌러야 진입)
-					if(confirm("승인처리는 한 번만 할 수 있습니다.")){
+					if(confirm("승인 여부를 처리하시겠습니까?")){
 					
 						// ● 업데이트 로직 실행
 						$.ajax({
@@ -1612,7 +1815,12 @@
 							
 						}); // end ajax
 				
-					// end confirm if	
+					// end confirm if
+					
+						// 변경 사항을 선택했으면 자동으로 닫아준다.
+						$("#modDiv").hide("slow");
+					
+					
 					}else{
 						
 						$("#form_enroll_msg").val("");
@@ -1786,7 +1994,7 @@
 					
 		
 		
-	//});// end $(document).ready
+	});// end $(document).ready
 	
 	</script>
 

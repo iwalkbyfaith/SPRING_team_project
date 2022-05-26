@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 <body>
 	<h1>${weekList[0].novel_week} 웹툰 목록</h1>
 
-	${weekList}
+	
 		 	<table class="table table-bordered border-info">
 			<tr>
 				<th>소설번호</th>

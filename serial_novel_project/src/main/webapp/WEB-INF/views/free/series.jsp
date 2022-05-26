@@ -41,7 +41,7 @@
 			}
 			.writebtn,.List,.series{
 				float:right;
-				margin-right:10px; 
+				margin-right:10px;
 			}
 			.articleInfo{
 				float:right;
@@ -49,6 +49,24 @@
 			.articleMain{
 				text-align:center;
 			} 
+	
+.menubar li ul {
+list-style:none;
+background: yellowgreen;
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+}
+.menubar li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}
+	
+
 	</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
@@ -93,15 +111,24 @@
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
 		          </ul><!-- ul 태그 끝 -->
-		          <div class="social-part">
-		            <sec:authorize access="isAuthenticated()">
-		            <a href="/mypage/myInfo">내 정보</a></i>
-		            </sec:authorize>
-		            <sec:authorize access="isAnonymous()">
-		            <i class="join"><a href="/secu/join">join</a></i>
-					<i class="login"><a href="/customLogin">login</a></i>
-					</sec:authorize>
-		          </div>
+		          <div class="menubar">
+	   		
+    	 	<ul> 	
+    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
+        	 <ul>
+           <li><a href="/mypage/myInfo">계정정보</a></li>
+           <li><a href="/mypage/myFavor">선호작</a></li>
+           <li><a href="/mypage/bookmark">책갈피</a></li>
+           <li><a href="/secu/customLogout">로그아웃</a></li>
+           
+     	    </ul>
+   			   </li>
+      			</ul>
+      
+   
+</div>
+	
+
 	        </div><!-- div 끝 -->
 	    </nav><!-- 네비바 끝 -->
      </div><!-- header 끝 --> 
@@ -119,49 +146,26 @@
 		     });
      
      </script>
+     <h1 style="text-align:center">회차목록</h1>
+		<table class="table table-bordered border-info">
+			<tr>
+				<th>회차</th>
+				<th>제목</th>
+				<th>조회수</th>
+				<th>추천</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach var="free" items="${FreeList}">
+					<tr>
+						<td>${free.free_snum}</td>
+						<td>${free.free_title}</td>
+						<td>${free.free_hit}</td>
+						<td>${free.free_rec}</td>
+						<td>${free.free_rdate}</td>
+					</tr>
+				</c:forEach>
+		</table>
      
-     
-     <h1> 메인 </h1>
-
-     
-    <a href="/secu/join">join</a>
-	<a href="/customLogin">login</a>
-    <a href="/charge">결제</a>
-    <a href="/homeTest2">홈 테스트 중</a>
-    
-
-     <h3>0. 공지바(사진 바뀌는거)</h3>
-     <h3>1. 무료소설 조회수 베스트</h3>
-     <h3>2. 유료소설 조회수 베스트</h3>
-     <h3>3. 무료소설 선호작 베스트</h3>
-     <h3>4. 유료소설 선호작 베스트</h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </body>

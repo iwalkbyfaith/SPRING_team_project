@@ -216,6 +216,8 @@ public class NovelWriterTests {
 	}
 	
 	
+
+
 	// ■ (커스텀DB) 이름에 맞는 권한 부여하기 (ROLE_PAID_WRITER)
 	//@Test
 	public void testInsertPaidWriterAuth() {
@@ -247,7 +249,9 @@ public class NovelWriterTests {
 	
 	// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 	
+
 	// ■ (커스텀DB) 테스트 코드를 이용해 데이터 넣기 (관리자)
+
 	//@Test
 	public void testAdminCustomDB() {
 		try {
@@ -304,14 +308,4 @@ public class NovelWriterTests {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

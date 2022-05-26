@@ -76,7 +76,7 @@
 				FROM DUAL
 		</update>
 		
-		
+		<!-- ■ 선호작 리스트 유료 무료 관계없이 뽑아오기 -->
 		<select id="selectFavList" resultType="com.novel.user.domain.FavorVO">
 			
 			select * from
@@ -87,10 +87,20 @@
     							on ft.novel_num = nt.novel_num
 		</select>
 		
+		<!-- ■ 선호작이 무료소설일 경우에 무료 소설 디테일을 받아옴 (유료소설은 paid쪽에 이미 있어서 따로 안만듬) -->
 		<select id="selectFreeList" resultType="com.novel.free.domain.FreeNovelVO">
 			
 			select * from free_tbl where novel_num = #{novelNum}
 		</select>
+		
+		<insert id="insertFav">
+			INSERT INTO favorite_tbl VALUES (fav_num.nextval,#{novel_num},#{user_num})
+		</insert>
+		<delete id="deleteFav">
+			DELETE FROM favorite_tbl WHERE novel_num = #{novel_num} and user_num = #{user_num}
+		</delete>
+		
+		
 
 
 

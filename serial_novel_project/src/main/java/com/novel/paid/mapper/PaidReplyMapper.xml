@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.novel.paid.mapper.PaidReplyMapper">
+	
+	<select id="getList" resultType="com.novel.paid.domain.PaidReplyVO">
+		SELECT * FROM paid_repl_tbl WHERE novel_num = #{novelNum} and paid_pnum = #{paidNum}
+		ORDER BY prepl_num DESC
+	</select>
+	
+	<insert id="create">
+		INSERT INTO paid_repl_tbl (prepl_num, novel_num, paid_pnum, prepl_content, prepl_writer)
+			VALUES
+		(prepl_num.nextval, #{novel_num}, #{paid_pnum}, #{prepl_content}, #{prepl_writer})
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM paid_repl_tbl WHERE prepl_num = #{prepl_num}
+	</delete>
+	
+	<update id="update">
+		UPDATE paid_repl_tbl SET prepl_content = #{prepl_content}, prepl_mdate = sysdate
+		 WHERE prepl_num = #{prepl_num}
+	</update>
+	
+
+</mapper>

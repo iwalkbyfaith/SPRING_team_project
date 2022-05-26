@@ -25,14 +25,14 @@ ul li a{
 .footer{
 	height:150px;
 }
-#headerMonLi,#headerTueLi,#headerWenLi,#headerThuLi,#headerFriLi{
+#headerMonLi,#headerTueLi,#headerWedLi,#headerThuLi,#headerFriLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
 	font-size:30px;
 	outline:solid 1px;
 }
-.monLi , .tueLi , .wenLi, .thuLi, .friLi{
+.monLi , .tueLi , .wedLi, .thuLi, .friLi{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
@@ -119,7 +119,7 @@ text-align:center;
 	<ul>
 		<li id="headerMonLi"><a href="/paid/Week/Mon">월요일</a></li>
 		<li id="headerTueLi"><a href="/paid/Week/Tue">화요일</a></li>
-		<li id="headerWenLi"><a href="/paid/Week/Wen">수요일</a></li>
+		<li id="headerWedLi"><a href="/paid/Week/Wed">수요일</a></li>
 		<li id="headerThuLi"><a href="/paid/Week/Thu">목요일</a></li>
 		<li id="headerFriLi"><a href="/paid/Week/Fri">금요일</a></li>
 	</ul>
@@ -292,8 +292,8 @@ function getTueList(){
 	
 }
 	// ■ 수요일 리스트 가져오기.
-function getWenList(){
-	  var novelWeek = "Wen";
+function getWedList(){
+	  var novelWeek = "Wed";
 	  	$(".List").hide();
 		$(".writebtn").hide();
 		$(".series").hide();
@@ -306,7 +306,7 @@ function getWenList(){
 		$(data).each(
 				function(){
 					
-					str += "<div class='wenLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
+					str += "<div class='wedLi' data-novelNum='" + this.novel_num + "' data-paidNum='"+this.paid_num +"'>" + 
 					this.novel_title + "</div>";
 
 				});
@@ -384,13 +384,13 @@ $("#headerTueLi").on("click",function(){
 getTueList();
 });
 //■ 수요일을 클릭시 무협지 카테로리의 소설 리스트를 보여줌
-$("#headerWenLi").on("click",function(){
+$("#headerWedLi").on("click",function(){
 
 $("#novellist").empty();
 $(".content").hide();
 $(".table").hide();
 
-getWenList();
+getWedList();
 	
 });
 //■ 목요일 클릭시 미스터리 카테고리의 소설 리스트를 보여줌
