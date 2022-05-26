@@ -82,6 +82,13 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 			freeMapper.update(vo);
 		
 	}
+	
+	@Override
+	public void addhit (FreeNovelVO vo) {
+		vo.setFree_hit(vo.getFree_hit()+1);
+		freeMapper.addhit(vo);
+		
+	}
 
 
 

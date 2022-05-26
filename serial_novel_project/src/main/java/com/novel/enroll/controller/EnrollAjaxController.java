@@ -76,9 +76,13 @@ public class EnrollAjaxController {
 		ResponseEntity<EnrollVO> entity = null;
 		
 		try {
-			
 			log.warn("/checkUsersResult0List로 들어온 user_id -> " + user_id);
+			log.warn("->" + service.getEnrollResult0(user_id));
+//			log.info("/checkUsersResult0List로 들어온 user_id -> " + user_id);
+//			log.info("->" + service.getEnrollResult0(user_id));
 			entity = new ResponseEntity<>(service.getEnrollResult0(user_id), HttpStatus.OK);
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -75,6 +75,14 @@
 			SELECT *
 				FROM DUAL
 		</update>
+		
+		
+		<select id="selectFavList" resultType="com.novel.user.domain.FavorVO">
+			
+			select * from novel_tbl where novel_num = 
+			(select novel_num from favorite_tbl where user_num = 
+			(select user_num from user_tbl where user_id=#{user_id})) 
+		</select>
 
 
 

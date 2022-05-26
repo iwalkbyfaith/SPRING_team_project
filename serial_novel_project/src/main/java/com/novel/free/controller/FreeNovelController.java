@@ -156,6 +156,26 @@ public class FreeNovelController {
 		}
 		return entity;
 }
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
+			value="hit/{freeNum}",
+			consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> addhit(
+			@RequestBody FreeNovelVO vo,
+			@PathVariable("freeNum") Long freeNum){
+		ResponseEntity<String> entity = null;
+		try {	
+			vo.setFree_num(freeNum);
+			
+			service.addhit(vo);
+			
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 	@PostMapping(value="/novel", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	// produces에 TEXT_PLAIN_VALUES를 줬으므로 결과코드와 문자열을 넘김
 	public ResponseEntity<String> register(
