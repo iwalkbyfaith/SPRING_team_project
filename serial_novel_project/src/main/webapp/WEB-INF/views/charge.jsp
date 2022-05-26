@@ -49,18 +49,32 @@
 	var merchant_uid = "";
 	var userNum = 1;
 	
-	// 위임처리로 어떤 상품을 클릭했을 때 그 상품에 대한
+	var coin = "";
+	var coupon = "";
+	
+	// 위임처리
 	$(".itemSection").on("click",".orderBtn",function(){
 		itemPrice = $(this).parent().siblings(".itemPrice").children().attr("data-price");
+		
+		if(itemPrice == 2000){
+			coupon = 2;
+			coin = 200;
+		}
+		else if(itemPrice == 1000){
+			coupon = 1;
+			coin = 100;
+		}	
 		itemTitle = $(this).parent().siblings(".itemTitle").children().text();
 		d = new Date();
 		merchant_uid = "order" + d.getTime();
+		
 		iamport();
+	
 	});
 
 
 function iamport(){
-	IMP.init('imp28027601'); //iamport 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
+	IMP.init('imp28027601'); 
 	IMP.request_pay({
 		pg : 'html5_inicis',
 		pay_method : 'card',
@@ -84,6 +98,7 @@ function iamport(){
 					"Content-Type":"application/json",
 					"X-HTTP-Method-Override":"POST"
 				},
+				contentType : "application/json",
 				dataType:"text",
 				data: JSON.stringify({
 					itemname : itemTitle,
@@ -92,29 +107,9 @@ function iamport(){
 					user_num : userNum
 				}),
 				success:function(){
-					alert(itemTitle + "결제완료!");
-					// 결제 성공시 코인 추가
-					$.ajax({
-						type:'post',
-						url:'/order',
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-							},
-						headers:{
-							"Content-Type":"application/json",
-							"X-HTTP-Method-Override":"POST"
-						},
-						dataType:"text",
-						data: JSON.stringify({
-							itemname : itemTitle,
-							charge_price : itemPrice,
-							merchant_uid : merchant_uid,
-							user_num : userNum
-						}),
-						success:functioin(){
-							
-						}// 코인 success end
-					});// 코인 end
+						alert(itemTitle + "결제완료!");
+						addCoin(); // ■ 코인추가를위해 addCoin 호출
+					
 				} // 결제 success end	
 			}); // 결제 ajax end
 		} else {
@@ -124,6 +119,36 @@ function iamport(){
 	});
 }
 
+//■ 코인추가를위해 addCoin 선언
+function addCoin(){
+	console.log(userNum)
+	console.log(coin)
+	console.log(coupon)
+	$.ajax({
+		type : 'patch', 
+		url : '/coinAdd',
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+		header : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "PATCH" 
+		},
+		contentType : "application/json",
+		data : JSON.stringify({
+			user_coin : coin,
+			user_coupon : coupon,
+			user_num : userNum
+			}),
+		dataType : 'text',
+		success : function(result){
+			console.log("result : " + result);
+			if(result == 'SUCCESS'){
+				alert("코인이 추가되었습니다.");
+			}
+		}
+	});
+};
 </script>			
 </body>
 </html>
