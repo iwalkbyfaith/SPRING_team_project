@@ -990,7 +990,7 @@
 			// ● 8강 시작일 & 종료일
 			let sdate4;
 			let edate4;
-				
+				 
 			
 			// 1. 추천 기록 받아오기 (DB) : 로그인한 id & to_num = 2(4강)인 경우 데이터를 가져옴 
 			$.getJSON("/tournament/checkRec/2/" + id, function(data){
