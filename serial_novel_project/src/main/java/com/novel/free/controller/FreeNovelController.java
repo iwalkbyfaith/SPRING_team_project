@@ -22,6 +22,8 @@ import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.service.FreeNovelService;
 import com.novel.service.SecurityService;
+import com.novel.user.domain.FavorVO;
+import com.novel.user.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -33,6 +35,9 @@ public class FreeNovelController {
 
 	@Autowired
 	private FreeNovelService service;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	@GetMapping(value="/novel/{novelCategory}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
@@ -197,6 +202,23 @@ public class FreeNovelController {
 		}
 		// 위의 try블럭이나 catch블럭에서 얻어온 entity변수 리턴
 		return entity;
+	}
+	
+	@GetMapping(value="/favor/{userId}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<FavorVO>> selectFavor(@PathVariable("userId") String userId){
+		
+		ResponseEntity<List<FavorVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(userService.selectFavList(userId), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
 	}
 }
 

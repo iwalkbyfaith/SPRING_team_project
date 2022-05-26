@@ -2,68 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="com.novel.free.mapper.FreeNovelMapper">
-	<sql id="search">
-	<!-- 동적 쿼리문이 들어올 자리  -->
-	<if test="searchType != null">
-		<if test="searchType == 't'.toString()">
-			(novel.novel_titlelike '%'||#{keyword}||'%') AND
-		</if>
-		<if test="searchType == 'c'.toString()">
-			(free.free_content like '%'||#{keyword}||'%') AND
-		</if>
-		<if test="searchType == 'w'.toString()">
-			(novel.novel_writer like '%'||#{keyword}||'%') AND
-		</if>
-		<if test="searchType == 'tc'.toString()">
-		   ((novel.novel_title like '%'||#{keyword}||'%')
-		    	OR
-			(free.free_content like '%'||#{keyword}||'%')) AND
-		</if>
-		<if test="searchType == 'cw'.toString()">
-		   ((free.free_content like '%'||#{keyword}||'%')
-		    	OR
-			(novel.novel_writer like '%'||#{keyword}||'%')) AND
-		</if>
-		<if test="searchType == 'tcw'.toString()">
-		   ((novel.novel_writer like '%'||#{keyword}||'%')
-		    	OR
-		    (free.free_content like '%'||#{keyword}||'%')
-		    	OR
-			(novel.novel_title like '%'||#{keyword}||'%')) AND
-		</if>
-		
-	</if>
-	</sql>
-	<select id="getJoinList" resultType="com.novel.free.domain.FreeNovelJoinVO">
-	<![CDATA[ 
-SELECT /* + INDEX_DESC(free_tbl free_num) */
-rownum rn, f.free_num,f.free_rec, n.novel_title , n.novel_category, 
-n.novel_end FROM (free_tbl f INNER JOIN 
-	novel_tbl n ON f.novel_num = n.novel_num) WHERE 
-	
-	]]>
-	<!-- SELECT free_tbl.free_content FROM free_tbl INNER JOIN 
-	novel_tbl ON free_tbl.novel_num = novel_tbl.novel_num; -->
-	<!-- SELECT f.* FROM free_tbl f INNER JOIN 
-	novel_tbl n ON f.novel_num = n.novel_num; 
-	free_tbl f , novel_tbl n  각 테이블을 f, n 으로 표현할 수 있음.
-	-->
-	<include refid="search"></include>
-	
-	<![CDATA[
-	
-	rownum <= #{pageEnd})
-	WHERE rn > #{pageStart}
-	
-	]]>
-	</select>
-	
+
 	<select id="selectList" resultType="com.novel.free.domain.NovelVO">
 	SELECT n.novel_title , n.novel_num , n.user_id FROM novel_tbl n 
-WHERE n.novel_category = #{novelCategory} and n.novel_week='free'
+	WHERE n.novel_category = #{novelCategory} and n.novel_week='free'
 	</select>
-	
-	
 	
 	<insert id="insertNovel">
 	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
@@ -102,15 +45,6 @@ free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num
 	<update id="addhit">
 	UPDATE free_tbl SET free_hit=#{free_hit} WHERE free_num = #{free_num}
 	</update>
-	<select id="countPageNum" resultType="int">
-	<![CDATA[ 
-	SELECT count(*) FROM free_tbl WHERE
 	
-	]]> 
-	<include refid="search"></include>
 	
-	<![CDATA[
-	free_num > 0
-	]]>
-	</select>
 	</mapper>

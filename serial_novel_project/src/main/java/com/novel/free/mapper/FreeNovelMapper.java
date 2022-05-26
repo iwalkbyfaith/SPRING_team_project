@@ -8,6 +8,7 @@ import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
+import com.novel.user.domain.FavorVO;
 
 public interface FreeNovelMapper {
 	public List<NovelVO> selectList(String novelCategory);							// 카테고리별 소설 리스트 받아오기                     
@@ -34,6 +35,7 @@ public interface FreeNovelMapper {
 		
 	public int countPageNum(SearchCriteria cri);									// 작품 페이지 
 
+	
 
 	
 		

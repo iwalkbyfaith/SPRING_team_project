@@ -65,10 +65,6 @@ z-index:200;
 .menubar li:hover ul {
 display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 }
-
-#novelTitle:hover{
-  background:yellow; /*변경할 배경색*/
-}
 	
 
 	</style>
@@ -150,44 +146,26 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 		     });
      
      </script>
-     
-     
-    							<h1>선호작</h1>
-   <table class="table">
-	  <thead class="table-dark">
-  					<tr>
-					<th>소설 제목</th>
-					<th>작가</th>
-					<th>완결여부</th>
-					<th>부작</th>
+     <h1 style="text-align:center">회차목록</h1>
+		<table class="table table-bordered border-info">
+			<tr>
+				<th>회차</th>
+				<th>제목</th>
+				<th>조회수</th>
+				<th>추천</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach var="free" items="${FreeList}">
+					<tr>
+						<td>${free.free_snum}</td>
+						<td>${free.free_title}</td>
+						<td>${free.free_hit}</td>
+						<td>${free.free_rec}</td>
+						<td>${free.free_rdate}</td>
 					</tr>
-	 	</thead>	
-			<tbody>
-					<c:forEach var="fav" items="${FavorList}">
-				<tr>
-					<td id="novelTitle" data-novelNum="${fav.novel_num}" data-novelWeek="${fav.novel_week}"><c:out value="${fav.novel_title}"/></td>
-					
-			    	<td><c:out value="${fav.novel_writer}"/></td>
-    				<td><c:out value="${fav.novel_end}"/></td>
-    				<td><c:out value="${fav.novel_tsnum}"/></td>
-				</tr>
-					</c:forEach>
-			</tbody>
-	</table>
-   
- 
- <script type="text/javascript">
- // onClick="location.href='http://localhost:8181/paid/List/${fav.novel_num}'"
- $(".table").on("click","#novelTitle",function(){
-	var novelNum = $(this).attr("data-novelNum");
-	var novelWeek = $(this).attr("data-novelWeek");
-	if(novelWeek == 'free'){
-		location.href="http://localhost:8181/mypage/free/"+ novelNum;	
-	}
-	else{ location.href="http://localhost:8181/paid/List/"+ novelNum; }  
- });
- 
- </script> 
+				</c:forEach>
+		</table>
+     
 
 
 </body>
