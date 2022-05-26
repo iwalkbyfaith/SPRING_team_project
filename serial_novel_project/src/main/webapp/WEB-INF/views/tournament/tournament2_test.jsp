@@ -132,7 +132,7 @@
 			              	</div>
 			          	</li>
 			          <li class="nav-item">
-				            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
 			          </li>
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
