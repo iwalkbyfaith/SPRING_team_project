@@ -32,16 +32,15 @@
 		    border : solid 3px black;
 		}
 		
-		<%--.tourna-work-list-div-img{
-			background-position: center;
-            height: 180px;
-            border-radius: 10px;
-            border: 1px solid green;
+
+			.tourna-work-list{ 
+				background-color : whitesmoke;
+				width : 160px;
+				text-align : center;
 			}
-		--%>
-		.tourna-work-list{ 
-			background-color : whitesmoke;
-			width : 160px;
+			
+			.tourna-work-list img{
+				height : 180px;
 			}
 			
 			
@@ -163,8 +162,8 @@
      
 	 
 	<h3>★ 나중에 추가 할 것 : </h3>
-		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) <br/>
-		2. 썸네일 이미지 삽입 <br/>
+		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) -> 완 <br/>
+		2. 썸네일 이미지 삽입 -> 완 <br/>
 	
 	 <hr/>
 	
@@ -379,7 +378,7 @@
 						$(data).each(function(){
 								
 								str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-										+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
+										+ "<div class='tourna-work-list-div-img'>"+ "<a href='http://localhost:8181/free/series/" + this.novel_num + "'>" + "<img src='/resources/novel_image/" + this.novel_num + ".png'>" + "</a>" +"</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -461,7 +460,8 @@
 						$(data).each(function(){
 							
 							str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-									+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
+									+ "<div class='tourna-work-list-div-img'>"+ "<a href='http://localhost:8181/free/series/" + this.novel_num + "'>" + "<img src='/resources/novel_image/" + this.novel_num + ".png'>" + "</a>" +"</div>"
+									//+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
@@ -547,7 +547,8 @@
 					$(data).each(function(){
 						
 						str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-								+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
+						        + "<div class='tourna-work-list-div-img'>"+ "<a href='http://localhost:8181/free/series/" + this.novel_num + "'>" + "<img src='/resources/novel_image/" + this.novel_num + ".png'>" + "</a>" +"</div>"
+						   	  //+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"

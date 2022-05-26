@@ -53,75 +53,81 @@
 			
 			
 			/*여기부터 캐러셀*/
-			
-			.carousel{
-				width : 300vw;
-				transition : transform 0.5s;
+				.crsOutter{
+					overflow: hidden;
+					height : 300px
+				}
+				.carousel{
+					width : 300vw;
+					transition : transform 0.5s;
+					
+				}
 				
-			}
-			
-			.innerCrs{
-				width : 100vw;
-				float : left;
-			}	
-			
-			.innerCrs img{
-				width : 100%
-			}
-			
-			.btnList{
-				 text-align: center;
-			}
-			#crsBtn1, #crsBtn2, #crsBtn3{
-				color : #dcdcdc;
-				padding: 0;
-				height : 10px;
-				width : 20px;				
-			}
+				.innerCrs{
+					width : 100vw;
+					float : left;
+				}	
 				
-			#prev, #next{
-				background-color :#c8c8c8;
-				padding: 0;
-				height : 10px;
-				width : 20px;
-			}
-			
-			
-			
-			/* 여기부터 조회수 */
-			.bestTotalView, .bestTotalHit{ 
-				background-color : whitesmoke;
-				width : 100%;
-				height : 350px;
+				.innerCrs img{
+					width : 100%
+				}
 				
-			}
-			.work{
-				float : left;
-				border : 1px solid black;
-				padding: 10px 12px;
-				margin : 20px;
-				background-color : #c8c8c8;
-				text-align : center;
-			}
-			.bestBody{
-				background-color : 	#d2d2d2;
-				height : 320px;
-				text-align : center;
-			}
-			.work img {
+				.btnList{
+					 text-align: center;
+				}
+				#crsBtn1, #crsBtn2, #crsBtn3{
+					color : #dcdcdc;
+					padding: 0;
+					height : 10px;
+					width : 20px;				
+				}
+					
+				#prev, #next{
+					background-color :#c8c8c8;
+					padding: 0;
+					height : 10px;
+					width : 20px;
+				}
 				
-				width: 130px;
-				height: 180px;	
-				margin: 10px;
-			}
-			.icon div{
-				padding: 0;
-			}
-			.icon img{
-				width : 20px;
-				height : 20px;
-				margin : 0px 5px;
-			}
+			
+			
+			/* 여기부터 조회수, 추천수 리스트 관련 */
+				.bestTotalView, .bestTotalHit{ 
+					background-color : whitesmoke;
+					width : 100%;
+					height : 350px;
+					
+				}
+				.work{
+					float : left;
+					border : 1px solid black;
+					padding: 10px 12px;
+					margin : 30px;
+					background-color : #c8c8c8;
+					text-align : center;
+				}
+				.bestBody{
+					background-color : 	#d2d2d2;
+					height : 320px;
+					text-align : center;
+				}
+				.work img {
+					
+					width: 130px;
+					height: 180px;	
+					margin: 10px;
+				}
+				.icon div{
+					padding: 0;
+				}
+				.icon img{
+					width : 20px;
+					height : 20px;
+					margin : 0px 5px;
+				}
+				.listtitle{
+					font-size : 20px;
+				}
 			
 			
 	</style>
@@ -198,7 +204,7 @@
      
      <!-- ● 캐러셀 시작 -->
      
-     	<div style="overflow: hidden">
+     	<div class="crsOutter">
 	     	<div class="carousel">
 	     		<div class="innerCrs">
 	     			<a href="#"><img src="/resources/carousel/1.png"></a>
@@ -306,15 +312,12 @@
 
 
 
-     <h3>0. 공지바(사진 바뀌는거) -> 완</h3>
      
-     
-     <h3>2. 유료소설 조회수 베스트</h3>
-     	
+     	<!-- ■ 유료 소설 조회수 베스트 -->
+    	
      	<div class='bestTotalView'>
-     		<div>유료소설 조회수 베스트 '.bestTotalView'</div>
+     		<div class="listTitle">유료소설 조회수 베스트 '.bestTotalView'</div>
      		<div class="bestBody">
-     			바디 .bestBody
      			
      			<c:forEach var="view" items="${paidViewList}">
      				<div class="work">
@@ -327,15 +330,15 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 -->
+     	</div><!-- 제일 바깥 --> <br/><br/>
      
      
-      <h3>4. 유료소설 추천수 베스트</h3>
      
+     	<!-- ■ 유료 소설 조회수 베스트 -->
+     	     
      	<div class='bestTotalHit'>
-     		<div>무료소설 추천수 베스트 '.bestTotalFav'</div>
+     		<div class="listTitle">유료 소설 추천수 베스트 '.bestTotalFav'</div>
      		<div class="bestBody">
-     			바디 .bestBody
      			
      			<c:forEach var="rec" items="${paidRecList}">
      				<div class="work">
@@ -348,24 +351,22 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/>     
+     	</div><!-- 제일 바깥 --> <br/><br/>
      
      
      
+
      
-      <hr/>
      
-     
-     <h3>1. 무료소설 조회수 베스트</h3>
-     
+       	<!-- ■ 무료 소설 조회수 베스트 -->
+       	
      	<div class='bestTotalView'>
-     		<div>무료소설 조회수 베스트 '.bestTotalView'</div>
+     		<div class="listTitle">무료소설 조회수 베스트 '.bestTotalView'</div>
      		<div class="bestBody">
-     			바디 .bestBody
      			
      			<c:forEach var="view" items="${freeViewList}">
      				<div class="work">
-	     				<div><img src='/resources/novel_image/${view.novel_num}.png'></div>
+	     				<div><a href="http://localhost:8181/free/series/${view.novel_num}"><img src='/resources/novel_image/${view.novel_num}.png'></a></div>
 	     				<div>${view.novel_title}</div>
 	     				<div class="icon">
 	     					<div><img src='/resources/main/view2.png'>${view.total_view}</div>
@@ -375,19 +376,19 @@
      			
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/>
+     	</div><!-- 제일 바깥 --> <br/><br/>
      
-     <hr/>
-     <h3>3. 무료소설 추천수 베스트</h3>
 		
+		
+		
+       	<!-- ■ 무료 소설 추천수 베스트 -->		
 		<div class='bestTotalHit'>
-     		<div>무료소설 추천수 베스트 '.bestTotalFav'</div>
+     		<div class="listTitle">무료소설 추천수 베스트 '.bestTotalFav'</div>
      		<div class="bestBody">
-     			바디 .bestBody
      			
      			<c:forEach var="rec" items="${freeRecList}">
      				<div class="work">
-	     				<div><img src='/resources/novel_image/${rec.novel_num}.png'></div>
+	     				<div><a href="http://localhost:8181/free/series/${rec.novel_num}"><img src='/resources/novel_image/${rec.novel_num}.png'></a></div>
 	     				<div>${rec.novel_title}</div>
 	     				<div class="icon">
 	     					<div><img src='/resources/main/thumb.png'>${rec.total_rec}</div>
@@ -395,10 +396,8 @@
      				</div>
      			</c:forEach>
      			
-     			</div><!-- 작품들 일단 뿌리기 -->
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/>     
-     
+     	</div><!-- 제일 바깥 --> <br/><br/>
 
 
 
