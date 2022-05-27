@@ -2,6 +2,9 @@ package com.novel.user.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.novel.free.domain.FreeNovelVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.domain.UserVO;
 
@@ -20,7 +23,18 @@ public interface UserMapper {	// 시큐리티 관련 ( 나중에 com.novel.user.
 
 	// ■ 선호작 불러오기.
 	public List<FavorVO> selectFavList(String user_id); 		
+
+	// ■ 선호작에서 무료소설 디테일 불러오기.
+	public List<FreeNovelVO> selectFreeList(long novelNum);
+	
+	// ■ 선호작 등록
+	public void insertFav(FavorVO vo);
+	
+	// ■ 선호작 삭제
+	public void deleteFav(@Param("novel_num")long novel_num,@Param("user_num")long user_num);
+
 	// ■ 결제 성공시 해당 유저 코인 발급 로직
 
+	
 	
 }

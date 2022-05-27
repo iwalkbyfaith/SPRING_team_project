@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.novel.novel.domain.MainBestNovelVO;
 import com.novel.novel.domain.NovelVO;
 import com.novel.novel.domain.SearchCriteria;
 import com.novel.novel.mapper.NovelMapper;
@@ -14,6 +15,7 @@ public class NovelServiceImpl implements NovelService{
 
 	@Autowired
 	private NovelMapper novelMapper;
+	
 	
 	@Override
 	public List<NovelVO> getNovelList(SearchCriteria cri) {
@@ -45,6 +47,32 @@ public class NovelServiceImpl implements NovelService{
 	@Override
 	public int countPageNum(SearchCriteria cri) {
 		return novelMapper.countPageNum(cri);
+	}
+
+	
+	
+	// ● 무료소설 조회수 베스트
+	@Override
+	public List<MainBestNovelVO> getBestViewFreeData() {
+		return novelMapper.getBestViewFreeData();
+	}
+
+	// ● 무료소설 추천수 베스트
+	@Override
+	public List<MainBestNovelVO> getBestRecFreeData() {
+		return novelMapper.getBestRecFreeData();
+	}
+
+	// ● 유료소설 조회수 베스트
+	@Override
+	public List<MainBestNovelVO> getBestViewPaidData() {
+		return novelMapper.getBestViewPaidData();
+	}
+
+	// ● 유료소설 추천수 베스트
+	@Override
+	public List<MainBestNovelVO> getBestRecPaidData() {
+		return novelMapper.getBestRecPaidData();
 	}
 
 	

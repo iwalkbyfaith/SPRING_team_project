@@ -43,6 +43,12 @@
             (novel_num.nextval, #{novel_writer}, #{user_id}, #{novel_title}, #{novel_category}, #{novel_week})
 		</insert>
 		
+		<!-- ● 작품 신청 게시판에서 무료 승인이 난 경우, auth가 'ROLE_USER'인 경우는 'ROLE_FREE_WRITER'로 변경 -->
+		<update id="updateUserAuth">
+			UPDATE auth_tbl SET auth='ROLE_FREE_WRITER' WHERE user_id = #{user_id} AND auth = 'ROLE_USER'
+		</update>
+		
+		
 	<!-- ■ enroll_result값에 따른 리스트 가져오기 -->
 	<select id="getEnrollxxList" resultType="com.novel.enroll.domain.EnrollVO">
 		SELECT * FROM enroll_tbl WHERE enroll_result=#{enroll_result} ORDER BY enroll_num DESC

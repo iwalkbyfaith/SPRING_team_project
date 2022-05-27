@@ -40,6 +40,13 @@ ul li a{
 	
 	outline:solid 1px;
 }
+.fantasyListimg{
+background-position: center;
+height: 180px;
+border-radius: 10px;
+border: 1px solid green;
+			}
+		
 .writebtn,.List,.series,.delete,.update{
 float:right;
 margin-right:10px;
@@ -77,6 +84,21 @@ resize: none;
 border:none;
 margin-right:5px;
 }
+.menubar li ul {
+list-style:none;
+background: yellowgreen;
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+}
+.menubar li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}
 }
 	
 	</style>
@@ -112,7 +134,7 @@ margin-right:5px;
              </div>
           </li>
           <li class="nav-item">
-	            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
+	            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
           </li>
           <li class="nav-item">
 	            <a class="nav-link" href="/tourna/list2">토너먼트</a>
@@ -131,11 +153,22 @@ margin-right:5px;
             </div>
           </li> -->
           </ul>
-          <div class="social-part">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </div>
+        <div class="menubar">
+	   		
+    	 	<ul> 	
+    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
+        	 <ul>
+           <li><a href="/mypage/myInfo">계정정보</a></li>
+           <li><a href="/mypage/myFavor">선호작</a></li>
+           <li><a href="/mypage/bookmark">책갈피</a></li>
+           <li><a href="/secu/customLogout">로그아웃</a></li>
+           
+     	    </ul>
+   			   </li>
+      			</ul>
+      
+   
+</div>
         </div>
       </nav>
       </div>
@@ -163,6 +196,8 @@ margin-right:5px;
 <div class="listsize">
 <ul id="novellist">
 </ul>
+<div id="image">
+</div>
 </div>
 <br/>
 <!-- ■ 읽고있던 카테고리-소설의 회차목록 바로가기 버튼-->
@@ -179,6 +214,9 @@ margin-right:5px;
 </div>
 <!-- ■ 해당 카테고리에 해당 소설에 대한 글쓰기 (추후에 소설작가만 글쓰기 버튼을 볼수 있도록 설정할 예정) -->
 <div class="writebtn" style="display:none;">
+</div>
+<!-- ■ 해당 카테고리에 해당 소설에 대한 선호 표시 -->
+<div class="favor" style="display:none;">
 </div>
 <br/>
 <br/>
@@ -417,8 +455,10 @@ var csrfHeaderName ="${_csrf.headerName}";
 var csrfTokenValue ="${_csrf.token}";
 
 let id = "<sec:authentication property="principal.user.user_id"/>";
+let user_num = "<sec:authentication property="principal.user.user_num"/>";
 console.log("▼▼▼▼▼▼▼▼");
 console.log(id);
+console.log(user_num);
 
 
 
@@ -519,17 +559,20 @@ function getFantasyList(){
 			
 						
 		let str = "";
+		
 		console.log(data);
 		
 		$(data).each(
 				function(){
 			
-			str += "<div class='fantasyLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
-			this.novel_title + "</div>";
+			str += "<div class='fantasyLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>"  
+			+"<div class='fanatasyImage'><img src='/resources/novel_image/"+this.novel_num+".png'></div>"+ this.novel_title +"</div>";
+			
 
 		});
 		
 		$("#novellist").html(str);
+		
 	});
 	
 }
@@ -552,7 +595,7 @@ function getRomanceList(){
 				function(){
 					
 					str += "<div class='romanceLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
-					this.novel_title + "</div>";
+					 "<div class='romanceImage'><img src='/resources/novel_image/"+this.novel_num+".png'></div>"+ this.novel_title +"</div>";
 
 				});
 		
@@ -577,7 +620,7 @@ function getWuxiaList(){
 				function(){
 					
 					str += "<div class='wuxiaLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
-					this.novel_title + "</div>";
+					"<div class='wuxiaImage'><img src='/resources/novel_image/"+this.novel_num+".png'></div>"+ this.novel_title +"</div>";
 
 				});
 		
@@ -602,7 +645,8 @@ function getMysteryList(){
 				function(){
 					
 					str += "<div class='mysteryLi' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
-					this.novel_title + "</div>";
+					"<div class='wuxiaImage'><img src='/resources/novel_image/"+this.novel_num+".png'></div>"+ this.novel_title +"</div>";
+					
 
 				});
 		
@@ -741,7 +785,47 @@ console.log(novelNum);
 	$("#novellist").empty();
 	$(".categoryheader").hide();
 	
+	// ■ 선호작 버튼  
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
 	
+	var favlist = [];
+	$.getJSON("/free/favor/"+ id, function(data){
+		console.log(data);
+		$(data).each(function(i){
+			
+			console.log(this.novel_num);
+			favlist[i] = this.novel_num;
+		});
+		console.log(favlist);	
+		console.log(favlist.includes(novelNum));
+		console.log("novelNum : " + novelNum)
+		
+		if(favlist.includes(novelNum)){
+			
+			
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			
+			$(".favor").html(str);
+		}
+		else{
+					
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			
+			$(".favor").html(str);				
+		}
+	});
+// 여기까지 선호작 버튼 넣는 로직 =========================================================================================================	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
@@ -750,8 +834,11 @@ console.log(novelNum);
 		let str2 = "";
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		
+		
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
+		
 	console.log(data);
 	
 	$(data).each(
@@ -793,6 +880,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 	
 		
 });
@@ -805,6 +893,47 @@ console.log(novelNum);
 
 	$("#novellist").empty();
 	$(".categoryheader").hide();
+	// ■ 선호작 버튼  
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+	var favlist = [];
+	$.getJSON("/free/favor/"+ id, function(data){
+		console.log(data);
+		$(data).each(function(i){
+			
+			console.log(this.novel_num);
+			favlist[i] = this.novel_num;
+		});
+		console.log(favlist);	
+		console.log(favlist.includes(novelNum));
+		console.log("novelNum : " + novelNum)
+		
+		if(favlist.includes(novelNum)){
+			
+			
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			
+			$(".favor").html(str);
+		}
+		else{
+					
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			
+			$(".favor").html(str);				
+		}
+	});
+// 여기까지 선호작 버튼 넣는 로직 =========================================================================================================	
 	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
@@ -813,10 +942,13 @@ console.log(novelNum);
 		let str = "";
 		let str1 ="";
 		let str2 = "";
+
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
+
 	console.log(data);
 	
 	$(data).each(
@@ -853,6 +985,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 	
 });
 //■ 무협지 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
@@ -865,6 +998,47 @@ console.log(novelNum);
 	$("#novellist").empty();
 	$(".categoryheader").hide();
 	
+	// ■ 선호작 버튼  
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+	var favlist = [];
+	$.getJSON("/free/favor/"+ id, function(data){
+		console.log(data);
+		$(data).each(function(i){
+			
+			console.log(this.novel_num);
+			favlist[i] = this.novel_num;
+		});
+		console.log(favlist);	
+		console.log(favlist.includes(novelNum));
+		console.log("novelNum : " + novelNum)
+		
+		if(favlist.includes(novelNum)){
+			
+			
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			
+			$(".favor").html(str);
+		}
+		else{
+					
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			
+			$(".favor").html(str);				
+		}
+	});
+// 여기까지 선호작 버튼 넣는 로직 =========================================================================================================	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
@@ -873,11 +1047,14 @@ console.log(novelNum);
 		let str = "";
 		let str1 ="";
 		let str2 = "";
+		
 		str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 		str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+		
+		
 		$(".writebtn").html(str1);
 		$(".List").html(str2);
-	
+		
 	console.log(data);
 	
 	$(data).each(
@@ -915,6 +1092,7 @@ console.log(novelNum);
 	$(".table").show("slow");
 	$(".List").show("slow");
 	$(".tbody").empty();
+	$(".favor").show("slow");
 });
 //■ 미스터리 카테고리의 특정 작품을 선택했을때 그 작품의 회차정보를 보여줌
 $("#novellist").on("click",".mysteryLi", function(){
@@ -926,6 +1104,47 @@ console.log(novelNum);
 	$("#novellist").empty();
 	$(".categoryheader").hide();
 	
+	// ■ 선호작 버튼  
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+	var favlist = [];
+	$.getJSON("/free/favor/"+ id, function(data){
+		console.log(data);
+		$(data).each(function(i){
+			
+			console.log(this.novel_num);
+			favlist[i] = this.novel_num;
+		});
+		console.log(favlist);	
+		console.log(favlist.includes(novelNum));
+		console.log("novelNum : " + novelNum)
+		
+		if(favlist.includes(novelNum)){
+			
+			
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			
+			$(".favor").html(str);
+		}
+		else{
+					
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			
+			$(".favor").html(str);				
+		}
+	});
+// 여기까지 선호작 버튼 넣는 로직 =========================================================================================================	
 	
 	$.getJSON("/free/novel/select/"+ novelNum , function(data){
 	
@@ -933,10 +1152,14 @@ console.log(novelNum);
 	let str = "";
 	let str1 ="";
 	let str2 = "";
+	
 	str1+= "<button class='writenovelbtn' data-novelNum='"+novelNum+"' data-novelCategory='"+novelCategory+"'>글쓰기</button>";
 	str2+= "<button class='novelList' data-novelCategory='"+novelCategory+"'>글목록</button>";
+	
+	
 	$(".writebtn").html(str1);
 	$(".List").html(str2);
+	
 	console.log(data);
 	
 	$(data).each(
@@ -972,6 +1195,7 @@ console.log(novelNum);
 	}
 	$(".table").show("slow");
 	$(".List").show("slow");
+	$(".favor").show("slow");
 	$(".tbody").empty();
 });
 // ■ 특정 카테고리의 회차정보에서 제목을 클릭시 그 회차에 대한 디테일을 보여줌(작가, 내용 등등)
@@ -987,6 +1211,7 @@ $("#novellist").empty();
 $(".content").hide();
 $(".table").hide();
 $(".writebtn").hide();
+$(".favor").hide();
 
 //■ 조회수 올리는 로직.
 
@@ -1133,6 +1358,7 @@ $(".List").on("click",".novelList",function(){
 	$(".series").hide();
 	$(".delete").hide();
 	$(".update").hide();
+	$(".favor").hide();
 	
 var novelCategory = $(this).attr("data-novelCategory");
 
@@ -1147,7 +1373,7 @@ var novelCategory = $(this).attr("data-novelCategory");
 				function(){
 			
 			str += "<div class='"+novelCategory+"Li' data-novelNum='" + this.novel_num + "' data-userId='" + this.user_id + "'>" + 
-			this.novel_title + "</div>";
+			 "<div class='"+novelCategory+"Image'><img src='/resources/novel_image/"+this.novel_num+".png'></div>"+ this.novel_title +"</div>";
 
 		});
 		
@@ -1167,6 +1393,7 @@ $(".series").on("click",".novelSeries",function(){
 	$(".series").hide();
 	$(".update").hide();
 	$(".delete").hide();
+	$(".favor").show();
 	var userId = $(this).attr("data-userId")	
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
@@ -1540,6 +1767,7 @@ $(".update").on("click",".nUpdate",function(){
 	$(".delete").hide();
 	$(".uwork").show();
 	$(".categoryheader").hide();
+	$(".favor").hide();
 });
 
 // ■ 글 수정창에서 취소 버튼을 클릭시 보고있던 디테일 페이지로 돌아감.
@@ -1992,6 +2220,85 @@ $(".replyContainer").on("click","#replInsert",function(){
 		
 		});
 
+$(".favor").on("click","#favorDelete",function(){
+	var userId = id;
+	var novelNum = $(this).attr("data-novelNum");
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+		$.ajax({
+				type : 'delete',
+				url: '/fav/delete/' + novelNum + "/" + user_num,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				headers:{
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				dataType : 'text',
+				success : function(result){
+					if(result == 'SUCCESS'){
+						alert("선호작이 삭제 되었습니다."); 
+				} 
+				}	// success 끝나는부분 
+		});	// ajax 끝나는부분
+			
+			$(".favor").empty
+			
+			str = "";
+			
+			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			
+			
+			
+			$(".favor").html(str);				
+		
+	});
+$(".favor").on("click","#favorInsert",function(){
+	var userId = id;
+	var novelNum = $(this).attr("data-novelNum");
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+	
+		
+		$.ajax({
+			type : 'post',
+			url: '/fav/insert',
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			headers:{
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				
+				user_num : user_num,
+				novel_num : novelNum
+		}),
+			success : function(result){
+				if(result == 'SUCCESS'){
+					alert("선호작이 등록 되었습니다."); 
+			} 
+			}	// success 끝나는부분 
+	});	// ajax 끝나는부분 
+
+		$(".favor").empty
+		
+		str = "";
+		
+		str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+		
+		$(".favor").html(str);
+		
+	});
+	
 
 		
 	

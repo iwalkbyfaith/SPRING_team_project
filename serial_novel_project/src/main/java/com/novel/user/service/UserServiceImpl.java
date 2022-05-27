@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.novel.free.domain.FreeNovelVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.mapper.UserMapper;
 
@@ -18,6 +19,23 @@ public class UserServiceImpl implements UserService{
 	public List<FavorVO> selectFavList(String user_id) {
 		
 		return mapper.selectFavList(user_id);
+	}
+	@Override
+	public List<FreeNovelVO> selectFree(long novelNum) {
+		
+		return mapper.selectFreeList(novelNum);
+	}
+	@Override
+	public void insertFav(FavorVO vo) {
+		
+		mapper.insertFav(vo);
+		
+	}
+	@Override
+	public void deleteFav(long novel_num,long user_num) {
+		
+		mapper.deleteFav(novel_num,user_num);
+		
 	}
 
 }

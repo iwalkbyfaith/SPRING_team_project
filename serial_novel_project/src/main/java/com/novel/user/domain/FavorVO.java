@@ -13,5 +13,6 @@ public class FavorVO {
     private String novel_week; 		// 소설 연재 요일
     private long novel_end; 		// 소설 완결 유무 (char(1) default ‘0’)
     private String user_id;			// 유저 아이디
+    private String user_num;		// 유저 번호
 
 }

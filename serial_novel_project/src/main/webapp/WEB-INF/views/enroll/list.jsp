@@ -20,19 +20,43 @@
 	crossorigin="anonymous"></script>
 
 <style>
-#modDiv {
-	width: 500px;
-	height: 150px;
-	background-color: whitesmoke;
-	border: gray solid 1px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -250px;
-	padding: 10px;
-	z-index: 1000;
-}
+
+	.social-part .fa{
+		    	padding-right:20px;
+			}
+			
+			ul li a{
+		    	margin-right: 20px;
+			}
+			.header{
+				height:100px;
+			}
+			.container{
+				height:1000px;
+			}
+			.footer{
+				height:150px;
+			}
+
+
+	#modDiv {
+		width: 500px;
+		height: 150px;
+		background-color: whitesmoke;
+		border: gray solid 1px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -250px;
+		padding: 10px;
+		z-index: 1000;
+	}
+
+
+
+
+
 </style>
 
 <meta charset="UTF-8">
@@ -75,8 +99,7 @@
 							<a class="dropdown-item" href="/free/novelList">무료소설</a> <a
 								class="dropdown-item" href="/paid/novelList">유료소설</a>
 						</div></li>
-					<li class="nav-item"><a class="nav-link" href="/enroll/list">작가
-							신청 게시판</a></li>
+					<li class="nav-item"><a class="nav-link" href="/enroll/list">작품 신청 게시판</a></li>
 					<li class="nav-item"><a class="nav-link" href="/tourna/list2">토너먼트</a>
 					</li>
 				</ul>
