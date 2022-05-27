@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.novel.novel.domain.NovelVO;
 import com.novel.novel.service.NovelService;
 import com.novel.paid.domain.PageMaker;
+import com.novel.paid.domain.PaidRecVO;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
 import com.novel.paid.service.PaidNovelService;
@@ -66,10 +67,16 @@ public class PaidNovelController {
 	
 	// ■ 유료소설 회자 상세 (paidDetail)
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/detail/{novel_num}/{paid_num}")
-	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, Model model ) {
+	@GetMapping("/detail/{novel_num}/{paid_num}/{user_num}")
+	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, 
+			@PathVariable long user_num, Model model ) {
+		
+		paidservice.upHit(paid_num);
 		PaidVO novel = paidservice.selectDetail(paid_num, novel_num);
 		model.addAttribute("novel",novel);
+		
+		PaidRecVO rec = paidservice.recList(paid_num, user_num);
+		model.addAttribute("rec",rec);
 		
 		return "paid/paidDetail";
 	}

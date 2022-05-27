@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.novel.paid.domain.PaidRecVO;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.service.PaidNovelService;
 
@@ -60,7 +61,37 @@ public class PaidNovelRestController {
 		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	return entity;
-}
+}	
 	
-	
+		// ■ 유료소설 추천 테이블에 적재하기
+		@PostMapping(value="", consumes="application/json",produces= {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> addRec(@RequestBody PaidRecVO vo){
+			ResponseEntity<String> entity = null;
+			try {	
+				paidservice.addRec(vo);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		}catch(Exception e) {
+		
+			entity = new ResponseEntity<String>(
+					e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+		
+		return entity;
+		}
+		
+		
+		@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
+				value="/{paid_num}",
+				consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> modify(@PathVariable long paid_num){
+			ResponseEntity<String> entity = null;
+			try {
+				paidservice.plusRec(paid_num);
+				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			}catch(Exception e) {
+				entity = new ResponseEntity<String>(
+						e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			return entity;
+		}		
 }

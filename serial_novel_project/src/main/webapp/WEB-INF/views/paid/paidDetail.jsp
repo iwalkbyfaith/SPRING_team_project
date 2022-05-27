@@ -101,6 +101,10 @@ ul li a{
 	<div class="container">
 	${novel}
 	<hr>
+	${rec }
+	${rec.user_num }
+	<hr>
+	
 	<p><sec:authentication property="principal.user" /></p>
 	<sec:authentication property="principal.user" var="user"/>
 	
@@ -157,9 +161,17 @@ ul li a{
 			<div class="col-md-1">
 				<button type="button">선호</button>
 			</div>
-			<div class="col_md-1">
+		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 -->
+		<c:if test="${rec.user_num ne user.user_num}">
+			<div class="col-md-1">
+				<button class="recBtn">추천</button>
+			</div>
+		</c:if>
+		<c:if test="">
+			<div class="col-md-1">
 				<button class="chargeBtn">결제</button>
 			</div>
+		</c:if>
 			<div class="col-md-1">
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/updateS" method="POST">
@@ -412,8 +424,6 @@ ul li a{
 			var coin = ${novel.paid_price}
 			var userNum = ${user.user_num};
 			
-			
-			
 			// 코인 차감
 			$.ajax({
 				type : 'patch', 
@@ -468,6 +478,62 @@ ul li a{
 					}
 				}
 			});
+		}
+		
+		// ■ 추천버튼 클릭시 유료추천테이블 적재
+		$('.recBtn').on("click",function(){
+			
+			var userNum = ${user.user_num};
+			
+			$.ajax({
+				type : 'post',
+				url : '/paid',
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				dataType : 'text',
+				data : JSON.stringify({
+					user_num : userNum,
+					paid_num : paidnum,
+				}),
+				success : function(result){
+					if(result == 'SUCCESS'){
+						alert("적재되었ㅅ브니다.");
+						addRec();
+					}
+				}
+			});
+		});
+		
+		// ■ 추천시 추천수 올리기
+		function addRec(){
+			
+			$.ajax({
+				type : 'patch', 
+				url : '/paid/' + paidnum,
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PATCH" 
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				contentType : "application/json",
+				data : JSON.stringify({paid_num : paidnum}),
+				dataType : 'text',
+				success : function(result){
+					console.log("result : " + result);
+					if(result == 'SUCCESS'){
+						alert("추천되었습니다.");
+						
+					}
+				}
+			});
+			
 		}
 	</script>
 	<div class="footer">

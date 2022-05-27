@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.novel.paid.domain.PaidRecVO;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
 
@@ -27,4 +28,12 @@ public interface PaidNovelService {
 	public void delete(long paid_snum); // ■ paid 상세 회차 삭제
 	
 	public void update(PaidVO vo); // ■ paid 상세 회차 수정
+	
+	public void upHit(long paid_num); // ■ 조회수
+	
+	public void addRec(PaidRecVO vo); // ■ 유료추천테이블 적재
+	
+	public void plusRec(long paid_num); // ■ 유료소설테이블 추천수 올리기 
+	
+	public PaidRecVO recList(@Param("paid_num")long paid_num,@Param("user_num") long user_num); // ■ 유료소설테이블 조회
 }

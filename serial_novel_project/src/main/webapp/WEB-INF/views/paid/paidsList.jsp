@@ -28,13 +28,11 @@
 				<c:forEach var="paid" items="${paidList }">
 						<tr>
 							<td>${paid.paid_snum }</td>
-							<td><a href="/paid/detail/${paid.novel_num }/${paid.paid_num }">${paid.paid_title }</a></td>
+							<td><a href="/paid/detail/${paid.novel_num }/${paid.paid_num }/${user.user_num}">${paid.paid_title }</a></td>
 							<td>${paid.paid_hit }</td>
 							<td>${paid.paid_rec }</td>
 							<td>${paid.paid_price }</td>
 							<td>${paid.paid_rdate }</td>
-							<td><button type="button">구매</button></td>
-						
 						</tr>
 					</c:forEach>
 			</table>
