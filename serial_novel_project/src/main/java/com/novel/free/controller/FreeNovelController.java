@@ -22,6 +22,7 @@ import com.novel.free.domain.FreeNovelVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.service.FreeNovelService;
 import com.novel.service.SecurityService;
+import com.novel.user.domain.BookmarkVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.service.UserService;
 
@@ -212,6 +213,22 @@ public class FreeNovelController {
 		
 		try {
 			entity = new ResponseEntity<>(userService.selectFavList(userId), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
+	}
+	@GetMapping(value="/bookmark/{userId}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<BookmarkVO>> selectbookmark(@PathVariable("userId") String userId){
+		
+		ResponseEntity<List<BookmarkVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(userService.selectBookmarkList(userId), HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	

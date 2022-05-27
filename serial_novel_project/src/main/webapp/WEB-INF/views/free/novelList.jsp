@@ -218,6 +218,9 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 <!-- ■ 해당 카테고리에 해당 소설에 대한 선호 표시 -->
 <div class="favor" style="display:none;">
 </div>
+<!-- ■ 해당 카테고리에 해당 소설에 대한 책갈피 표시 -->
+<div class="bookmark" style="display:none;">
+</div>
 <br/>
 <br/>
 <!-- ■ 위에 (id="novelList")안에 들어온 리스트를 클릭시 넘어오는 게시판 형식의 해당 소설 회차목록 -->
@@ -1205,6 +1208,7 @@ console.log(freeSNum);
 var novelNum =  $(this).attr("data-novelNum");
 console.log(novelNum);
 var freeNum = $(this).attr("data-freeNum");
+	freeNum = Number(freeNum);
 var novelCategory =$(this).attr("data-novelCategory");
 var user_id = $(this).attr("data-userId");
 $("#novellist").empty();
@@ -1212,6 +1216,43 @@ $(".content").hide();
 $(".table").hide();
 $(".writebtn").hide();
 $(".favor").hide();
+
+
+var bookmarkList = [];
+$.getJSON("/free/bookmark/"+ id, function(data){
+	console.log(data);
+	$(data).each(function(i){
+		
+		console.log(this.free_num);
+		bookmarkList[i] = this.free_num;
+	});
+	console.log(bookmarkList);	
+	console.log(bookmarkList.includes(freeNum));
+	console.log("freeNum : " + freeNum)
+	
+	if(bookmarkList.includes(freeNum)){
+		
+		
+		$(".bookmark").empty
+		
+		str = "";
+		
+		str+= "<button id='bookmarkDelete' data-freeNum='"+freeNum+"'>책갈피 취소</button>"
+		
+		$(".bookmark").html(str);
+	}
+	else{
+				
+		$(".bookmark").empty
+		
+		str = "";
+		
+		str+= "<button id='bookmarkInsert' data-freelNum='"+freeNum+"'>책갈피 등록</button>"
+		
+		$(".bookmark").html(str);				
+	}
+}); 
+//여기까지 책갈피 버튼 넣는 로직 =========================================================================================================	
 
 //■ 조회수 올리는 로직.
 
@@ -2299,6 +2340,93 @@ $(".favor").on("click","#favorInsert",function(){
 		
 	});
 	
+
+
+
+
+$(".bookmark").on("click","#bookmarkDelete",function(){
+	var userId = id;
+	var freeNum = $(this).attr("data-freeNum");
+	freeNum = Number(freeNum);
+	console.log(typeof(freeNum));
+	freeNum = Number(freeNum);
+	console.log(typeof(freeNum));
+	console.log("freeNum : " + freeNum)
+	
+		$.ajax({
+				type : 'delete',
+				url: '/bookmark/delete/' + novelNum + "/" + user_num,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				headers:{
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				dataType : 'text',
+				success : function(result){
+					if(result == 'SUCCESS'){
+						alert("선호작이 삭제 되었습니다."); 
+				} 
+				}	// success 끝나는부분 
+		});	// ajax 끝나는부분
+			
+			$(".bookmark").empty
+			
+			str = "";
+			
+			str+= "<button id='bookmarkInsert' data-freeNum='"+freeNum+"'>책갈피 등록</button>"
+			
+			
+			
+			$(".bookmark").html(str);				
+		
+	});
+$(".bookmark").on("click","#bookmarkInsert",function(){
+	var userId = id;
+	var novelNum = $(this).attr("data-novelNum");
+	freeNum = Number(freeNum);
+	console.log(typeof(novelNum));
+	novelNum = Number(novelNum);
+	console.log(typeof(novelNum));
+	console.log("novelNum : " + novelNum)
+	
+	
+		
+		$.ajax({
+			type : 'post',
+			url: '/bookmark/insert',
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			headers:{
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				
+				user_num : user_num,
+				novel_num : novelNum
+		}),
+			success : function(result){
+				if(result == 'SUCCESS'){
+					alert("선호작이 등록 되었습니다."); 
+			} 
+			}	// success 끝나는부분 
+	});	// ajax 끝나는부분 
+
+		$(".bookmark").empty
+		
+		str = "";
+		
+		str+= "<button id='bookmarkDelete' data-freeNum='"+freeNum+"'>책갈피 취소</button>"
+		
+		$(".bookmark").html(str);
+		
+	});
+
+
+
 
 		
 	

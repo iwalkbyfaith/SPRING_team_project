@@ -146,45 +146,16 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 		     });
      
      </script>
-     <h1>책갈피 리스트</h1>
-   <table class="table">
-	  <thead class="table-dark">
-  					<tr>
-  					<th>책갈피 번호</th>
-					<th>소설 제목</th>
-					<th>업로드일</th>
-					</tr>
-	 	</thead>	
-			<tbody>
-					<c:forEach var="bookmark" items="${BookmarkList}">
-				<tr>
-					<td><c:out value="${bookmark.fbm_num}"/></td>
-					<td id="novelTitle" data-freeNum="${bookmark.free_num}"><c:out value="${bookmark.free_title}"/></td>
-					<td><c:out value="${bookmark.free_rdate}"/></td>
-    			</tr>
+    			<c:forEach var="bookmark" items="${BookmarkList}">
+    			<h1>${bookmark.free_title}</h1>
+				
+				<p>${bookmark.free_content1}</p>
+				<p>${bookmark.free_content2}</p>
 					</c:forEach>
-			</tbody>
-	</table>
-   
- 
- <script type="text/javascript">
- // onClick="location.href='http://localhost:8181/paid/List/${fav.novel_num}'"
- $(".table").on("click","#novelTitle",function(){
-	
-	 var freeNum = $(this).attr("data-freeNum");
-	 var user_num = "<sec:authentication property="principal.user.user_num"/>"; 
-
-	location.href="http://localhost:8181/mypage/bookmarkDetail/"+ freeNum +"/" + user_num ;	
-	  
- });
- 
- </script> 
      
      
-    
-    
      
-  
+     
 
 
 </body>

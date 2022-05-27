@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.user.domain.BookmarkVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.mapper.UserMapper;
 
@@ -35,6 +36,28 @@ public class UserServiceImpl implements UserService{
 	public void deleteFav(long novel_num,long user_num) {
 		
 		mapper.deleteFav(novel_num,user_num);
+		
+	}
+	@Override
+	public List<BookmarkVO> selectBookmarkList(String user_id) {
+		
+		return mapper.selectBookmarkList(user_id);
+	}
+	@Override
+	public List<BookmarkVO> selectBookmarkDetail(long free_num,long user_num){
+		
+		return mapper.selectBookmarkDetail(free_num, user_num);
+	}
+	@Override
+	public void insertFreeBookmark(BookmarkVO vo) {
+		
+		mapper.insertFreeBookmark(vo);
+		
+	}
+	@Override
+	public void deleteFreeBookmark(long fbm_num) {
+		
+		mapper.deleteFreeBookmark(fbm_num);
 		
 	}
 
