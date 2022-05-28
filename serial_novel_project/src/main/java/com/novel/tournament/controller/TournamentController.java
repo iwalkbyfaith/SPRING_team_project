@@ -2,6 +2,7 @@ package com.novel.tournament.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class TournamentController {
 	@Autowired
 	private TournamentService service;
 	
-
+	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_FREE_WRITER', 'ROLE_PAID_WRITER', 'ROLE_ADMIN')")
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
 		return "tournament/tournament2_test";

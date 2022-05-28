@@ -18,8 +18,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	
 	<style>
-	
-		#tournament, #tournament8, #tournament4, #tournament2, #tournamentWork, #winner{
+		/*
+		#tournament, #tournament8, #tournament4, #tournament2, #tournamentWork {
 			margin: 0px 50px 40px;
 		    column-gap: 40px;
 		    padding-bottom: 16px;
@@ -30,17 +30,45 @@
 		    max-width: 100vw;
 		    /*overflow: scroll hidden;*/
 		    border : solid 3px black;
+		    
+		    text-align : center;
 		}
+		*/
 		
+		/* (변경 시도) 전체 레이아웃 이걸로 바꿈 */
+		
+			h3 {
+				margin:0;
+				padding : 0;
+			}		
+		
+			#container{
+				width : 100%;
+				overflow-x: hidden;
+				/*margin : 0;
+				padding: 0;*/
+			}
+			#tournament, #tournament8, #tournament4, #tournament2, #tournamentWork{	
+				text-align : center;
+				padding: 10px 0px;
+				overflow-x: hidden;
+				width : 100%;
+				background-color : whitesmoke;
+			}
 
 			.tourna-work-list{ 
-				background-color : whitesmoke;
+				display:inline-block;  zoom:1;
+				margin : 0px 30px;
+				overflow-x: hidden;
+				border : 1px solid black;
 				width : 160px;
-				text-align : center;
+				background-color : white;
 			}
 			
 			.tourna-work-list img{
-				height : 180px;
+				height : 190px;
+				width: 165px;
+				/*margin : 10px;*/
 			}
 			
 			
@@ -48,32 +76,74 @@
 				text-align : center;
 			}
 			
-			#end h1{
+
+			
+			
+			
+			
+		/* 예상 우승 작품 */
+			#winnerImg{
+				text-align : center;
+				width: 100%;
+				padding:0;
+			}
+			#winner{
+				text-align : center;
+			}
+			.tourna-work-winner{
+				width : 100%;
+				text-align : center;
+			}
+			
+			.tourna-work-winner-title, .tourna-work-winner-writer, .tourna-work-winner-rec{
+				text-align : center;
+				width: 100%;
+			}
+			.tourna-work-winner-title{
+				font-size : 30px;
+			}
+			.tourna-work-winner-rec{
+				font-size : 25px;
+			}
+			
+			
+		/* 대회 종료 */
+			.end-winner{
+				text-align : center;
+			}
+			.end-winner-title{
+				font-size : 30px;
+			}
+			.end-winner-rec{
+				font-size : 20px;
+			}
+			#end a{
+				text-decoration: none;
+				color: black;
+			}
+			.end-winner-title:hover{
+				color: green;
+			}
+			#end h1, h3{
 				text-align : center;
 			}
 			
 			
+		/* 상단 네비바 */
 			
-			/* 상단 네비바 */
+			.social-part .fa{
+		    	padding-right:20px;
+			}
 			
-				.social-part .fa{
-			    	padding-right:20px;
-				}
-				
-				ul li a{
-			    	margin-right: 20px;
-				}
-				.header{
-					height:100px;
-				}
-				.container{
-					height:1000px;
-				}
-				.footer{
-					height:150px;
-				}
-				
-		
+			ul li a{
+		    	margin-right: 20px;
+			}
+			.header{
+				height:80px;
+				width:100%;
+			}
+			
+		/* 버튼 */
 	
 	</style>
 
@@ -161,38 +231,45 @@
 	<!-- ■ 05.22 관리자에게만 보이도록 변경 -->
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<div class="endTournament">
-			<button type="button" id="afterTournamentBtn" class="btn btn-light">대회 종료</button><br/>
-		</div>
+			<button type="button" id="afterTournamentBtn" class="btn btn-success">대회 종료</button><br/>
+		</div><br/>
 	</sec:authorize>
 	
-	<hr>
+	
 	<div id="container">
 		<div class="row">
-			<h3 class="text-primary">예상 우승 작품 #winner</h3>
+			<!-- <h3 class="text-primary">예상 우승 작품 #winner</h3> -->
+			<div id="winnerImg"><img src="/resources/tournament/winner.png"></div>
 			<div id="winner"><!-- 리스트가 들어갈 위치 --></div>
-		</div>
+		</div><br/><br/>
 		
+		
+	
 		
 		<div class="row">
-			<h3 class="text-primary">대회 참여 리스트 2강(결승) #tournament2</h3>
+			<h3>웹소설 토너먼트 최강자 결승전</h3><!-- #tournament2 -->
 			<div id="tournament2"><!-- 리스트가 들어갈 위치 --></div>
-		</div>
+		</div><br/><br/>
+		
+	
 		
 		<div class="row">
-	 		<h3 class="text-primary">대회 참여 리스트 4강 #tournament4</h3>
+	 		<h3>웹소설 토너먼트 최강자 8강전</h3> <!-- #tournament4 -->
 			<div id="tournament4"><!-- 리스트가 들어갈 위치 --></div>
-		</div>
+		</div><br/><br/>
+		
+
 		
 		<div class="row">
-	 		<h3 class="text-primary">대회 참여 리스트 8강 #tournament8</h3>
+	 		<h3>웹소설 토너먼트 최강자 8강전</h3><!-- #tournament8 -->
 			<div id="tournament8"><!-- 리스트가 들어갈 위치 --></div>
-		</div>
+		</div><br/><br/>
 	</div>
 	<div id="end"></div>
 	
 	
 	<!-- 
-	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/><hr/>
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/>
 	현재 로그인한 유저 권한 -> <sec:authentication property="principal.user.authList"/>
 	 -->	
 	
@@ -297,16 +374,43 @@
 					// * 화면 비우고 메세지 출력
 						// div 태그들을 감싸는 #container를 비워줌
 						$("#container").remove();
+						
+						// #end에 끼워넣을 태그용 변수 생성
+						//let str =""
 					
-						// 메세지 출력 				
-						$("#end").html("<h1>다음 대회를 준비 중입니다.</h1>");
-				}
+						// 우승 작품 데이터 가져옴
+						$.getJSON("/tournament/toWork/winner", function(data){
+							
+							let str =""
+							
+							str = "<a href='http://localhost:8181/paid/List/" + data.novel_num + "'>"
+									+ "<div class='end-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"' data-novel-num='"+ data.novel_num +"'>"
+										+    "<img src='/resources/tournament/winner.png'>"
+										+	 "<div class='end-winner-title'>" + data.novel_title + "</div>"
+										+ 	 "<div class='end-winner-rec'>" + data.towork_rec + "</div>"
+									+ "</div><br/><br/>"
+								+ "</a>";
+								
+							console.log("getJSON 안의 str -> " + str);
+														
+							
+							// 메세지 출력 및 우승 작품 보여주기 
+							
+							$("#end").append("<h1>토너먼트가 종료되었습니다</h1><h3>다음 대회를 준비 중입니다</h3><br/><br/>");
+							$("#end").append(str);
+						
+						});// end getJSON
+						
+
+						
+						
+				}// end elseif
 				
-			});
+			});// end getJSON
 		
-		}
+		}// end controller()
 		controller();
-		setInterval(getWinner, 3000); // 간격 : 3초
+		setInterval(getWinner, 1000); // 간격 : 1초
 		
 
 		<!-- ■ 토너먼트 8강 참여 리스트를 불러오는 함수 -->
@@ -374,7 +478,7 @@
 										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-										+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+										+ "<button type='button' class='button8 btn btn-light'" + deactivation +">추천</button>"
 									+ "</div>";
 								
 							});
@@ -457,7 +561,7 @@
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 									+ "<div class='tsourna-work-list-div'>" + this.towork_rec + "</div>"
-									+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+									+ "<button type='button' class='button8 btn btn-light' " + deactivation +">추천</button>"
 								+ "</div>";
 							
 						});
@@ -544,7 +648,7 @@
 								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-								+ "<button type='button' class='button8' " + deactivation +">추천</button>"
+								+ "<button type='button' class='button8 btn btn-light'" + deactivation +">추천</button>"
 							+ "</div>";
 						
 					});
@@ -731,11 +835,11 @@
 			$.getJSON("/tournament/toWork/winner", function(data){
 				
 				let str = "<div class='tourna-work-winner' data-tno='" + data.to_num + "' data-twno='" + data.towork_num +"' data-novel-num='"+ data.novel_num +"'>"
-						+ "<div class='tourna-work-list-div-img'>"+ "이미지 넣으니까 난리법석이라서 주석처리" +"</div>"
+						//+ "<div class='tourna-work-list-div-img'>"+ "이미지 넣으니까 난리법석이라서 주석처리" +"</div>"
 						//+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/test_winner.png'>" +"</div>"
-						+	 "<div class='tourna-work-winner-div'>" + data.novel_title + "</div>"
-						+ 	 "<div class='tourna-work-winner-div'>" + data.novel_writer + "</div>"
-						+ 	 "<div class='tourna-work-winner-div'>" + data.towork_rec + "</div>"
+						+	 "<div class='tourna-work-winner-title'>" + data.novel_title + "</div>"
+						//+ 	 "<div class='tourna-work-winner-writer'>" + data.novel_writer + "</div>"
+						+ 	 "<div class='tourna-work-winner-rec'>" + data.towork_rec + "</div>"
 						+ "</div>";
 				
 				$("#winner").html(str);
@@ -798,7 +902,7 @@
 				
 				$("#afterTournamentBtn").hide();
 				
-				// 화면 비우기?
+				// 화면 비우기? (위의 controller 함수에 있음)
 				//$("#container").remove();
 				//$("#end").html("<h1>다음 대회를 준비 중입니다.</h1>");
 				

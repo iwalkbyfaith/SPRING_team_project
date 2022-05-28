@@ -93,24 +93,33 @@
 			
 			/* 여기부터 조회수, 추천수 리스트 관련 */
 				.bestTotalView, .bestTotalHit{ 
-					background-color : whitesmoke;
+					/*background-color : whitesmoke;*/
 					width : 100%;
 					height : 350px;
 					
 				}
+				.bestBody{
+					background-color : whitesmoke;
+					/*background-color : 	#d2d2d2;*/
+					height : 320px;
+					text-align : center;
+					margin: 10px 0px 50px 0px;
+				}
+				.listtitle{
+					margin: 1px 0px 0px 8px;
+				}
+				
 				.work{
-					float : left;
+					
 					border : 1px solid black;
 					padding: 10px 12px;
 					margin : 30px;
-					background-color : #c8c8c8;
-					text-align : center;
+					/*background-color : #c8c8c8;*/
+					background-color : white;
+
+					display:inline-block;  zoom:1;
 				}
-				.bestBody{
-					background-color : 	#d2d2d2;
-					height : 320px;
-					text-align : center;
-				}
+				
 				.work img {
 					
 					width: 130px;
@@ -126,8 +135,10 @@
 					margin : 0px 5px;
 				}
 				.listtitle{
-					font-size : 20px;
+					font-weight : bold;
+					text-align : center;
 				}
+				
 			
 			
 	</style>
@@ -226,7 +237,7 @@
 	     	<button id="crsBtn2" class="btn btn-light btn btn-secondary btn-sm">　</button>
 	     	<button id ="crsBtn3" class="btn btn-light btn btn-secondary btn-sm">　</button>
 			<button id ="next" class="btn btn-light btn btn-secondary btn-sm">　</button>
-		</div>
+		</div><br/><br/>
 		
 		
 		
@@ -304,11 +315,7 @@
      	</script>
      
   
-  
-     
-    <a href="/secu/join">join</a>
-	<a href="/customLogin">login</a>
-    <a href="/charge">결제</a>
+ 
     
 
 
@@ -318,7 +325,7 @@
      	<!-- ■ 유료 소설 조회수 베스트 -->
     	
      	<div class='bestTotalView'>
-     		<div class="listTitle">유료소설 조회수 베스트 '.bestTotalView'</div>
+     		<h2 class="listTitle">유료소설 조회수 베스트</h2><!-- .bestTotalView -->
      		<div class="bestBody">
      			
      			<c:forEach var="view" items="${paidViewList}">
@@ -332,14 +339,14 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
      
      
-     	<!-- ■ 유료 소설 조회수 베스트 -->
+     	<!-- ■ 유료 소설 추천수 베스트 -->
      	     
      	<div class='bestTotalHit'>
-     		<div class="listTitle">유료 소설 추천수 베스트 '.bestTotalFav'</div>
+     		<h2 class="listTitle">유료소설 추천수 베스트</h2><!-- .bestTotalFav -->
      		<div class="bestBody">
      			
      			<c:forEach var="rec" items="${paidRecList}">
@@ -353,7 +360,7 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
      
      
@@ -363,7 +370,7 @@
        	<!-- ■ 무료 소설 조회수 베스트 -->
        	
      	<div class='bestTotalView'>
-     		<div class="listTitle">무료소설 조회수 베스트 '.bestTotalView'</div>
+     		<h2 class="listTitle">무료소설 조회수 베스트</h2><!-- .bestTotalView -->
      		<div class="bestBody">
      			
      			<c:forEach var="view" items="${freeViewList}">
@@ -378,14 +385,14 @@
      			
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
 		
 		
 		
        	<!-- ■ 무료 소설 추천수 베스트 -->		
 		<div class='bestTotalHit'>
-     		<div class="listTitle">무료소설 추천수 베스트 '.bestTotalFav'</div>
+			<h2 class="listTitle">무료소설 추천수 베스트</h2><!-- .bestTotalFav -->
      		<div class="bestBody">
      			
      			<c:forEach var="rec" items="${freeRecList}">
@@ -399,7 +406,7 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
 
 
 
