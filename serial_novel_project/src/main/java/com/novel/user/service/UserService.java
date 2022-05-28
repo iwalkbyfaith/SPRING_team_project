@@ -25,9 +25,9 @@ public interface UserService {
 		public List<BookmarkVO> selectBookmarkDetail(long free_num,long user_num);	//  책갈피에서 무료소설 디테일 불러오기.
 		
 		
-		public void insertFreeBookmark(BookmarkVO vo);								//  무료책갈피 등록
+		public void insertFreeBookmark(BookmarkVO vo);								//  무료 책갈피 등록
 		
 		
-		public void deleteFreeBookmark(long fbm_num);								//  무료 책갈피 삭제
+		public void deleteFreeBookmark (long free_num,long user_num); 						//  무료 책갈피 삭제
  
 }

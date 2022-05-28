@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	@Override
-	public void deleteFreeBookmark(long fbm_num) {
+	public void deleteFreeBookmark(long free_num,long user_num) {
 		
-		mapper.deleteFreeBookmark(fbm_num);
+		mapper.deleteFreeBookmark(free_num,user_num);
 		
 	}
 

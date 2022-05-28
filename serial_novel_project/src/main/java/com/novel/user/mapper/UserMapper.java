@@ -45,7 +45,7 @@ public interface UserMapper {	// 시큐리티 관련 ( 나중에 com.novel.user.
 	public void insertFreeBookmark(BookmarkVO vo);
 	
 	// ■ 무료 책갈피 삭제
-	public void deleteFreeBookmark(long fbm_num);
+	public void deleteFreeBookmark(@Param("free_num")long free_num,@Param("user_num")long user_num);
 
 	// ■ 결제 성공시 해당 유저 코인 발급 로직
 

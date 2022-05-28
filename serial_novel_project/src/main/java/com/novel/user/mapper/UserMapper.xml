@@ -103,7 +103,7 @@
 		</delete>
 		
 		
-		<!-- ■ 무료 책갈피 목록 받아오기.-->
+		<!-- ■ 무료 책갈피 리스트 받아오기.-->
 		<select id="selectBookmarkList" resultType="com.novel.user.domain.BookmarkVO">
 		select * from
         		(select * from free_bookmark_tbl where user_num=
@@ -121,11 +121,11 @@
 		
 		<!-- ■ 무료 책갈피 등록 -->
 		<insert id="insertFreeBookmark">
-			INSERT INTO free_bookmark_tbl VALUES (fbm_num.nextval,#{fbm_free_num},#{user_num})
+			INSERT INTO free_bookmark_tbl VALUES (fbm_num.nextval,#{free_num},#{user_num})
 		</insert>
 		<!-- ■ 무료 책갈피 삭제 -->
 		<delete id="deleteFreeBookmark">
-			DELETE FROM free_bookmark_tbl WHERE fbm_num = #{fbm_num}
+			DELETE FROM free_bookmark_tbl WHERE fbm_free_num = #{free_num} and user_num = #{user_num}
 		</delete>
 		
 		

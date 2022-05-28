@@ -225,10 +225,14 @@ public class FreeNovelController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<BookmarkVO>> selectbookmark(@PathVariable("userId") String userId){
 		
+		log.info(userId);
+		
 		ResponseEntity<List<BookmarkVO>> entity = null;
 		
 		try {
 			entity = new ResponseEntity<>(userService.selectBookmarkList(userId), HttpStatus.OK);
+			
+			log.info(entity);
 		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
