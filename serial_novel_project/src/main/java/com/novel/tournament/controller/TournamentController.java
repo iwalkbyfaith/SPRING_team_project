@@ -1,6 +1,6 @@
 package com.novel.tournament.controller;
 
-import org.apache.tomcat.util.http.parser.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +25,11 @@ public class TournamentController {
 
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
-		return "tournament/tournament2";
+		return "tournament/tournament2_test";
 	}
 	
 	@GetMapping("/test")
 	public String test() {
-		return "tournament/test";
+		return "tournament/tournament2_test";
 	}
 }

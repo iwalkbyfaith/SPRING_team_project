@@ -4,11 +4,14 @@ import lombok.Data;
 
 @Data
 public class NovelVO {
-	private int novel_num;
-	private String novel_writer;
-	private String novel_title;
-	private int novel_tsnum;
-	private String novel_category;
-	private String novel_week;
-	private int novel_end;
+	private long novel_num; // 소설(공통) 번호
+	private String novel_writer; // 소설 글쓴이
+	private String novel_title; // 소설 제목
+	private long novel_tsnum; // 소설 총 회차
+	private String novel_category; // 소설 장르
+	private String novel_week; // 소설 연재요일
+	private boolean novel_end; // 소설 완결유무
+	
+	// 05.16
+	private String user_id;
 }

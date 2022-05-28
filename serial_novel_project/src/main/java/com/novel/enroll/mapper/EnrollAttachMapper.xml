@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ■ EnrollAttachMapper(인터페이스)와 연결해줌 -->
+<mapper namespace="com.novel.enroll.mapper.EnrollAttachMapper">
+
+	<!-- ■ 첨부파일 입력 -->
+	<insert id="insert">
+		INSERT INTO enroll_img_tbl (uuid, uploadPath, fileName, fileType, enroll_num)
+			VALUES
+		(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{enroll_num})
+	</insert>
+	
+	
+	<!-- ■ 첨부파일 삭제  -->
+	<delete id="delete">
+		DELETE FROM enroll_img_tbl WHERE uuid=#{uuid}
+	</delete>
+
+
+	<!-- ■ 첨부파일을 조회 (글 번호를 입력 받아, 그 밑에 딸린 애들 줄줄이 받음) -->
+	<select id="findByBno" resultType="com.novel.enroll.domain.EnrollAttachVO">
+		SELECT * FROM enroll_img_tbl WHERE enroll_num=#{enroll_num}
+	</select>
+
+</mapper>

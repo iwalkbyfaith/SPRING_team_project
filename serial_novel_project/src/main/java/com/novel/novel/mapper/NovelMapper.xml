@@ -3,7 +3,154 @@
 	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.novel.novel.mapper.NovelMapper">
-	
+		
+			<sql id="search">
+				<if test="searchType != null">
+					<if test="searchType == 't'.toString()">
+						(novel_Title like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'c'.toString()">
+						(novel_Category like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'w'.toString()">
+						(novel_Writer like '%'||#{keyword}||'%') AND
+					</if>
+				</if>	
+			</sql>
+		
+		
+		<select id="getNovelList" resultType="com.novel.novel.domain.NovelVO">
+			
+			<![CDATA[
+			SELECT * FROM
+				(SELECT /*+ INDEX_DESC(novel_tbl pk_novel) */
+				ROWNUM rn, novel_tbl.* FROM novel_tbl WHERE 
+			]]>	
+			
+			<include refid="search"></include>
+			
+			<![CDATA[		
+				ROWNUM <= #{pageEnd})
+					WHERE rn > #{pageStart}
+			]]>
+		</select>
+		
+		<select id="countPageNum" resultType="int">
+			<![CDATA[
+				SELECT COUNT(*) FROM novel_tbl WHERE
+			]]>
+			
+			<include refid="search"></include>
+				
+			<![CDATA[
+				novel_num > 0
+			]]>
+		</select>
+		
+		<insert id="insertNovel">
+			INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category}, #{novel_week})
+		</insert>
+		
+		<delete id="deleteNovel">
+			DELETE FROM novel_tbl WHERE novel_num = #{novel_num}
+		</delete>
+		
+		<select id="detailNovel" resultType="com.novel.novel.domain.NovelVO">
+			SELECT * FROM novel_tbl WHERE novel_num = #{novel_num}
+		</select>
+		
+		<update id="updateNovel">
+			UPDATE novel_tbl SET 
+			novel_title = #{novel_title}, novel_tsnum = #{novel_tsnum}, novel_category = #{novel_category}, novel_week = #{novel_week}, novel_end = #{novel_end} 
+			WHERE novel_num = #{novel_num}
+		</update>
+		
+		
+		
+		
+		<!-- ● 무료소설 조회수 베스트 -->
+		<select id="getBestViewFreeData" resultType="com.novel.novel.domain.MainBestNovelVO">
+			<![CDATA[
+				SELECT
+            		nt.novel_num, nt.novel_title, ft.total_view
+        		FROM
+                	(SELECT 
+                		novel_num, total_view 
+            		FROM 
+                		(SELECT novel_num, sum(free_hit) as total_view  FROM free_tbl Group By novel_num order by total_view DESC)
+            		WHERE
+                		rownum <= 5) ft
+        		LEFT JOIN 
+            		novel_tbl nt
+        		ON 
+            		ft.novel_num = nt.novel_num
+
+			]]>
+		</select>
+		
+		
+		<!-- ● 무료소설 추천수 베스트 -->
+		<select id="getBestRecFreeData" resultType="com.novel.novel.domain.MainBestNovelVO">
+			<![CDATA[
+				SELECT
+                	nt.novel_num, nt.novel_title, ft.total_rec
+            	FROM
+                	(SELECT 
+                     	novel_num, total_rec
+                	FROM 
+                    	(SELECT novel_num, sum(free_rec) as total_rec  FROM free_tbl Group By novel_num order by total_rec DESC)
+                	WHERE
+	                    rownum <= 5) ft
+    	        LEFT JOIN 
+                	novel_tbl nt
+            	ON 
+	                ft.novel_num = nt.novel_num
+
+			]]>
+		</select>
+		
+		
+		<!-- ● 유료소설 조회수 베스트 -->
+		<select id="getBestViewPaidData" resultType="com.novel.novel.domain.MainBestNovelVO">
+			<![CDATA[
+				SELECT
+		            nt.novel_num, nt.novel_title, ft.total_view
+		        FROM
+		            (SELECT 
+		                novel_num, total_view 
+		            FROM 
+		                (SELECT novel_num, sum(paid_hit) as total_view  FROM paid_tbl Group By novel_num order by total_view DESC)
+	            	WHERE
+		                rownum <= 5) ft
+		        LEFT JOIN 
+		            novel_tbl nt
+		        ON 
+		            ft.novel_num = nt.novel_num
+
+			]]>
+		</select>
+		
+		
+		<!-- ● 유료소설 추천수 베스트 -->
+		<select id="getBestRecPaidData" resultType="com.novel.novel.domain.MainBestNovelVO">
+			<![CDATA[
+				SELECT
+		            nt.novel_num, nt.novel_title, ft.total_rec
+		        FROM
+		            (SELECT 
+		                novel_num, total_rec
+		            FROM 
+		                (SELECT novel_num, sum(paid_rec) as total_rec  FROM paid_tbl Group By novel_num order by total_rec DESC)
+		             WHERE
+		                    rownum <= 5) ft
+		        LEFT JOIN 
+		            novel_tbl nt
+		        ON 
+		            ft.novel_num = nt.novel_num
+
+			]]>
+		</select>
 		
 		
 		

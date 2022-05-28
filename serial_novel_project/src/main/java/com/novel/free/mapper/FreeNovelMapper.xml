@@ -3,5 +3,48 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="com.novel.free.mapper.FreeNovelMapper">
 
+	<select id="selectList" resultType="com.novel.free.domain.NovelVO">
+	SELECT n.novel_title , n.novel_num , n.user_id FROM novel_tbl n 
+	WHERE n.novel_category = #{novelCategory} and n.novel_week='free'
+	</select>
+	
+	<insert id="insertNovel">
+	INSERT INTO novel_tbl (novel_num, novel_writer, novel_title, novel_tsnum, novel_category, novel_week) values
+                        (novel_num.nextval,#{novel_writer},#{novel_title},#{novel_tsnum}, #{novel_category},#{novel_week})
+	</insert>
+	<insert id="insertFree">
+	INSERT INTO free_tbl (free_num, novel_num, free_snum, free_title, free_content1,free_content2) values
+                        (free_num.nextval, #{novel_num},#{free_snum},#{free_title},#{free_content1},#{free_content2})
+	</insert>
+	
+	<select id="select" resultType="com.novel.free.domain.FreeNovelJoinVO">
+	
+	SELECT n.user_id,n.novel_num,n.novel_category,n.novel_title,n.novel_writer,f.free_snum,f.free_title,f.free_rdate,f.free_mdate,f.free_num FROM 
+free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num =#{novelNum}
+	</select>
+	<select id="selecttitle" resultType="com.novel.free.domain.NovelVO">
+	
+	SELECT novel_title, novel_writer FROM novel_tbl where novel_num = #{novel_num} 
+
+	</select>
+	
+	<select id="selectDetail" resultType="com.novel.free.domain.FreeNovelJoinVO">
+	
+		SELECT n.novel_num,n.novel_title,n.novel_writer,n.novel_end,n.novel_category,f.free_snum,f.free_content1,free_content2,f.free_rdate,f.free_hit,f.free_rec,f.free_title
+		 FROM free_tbl f INNER JOIN 
+	novel_tbl n ON f.novel_num = n.novel_num WHERE free_snum =#{freeSNum} and f.novel_num=#{novelNum} 
+	</select>
+	<delete id="delete">
+	
+		DELETE FROM free_tbl WHERE free_num = #{free_num}
+	</delete>
+	<update id="update">
+	UPDATE free_tbl SET free_title =#{free_title}, free_snum=#{free_snum},free_content1 = #{free_content1}, free_content2 =#{free_content2},
+	free_mdate = sysdate WHERE free_num = #{free_num}
+	</update>
+	<update id="addhit">
+	UPDATE free_tbl SET free_hit=#{free_hit} WHERE free_num = #{free_num}
+	</update>
+	
 	
 	</mapper>

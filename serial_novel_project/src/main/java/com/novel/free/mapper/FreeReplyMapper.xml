@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.novel.free.mapper.FreeReplyMapper">
+	<select id="getList" resultType="com.novel.free.domain.FreeReplyVO">
+	SELECT * FROM free_repl_tbl where free_num=#{free_num}
+	</select>
+	<insert id="create">
+	INSERT INTO free_repl_tbl (frepl_num,novel_num,free_num,frepl_content,user_id) values 
+                        (frepl_num.nextval,#{novel_num},#{free_num},#{frepl_content},#{user_id})
+	</insert>
+	<update id="update">
+	UPDATE free_repl_tbl SET frepl_content = #{frepl_content} WHERE frepl_num = #{frepl_num}
+	</update>
+	<delete id="delete">
+			DELETE FROM free_repl_tbl WHERE frepl_num=#{frepl_num}
+	</delete>
+	<select id="getBno" resultType="long">
+	 	SELECT free_num FROM free_repl_tbl WHERE frepl_num = #{frepl_num}
+	</select>
+	<delete id="deleteAll">
+			DELETE FROM free_repl_tbl WHERE free_num=#{free_num}
+	</delete>
+	</mapper>

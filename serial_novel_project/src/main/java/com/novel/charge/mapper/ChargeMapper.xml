@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.novel.charge.mapper.ChargeMapper">
+	
+	<insert id="insertPay">
+		INSERT INTO charge_tbl 
+		(charge_num, merchant_uid, itemname, user_num, charge_price)
+			VALUES
+		(charge_num.nextval, #{merchant_uid}, #{itemname},#{user_num}, #{charge_price})
+	</insert>
+	
+	<update id="addCoin">
+		update user_tbl set 
+			user_coin = (user_coin + #{user_coin}), user_coupon = (user_coupon + #{user_coupon}) 
+				where user_num = #{user_num}
+	</update>
+	
+	<update id="removeCoin">
+		update user_tbl set 
+			user_coin = (user_coin - #{user_coin}) where user_num = #{user_num}
+	</update>
+	
+	<insert id="insertUse">
+		INSERT INTO use_tbl (use_num, user_num, use_type, use_count) values
+           						(use_num.nextval, #{user_num}, #{use_type}, #{use_count})
+	</insert>
+</mapper>	

@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+/* .jsp 파일의 상단 네비게이션 바에 적용하는 css
+*  해당 파일에 적용하려면 head 태그 사이에 <link rel="styleshett" href="header-navi.css">를 끼워 넣으면 됨
+*/
+
+
+			.social-part .fa{
+		    	padding-right:20px;
+			}
+			
+			ul li a{
+		    	margin-right: 20px;
+			}
+			.header{
+				height:100px;
+			}
+			.container{
+				height:1000px;
+			}
+			.footer{
+				height:150px;
+			}
+			#headerfLi,#headerwLi,#headerrLi,#headermLi{
+				list-style-type:none;
+				float:left;
+				margin-left:20px;
+				font-size:30px;
+				outline:solid 1px;
+			}
+			.fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
+				list-style-type:none;
+				float:left;
+				margin-left:20px;
+				outline:solid 1px;
+			}
+			.writebtn,.List,.series{
+				float:right;
+				margin-right:10px;
+			}
+			.articleInfo{
+				float:right;
+			}
+			.articleMain{
+				text-align:center;
+			} 
