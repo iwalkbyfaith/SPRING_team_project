@@ -155,9 +155,7 @@
 			            <li class="nav-item">
 			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
 			            </li>
-			            <li class="nav-item">
-			              	<a class="nav-link" href="#">About</a>
-			            </li>
+			           
 			            <li class="nav-item dropdown dmenu">
 			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 			              		소설 선택
@@ -173,9 +171,13 @@
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+		               </li>
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <sec:authorize access="isAuthenticated()">
+		            
 		            <a href="/mypage/myInfo">내 정보</a></i>
 		            </sec:authorize>
 		            <sec:authorize access="isAnonymous()">
@@ -207,7 +209,7 @@
      	<div class="crsOutter">
 	     	<div class="carousel">
 	     		<div class="innerCrs">
-	     			<a href="#"><img src="/resources/carousel/1.png"></a>
+	     			<a href="http://localhost:8181/enroll/list"><img src="/resources/carousel/1.png"></a>
 	     		</div>
 	     		<div class="innerCrs">
 	     			<a href="http://localhost:8181/tourna/list2"><img src="/resources/carousel/2.png"></a>
