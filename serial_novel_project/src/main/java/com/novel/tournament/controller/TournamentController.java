@@ -18,18 +18,10 @@ public class TournamentController {
 	@Autowired
 	private TournamentService service;
 	
-	@GetMapping(value="/list")
-	public String goTournamentMain() {
-		return "tournament/tournament";
-	}
 
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
 		return "tournament/tournament2_test";
 	}
 	
-	@GetMapping("/test")
-	public String test() {
-		return "tournament/tournament2_test";
-	}
 }

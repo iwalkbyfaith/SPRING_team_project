@@ -51,7 +51,7 @@ public class EnrollServiceImpl implements EnrollService{
 		log.warn(vo.getEnroll_result());
 		
 		
-		// ● 승인된 경우 novel_tbl에 적재 (2 = 무료 연재 승인)
+		// ● 승인된 경우 novel_tbl에 적재 (2 = 무료 연재 승인)하고, 유저의 권한이 ROLE_USER인 경우 -> ROLE_FREE_WRITER로 바꿔줌
 		if(vo.getEnroll_result() == 2) {
 			
 			NovelVO novel = new NovelVO();
@@ -64,7 +64,11 @@ public class EnrollServiceImpl implements EnrollService{
 			
 			log.warn("EnrollVO에서 NovelVO로 세팅한 vo ===> " + novel);
 			
+			// 적재
 			mapper.insertEnrollResult(novel);
+			
+			// 권한 변경
+			mapper.updateUserAuth(vo);
 		}
 	}
 
@@ -83,6 +87,13 @@ public class EnrollServiceImpl implements EnrollService{
 	}
 
 	
+	// ■ 05.27 나의 신청 결과 리스트 출력
+	@Override
+	public List<EnrollVO> getMyResultList(String user_id) {
+		return mapper.getMyResultList(user_id);
+	}
+	
+	
 	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
 	@Override
 	public void deleteEnrollForm(long enroll_num) {
@@ -94,6 +105,9 @@ public class EnrollServiceImpl implements EnrollService{
 	public EnrollVO getEnrollResult0(String user_id) {
 		return mapper.getEnrollResult0(user_id);
 	}
+
+
+	
 	
 	
 

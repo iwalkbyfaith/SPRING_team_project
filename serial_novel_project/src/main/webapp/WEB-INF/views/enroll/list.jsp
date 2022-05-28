@@ -20,19 +20,55 @@
 	crossorigin="anonymous"></script>
 
 <style>
-#modDiv {
-	width: 500px;
-	height: 150px;
-	background-color: whitesmoke;
-	border: gray solid 1px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -250px;
-	padding: 10px;
-	z-index: 1000;
-}
+
+	.social-part .fa{
+		    	padding-right:20px;
+			}
+			
+			ul li a{
+		    	margin-right: 20px;
+			}
+			.header{
+				height:100px;
+			}
+			.container{
+				height:1000px;
+			}
+			.footer{
+				height:150px;
+			}
+
+
+	#modDiv {
+		width: 500px;
+		height: 150px;
+		background-color: whitesmoke;
+		border: gray solid 1px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -250px;
+		padding: 10px;
+		z-index: 1000;
+	}
+	
+	/* 리스트 버튼들 */
+	
+		.btnList{
+			 text-align: center;
+		}
+		#crsBtn1, #crsBtn2, #crsBtn3{
+			color : #dcdcdc;
+			padding: 0;
+			height : 10px;
+			width : 20px;				
+		}
+
+
+
+
+
 </style>
 
 <meta charset="UTF-8">
@@ -53,45 +89,51 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<!-- ■ 상단 네비바 : 네비바 적용3) -->
+		<!-- ■ 상단 네비바 -->
 	<div class="header">
-		<nav class="navbar navbar-expand-sm   navbar-light bg-light">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarTogglerDemo03"
-				aria-controls="navbarTogglerDemo03" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item"><a class="nav-link" href="/">홈 <span
-							class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item dropdown dmenu"><a
-						class="nav-link dropdown-toggle" href="#" id="navbardrop"
-						data-toggle="dropdown"> 소설 선택 </a>
-						<div class="dropdown-menu sm-menu">
-							<a class="dropdown-item" href="/free/novelList">무료소설</a> <a
-								class="dropdown-item" href="/paid/novelList">유료소설</a>
-						</div></li>
-					<li class="nav-item"><a class="nav-link" href="/enroll/list">작가
-							신청 게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="/tourna/list2">토너먼트</a>
-					</li>
-				</ul>
-				<!-- ul 태그 끝 -->
-				<div class="social-part">
-					<i class="fa fa-facebook" aria-hidden="true"></i> <i
-						class="fa fa-twitter" aria-hidden="true"></i> <i
-						class="fa fa-instagram" aria-hidden="true"></i>
-				</div>
-			</div>
-			<!-- div 끝 -->
-		</nav>
-		<!-- 네비바 끝 -->
-	</div>
-	<!-- header 끝 (하단의 스크립트 태그까지 가져와야 함) -->
+	    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	
+        	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			            <li class="nav-item">
+			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
+			            </li>
+			           
+			            <li class="nav-item dropdown dmenu">
+			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			              		소설 선택
+			            	</a>
+			            	<div class="dropdown-menu sm-menu">
+			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
+			              	</div>
+			          	</li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
+			          </li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
+			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+		               </li>
+		          </ul><!-- ul 태그 끝 -->
+		          <div class="social-part">
+		            <sec:authorize access="isAuthenticated()">
+		            
+		            <a href="/mypage/myInfo">내 정보</a></i>
+		            </sec:authorize>
+		            <sec:authorize access="isAnonymous()">
+		            <i class="join"><a href="/secu/join">join</a></i>
+					<i class="login"><a href="/customLogin">login</a></i>
+					</sec:authorize>
+		          </div>
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
+     </div><!-- header 끝 --> 
 
 	<script>
 	     
@@ -110,9 +152,10 @@
 
 	<!-- ■ div 모음 -->
 
-	<!-- ● 글쓰기 버튼 -->
-	<button type="button" id="enrollBtn">작품 신청 '#enrollBtn'</button>
-
+	<!-- ● 글쓰기 버튼 (유저, 무료작가, 유료작가만 보이도록 설정) -->
+	<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_FREE_WRITER', 'ROLE_PAID_WRITER')">
+		<button type="button" id="enrollBtn">작품 신청 '#enrollBtn'</button>
+	</sec:authorize>
 
 	<!-- ● 승인 대기(0) 출력하는 테이블 -->
 	<div id="divResult0List">
@@ -121,22 +164,54 @@
 			<!-- style="display:none;"> -->
 			<thead class="table-dark">
 				<tr>
-					<th>enroll_num</th>
+					<th>신청 번호</th>
 					<th>장르</th>
 					<th>제목</th>
-					<th>유저 아이디</th>
-					<th>결과값</th>
+					<th>아이디</th>
+					<th>승인 여부</th>
 				</tr>
 			</thead>
 			<tbody id="0List">
 				<!-- 리스트가 들어갈 위치 -->
 			</tbody>
 		</table>
+	</div><br/>
+	
+	<!-- ● '나의 신청 결과'를 출력하는 테이블(본인만 확인 가능) -->
+	<div id="divMyResult">
+		<h3 class="text-primary">나의 신청 결과 리스트 출력 #divMyResult / tbody #myResultList</h3>
+		<table class="table">
+			<!-- style="display:none;"> -->
+			<thead class="table-dark">
+				<tr>
+					<th>신청 번호</th>
+					<th>장르</th>
+					<th>제목</th>
+					<th>아이디</th>
+					<th>승인 여부</th>
+				</tr>
+			</thead>
+			<tbody id="myResultList">
+				<!-- 리스트가 들어갈 위치 -->
+			</tbody>
+		</table>
 	</div>
+	
+	
+	
+	<br/><br/>
 
 
-	<!-- ● 관리자만 조회할 수 있는 태그-->	
+	<!-- ● 관리자만 조회할 수 있는 태그-->
+	
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
+			
+			<!-- ● 리스트를 확인하는 버튼 -->
+			<div class="btnList">
+		    	<button id="2ListBtn" class="btn btn-light btn btn-secondary btn-sm">무료 승인</button>
+		     	<button id="1ListBtn" class="btn btn-light btn btn-secondary btn-sm">승인 거부</button>
+		     	<button id="AllListBtn" class="btn btn-light btn btn-secondary btn-sm">모든 리스트</button>
+			</div>
 			
 			<!-- ● 무료 승인(2) 출력하는 테이블 -->
 			<div id="divResult2List">
@@ -145,35 +220,14 @@
 					<!-- style="display:none;"> -->
 					<thead class="table-dark">
 						<tr>
-							<th>enroll_num</th>
+							<th>신청 번호</th>
 							<th>장르</th>
 							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
+							<th>아이디</th>
+							<th>승인 여부</th>
 						</tr>
 					</thead>
 					<tbody id="2List">
-						<!-- 리스트가 들어갈 위치 -->
-					</tbody>
-				</table>
-			</div>
-		
-		
-			<!-- ● 모든 리스트 출력하는 테이블 -->
-			<div id="divAllList">
-				<h3 class="text-primary">모든 리스트 출력 #allList</h3>
-				<table class="table">
-					<!-- style="display:none;"> -->
-					<thead class="table-dark">
-						<tr>
-							<th>enroll_num</th>
-							<th>장르</th>
-							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
-						</tr>
-					</thead>
-					<tbody id="allList">
 						<!-- 리스트가 들어갈 위치 -->
 					</tbody>
 				</table>
@@ -187,11 +241,11 @@
 					<!-- style="display:none;"> -->
 					<thead class="table-dark">
 						<tr>
-							<th>enroll_num</th>
+							<th>신청 번호</th>
 							<th>장르</th>
 							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
+							<th>아이디</th>
+							<th>승인 여부</th>
 						</tr>
 					</thead>
 					<tbody id="1List">
@@ -199,6 +253,28 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<!-- ● 모든 리스트 출력하는 테이블 -->
+			<div id="divAllList">
+				<h3 class="text-primary">모든 리스트 출력 #allList</h3>
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>신청 번호</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>아이디</th>
+							<th>승인 여부</th>
+						</tr>
+					</thead>
+					<tbody id="allList">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+			</div>	
+			
+			
 	</sec:authorize><!-- 관리자만 조회할 수 있는 태그 끝 -->			
 			
 
@@ -241,7 +317,7 @@
 						<option value="0">승인 대기</option>
 						<option value="1">승인 거부</option>
 						<option value="2">무료 승인</option>
-						<option value="3">유료 승인</option>
+						<!-- <option value="3">유료 승인</option> -->
 					</select>
 				</div>
 				<br />
@@ -344,6 +420,9 @@
 		<!-- ■ 승인 대기 리스트 가져오기 -->
 		<!-- ■ 승인 거부 리스트 가져오기 -->
 		<!-- ■ 무료 승인 리스트 가져오기 -->
+		<!-- ■ 나의 신청 결과 리스트 가져오기 -->
+		
+		<!-- ■ 무료 승인, 승인 거부, 전체 리스트를 불러오는 버튼 onClick -->
 		
 		<!-- ■ 전체 리스트 디테일 가져오기 -->
 		<!-- ■ 승인 대기 리스트 디테일 가져오기 -->	
@@ -403,6 +482,15 @@
 			
 			// ● 무료 승인(2) 리스트 보여주기
 			get2List();
+			
+			// ● 나의 신청 결과 리스트 불러오기 & 비활성화(활성화->if로 비활성화는 화면에 데이터가 뿌려졌다가 사라짐)
+			getMyResultList();
+			$("#divMyResult").hide();
+			
+			// ● 무료 승인, 승인 거부, 모든 리스트 div는 숨기기 (버튼 클릭해야 보이도록)
+			$("#divResult2List").hide();
+			$("#divResult1List").hide();
+			$("#divAllList").hide();			
 			
 			// ● 디테일 페이지(#divDetail) 숨기기
 			$("#divDetail").hide();
@@ -603,9 +691,92 @@
 		
 		
 		
+		<!-- ■ 나의 신청 결과 리스트 가져오기 -->
+		function getMyResultList(){
+			
+			$.getJSON("/enrollAjax/getMyResultList/" + id, function(data){
+				
+				console.log("신청결과 리스트 데이터 유무 ->" + data);
+				console.log("!data 결과 -> " + !data);
+				console.log("data=='' 결과(공백) -> " + data == "");
+				
+				// ● 테이블로 출력
+				let str = "";
+				
+					$(data).each(function(){
+						
+						// ● 나의 결과 리스트 보여주기 (처음에 비활성화 시켜 놓음)
+						$("#divMyResult").show();
+						
+						// ● 결과값(숫자)에 따른 의미
+						let result = "";
+						
+						if(this.enroll_result == 0){
+							result = "승인 대기";	
+						}else if(this.enroll_result == 1){
+							result = "승인 거부";	
+						}else if(this.enroll_result == 2){
+							result = "무료 소설";	
+						}else if(this.enroll_result == 3){
+							result = "유료 소설";	
+						}
+						
+						str+= "<tr class='go_to_detail'>" 
+								+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
+								+ "<td>"+ this.novel_category +"</td>"
+								+ "<td>" + 
+									  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
+									  this.novel_title +
+								  "</td>"
+								+ "<td>"+ this.user_id +"</td>"
+								+ "<td>"+ result +"</td>" + 
+							  "</tr>"
+					});// end .eachs
+				
+				
+				
+					$("#myResultList").html(str);
+
+				
+			}); // end getJSON
+			
+		}// end getMyResultList()
 		
 		
+
 		
+		
+		<!-- ■ 무료 승인, 승인 거부, 전체 리스트를 불러오는 버튼 onClick -->
+			
+			<!-- ● 무료 승인 -->
+			$("#2ListBtn").on("click", function(){
+				
+				$("#divResult2List").show();
+				$("#divResult1List").hide();
+				$("#divAllList").hide();
+				
+			});// end click 2ListBtn
+			
+			<!-- ● 승인 거부 -->
+			$("#1ListBtn").on("click", function(){
+				
+				$("#divResult1List").show();
+				$("#divResult2List").hide();
+				$("#divAllList").hide();
+				
+			});// end click 1ListBtn
+			
+			<!-- ● 모든 리스트 -->
+			$("#AllListBtn").on("click", function(){
+				
+				$("#divAllList").show();
+				$("#divResult2List").hide();
+				$("#divResult1List").hide();
+				
+			});// end click AllListBtn
+		
+		
+
 		<!-- ■ 전체 리스트 디테일 가져오기 -->
 		
 			$("#allList").on("click", (".go_to_detail"), function(){
@@ -638,6 +809,14 @@
 							
 							// * 디테일 수정창 숨기기
 							$("#divUpdateDetail").hide();
+							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
 							
 							
 						
@@ -731,6 +910,14 @@
 							
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
+							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
 							
 						
 						// ● 보이기
@@ -831,6 +1018,14 @@
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
 							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
+							
 						
 						// ● 보이기
 							// * 디테일 보이기
@@ -923,6 +1118,14 @@
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
 							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
+							
 						
 						// ● 보이기
 							// * 디테일 보이기
@@ -992,14 +1195,15 @@
 					
 					// * 디테일 수정창 숨기기
 					$("#divUpdateDetail").hide();
-				
+					
+					
 				
 				
 				// ● 보이기
 				
 					// * 모든 리스트 보이기
 					getAllList();
-					$("#divAllList").show();
+					//$("#divAllList").show();
 	
 					// * 승인 대기 리스트 보이기
 					get0List();
@@ -1007,14 +1211,22 @@
 					
 					// * 승인 거부 리스트 보이기
 					get1List();
-					$("#divResult1List").show();
+					//$("#divResult1List").show();
 					
 					// * 무료 승인 리스트 보이기
 					get2List();
-					$("#divResult2List").show();
+					//$("#divResult2List").show();
 					
 					// * 작가 신청 버튼은 보여야함
 					$("#enrollBtn").show();
+					
+					// * 관리자 리스트 확인 버튼 보이기
+					$("#2ListBtn").show();
+					$("#1ListBtn").show();
+					$("#AllListBtn").show();
+					
+					// * 나의 신청 결과 리스트 보이기
+					$("#divMyResult").show();
 				
 				
 				// ● 전체 리스트 보여주기
@@ -1082,6 +1294,9 @@
 				// ● 숨기기									
 					// * 디테일 #divDetail 가리기
 					$("#divDetail").hide();
+				
+					// * 나의 신청 결과 리스트 숨기기
+					$("#divMyResult").hide();
 					
 				// ● 보이기
 					// * 전체 리스트로 가는 버튼 활성화
@@ -1540,6 +1755,9 @@
 					
 					// * 디테일 수정창 숨기기
 					$("#divUpdateDetail").hide();
+					
+					// * 나의 신청 결과 리스트 숨기기
+					$("#divMyResult").hide();
 				
 			// ● 이미 작성했다면 경고창만 띄우고 같은 창에 머무르기.
 			}else{
@@ -1655,9 +1873,9 @@
 				let adminEnrollResult = $(this).parent().siblings("#detail").children("#input_enroll_result").val();
 				
 					// * 이미 변경 사항이 있다면(= '승인 대기'가 아니라면) 확인창 띄움
-					if(adminEnrollResult != "승인 대기"){
+					if(adminEnrollResult == "승인 거부"){
 						
-						if(confirm("이미 변경 사항이 있습니다. 다시 변경하시겠습니까?")){
+						if(confirm("이미 승인 거부하셨습니다. 다시 변경하시겠습니까?")){
 							
 							// 모달 열기
 							$("#modDiv").show("slow");
@@ -1665,6 +1883,10 @@
 						}// end confirm id
 					
 					// * 승인 대기 상태(초기값)라면 바로 모달 열기
+					}else if(adminEnrollResult == "무료 소설"){
+						
+						alert("이미 무료 소설로 선정된 작품은 변경할 수 없습니다.");
+						
 					}else{
 						
 						// 모달 열기
