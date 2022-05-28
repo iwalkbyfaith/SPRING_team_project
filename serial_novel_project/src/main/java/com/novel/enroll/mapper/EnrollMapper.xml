@@ -8,7 +8,11 @@
 
 	<!-- ■ 전체 리스트 가져오기 -->
 	<select id="getAllEnrollList" resultType="com.novel.enroll.domain.EnrollVO">
+<<<<<<< HEAD
 		SELECT * FROM enroll_tbl
+=======
+		SELECT * FROM enroll_tbl ORDER BY enroll_num DESC
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	</select>
 	
 	<!-- ■ 디테일 가져오기 -->
@@ -55,6 +59,15 @@
 	</select>
 	
 	
+<<<<<<< HEAD
+=======
+	<!-- ■ 05.27 나의 신청 결과 리스트 출력 -->
+	<select id="getMyResultList" resultType="com.novel.enroll.domain.EnrollVO">
+		SELECT * FROM enroll_tbl WHERE user_id = #{user_id} ORDER BY enroll_num DESC
+	</select>
+	
+	
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	<!-- ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함) -->
 	<update id="updateEnrollForm">
 		UPDATE 

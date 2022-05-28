@@ -25,6 +25,12 @@ public interface EnrollService {
 	// ■ enroll_result값에 따른 리스트 가져오기
 	public List<EnrollVO> getEnrollxxList(long enroll_result);
 	
+<<<<<<< HEAD
+=======
+	// ■ 05.27 나의 신청 결과 리스트 출력
+	public List<EnrollVO> getMyResultList(String user_id);
+	
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함)
 	public void updateEnrollForm(EnrollVO vo);
 	

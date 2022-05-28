@@ -44,6 +44,7 @@
 			}
 			
 			
+<<<<<<< HEAD
 			.social-part .fa{
 		    	padding-right:20px;
 			}
@@ -84,6 +85,37 @@
 				text-align:center;
 			} 
 			
+=======
+			.endTournament{
+				text-align : center;
+			}
+			
+			#end h1{
+				text-align : center;
+			}
+			
+			
+			
+			/* 상단 네비바 */
+			
+				.social-part .fa{
+			    	padding-right:20px;
+				}
+				
+				ul li a{
+			    	margin-right: 20px;
+				}
+				.header{
+					height:100px;
+				}
+				.container{
+					height:1000px;
+				}
+				.footer{
+					height:150px;
+				}
+				
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 		
 	
 	</style>
@@ -119,9 +151,13 @@
 			            <li class="nav-item">
 			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
 			            </li>
+<<<<<<< HEAD
 			            <li class="nav-item">
 			              	<a class="nav-link" href="#">About</a>
 			            </li>
+=======
+			           
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 			            <li class="nav-item dropdown dmenu">
 			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 			              		소설 선택
@@ -137,6 +173,7 @@
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
+<<<<<<< HEAD
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -146,6 +183,25 @@
 	        </div><!-- div 끝 -->
 	    </nav><!-- 네비바 끝 -->
      </div><!-- header 끝 (하단의 스크립트 태그까지 가져와야 함) --> 
+=======
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+		               </li>
+		          </ul><!-- ul 태그 끝 -->
+		          <div class="social-part">
+		            <sec:authorize access="isAuthenticated()">
+		            
+		            <a href="/mypage/myInfo">내 정보</a></i>
+		            </sec:authorize>
+		            <sec:authorize access="isAnonymous()">
+		            <i class="join"><a href="/secu/join">join</a></i>
+					<i class="login"><a href="/customLogin">login</a></i>
+					</sec:authorize>
+		          </div>
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
+     </div><!-- header 끝 --> 
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
           
 	     <script>
 	     
@@ -161,16 +217,25 @@
 	     </script>
      
 	 
+<<<<<<< HEAD
 	<h3>★ 나중에 추가 할 것 : </h3>
 		1. 작품이름 클릭하면 해당 작품 페이지로 이동하도록, (free 게시판 상세페이지 구현 후) -> 완 <br/>
 		2. 썸네일 이미지 삽입 -> 완 <br/>
 	
 	 <hr/>
+=======
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	
 	
 	<!-- ■ 05.22 관리자에게만 보이도록 변경 -->
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
+<<<<<<< HEAD
 		<button type="button" id="afterTournamentBtn">초기화 버튼</button><br/>
+=======
+		<div class="endTournament">
+			<button type="button" id="afterTournamentBtn" class="btn btn-light">대회 종료</button><br/>
+		</div>
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	</sec:authorize>
 	
 	<hr>
@@ -199,10 +264,17 @@
 	<div id="end"></div>
 	
 	
+<<<<<<< HEAD
 	<hr/>
 	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/><hr/>
 	현재 로그인한 유저 권한 -> <sec:authentication property="principal.user.authList"/>
 			
+=======
+	<!-- 
+	현재 로그인한 유저 정보 -> <sec:authentication property="principal.user"/><hr/>
+	현재 로그인한 유저 권한 -> <sec:authentication property="principal.user.authList"/>
+	 -->	
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	
 	
 	<script>
@@ -464,7 +536,11 @@
 									//+ "<div class='tourna-work-list-div-img'>"+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" +"</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
+<<<<<<< HEAD
 									+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
+=======
+									+ "<div class='tsourna-work-list-div'>" + this.towork_rec + "</div>"
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 									+ "<button type='button' class='button8' " + deactivation +">추천</button>"
 								+ "</div>";
 							

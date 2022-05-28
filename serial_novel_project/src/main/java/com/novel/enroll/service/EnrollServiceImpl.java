@@ -87,6 +87,16 @@ public class EnrollServiceImpl implements EnrollService{
 	}
 
 	
+<<<<<<< HEAD
+=======
+	// ■ 05.27 나의 신청 결과 리스트 출력
+	@Override
+	public List<EnrollVO> getMyResultList(String user_id) {
+		return mapper.getMyResultList(user_id);
+	}
+	
+	
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	// ■ 신청 폼 삭제하기(승인 대기중인 리스트만 가능함)
 	@Override
 	public void deleteEnrollForm(long enroll_num) {
@@ -99,6 +109,10 @@ public class EnrollServiceImpl implements EnrollService{
 		return mapper.getEnrollResult0(user_id);
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	
 	
 	

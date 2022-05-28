@@ -176,6 +176,29 @@ public class EnrollAjaxController {
 	}
 	
 	
+<<<<<<< HEAD
+=======
+	// ■ 05.27 나의 신청 결과 리스트 출력
+	@GetMapping(value="/getMyResultList/{user_id}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<EnrollVO>> getMyResultList(@PathVariable("user_id") String user_id){
+		
+		ResponseEntity<List<EnrollVO>> entity = null;
+		
+		try {
+			
+			log.warn("/getMyResultList) 들어온 user_id -> " + user_id);
+			entity = new ResponseEntity<>(service.getMyResultList(user_id), HttpStatus.OK);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
+	
+>>>>>>> 5c77970f7fe19881ffa5d5d801379ec1847f78e1
 	// ■ 신청 폼 수정하기(승인 대기중인 리스트만 가능함 : 다른 리스트는 못보게 권한 설정 해놓을것)
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, 
 			    	value="/updateEnrollForm",
