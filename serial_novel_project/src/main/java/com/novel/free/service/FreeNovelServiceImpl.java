@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.free.domain.FreeRecVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 import com.novel.free.mapper.FreeNovelMapper;
@@ -90,6 +91,38 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 		
 	}
 
+	@Override
+	public List<FreeRecVO> selectRecList(long free_num){
+	
+		return freeMapper.selectRecList(free_num);
+	}
+	
+	@Transactional
+	@Override
+	public void insertRec(FreeRecVO vo) {
+		vo.setFree_rec(vo.getFree_rec() + 1);
+		
+		freeMapper.addRec(vo); 
+		
+		
+		freeMapper.insertRec(vo);
+		
+		
+		
+	}
+	
+	@Transactional
+	@Override
+	public void deleteRec(FreeRecVO vo) {
+		vo.setFree_rec(vo.getFree_rec() - 1);
+		
+		freeMapper.subtractRec(vo);	
+			
+		freeMapper.deleteRec(vo);
+			
+			
+		
+	}
 
 
 }

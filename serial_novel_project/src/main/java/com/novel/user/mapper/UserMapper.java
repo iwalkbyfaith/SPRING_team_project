@@ -21,7 +21,36 @@ public interface UserMapper {	// 시큐리티 관련 ( 나중에 com.novel.user.
 	// ■ 회원가입 로직 - 권한 목록 기입 ( ★ 다중 insert 구문은 update 태그로 처리한다 )
 	public void insertMemberAuth(UserVO vo); // MemberVO 내부에 authList가 있기 때문에 MemberVO로 받는다.
 	
+	// ■ 회원정보 수정 로직 - 회원정보 수정
+	public void updateMember(UserVO vo);
 
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 1. 권한 
+
+	public void updateAuthUser(UserVO vo);
+	
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 2. 소설  
+	
+	public void updateNovelUser(UserVO vo);
+	
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 3. 작가신청 
+	
+	public void updateEnrollUser(UserVO vo);
+	
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 4. 유료댓글 
+	
+	public void updatePaidReplUser(UserVO vo);
+	
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 5. 무료댓글 
+	
+	public void updateFreeReplUser(UserVO vo);
+	
+	// ■ 회원정보 수정을 위한 그에 따른 정보들 우선 수정 6. 토너먼트 추천수 
+
+	public void updateTorecUser(UserVO vo);	
+
+	// 〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓 ★ 여기 까지 회원 로직  ★ 〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓
+	
+	
 	// ■ 선호작 불러오기.
 	public List<FavorVO> selectFavList(String user_id); 		
 

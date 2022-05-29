@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.free.domain.FreeRecVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 
@@ -33,4 +34,15 @@ public interface FreeNovelService {
 	
 	public void addhit(FreeNovelVO vo);							// 조회수 1 증가시키기
 	
+	// ■ 무료소설 추천한 아이디 리스트 불러오기
+	public List<FreeRecVO> selectRecList(long free_num);
+	
+	// ■ 무료소설 추천한 아이디 테이블에 저장
+	public void insertRec(FreeRecVO vo);
+	
+	// ■ 무료소설 추천한 아이디 테이블에 삭제
+	public void deleteRec(FreeRecVO vo);
+	
+
+		
 }

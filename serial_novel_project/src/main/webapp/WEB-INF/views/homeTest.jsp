@@ -129,7 +129,23 @@
 					font-size : 20px;
 				}
 			
-			
+				
+.menubar li ul {
+list-style:none;
+background: yellowgreen;
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+}
+.menubar li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}
+	
 	</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
@@ -177,8 +193,19 @@
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <sec:authorize access="isAuthenticated()">
-		            
-		            <a href="/mypage/myInfo">내 정보</a></i>
+		            <div class="menubar">
+		            <ul> 	
+    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
+        	 <ul>
+           <li><a href="/mypage/myInfo">계정정보</a></li>
+           <li><a href="/mypage/myFavor">선호작</a></li>
+           <li><a href="/mypage/bookmark">책갈피</a></li>
+           <li><a href="/secu/customLogout">로그아웃</a></li>
+           
+     	    </ul>
+   			   </li>
+      			</ul>
+      			</div>
 		            </sec:authorize>
 		            <sec:authorize access="isAnonymous()">
 		            <i class="join"><a href="/secu/join">join</a></i>

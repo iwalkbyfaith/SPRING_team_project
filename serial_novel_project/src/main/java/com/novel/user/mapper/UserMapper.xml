@@ -76,6 +76,13 @@
 				FROM DUAL
 		</update>
 		
+		<!-- ■ 회원수정 로직 -->
+		<update id="updateMember">
+		UPDATE user_tbl SET user_id =#{user_id}, user_pw=#{user_pw}, user_name=#{user_name},
+		user_pnum=#{user_phone}, user_email=#{user_email},user_mdate=sysdate 
+		WHERE user_num = #{user_num}
+		</update>
+		
 		<!-- ■ 선호작 리스트 유료 무료 관계없이 뽑아오기 -->
 		<select id="selectFavList" resultType="com.novel.user.domain.FavorVO">
 			
@@ -129,6 +136,36 @@
 		</delete>
 		
 		
+		<!-- ■ 회원정보 수정을 하려면 그에 딸려있는 모든 유저정보를 먼저 수정해야함. -->
+		<!--  1. auth_tbl     --> 
+<update id="updateAuthUser">
+	update auth_tbl set user_id =#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})
+</update>
+		
+		<!-- 2. novel_tbl     -->
+<update id="updateNovelUser">
+	update novel_tbl set user_id =#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})                         
+</update>
+		
+		<!-- 3. enroll_tbl    -->
+<update id="updateEnrollUser">
+	update enroll_tbl set user_id =#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})                         
+</update>
+		
+		<!-- 4. paid_repl_tbl -->
+<update id="updatePaidReplUser">
+	update paid_repl_tbl set prepl_writer=#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})                         
+</update>
+		
+		<!-- 5. free_repl_tbl -->
+<update id="updateFreeReplUser">
+	update free_repl_tbl set user_id =#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})                         
+</update>
+		
+		<!-- 6. torec_tbl     -->
+<update id="updateTorecUser">
+	update torec_tbl set user_id =#{user_id} where user_id =(select user_id from user_tbl where user_num=#{user_num})                         
+</update>		
 
 
 
