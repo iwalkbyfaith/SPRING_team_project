@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.novel.free.domain.FreeNovelVO;
 import com.novel.user.domain.BookmarkVO;
 import com.novel.user.domain.FavorVO;
+import com.novel.user.domain.UserVO;
 import com.novel.user.mapper.UserMapper;
 
 @Service
@@ -15,6 +16,37 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserMapper mapper;
+	
+	@Override 
+	public void updateAuthUser(UserVO vo) {
+		
+		mapper.updateAuthUser(vo);
+	}
+	@Override 
+	public void updateNovelUser(UserVO vo) {
+		
+		mapper.updateNovelUser(vo);
+	}
+	@Override 
+	public void updateEnrollUser(UserVO vo) {
+		
+		mapper.updateEnrollUser(vo);
+	}
+	@Override 
+	public void updatePaidReplUser(UserVO vo) {
+		
+		mapper.updatePaidReplUser(vo);
+	}
+	@Override 
+	public void updateFreeReplUser(UserVO vo) {
+		
+		mapper.updateFreeReplUser(vo);
+	}
+	@Override 
+	public void updateTorecUser(UserVO vo) {
+		
+		mapper.updateTorecUser(vo);
+	}
 	
 	@Override
 	public List<FavorVO> selectFavList(String user_id) {

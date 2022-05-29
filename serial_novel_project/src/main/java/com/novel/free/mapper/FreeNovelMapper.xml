@@ -46,5 +46,24 @@ free_tbl f INNER JOIN novel_tbl n ON f.novel_num = n.novel_num where n.novel_num
 	UPDATE free_tbl SET free_hit=#{free_hit} WHERE free_num = #{free_num}
 	</update>
 	
+	<select id="selectRecList" resultType="com.novel.free.domain.FreeRecVO">
+	SELECT fr.*,f.free_rec from free_rec_tbl fr INNER JOIN free_tbl f ON fr.free_num = f.free_num WHERE fr.free_num=#{free_num}
+	</select>
+	
+	<insert id="insertRec">
+	INSERT INTO free_rec_tbl VALUES(rec_num.nextval,#{free_num},#{user_id})
+	</insert>
+	
+	<update id="addRec">
+	UPDATE free_tbl SET free_rec=#{free_rec} WHERE free_num = #{free_num}
+	</update>
+	
+	<delete id="deleteRec">
+	DELETE FROM free_rec_tbl WHERE user_id = #{user_id}
+	</delete>
+	
+	<update id="subtractRec">
+	UPDATE free_tbl SET free_rec=#{free_rec} WHERE free_num = #{free_num}
+	</update>
 	
 	</mapper>

@@ -11,34 +11,41 @@
 <html lang="kor">
 <head>
 	<style>
-	.social-part .fa{
+ 	.social-part .fa{
     padding-right:20px;
 }
 ul li a{
+	font-family: 'EliceDigitalBaeum-Bd';
     margin-right: 20px;
 }
 	.header{
+
 	height:100px;
 }
 .container{
+
 	height:1000px;
 }
 .footer{
 	height:150px;
 }
 #headerfLi,#headerwLi,#headerrLi,#headermLi{
+	
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
+	margin-right:100px;
 	font-size:30px;
-	outline:solid 1px;
+	font-family: 'EliceDigitalBaeum-Bd';
+	
 }
 .fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
+
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
+	font-family: 'EliceDigitalBaeum-Bd';
 	
-	outline:solid 1px;
 }
 .fantasyListimg{
 background-position: center;
@@ -50,19 +57,22 @@ border: 1px solid green;
 .writebtn,.List,.series,.delete,.update{
 float:right;
 margin-right:10px;
+font-family: 'EliceDigitalBaeum-Bd';
 }
 .articleInfo{
 float:right;
+font-family: 'EliceDigitalBaeum-Bd';
 
 }
  .articleMain{
 text-align:center;
-
+font-family: 'EliceDigitalBaeum-Bd';
 }
 
 
 .articlecontent{
 	margin-bottom:300px;
+	font-family: 'EliceDigitalBaeum-Bd';
 }
 #reply,#reply1{
 text-align:left;
@@ -70,19 +80,23 @@ border:none;
 width:1000px;
 height:100px;
 font-size:20px;
+font-family: 'EliceDigitalBaeum-Bd';
 
 }
 #writeNovel,#replInsert{
 float:right;
+font-family: 'EliceDigitalBaeum-Bd';
 } 
 #replyWrite{
 width: 100%; 
 height: 5.0em; 
 resize: none;
+font-family: 'EliceDigitalBaeum-Bd';
 }
 #novelWriteBtn,.novellist,.novelseries,#replDelete,#replUpdateBtn,#replUpdate,#replInsert{
 border:none;
 margin-right:5px;
+font-family: 'EliceDigitalBaeum-Bd';
 }
 .menubar li ul {
 list-style:none;
@@ -99,8 +113,76 @@ z-index:200;
 .menubar li:hover ul {
 display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 }
+
 }
-	
+
+#favorDelete,#favorInsert {
+  width: 200px;
+  margin: 100px auto;
+  background: #f3f3f3;
+  border: 1px solid #d8d8d8;
+  text-align: center;
+}
+#favorDelete div,#favorInsert div,#bookmarkInsert div,#bookmarkDelete div,#recInsert div,#recDelete div{
+  position: relative;
+  display: inline-block;
+}
+
+#favorDelete img,#favorInsert img,#bookmarkInsert img,#bookmarkDelete img,#recInsert img,#recDelete img{
+  display: flex;
+  width: 100px;
+  padding: 2px 16px;
+  cursor: pointer;
+}
+
+/* 말풍선 적절한 top 과 margin-left 로 위치조정 */
+.arrow_box {
+  display: none;
+  position: center;
+  width: 100px;
+  padding: 8px;
+  left: 0;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'EliceDigitalBaeum-Bd';
+  
+}
+
+.arrow_box:after {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(51, 51, 51, 0);
+  border-bottom-color: #333;
+  border-width: 10px;
+  pointer-events: none;
+  content: ' ';
+}
+
+#favorDelete img:hover + p.arrow_box,#favorInsert img:hover + p.arrow_box,#bookmarkDelete img:hover + p.arrow_box,#bookmarkInsert img:hover + p.arrow_box
+,#recDelete img:hover + p.arrow_box,#recInsert img:hover + p.arrow_box {
+  display: block;
+}
+.categoryheader,#novellist img{
+cursor: pointer;
+}
+.table{
+font-family: 'EliceDigitalBaeum-Bd';
+}
+@font-face {
+    font-family: 'EliceDigitalBaeum-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 	</style>
   <title>무료 소설</title>
   <meta charset="utf-8">
@@ -439,7 +521,8 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
                 </td>
                 </tr>
         </table>
-
+	<div class="rec" style="display:none;">
+	</div>
 
 
 
@@ -817,7 +900,8 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			str+= "<div id='favorDelete' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOn.png'><p class='arrow_box'>선호작 취소</p></div>"
+			
 			
 			$(".favor").html(str);
 		}
@@ -827,7 +911,7 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			str+= "<div id='favorInsert' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOff.png'><p class='arrow_box'>선호작 등록</p></div>"
 			
 			$(".favor").html(str);				
 		}
@@ -925,7 +1009,8 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			str+= "<div id='favorDelete' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOn.png'><p class='arrow_box'>선호작 취소</p></div>"
+			
 			
 			$(".favor").html(str);
 		}
@@ -935,7 +1020,7 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			str+= "<div id='favorInsert' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOff.png'><p class='arrow_box'>선호작 등록</p></div>"
 			
 			$(".favor").html(str);				
 		}
@@ -1030,7 +1115,8 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			str+= "<div id='favorDelete' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOn.png'><p class='arrow_box'>선호작 취소</p></div>"
+			
 			
 			$(".favor").html(str);
 		}
@@ -1040,7 +1126,7 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			str+= "<div id='favorInsert' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOff.png'><p class='arrow_box'>선호작 등록</p></div>"
 			
 			$(".favor").html(str);				
 		}
@@ -1136,7 +1222,8 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+			str+= "<div id='favorDelete' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOn.png'><p class='arrow_box'>선호작 취소</p></div>"
+			
 			
 			$(".favor").html(str);
 		}
@@ -1146,7 +1233,7 @@ console.log(novelNum);
 			
 			str = "";
 			
-			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			str+= "<div id='favorInsert' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOff.png'><p class='arrow_box'>선호작 등록</p></div>"
 			
 			$(".favor").html(str);				
 		}
@@ -1219,6 +1306,45 @@ $(".content").hide();
 $(".table").hide();
 $(".writebtn").hide();
 $(".favor").hide();
+//■ 조회수 올리는 로직.
+let newHit="";
+$.ajax({
+	type : 'put',
+	url : '/free/hit/' + freeNum,
+	beforeSend : function(xhr){
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	},
+	header : {
+		"Content-Type" : "application/json",
+		"X-HTTP-Method-Override" : "PUT"
+	},
+	contentType : "application/json",
+	dataType : 'text',
+	data: JSON.stringify({
+		free_num : freeNum	
+	}),
+	success : function(result) {
+		
+		if(result == 'SUCCESS'){
+			
+			let str = "";
+			var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
+			$.getJSON(url, function(data){
+			
+				$(data).each(function(){
+					newHit = this.free_hit;
+				});
+				newHit = Number(newHit);
+				
+				str+= "<strong>조회수 : </strong>" + newHit;
+				
+				$("#hitCount").html(str);	
+			});
+			
+		}
+		}
+		});
+
 
 // ■ 책갈피 넣는 로직 .
 
@@ -1248,7 +1374,7 @@ $.getJSON("/free/bookmark/"+ id, function(data){
 		
 		str = "";
 		
-		str+= "<button id='bookmarkDelete' data-freeNum='"+freeNum+"'>책갈피 취소</button>"
+		str+= "<div id='bookmarkDelete' data-freeNum='"+freeNum+"'><img src='/resources/free/bookmarkOn.png'><p class='arrow_box'>북마크 취소</p></div>"
 		
 		$(".bookmark").html(str);
 	}
@@ -1258,7 +1384,7 @@ $.getJSON("/free/bookmark/"+ id, function(data){
 		
 		str = "";
 		
-		str+= "<button id='bookmarkInsert' data-freeNum='"+freeNum+"'>책갈피 등록</button>"
+		str+= "<div id='bookmarkInsert' data-freeNum='"+freeNum+"'><img src='/resources/free/bookmarkOff.png'><p class='arrow_box'>북마크 등록</p></div>"
 		
 		$(".bookmark").html(str);				
 	}
@@ -1266,29 +1392,7 @@ $.getJSON("/free/bookmark/"+ id, function(data){
 //여기까지 책갈피 버튼 넣는 로직 =========================================================================================================	
 
 	
-//■ 조회수 올리는 로직.
 
-$.ajax({
-	type : 'put',
-	url : '/free/hit/' + freeNum,
-	beforeSend : function(xhr){
-		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	},
-	header : {
-		"Content-Type" : "application/json",
-		"X-HTTP-Method-Override" : "PUT"
-	},
-	contentType : "application/json",
-	dataType : 'text',
-	data: JSON.stringify({
-			
-	}),
-	success : function(result) {
-		
-		if(result == 'SUCCESS'){
-			}
-		}
-		});
 let str6 =	"";
 let str7 =	"";
 
@@ -1302,10 +1406,7 @@ var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
 console.log(url);
 $.getJSON(url, function(data){
 	
-		
-	
 
-	
 	let str = "";
 	let str1 = "";
 	let str2 =	"";
@@ -1325,7 +1426,7 @@ $.getJSON(url, function(data){
 				if(this.free_content2 == null){
 					str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 					str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-					str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+newHit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4>";
 					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
@@ -1334,7 +1435,7 @@ $.getJSON(url, function(data){
 				else{
 					str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 					str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-					str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+newHit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
 					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
@@ -1351,6 +1452,44 @@ $.getJSON(url, function(data){
 				
 			});
 });
+
+
+
+// ■ 추천수 로직 
+
+	$.getJSON("rec/"+ freeNum, function(data){
+		
+		let str="";
+		
+		let recList = []; 
+		let rec = "";
+		$(data).each(function(i){
+				
+				
+			recList[i] = this.user_id;
+			rec = this.free_rec;
+		});
+		console.log("추천 아이디 리스트 : " + recList);
+		rec = Number(rec);
+		console.log("rec타입 : " + typeof(rec));
+		console.log("추천수 : "  + rec)
+		
+		if(recList.includes(id)){
+			
+			str+="<div id='recDelete' data-freeNum='"+freeNum+"' data-rec='"+rec+"'><img src='/resources/free/RecommendOn.png'><p class='arrow_box'>추천 취소</p></div>";
+			
+			$(".rec").html(str);
+		}
+		else{
+			
+			str+="<div id='recInsert' data-freeNum='"+freeNum+"' data-rec='"+rec+"'><img src='/resources/free/RecommendOff.png'><p class='arrow_box'>추천</p></div>";
+			
+			$(".rec").html(str);
+			
+		}
+		
+		
+	});	
 
 
 	$.getJSON("/replies/detail/"+ freeNum, function(data){
@@ -1396,6 +1535,7 @@ $.getJSON(url, function(data){
 	$(".series").show("slow");
 	$(".repl").show("slow");
 	$(".bookmark").show("slow");
+	$(".rec").show("slow");
 });
 
 
@@ -1412,7 +1552,9 @@ $(".List").on("click",".novelList",function(){
 	$(".series").hide();
 	$(".delete").hide();
 	$(".update").hide();
+	$(".bookmark").hide();
 	$(".favor").hide();
+	$(".rec").hide();
 	
 var novelCategory = $(this).attr("data-novelCategory");
 
@@ -1447,6 +1589,8 @@ $(".series").on("click",".novelSeries",function(){
 	$(".series").hide();
 	$(".update").hide();
 	$(".delete").hide();
+	$(".bookmark").hide();
+	$(".rec").hide();
 	$(".favor").show();
 	var userId = $(this).attr("data-userId")	
 	var novelNum = $(this).attr("data-novelNum");
@@ -1512,6 +1656,7 @@ $(".writebtn").on("click",".writenovelbtn",function(){
 	
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
+	$(".favor").hide();
 	
 	$.getJSON("/free/novel/selecttitle/"+ novelNum , function(data){
 		
@@ -1550,6 +1695,7 @@ $("#nBtn").on("click",".nSubmit",function(){
 	var freeTitle = $(".fTitle").val();
 	var content1 = $(".contents1").val();
 	var content2 = $(".contents2").val();
+	$(".favor").show("slow");
 	$.ajax({
 		type : 'post',
 		url: '/free',
@@ -1605,11 +1751,12 @@ $("#nBtn").on("click",".nSubmit",function(){
 							let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
 							
 							str+= "<tr><td>"+this.free_snum+"</td>"
-								+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.free_title+"</td>"
-								+ "<td>"+this.novel_writer+"</td>"
-								+ "<td>"+formattedTime1+"</td>"
-								+ "<td>"+formattedTime2+"</td></tr>"
-								console.log(this);
+							+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
+							+ "<td>"+this.novel_writer+"</td>"
+							+ "<td>"+formattedTime1+"</td>"
+							+ "<td>"+formattedTime2+"</td></tr>"
+						
+								
 							
 							
 								
@@ -1636,7 +1783,7 @@ $("#nBtn").on("click",".nCancel",function(){
 
 		$("#novellist").empty();
 		$(".work").hide();
-		
+		$(".favor").show("slow");
 		
 		$.getJSON("/free/novel/select/"+ novelNum , function(data){
 		
@@ -1686,7 +1833,8 @@ $(".delete").on("click",".nDelete",function(){
 	var free_num = $(this).attr("data-freeNum");
 	var novelNum = $(this).attr("data-novelNum");
 	var novelCategory = $(this).attr("data-novelCategory");
-	
+	$(".bookmark").hide();
+	$(".favor").show("slow");
 	$.ajax({
 		type : 'delete',
 		url : '/free/' + free_num,
@@ -1735,10 +1883,10 @@ $(".delete").on("click",".nDelete",function(){
 								let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
 								
 								str+= "<tr><td>"+this.free_snum+"</td>"
-									+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.free_title+"</td>"
-									+ "<td>"+this.novel_writer+"</td>"
-									+ "<td>"+formattedTime1+"</td>"
-									+ "<td>"+formattedTime2+"</td></tr>"
+								+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
+								+ "<td>"+this.novel_writer+"</td>"
+								+ "<td>"+formattedTime1+"</td>"
+								+ "<td>"+formattedTime2+"</td></tr>"
 									
 								console.log(this);
 									
@@ -1764,6 +1912,7 @@ $(".update").on("click",".nUpdate",function(){
 	var freeSNum = $(this).attr("data-freeSNum");
 	console.log(novelNum);
 	console.log(freeSNum);
+	
 	
 	var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
 	console.log(url);
@@ -1870,7 +2019,7 @@ $("#uBtn").on("click",".uCancel",function(){
 					if(this.free_content2 == null){
 						str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 						str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-						str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+						str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 						str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 						str+= "<h4>"+this.free_content1+"</h4>";
 						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"' data-userId='"+this.user_id+"'>회차목록</button>";
@@ -1879,7 +2028,7 @@ $("#uBtn").on("click",".uCancel",function(){
 					else{
 						str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 						str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-						str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+						str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 						str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 						str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
 						str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+this.novel_category+"' data-userId='"+this.user_id+"'>회차목록</button>";
@@ -1918,6 +2067,8 @@ $("#uBtn").on("click",".uModify",function(){
 		var freeTitle = $(".uTitle").val();
 		var content1 = $(".ucontents1").val();
 		var content2 = $(".ucontents2").val();
+		
+		
 		
 		$.ajax({
 			type : 'put',
@@ -1983,18 +2134,18 @@ $("#uBtn").on("click",".uModify",function(){
 									if(this.free_content2 == null){
 										str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 										str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-										str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+										str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 										str5+= "<h2>제목 :"+ this.free_title+"</h2>";
-										str+= "<h4>"+this.free_content1+"</h4>";
+										str+= "<h4>"+content1+"</h4>";
 										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>회차목록</button>";
 										
 									}
 									else{
 										str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 										str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-										str4+= "<strong>조회수 : </strong>" + this.free_hit +"&nbsp;&nbsp;&nbsp;&nbsp; <strong>추천수 : </strong>" + this.free_rec;
+										str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 										str5+= "<h2>제목 :"+ this.free_title+"</h2>";
-										str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
+										str+= "<h4>"+content1+"</h4> <h4>"+content2+"</h4>";
 										str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>회차목록</button>";
 										
 									}
@@ -2250,7 +2401,7 @@ $(".replyContainer").on("click","#replInsert",function(){
 							function(){
 								
 								if(id == this.user_id){
-									replUpdate+= "<button id='replUpdate' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.freeNum+"'>수정</button>"
+									replUpdate+= "<button id='replUpdatebtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.freeNum+"'>수정</button>"
 									replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
 								}
 								
@@ -2294,7 +2445,7 @@ $(".favor").on("click","#favorDelete",function(){
 				dataType : 'text',
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("선호작이 삭제 되었습니다."); 
+						
 				} 
 				}	// success 끝나는부분 
 		});	// ajax 끝나는부분
@@ -2303,7 +2454,7 @@ $(".favor").on("click","#favorDelete",function(){
 			
 			str = "";
 			
-			str+= "<button id='favorInsert' data-novelNum='"+novelNum+"'>선호작 등록</button>"
+			str+= "<div id='favorInsert' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOff.png'><p class='arrow_box'>선호작 등록</p></div>"
 			
 			
 			
@@ -2338,7 +2489,7 @@ $(".favor").on("click","#favorInsert",function(){
 		}),
 			success : function(result){
 				if(result == 'SUCCESS'){
-					alert("선호작이 등록 되었습니다."); 
+					
 			} 
 			}	// success 끝나는부분 
 	});	// ajax 끝나는부분 
@@ -2347,7 +2498,7 @@ $(".favor").on("click","#favorInsert",function(){
 		
 		str = "";
 		
-		str+= "<button id='favorDelete' data-novelNum='"+novelNum+"'>선호작 취소</button>"
+		str+= "<div id='favorDelete' data-novelNum='"+novelNum+"'><img src='/resources/free/favorOn.png'><p class='arrow_box'>선호작 취소</p></div>"
 		
 		$(".favor").html(str);
 		
@@ -2376,7 +2527,7 @@ $(".bookmark").on("click","#bookmarkDelete",function(){
 				dataType : 'text',
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("책갈피가 삭제 되었습니다."); 
+						 
 				} 
 				}	// success 끝나는부분 
 		});	// ajax 끝나는부분
@@ -2385,7 +2536,7 @@ $(".bookmark").on("click","#bookmarkDelete",function(){
 			
 			str = "";
 			
-			str+= "<button id='bookmarkInsert' data-freeNum='"+freeNum+"'>책갈피 등록</button>"
+			str+= "<div id='bookmarkInsert' data-freeNum='"+freeNum+"'><img src='/resources/free/bookmarkOff.png'><p class='arrow_box'>북마크 등록</p></div>"
 			
 			
 			
@@ -2414,7 +2565,7 @@ $(".bookmark").on("click","#bookmarkInsert",function(){
 		}),
 			success : function(result){
 				if(result == 'SUCCESS'){
-					alert("책갈피가 등록 되었습니다."); 
+					
 			} 
 			}	// success 끝나는부분 
 	});	// ajax 끝나는부분 
@@ -2423,13 +2574,138 @@ $(".bookmark").on("click","#bookmarkInsert",function(){
 		
 		str = "";
 		
-		str+= "<button id='bookmarkDelete' data-freeNum='"+freeNum+"'>책갈피 취소</button>"
+		str+= "<div id='bookmarkDelete' data-freeNum='"+freeNum+"'><img src='/resources/free/bookmarkOn.png'><p class='arrow_box'>북마크 취소</p></div>"
 		
 		$(".bookmark").html(str);
 		
 	});
 
 
+$(".rec").on("click","#recInsert",function(){
+	var freeNum = $(this).attr("data-freeNum");
+	freeNum = Number(freeNum);
+	console.log(freeNum);
+	var rec = $(this).attr("data-rec");
+	console.log("추천을 눌렀을때 받아오는 rec : " + rec);
+	rec = Number(rec);
+	let newRec = "";
+	console.log("newRec : " + newRec);
+	
+	$.ajax({
+		type : 'post',
+		url: 'insert/rec',
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		headers:{
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
+		},
+		dataType : 'text',
+		data : JSON.stringify({
+			user_id : id,
+			free_num : freeNum,
+			free_rec : rec
+		}),
+		success : function(result){
+			if(result == 'SUCCESS'){
+				
+				$.getJSON("rec/"+ freeNum, function(data){
+					
+					let str = "";
+					$(data).each(function(){
+						console.log("ajax안에서 getJson으로 받아오는 newRec(rec): " + this.free_rec);
+						newRec = this.free_rec;
+					});
+					newRec = Number(newRec);
+					str += "<strong>추천수 : </strong>" + newRec;
+					$("#recCount").html(str);
+					
+					
+					$(".rec").empty
+					
+					let str1 = "";
+					
+					str1+= "<div id='recDelete' data-freeNum='"+freeNum+"' data-rec='"+newRec+"'><img src='/resources/free/RecommendOn.png'><p class='arrow_box'>추천 취소</p></div>";
+					
+					$(".rec").html(str1);
+					
+					console.log("추천을 눌렀을때 받아오는 newRec : " + newRec);
+					
+				});	
+				
+		} 
+		}	// success 끝나는부분 
+	});	// ajax 끝나는부분
+
+	
+	
+});
+
+$(".rec").on("click","#recDelete",function(){
+
+	var freeNum = $(this).attr("data-freeNum");
+	freeNum = Number(freeNum);
+	var rec = $(this).attr("data-rec");
+	rec = Number(rec);
+	console.log("추천 취소를 눌렀을때 받아오는 rec : " + rec);
+	let newRec ="";
+	console.log("newRec : " + newRec);
+		
+		$.ajax({
+				type : 'delete',
+				url: 'delete/rec',
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					user_id : id,
+					free_num : freeNum,
+					free_rec : rec
+				}),
+				success : function(result){
+					if(result == 'SUCCESS'){
+							console.log("success 안에 있는 freeNum : " + freeNum);	
+						
+						$.getJSON("rec/"+ freeNum, function(data){
+							
+							let str = "";			
+							
+							$(data).each(function(){
+								console.log("ajax안에서 getJson으로 받아오는 newRec(rec): " + this.free_rec);
+								newRec = this.free_rec;
+							});
+							newRec = Number(newRec);
+							str += "<strong>추천수 : </strong>" + newRec;
+							$("#recCount").html(str);
+							
+							$(".rec").empty
+							
+							let str1 = "";
+							
+							str1+= "<div id='recInsert' data-freeNum='"+freeNum+"' data-rec='"+newRec+"'><img src='/resources/free/RecommendOff.png'><p class='arrow_box'>추천</p></div>"
+							
+							
+							$(".rec").html(str1);
+							
+							console.log("추천 취소를 눌렀을때 받아오는 newRec : " + newRec);
+							
+						});
+						 
+				} 
+				}	// success 끝나는부분 
+		});	// ajax 끝나는부분
+		
+		
+			
+			
+		
+	});
 
 
 		

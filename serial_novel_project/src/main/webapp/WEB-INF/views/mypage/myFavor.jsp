@@ -123,7 +123,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
            <li><a href="/mypage/myInfo">계정정보</a></li>
            <li><a href="/mypage/myFavor">선호작</a></li>
            <li><a href="/mypage/bookmark">책갈피</a></li>
-           <li><a href="/secu/customLogout">로그아웃</a></li>
+           <li><a href="/customLogout">로그아웃</a></li>
            
      	    </ul>
    			   </li>
