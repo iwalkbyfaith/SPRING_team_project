@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,27 +61,10 @@ public class TournamentWorkController {
 		
 		try {
 			
-			// 8강에 적재된 데이터가 있는지 확인
-			List<TournamentWorkVO> record8 = service.getTournamentData(1);
-			log.info(record8);
+			// ● 현재 8강에 작품이 없는 경우는 적재하기
+			service.check8ToworkRecord();
 			
-			// 8강 데이터가 없다면 적재
-			if(record8.isEmpty()) {
-				log.info("▼ 8강 데이터가 없다면 적재");
-				List<Integer> list8 = service.select8ToworkRecord();
-				log.info(list8);
-				
-				for(int novel_num : list8) {
-					TournamentWorkVO vo = new TournamentWorkVO();
-					vo.setNovel_num(novel_num);
-					vo.setTo_num(1);
-					log.info("생성된 new vo");
-					log.info(vo);
-					service.insert8Towork(vo);
-				}
-			}
-			
-			// 8강(to_num=1) 데이터 리턴
+			// ● 8강(to_num=1) 데이터 리턴
 			entity = new ResponseEntity<>(service.getTowork2or4or8(1), HttpStatus.OK);
 			log.info("성공시 entity -> " + entity);
 			
@@ -95,6 +79,7 @@ public class TournamentWorkController {
 	}
 	
 	// ■ 05.14 토너먼트 2 or 4강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	@Transactional
 	@GetMapping(value="/getList/{to_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	public ResponseEntity<List<TournamentJoinVO>> addAndGet2or4list(@PathVariable("to_num") long to_num){
 		
@@ -102,7 +87,7 @@ public class TournamentWorkController {
 		
 		
 		try {
-			// 2강, 4강인 경우 to_num과 rownum을 세팅
+			// ● 2강, 4강인 경우 to_num과 rownum을 세팅
 				// 4강 적재시 to_num=1, rownum=4 / 2강 적재시 to_num=2, rownum=2
 				int rownum = 0;
 				if(to_num == 1) {
@@ -111,18 +96,12 @@ public class TournamentWorkController {
 					rownum = 2;
 				}
 				
-			// 2 or 4강에 적재된 데이터가 있는지 확인
-				List<TournamentWorkVO> record = service.getTournamentData(to_num+1);
-				log.info("▼ 4강 혹은 2강의 데이터가 있다면");
-				log.info(record);
+			// ● 2강 or 4강을 조회하고 없는 경우는 적재하는 코드
+				// to_num=1 & rownum=4 / to_num=2 & rownum=2
+				service.check2or4ToworkRecord(to_num, rownum);
+				
 			
-			// 데이터가 없다면 적재
-				if(record.isEmpty()) {
-					log.info("▶ 4강 혹은 2강의 데이터가 없어서 DB에 적재");
-					service.insertTowork2or4(to_num, rownum);
-				}
-			
-			// 적재된 데이터 리턴
+			// ● 적재된 데이터 리턴
 				entity = new ResponseEntity<>(service.getTowork2or4or8(to_num+1), HttpStatus.OK);
 				log.info("성공시 entity -> " + entity);
 				
@@ -402,6 +381,99 @@ public class TournamentWorkController {
 		
 		return entity;
 	}
+	
+		// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	@GetMapping(value="/get8list", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	public ResponseEntity<List<TournamentJoinVO>> addAndGet8list(){
+		
+		ResponseEntity<List<TournamentJoinVO>> entity = null;
+		
+		try {
+			
+//			// 8강에 적재된 데이터가 있는지 확인
+//			List<TournamentWorkVO> record8 = service.getTournamentData(1);
+//			log.info(record8);
+//			
+//			// 8강 데이터가 없다면 적재
+//			if(record8.isEmpty()) {
+//				log.info("▼ 8강 데이터가 없다면 적재");
+//				List<Integer> list8 = service.select8ToworkRecord();
+//				log.info(list8);
+//				
+//				for(int novel_num : list8) {
+//					TournamentWorkVO vo = new TournamentWorkVO();
+//					vo.setNovel_num(novel_num);
+//					vo.setTo_num(1);
+//					log.info("생성된 new vo");
+//					log.info(vo);
+//					service.insert8Towork(vo);
+//				}
+//			}
+			
+			// 현재 8강에 작품이 없는 경우는 적재하기
+			service.check8ToworkRecord();
+			
+			// 8강(to_num=1) 데이터 리턴
+			entity = new ResponseEntity<>(service.getTowork2or4or8(1), HttpStatus.OK);
+			log.info("성공시 entity -> " + entity);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+			log.info("실패시 entity -> " + entity);
+		}
+		
+		return entity;
+
+	}
+	
+	
+	// ■ 05.14 토너먼트 2 or 4강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	@GetMapping(value="/getList/{to_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	public ResponseEntity<List<TournamentJoinVO>> addAndGet2or4list(@PathVariable("to_num") long to_num){
+		
+		ResponseEntity<List<TournamentJoinVO>> entity = null;
+		
+		
+		try {
+			// 2강, 4강인 경우 to_num과 rownum을 세팅
+				// 4강 적재시 to_num=1, rownum=4 / 2강 적재시 to_num=2, rownum=2
+				int rownum = 0;
+				if(to_num == 1) {
+					rownum = 4;
+				}else if(to_num ==2) {
+					rownum = 2;
+				}
+				
+			// 2 or 4강에 적재된 데이터가 있는지 확인
+				List<TournamentWorkVO> record = service.getTournamentData(to_num+1);
+				log.info("▼ 4강 혹은 2강의 데이터가 있다면");
+				log.info(record);
+			
+			// 데이터가 없다면 적재
+				if(record.isEmpty()) {
+					log.info("▶ 4강 혹은 2강의 데이터가 없어서 DB에 적재");
+					service.insertTowork2or4(to_num, rownum);
+				}
+			
+			// 적재된 데이터 리턴
+				entity = new ResponseEntity<>(service.getTowork2or4or8(to_num+1), HttpStatus.OK);
+				log.info("성공시 entity -> " + entity);
+				
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+			log.info("실패시 entity -> " + entity);
+		}
+		
+		return entity;
+	}
+	
+	
+	
+	
+	
 	
 */
 	

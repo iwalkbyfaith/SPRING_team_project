@@ -76,7 +76,44 @@
 				text-align : center;
 			}
 			
+			.row h3{
+				font-weight : bold;
+			}
 
+			.button8{
+				width : 120px;
+				background-color : whitesmoke;
+				
+				margin: 10px; /**/
+				position: relative;
+			    border: none;
+			    display: inline-block;
+			    padding: 15px 30px;
+			    border-radius: 15px;
+			    font-family: "paybooc-Light", sans-serif;
+			    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+			    text-decoration: none;
+			    font-weight: 600;
+			    transition: 0.25s;
+			    
+		        position: relative;
+			    padding: 5px 10px; /**/
+			    border-radius: 15px;
+			    font-family: "paybooc-Light", sans-serif;
+			    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+			    text-decoration: none;
+			    font-weight: 600;
+			    transition: 0.25s;
+			}
+			.button8:hover{
+			    letter-spacing: 2px;
+			    transform: scale(1.2);
+			    cursor: pointer;
+			    background-color : OliveDrab;
+			}
+			.button8:active{
+				 transform: scale(1.5);
+			}
 			
 			
 			
@@ -254,7 +291,7 @@
 	
 		
 		<div class="row">
-	 		<h3>웹소설 토너먼트 최강자 8강전</h3> <!-- #tournament4 -->
+	 		<h3>웹소설 토너먼트 최강자 4강전</h3> <!-- #tournament4 -->
 			<div id="tournament4"><!-- 리스트가 들어갈 위치 --></div>
 		</div><br/><br/>
 		
@@ -442,7 +479,7 @@
 			});
 			
 			
-			// 3. 데이터 뿌리기
+			// 2. 데이터 뿌리기
 			
 				$.getJSON("/tournament/get8list", function(data){ 
 					
@@ -474,18 +511,23 @@
 						$(data).each(function(){
 								
 								str += "<div class='tourna-work-list' data-tno='" + this.to_num + "' data-twno='" + this.towork_num +"' data-novel-num='" + this.novel_num +"'>"
-										+ "<div class='tourna-work-list-div-img'>"+ "<a href='http://localhost:8181/free/series/" + this.novel_num + "'>" + "<img src='/resources/novel_image/" + this.novel_num + ".png'>" + "</a>" +"</div>"
+										+ "<div class='tourna-work-list-div-img'>"
+											+ "<a href='http://localhost:8181/free/series/" + this.novel_num + "'>" 
+												+ "<img src='/resources/novel_image/" + this.novel_num + ".png'>" 
+											+ "</a>" 
+										+"</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 										+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-										+ "<button type='button' class='button8 btn btn-light'" + deactivation +">추천</button>"
+										+ "<button type='button' class='button8'" + deactivation +">추천</button>"
 									+ "</div>";
 								
-							});
+						});// end .each
 							
 							$("#tournament8").html(str);
-					}<!-- if 종료 -->
-				});
+						
+					}// end if
+				});// end getJSON
 			
 		}<!-- □ 8강 불러오기 끝 -->
 		
@@ -561,7 +603,7 @@
 									+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 									+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 									+ "<div class='tsourna-work-list-div'>" + this.towork_rec + "</div>"
-									+ "<button type='button' class='button8 btn btn-light' " + deactivation +">추천</button>"
+									+ "<button type='button' class='button8' " + deactivation +">추천</button>"
 								+ "</div>";
 							
 						});
@@ -648,7 +690,7 @@
 								+ "<div class='tourna-work-list-div'>" + this.novel_title + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.novel_writer + "</div>"
 								+ "<div class='tourna-work-list-div'>" + this.towork_rec + "</div>"
-								+ "<button type='button' class='button8 btn btn-light'" + deactivation +">추천</button>"
+								+ "<button type='button' class='button8'" + deactivation +">추천</button>"
 							+ "</div>";
 						
 					});
