@@ -342,7 +342,7 @@
      			
      			<c:forEach var="rec" items="${paidRecList}">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${rec.novel_num}"><img src='/resources/novel_image/${rec.novel_num}.png'></a></div>
+	     				<div><a href="http://localhost:8181/paid/List/${rec.novel_num}/${user}"><img src='/resources/novel_image/${rec.novel_num}.png'></a></div>
 	     				<div>${rec.novel_title}</div>
 	     				<div class="icon">
 	     					<div><img src='/resources/main/thumb.png'>${rec.total_rec}</div>

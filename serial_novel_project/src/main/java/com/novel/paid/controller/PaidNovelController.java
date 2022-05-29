@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.novel.charge.domain.UseVO;
+import com.novel.charge.service.ChargeService;
 import com.novel.novel.domain.NovelVO;
 import com.novel.novel.service.NovelService;
 import com.novel.paid.domain.PageMaker;
+import com.novel.paid.domain.PaidFavVO;
 import com.novel.paid.domain.PaidRecVO;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
@@ -33,34 +36,50 @@ public class PaidNovelController {
 	@Autowired
 	private NovelService novelservice;
 	
+	@Autowired
+	private ChargeService chargeservice;
+	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/novelList")
-	public String getPaidList() {
+	public String getPaidList(SearchCriteria cri,Model model) {
+		
+		List<PaidVO> monList = paidservice.selectMon(cri);
+		model.addAttribute("monList", monList);
+		
+		List<PaidVO> tueList = paidservice.selectTue(cri);
+		model.addAttribute("tueList", tueList);
+		
+		List<PaidVO> wedList = paidservice.selectWed(cri);
+		model.addAttribute("wedList", wedList);
+		
+		List<PaidVO> thuList = paidservice.selectThu(cri);
+		model.addAttribute("thuList", thuList);
+		
+		List<PaidVO> friList = paidservice.selectFri(cri);
+		model.addAttribute("friList", friList);
 		
 		return "paid/paidList";
 	}
 	
-	// ■ 요일별 소설 목록 (paidWeek)
-	@PreAuthorize("isAuthenticated()")
-	@GetMapping(value="/Week/{novelWeek}")
-	public String paidWeek(@PathVariable("novelWeek") String novelWeek, Model model) {
-		
-		List<PaidVO> weekList = paidservice.selectWeekList(novelWeek);
-		model.addAttribute("weekList", weekList);
-		
-		return "paid/paidWeek";
-	}
+	
+	
+	
 	
 	// ■ 해당 유료소설의 상세회차들 (paidsList)
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping(value="/List/{novelNum}")
-	public String paidList(@PathVariable("novelNum") long novelNum, Model model) {
+	@GetMapping(value="/List/{novelNum}/{userNum}")
+	public String paidList(@PathVariable("novelNum") long novelNum, @PathVariable long userNum, Model model) {
 		
+		NovelVO novelList = novelservice.detailNovel(novelNum);
 		
 		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
 		
+		PaidFavVO fav = paidservice.favList(novelNum, userNum);
+		
 		model.addAttribute("novelNum", novelNum);
 		model.addAttribute("paidList", paidList);
-
+		model.addAttribute("novelList", novelList);
+		model.addAttribute("fav", fav);
 		
 		return "paid/paidsList";
 	}
@@ -78,6 +97,9 @@ public class PaidNovelController {
 		PaidRecVO rec = paidservice.recList(paid_num, user_num);
 		model.addAttribute("rec",rec);
 		
+		UseVO use = chargeservice.useList(paid_num, user_num);
+		model.addAttribute("use",use);
+		
 		return "paid/paidDetail";
 	}
 	
@@ -92,7 +114,6 @@ public class PaidNovelController {
 	}
 	
 	// ■ 유료소설 상세 소설 작성
-
 	@PostMapping("/insertS")
 	public String insertS(PaidVO paidvo) {
 		paidservice.insert(paidvo);

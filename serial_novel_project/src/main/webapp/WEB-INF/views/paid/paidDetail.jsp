@@ -39,6 +39,13 @@ ul li a{
 	 	padding : 10px;
 	 	z-index : 1000; /*무조건 1보다 클것*/
 }
+
+img {
+	
+	width:163px;
+	margin-left: 24px;
+	padding:0;
+}
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -99,75 +106,43 @@ ul li a{
       </nav>
 	</div>
 	<div class="container">
-	${novel}
-	<hr>
-	${rec }
-	${rec.user_num }
-	<hr>
-	
-	<p><sec:authentication property="principal.user" /></p>
 	<sec:authentication property="principal.user" var="user"/>
 	
-	유저아이디 :  ${user.user_id }
 	<hr>
-		<h1 class="text text-info">${novel.novel_title }</h1>
-		<div class="row">
-			<div class="col-md-1">소제목</div>
-			<div class="col-md-4">
-				<input type="text" id="pTitle1" class="form-control" value="${novel.paid_title }" readonly>
-			</div>
-			<div class="col-md-1">글쓴이</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" value="${novel.novel_writer }" readonly>
-			</div>
-			<div class="col-md-1">조회수</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_hit }" readonly>
-			</div>
-			<div class="col-md-1">추천</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_rec }" readonly>
-			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-md-1">작성일</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.paid_rdate }" readonly>
-			</div>
-			<div class="col-md-1">수정일</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.paid_mdate}" readonly>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">장르</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.novel_category}" readonly>
-			</div>
-			<div class="col-md-1">회차</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_snum }" readonly>
-			</div>
-			<div class="col-md-1">가격</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_price }" readonly>
-			</div>
-		</div>
+		<h2 class="text text-info">${novel.novel_title }</h2>
+		
+			<table class="table caption-top table-sm">
+			  <tbody>
+			    <tr>
+			    	<th rowspan="5"><img src='/resources/novel_image/${novel.novel_num}.png' ></th>
+			      <th scope="row">회차제목</th>
+			      	<td>${novel.paid_title }</td>
+			      <th scope="row">작가</th>
+			      	<td>${novel.novel_writer }</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">게시일</th>
+			      	<td>${novel.paid_rdate }</td>
+			      <th scope="row">가격</th>
+			      <td>${novel.paid_price } coin</td>
+			    </tr>
+			  	
+			  </tbody>
+			</table>
+			
+			
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/paid/List/${novel.novel_num }" class="btn-sm">목록</a>
+				<a href="/paid/List/${novel.novel_num }/${user.user_num}" class="btn-sm"><button class="btn-sm">목록</button></a>
 			</div>
-			<div class="col-md-1">
-				<button type="button">선호</button>
-			</div>
-		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 -->
+		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 추천버튼 없애기-->
 		<c:if test="${rec.user_num ne user.user_num}">
 			<div class="col-md-1">
 				<button class="recBtn">추천</button>
 			</div>
 		</c:if>
-		<c:if test="">
+		<!-- 유료소설결제테이블과 로그인유저의 번호 비교 결제버튼 없애기-->
+		<c:if test="${use.user_num ne user.user_num}">
 			<div class="col-md-1">
 				<button class="chargeBtn">결제</button>
 			</div>
@@ -195,12 +170,13 @@ ul li a{
 		</div>
 		<hr>
 		<div class="container2">
-			
+		<!-- 결제 내역이 없으면 본문은 보이지 않음 -->
+		<c:if test="${use.user_num eq user.user_num }">
 			<!-- 본문내용공간 -->
 			<ul id="Pcon">
 			
 			</ul>
-			
+		</c:if>
 			
 			
 			
@@ -421,6 +397,10 @@ ul li a{
 		// ■ 결제시 코인 차감 
 		$(".chargeBtn").on("click", function(){
 			
+			if(${user.user_coin < 100}){
+				alert("코인이 부족합니다. 충전페이지로 이동합니다");
+				location.href = "/charge/${user.user_num}";
+			} else{
 			var coin = ${novel.paid_price}
 			var userNum = ${user.user_num};
 			
@@ -443,11 +423,11 @@ ul li a{
 				dataType : 'text',
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("결제 되었습니다.");
 						addUse();
 					}
 				}
 			});
+			}
 		});
 		
 		// ■ 구매시 use테이블(구매목록) 테이블에 넣어주기
@@ -469,12 +449,15 @@ ul li a{
 				dataType : 'text',
 				data : JSON.stringify({
 					user_num : userNum,
+					paid_num : paidnum,
 					use_type : useType,
 					use_count : coin
 				}),
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("구매목록에 등록 되었습니다.");
+						alert("결제완료! 구매목록에 등록되었습니다.");
+						$(".chargeBtn").hide();
+						location.href = "/paid/detail/${novel.novel_num}/${novel.paid_num}/${user.user_num}";
 					}
 				}
 			});
@@ -502,7 +485,6 @@ ul li a{
 				}),
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("적재되었ㅅ브니다.");
 						addRec();
 					}
 				}
@@ -529,6 +511,7 @@ ul li a{
 					console.log("result : " + result);
 					if(result == 'SUCCESS'){
 						alert("추천되었습니다.");
+						location.href = "/paid/detail/${novel.novel_num}/${novel.paid_num}/${user.user_num}";
 						
 					}
 				}

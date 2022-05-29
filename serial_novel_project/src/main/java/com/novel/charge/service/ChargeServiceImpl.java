@@ -1,5 +1,7 @@
 package com.novel.charge.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,21 @@ public class ChargeServiceImpl implements ChargeService{
 	public void insertUse(UseVO uVo) {
 		mapper.insertUse(uVo);
 		
+	}
+
+	@Override
+	public UseVO useList(long paid_num, long user_num) {
+		return mapper.useList(paid_num, user_num);
+	}
+
+	@Override
+	public List<UseVO> useList2(long user_num) {
+		return mapper.useList2(user_num);
+	}
+
+	@Override
+	public List<ChargeVO> chargeList(long user_num) {
+		return mapper.chargeList(user_num);
 	}
 
 

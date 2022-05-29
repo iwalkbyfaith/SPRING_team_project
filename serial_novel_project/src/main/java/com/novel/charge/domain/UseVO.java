@@ -11,4 +11,10 @@ public class UseVO {
 	private String use_type;
 	private long use_count;
 	private Date use_date;
+	private long paid_num;
+	
+	private String paid_title; 
+	private long novel_num;
 }
+
+
