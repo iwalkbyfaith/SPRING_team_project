@@ -15,7 +15,7 @@
     padding-right:20px;
 }
 ul li a{
-	font-family: 'EliceDigitalBaeum-Bd';
+	
     margin-right: 20px;
 }
 	.header{
@@ -36,7 +36,7 @@ ul li a{
 	margin-left:20px;
 	margin-right:100px;
 	font-size:30px;
-	font-family: 'EliceDigitalBaeum-Bd';
+	
 	
 }
 .fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
@@ -44,7 +44,7 @@ ul li a{
 	list-style-type:none;
 	float:left;
 	margin-left:20px;
-	font-family: 'EliceDigitalBaeum-Bd';
+	
 	
 }
 .fantasyListimg{
@@ -57,22 +57,22 @@ border: 1px solid green;
 .writebtn,.List,.series,.delete,.update{
 float:right;
 margin-right:10px;
-font-family: 'EliceDigitalBaeum-Bd';
+
 }
 .articleInfo{
 float:right;
-font-family: 'EliceDigitalBaeum-Bd';
+
 
 }
  .articleMain{
 text-align:center;
-font-family: 'EliceDigitalBaeum-Bd';
+
 }
 
 
 .articlecontent{
 	margin-bottom:300px;
-	font-family: 'EliceDigitalBaeum-Bd';
+	
 }
 #reply,#reply1{
 text-align:left;
@@ -80,23 +80,23 @@ border:none;
 width:1000px;
 height:100px;
 font-size:20px;
-font-family: 'EliceDigitalBaeum-Bd';
+
 
 }
 #writeNovel,#replInsert{
 float:right;
-font-family: 'EliceDigitalBaeum-Bd';
+
 } 
 #replyWrite{
 width: 100%; 
 height: 5.0em; 
 resize: none;
-font-family: 'EliceDigitalBaeum-Bd';
+
 }
 #novelWriteBtn,.novellist,.novelseries,#replDelete,#replUpdateBtn,#replUpdate,#replInsert{
 border:none;
 margin-right:5px;
-font-family: 'EliceDigitalBaeum-Bd';
+
 }
 .menubar li ul {
 list-style:none;
@@ -159,7 +159,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
   background: #333;
   color: #fff;
   font-size: 14px;
-  font-family: 'EliceDigitalBaeum-Bd';
+  
   
 }
 
@@ -185,15 +185,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 .categoryheader,#novellist img{
 cursor: pointer;
 }
-.table{
-font-family: 'EliceDigitalBaeum-Bd';
-}
-@font-face {
-    font-family: 'EliceDigitalBaeum-Bd';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_elice@1.0/EliceDigitalBaeum-Bd.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 	</style>
   <title>무료 소설</title>
