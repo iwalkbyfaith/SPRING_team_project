@@ -43,9 +43,13 @@
 	}
 	
 	h1 {
-		margin-top: 50;
+		margin-top: 70px;
+		font-style: italic;
+		line-height: 0.5;
+		color: darkgrey;
 	}
-
+	
+	
 /*메뉴바*/
 .menubar li ul {
 	list-style:none;
@@ -217,8 +221,8 @@
 		
 	</div><!-- container -->
 	<hr>
-	<h1>내 결제 내역</h1>
-	<div class="container2"> 
+	<h1>결제 내역</h1>
+	<div class="container"> 
 		
     	<c:if test="${empty chargeList}">
     		<h1>결제한 내역이 없습니다.</h1>
@@ -240,7 +244,7 @@
 			</table>
     	</c:if>
 	
-	</div><!-- container2 -->
+	</div><!-- container-->
 	
 	
 <script type="text/javascript">

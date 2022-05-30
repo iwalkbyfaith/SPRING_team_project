@@ -30,7 +30,8 @@ ul li a{
 #modDiv{
  		width : 300px;
 	 	height : 100px;
-	 	background-color : windowframe;
+	 	background-color: lightgray;
+    	color: lightgray;
 	 	position : absolute;
 	 	top : 50%;
 	 	left : 50%;
@@ -52,6 +53,10 @@ img {
 	
 }
 
+table {
+	font-size: 20px;
+}
+
 /*메뉴바*/
 .menubar li ul {
 	list-style:none;
@@ -67,7 +72,12 @@ img {
 }
 .menubar li:hover ul {
 	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-}				
+}		
+
+h2 {
+		font-style: italic;
+
+	}		
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -150,18 +160,18 @@ img {
 			
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/paid/List/${novel.novel_num }/${user.user_num}" class="btn-sm"><button class="btn btn-secondary btn-sm">목록</button></a>
+				<a href="/paid/List/${novel.novel_num }" class="btn-sm"><button class="btn btn-outline-secondary">목록</button></a>
 			</div>
 		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 추천버튼 없애기-->
 		<c:if test="${rec.user_num ne user.user_num}">
 			<div class="col-md-1">
-				<button class="recBtn">추천</button>
+				<button id="recBtn" class="btn btn-outline-secondary">추천</button>
 			</div>
 		</c:if>
 		<!-- 유료소설결제테이블과 로그인유저의 번호 비교 결제버튼 없애기-->
 		<c:if test="${use.user_num ne user.user_num}">
 			<div class="col-md-1">
-				<button class="chargeBtn">결제</button>
+				<button id="chargeBtn" class="btn btn-outline-secondary">결제</button>
 			</div>
 		</c:if>
 			<div class="col-md-1">
@@ -199,14 +209,14 @@ img {
 			
 	<div>
 		<div class="box-header">
-			<h2 class="text-primary">댓글</h2>
+			<h2 class="text text-secondary">댓글</h2>
 		</div><!-- header -->
 		<div class="box-body">
 			<strong>Writer : </strong>
 			<input type="text" id="newReplyWriter" value="${user.user_id }" class="from-control" readonly>
 			<strong>ReplyText : </strong>
 			<input type="text" id="newReplyText" placeholder="댓글내용" class="from-control">
-			<button type="button" class= "btn btn-success" id="replyAddBtn">댓글 추가</button>
+			<button type="button" class= "btn btn-outline-secondary btn-sm" id="replyAddBtn">댓글 추가</button>
 		</div><!-- body -->
 	</div>
 	
@@ -216,15 +226,15 @@ img {
 	</ul>
 	
 	<!-- mod -->
-	<div id="modDiv" style="display:none;">
+	<div id="modDiv" style="display:none;" >
 		<div class="modal-title"></div>
 		<div>
-			<input type="text" id="reply">
+			<input type="text" id="reply" class="form-control form-control-sm">
 		</div>
 		<div>
-			<button type="button" id="replyModBtn">수정</button>
-			<button type="button" id="replyDelBtn">삭제</button>
-			<button type="button" id="closeBtn">닫기</button>
+			<button type="button" id="replyModBtn" class="btn btn-outline-dark btn-sm">수정</button>
+			<button type="button" id="replyDelBtn" class="btn btn-outline-dark btn-sm">삭제</button>
+			<button type="button" id="closeBtn" class="btn btn-outline-dark btn-sm">닫기</button>
 		</div>
 	</div> 
 	
@@ -281,7 +291,7 @@ img {
 					str += "<div class='replyLi' data-prepl_num='" + this.prepl_num + "'><strong>@"
 						+ this.prepl_writer + "</strong> - " + formattedTime + "<br>"
 						+ "<div class='reply'>" + this.prepl_content + "</div>"
-						+ "<button type='button' class='btn btn-info'>수정/삭제</button>"
+						+ "<button type='button' class='btn btn-outline-secondary btn-sm'>수정/삭제</button>"
 						+ "</div>";
 					});
 				$("#replies").html(str);
@@ -412,7 +422,7 @@ img {
 		
 		
 		// ■ 결제시 코인 차감 
-		$(".chargeBtn").on("click", function(){
+		$("#chargeBtn").on("click", function(){
 			
 			if(${user.user_coin < 100}){
 				alert("코인이 부족합니다. 충전페이지로 이동합니다");
@@ -473,7 +483,7 @@ img {
 				success : function(result){
 					if(result == 'SUCCESS'){
 						alert("결제완료! 구매목록에 등록되었습니다.");
-						$(".chargeBtn").hide();
+						$("#chargeBtn").hide();
 						location.href = "/paid/detail/${novel.novel_num}/${novel.paid_num}/${user.user_num}";
 					}
 				}
@@ -481,7 +491,7 @@ img {
 		}
 		
 		// ■ 추천버튼 클릭시 유료추천테이블 적재
-		$('.recBtn').on("click",function(){
+		$('#recBtn').on("click",function(){
 			
 			var userNum = ${user.user_num};
 			

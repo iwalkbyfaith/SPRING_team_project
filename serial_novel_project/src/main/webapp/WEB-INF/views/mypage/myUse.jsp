@@ -2,72 +2,52 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <!DOCTYPE html>
 <html>
 <head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<style>
-		.social-part .fa{
-		    	padding-right:20px;
-			}
-			
-			ul li a{
-		    	margin-right: 20px;
-			}
-			.header{
-				height:100px;
-			}
-			.container{
-				height:1000px;
-			}
-			.footer{
-				height:150px;
-			}
-			#headerfLi,#headerwLi,#headerrLi,#headermLi{
-				list-style-type:none;
-				float:left;
-				margin-left:20px;
-				font-size:30px;
-				outline:solid 1px;
-			}
-			.fantasyLi , .romanceLi , .wuxiaLi , .mysteryLi{
-				list-style-type:none;
-				float:left;
-				margin-left:20px;
-				outline:solid 1px;
-			}
-			.writebtn,.List,.series{
-				float:right;
-				margin-right:10px;
-			}
-			.articleInfo{
-				float:right;
-			}
-			.articleMain{
-				text-align:center;
-			} 
 	
+	.container {
+		text-align: center;
+		display: flex;
+  		justify-content: center;
+  		padding-top: 50px;
+	}
+	
+	
+	h1 {
+		margin-top: 70px;
+		font-style: italic;
+		line-height: 0.5;
+		color: darkgrey;
+	}
+
+/*메뉴바*/
 .menubar li ul {
-list-style:none;
-background: yellowgreen;
-display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
-height:auto;
-padding:0px;
-margin:0px;
-border:0px;
-position:absolute;
-width:200px;
-z-index:200;
+	list-style:none;
+	background: yellowgreen;
+	display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+	height:auto;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	position:absolute;
+	width:200px;
+	z-index:200;
 }
 .menubar li:hover ul {
-display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-}
-	
+	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}	
 
-	</style>
+body h1{
+	color: darkgrey;
+	margin-top: 50px;
+}		
+</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
 <!--<link rel="styleshett" href="header-navi.css"> ◀ 헤더 네비바 css -->
@@ -146,8 +126,11 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
      <sec:authentication property="principal.user" var="user"/>
      
    
-	  <h1>내 구매 목록</h1>
-     	
+	 <h1>내 구매 목록</h1>
+	 <hr>
+	 
+     <div class="container"> 
+     
      	<c:if test="${empty useList}">
     		<h1>구매한 내역이 없습니다.</h1>
     	</c:if>
@@ -160,14 +143,14 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 				</tr>
 				<c:forEach var="use" items="${useList }">
 					<tr>
-						<td><a href ="/paid/detail/${use.novel_num}/${use.paid_num}/${user.user_num}">${use.paid_title}</a></td>
-						<td>${use.use_count}</td>
+						<td><a href ="/paid/detail/${use.novel_num}/${use.paid_num}/${user.user_num}" style="text-decoration:none">${use.paid_title}</a></td>
+						<td>${use.use_count} Coin</td>
 						<td>${use.use_date}</td>
 					</tr>
 				</c:forEach>
 			</table>
 		</c:if>
-    
+    </div><!-- container -->
     
      
   

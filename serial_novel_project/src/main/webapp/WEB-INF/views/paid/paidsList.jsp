@@ -42,6 +42,16 @@ img {
 	width: 230px;
 	
 }
+table {
+	font-size: 20px;
+}
+
+td p {
+	font-size: 10px;
+}
+
+
+
 </style>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <meta charset="UTF-8">
@@ -115,13 +125,13 @@ img {
 			      <td>${novelList.novel_week }</td>
 			    </tr>
 			    <tr>
-			      <th scope="row">${novelList.novel_end }</th>
+			      <th scope="row">${novelList.novel_end eq true ? '완결' : '연재중'}</th>
 			    <!-- fav 데이터 유무에 따라 보여주는 버튼 -->
 				<c:if test="${fav eq null}">
-			      <td><button id="addfavBtn">♡</button></td>
+			      <td><button id="addfavBtn" class="btn btn-outline-danger btn-lg" >♡</button></td>
 				</c:if>
 				<c:if test="${fav ne null}">
-			      <td><button id="delfavBtn">♥</button></td>
+			      <td><button id="delfavBtn" class="btn btn-outline-danger btn-lg">♥</button></td>
 				</c:if>
 			    </tr>
 			  </tbody>
@@ -140,10 +150,10 @@ img {
 				<c:forEach var="paid" items="${paidList }">
 						<tr>
 							<td>${paid.paid_snum }</td>
-							<td><a href="/paid/detail/${paid.novel_num }/${paid.paid_num }/${user.user_num}">${paid.paid_title }</a></td>
+							<td><a href="/paid/detail/${paid.novel_num }/${paid.paid_num }/${user.user_num}" >${paid.paid_title }</a></td>
 							<td>${paid.paid_hit }</td>
 							<td>${paid.paid_rec }</td>
-							<td>${paid.paid_price }</td>
+							<td>${paid.paid_price } Coin</td>
 							<td>${paid.paid_rdate }</td>
 						</tr>
 					</c:forEach>
