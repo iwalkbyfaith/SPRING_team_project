@@ -14,8 +14,11 @@ import com.novel.free.domain.SearchCriteria;
 import com.novel.free.mapper.FreeNovelMapper;
 import com.novel.free.mapper.FreeReplyMapper;
 
+import lombok.extern.log4j.Log4j;
+
 
 @Service
+@Log4j
 public class FreeNovelServiceImpl implements FreeNovelService{
 	
 	@Autowired
@@ -86,7 +89,11 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	
 	@Override
 	public void addhit (FreeNovelVO vo) {
+		System.out.println("증가전 vo : " + vo);
+		System.out.println("조회수 증가 전 :" + vo.getFree_hit());
 		vo.setFree_hit(vo.getFree_hit()+1);
+		System.out.println("증가후 vo : " + vo);
+		System.out.println("조회수 증가 확인 : "+ vo.getFree_hit());
 		freeMapper.addhit(vo);
 		
 	}

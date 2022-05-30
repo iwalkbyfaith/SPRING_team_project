@@ -164,16 +164,13 @@ public class FreeNovelController {
 		return entity;
 }
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-			value="hit/{freeNum}",
-			consumes="application/json",
+			value="/hit",
+			
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> addhit(
-			@RequestBody FreeNovelVO vo,
-			@PathVariable("freeNum") Long freeNum){
+			@RequestBody FreeNovelVO vo){
 		ResponseEntity<String> entity = null;
 		try {	
-			vo.setFree_num(freeNum);
-			
 			service.addhit(vo);
 			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);

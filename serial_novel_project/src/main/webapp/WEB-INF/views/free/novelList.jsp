@@ -128,11 +128,22 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
   display: inline-block;
 }
 
-#favorDelete img,#favorInsert img,#bookmarkInsert img,#bookmarkDelete img,#recInsert img,#recDelete img{
+#favorDelete img,#favorInsert img,#bookmarkInsert img,#bookmarkDelete img{
   display: flex;
   width: 100px;
   padding: 2px 16px;
   cursor: pointer;
+}
+#recInsert ,#recDelete{
+ 	display: flex;
+  justify-content: center;
+} 
+#recInsert img,#recDelete img{
+  display: flex;
+  width: 100px;
+  padding: 2px 16px;
+  cursor: pointer;
+  
 }
 
 /* 말풍선 적절한 top 과 margin-left 로 위치조정 */
@@ -183,6 +194,7 @@ font-family: 'EliceDigitalBaeum-Bd';
     font-weight: normal;
     font-style: normal;
 }
+
 	</style>
   <title>무료 소설</title>
   <meta charset="utf-8">
@@ -335,6 +347,8 @@ font-family: 'EliceDigitalBaeum-Bd';
 	<div class="articleMain">
 	<div class="articleTitle"></div>
 	<div class="articleContent"></div>
+	<div class="rec" style="display:none;">
+	</div>
 	</div>
 	
 	<div class="repl" style="display:none;">
@@ -521,8 +535,7 @@ font-family: 'EliceDigitalBaeum-Bd';
                 </td>
                 </tr>
         </table>
-	<div class="rec" style="display:none;">
-	</div>
+	
 
 
 
@@ -950,7 +963,8 @@ console.log(novelNum);
 				 }
 				
 				str+= "<tr><td>"+this.free_snum+"</td>"
-					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
+					+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"
+					+ novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 					+ "<td>"+this.novel_writer+"</td>"
 					+ "<td>"+formattedTime1+"</td>"
 					+ "<td>"+formattedTime2+"</td></tr>"
@@ -1306,44 +1320,6 @@ $(".content").hide();
 $(".table").hide();
 $(".writebtn").hide();
 $(".favor").hide();
-//■ 조회수 올리는 로직.
-let newHit="";
-$.ajax({
-	type : 'put',
-	url : '/free/hit/' + freeNum,
-	beforeSend : function(xhr){
-		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	},
-	header : {
-		"Content-Type" : "application/json",
-		"X-HTTP-Method-Override" : "PUT"
-	},
-	contentType : "application/json",
-	dataType : 'text',
-	data: JSON.stringify({
-		free_num : freeNum	
-	}),
-	success : function(result) {
-		
-		if(result == 'SUCCESS'){
-			
-			let str = "";
-			var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
-			$.getJSON(url, function(data){
-			
-				$(data).each(function(){
-					newHit = this.free_hit;
-				});
-				newHit = Number(newHit);
-				
-				str+= "<strong>조회수 : </strong>" + newHit;
-				
-				$("#hitCount").html(str);	
-			});
-			
-		}
-		}
-		});
 
 
 // ■ 책갈피 넣는 로직 .
@@ -1413,11 +1389,19 @@ $.getJSON(url, function(data){
 	let str3 =	"";
 	let str4 =	"";
 	let str5 =	"";
+	let freeHit = "";
 	
-	console.log(data);
+	
+	
+	
+	
+	
+	
 	
 	$(data).each(
 			function(){
+				freeHit =this.free_hit;
+				freeHit=Number(freeHit);
 				
 				let timestamp = this.free_rdate;
 				let date = new Date(timestamp);
@@ -1426,7 +1410,7 @@ $.getJSON(url, function(data){
 				if(this.free_content2 == null){
 					str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 					str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+newHit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
+					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4>";
 					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
@@ -1435,7 +1419,7 @@ $.getJSON(url, function(data){
 				else{
 					str2+= "<p>작가 :"+ this.novel_writer +"</p>";
 					str3+= "<p>작성일 : " + formattedTime + "</p>"; 
-					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+newHit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
+					str4+= "<div id='hitCount'><strong>조회수 : </strong>"+this.free_hit+"</div><div id='recCount'><strong>추천수 : </strong>" + this.free_rec+"</div>";
 					str5+= "<h2>제목 :"+ this.free_title+"</h2>";
 					str+= "<h4>"+this.free_content1+"</h4> <h4>"+this.free_content2+"</h4>";
 					str1+= "<button class='novelSeries' data-novelNum='"+this.novel_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+user_id+"'>회차목록</button>";
@@ -1451,6 +1435,49 @@ $.getJSON(url, function(data){
 				$(".series").html(str1);
 				
 			});
+	//■ 조회수 올리는 로직.
+	let newHit="";
+	$.ajax({
+		type : 'put',
+		url : '/free/hit', 
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
+		header : {
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "PUT"
+		},
+		contentType : "application/json",
+		dataType : 'text',
+		data: JSON.stringify({
+			free_num : freeNum,
+			free_hit : freeHit
+		}),
+		success : function(result) {
+			
+			if(result == 'SUCCESS'){
+				
+				let str = "";
+				var url = "/free/novel/detail/"+ freeSNum +"/"+novelNum;
+				$.getJSON(url, function(data){
+				
+					$(data).each(function(){
+						newHit = this.free_hit;
+					});
+					newHit = Number(newHit);
+					console.log("새 조회수 타입 :"+typeof(newHit));
+					console.log("새 조회수 : " + newHit);
+					str+= "<strong>조회수 : </strong>" + newHit;
+					
+										
+					$("#hitCount").html(str);	
+				});
+				
+			}
+			}
+			});
+	
+	
 });
 
 
@@ -1526,6 +1553,9 @@ $.getJSON(url, function(data){
 	
 	
 });
+	
+	
+
 	if(id == user_id){
 	$(".delete").show("slow");
 	$(".update").show("slow");

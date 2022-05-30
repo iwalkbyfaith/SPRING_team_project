@@ -12,7 +12,7 @@ public class FreeNovelJoinVO {
     private Date free_mdate;				// 최종 수정 날짜
     private String free_content1; 		 	// 무료 소설 내용1
     private String free_content2; 		 	// 무료 소설 내용2
-    private String free_hit; 		  		// 조회수
+    private long free_hit; 		  			// 조회수
     private String free_rec; 		  		// 추천수
     private int novel_end;					// 완결 여부
     private String novel_writer;		  	// 소설 작가
