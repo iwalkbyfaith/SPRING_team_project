@@ -79,7 +79,6 @@ public class TournamentWorkController {
 	}
 	
 	// ■ 05.14 토너먼트 2 or 4강에 들어갈 작품 적재하기(없는 경우) & 가져오기
-	@Transactional
 	@GetMapping(value="/getList/{to_num}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	public ResponseEntity<List<TournamentJoinVO>> addAndGet2or4list(@PathVariable("to_num") long to_num){
 		

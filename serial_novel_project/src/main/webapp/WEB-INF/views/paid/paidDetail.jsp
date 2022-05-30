@@ -76,6 +76,8 @@ img {
 <title>Insert title here</title>
 </head>
 <body>
+
+	
 	<div class="header">
 	<sec:authentication property="principal.user" var="user"/>
 	<nav class="navbar navbar-expand-sm   navbar-light bg-light">
@@ -415,35 +417,37 @@ img {
 		$(".chargeBtn").on("click", function(){
 			
 			if(${user.user_coin < 100}){
+				
+				console.log(typeof(${user.user_coin}));
 				alert("코인이 부족합니다. 충전페이지로 이동합니다");
 				location.href = "/charge/${user.user_num}";
 			} else{
-			var coin = ${novel.paid_price}
-			var userNum = ${user.user_num};
-			
-			// 코인 차감
-			$.ajax({
-				type : 'patch', 
-				url : '/remove',
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					},
-				header : {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "PATCH" 
-				},
-				contentType : "application/json",
-				data : JSON.stringify({
-					user_coin : coin,
-					user_num : userNum
-					}),
-				dataType : 'text',
-				success : function(result){
-					if(result == 'SUCCESS'){
-						addUse();
-					}
-				}
-			});
+					var coin = ${novel.paid_price}
+					var userNum = ${user.user_num};
+					console.log(typeof(${user.user_coin}));
+					// 코인 차감
+					$.ajax({
+						type : 'patch', 
+						url : '/remove',
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
+						header : {
+							"Content-Type" : "application/json",
+							"X-HTTP-Method-Override" : "PATCH" 
+						},
+						contentType : "application/json",
+						data : JSON.stringify({
+							user_coin : coin,
+							user_num : userNum
+							}),
+						dataType : 'text',
+						success : function(result){
+							if(result == 'SUCCESS'){
+								addUse();
+							}
+						}
+					});
 			}
 		});
 		

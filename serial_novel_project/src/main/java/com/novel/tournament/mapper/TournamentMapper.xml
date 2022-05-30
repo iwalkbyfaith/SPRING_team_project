@@ -109,17 +109,19 @@
 
         SELECT * FROM (
 	        SELECT tt2.* FROM ( 
-	            SELECT tt1.to_num, tt1.to_name, tt1.towork_num, nt.novel_title, nt.novel_writer, tt1.towork_rec, nt.novel_num FROM
-	                (SELECT tt.to_num, tt.to_name, tot.towork_num, tot.towork_rec, tot.novel_num FROM
-	                    towork_tbl tot
-	                LEFT JOIN
-	                    tourna_tbl tt
-	                ON
-	                    tot.to_num = tt.to_num) tt1
-	            LEFT JOIN
-	                novel_tbl nt
-	            ON 
-	                tt1.novel_num = nt.novel_num
+	            SELECT tt1.to_num, tt1.to_name, tt1.towork_num, nt.novel_title, nt.novel_writer, tt1.towork_rec, nt.novel_num 
+	            	FROM
+	                	(SELECT tt.to_num, tt.to_name, tot.towork_num, tot.towork_rec, tot.novel_num 
+	                		FROM
+	                			towork_tbl tot
+	                		LEFT JOIN
+	                    		tourna_tbl tt
+	                		ON
+	                    		tot.to_num = tt.to_num) tt1
+	            	LEFT JOIN
+	                	novel_tbl nt
+	            	ON 
+	                	tt1.novel_num = nt.novel_num
 	            ) tt2
 	        LEFT JOIN
 	            (
