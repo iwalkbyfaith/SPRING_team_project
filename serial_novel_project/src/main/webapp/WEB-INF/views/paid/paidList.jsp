@@ -40,8 +40,36 @@ img {
 	height: 170px;
 }
 
+ul li a{
+	    	margin-right: 20px;
+		}
+		.header{
+			height:100px;
+		}
+		.container
+{
+			height:1000px;
+		}
+		.footer{
+			height:150px;
+	}
 
-				
+/*메뉴바*/
+.menubar li ul {
+	list-style:none;
+	background: yellowgreen;
+	display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+	height:auto;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	position:absolute;
+	width:200px;
+	z-index:200;
+}
+.menubar li:hover ul {
+	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}				
 		
 </style>
 <meta charset="UTF-8">
@@ -49,8 +77,9 @@ img {
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <body>
-	<!-- ■ 상단 네비바 -->
+	<!-- ■ 상단 네비바 추가하기 3)-->
 	<div class="header">
+	<sec:authentication property="principal.user" var="user"/>
 	    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
 	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
 	          <span class="navbar-toggler-icon"></span>
@@ -61,9 +90,7 @@ img {
 			            <li class="nav-item">
 			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
 			            </li>
-			            <li class="nav-item">
-			              	<a class="nav-link" href="#">About</a>
-			            </li>
+			           
 			            <li class="nav-item dropdown dmenu">
 			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 			              		소설 선택
@@ -79,16 +106,38 @@ img {
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num }">결제</a>
+		               </li>
 		          </ul><!-- ul 태그 끝 -->
-		          <div class="social-part">
-		            <sec:authorize access="isAuthenticated()">
-		            <a href="/mypage/myInfo">내 정보</a></i>
-		            </sec:authorize>
-		            <sec:authorize access="isAnonymous()">
-		            <i class="join"><a href="/secu/join">join</a></i>
-					<i class="login"><a href="/customLogin">login</a></i>
-					</sec:authorize>
-		          </div>
+			         <!-- 검색창 -->
+			         <div class="row">	  	
+					  	<form action="/paid/novelList" method="get">
+					  		<!-- select태그를 이용해 클릭시 검색조건을 선택할수 있도록 처리합니다. -->
+					  		<select name="searchType">
+					  			<!-- 검색조건을 option태그를 이용해 만듭니다. -->
+					  			<option value="n">-</option>
+					  			<option value="t" ${pageMaker.cri.searchType eq 't' ? 'selected' : ''}>제목</option>
+					  			<option value="w" ${pageMaker.cri.searchType eq 'w' ? 'selected' : ''}>작가</option>
+					  			<option value="tcw" ${pageMaker.cri.searchType eq 'tw' ? 'selected' : ''}>제목+작가</option>
+					  		</select>
+					  		<input type="text" name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
+					  		<input type="submit" value="Search">
+					  	</form>
+				  	</div><!-- 검색 끝 -->
+				<div class="menubar">
+					<ul> 	
+						<li style="list-style:none;"><a href="#" id="current">내정보</a>
+							<ul>
+								<li><a href="/mypage/myInfo">계정정보</a></li>
+								<li><a href="/mypage/myFavor">선호작</a></li>
+								<li><a href="/mypage/bookmark">책갈피</a></li>
+								<li><a href="/useList/${user.user_num }">구매내역</a></li>
+								<li><a href="/customLogout">로그아웃</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- menuar 끝 -->
 	        </div><!-- div 끝 -->
 	    </nav><!-- 네비바 끝 -->
      </div><!-- header 끝 --> 
@@ -96,7 +145,7 @@ img {
  
     <!-- ■ 유료 소설 조회수 베스트 -->
     <div class="week">
-    	<sec:authentication property="principal.user" var="user"/>
+    	
      	<div class='weekView'>
      		<div class="listTitle">월요소설</div>
      		<div class="weekBody">
@@ -161,22 +210,17 @@ img {
     
     <div class="footer">
 	     
-	     	<div class="row">	  	
-				<!-- 검색창 -->
-			  	<form action="/paid/novelList" method="get">
-			  		<!-- select태그를 이용해 클릭시 검색조건을 선택할수 있도록 처리합니다. -->
-			  		<select name="searchType">
-			  			<!-- 검색조건을 option태그를 이용해 만듭니다. -->
-			  			<option value="n">-</option>
-			  			<option value="t" ${pageMaker.cri.searchType eq 't' ? 'selected' : ''}>제목</option>
-			  			<option value="w" ${pageMaker.cri.searchType eq 'w' ? 'selected' : ''}>작가</option>
-			  			<option value="tcw" ${pageMaker.cri.searchType eq 'tw' ? 'selected' : ''}>제목+작가</option>
-			  		</select>
-			  		<input type="text" name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
-			  		<input type="submit" value="Search">
-			  	</form>
-		  	</div>
-		  	
 	  </div><!-- footer -->
+	  
+	  <script>
+		// 네비 메뉴바 마우스 호버하는 경우 (소설 선택 -> 유료/무료 소설 페이지 뜨도록)
+	     $(document).ready(function () {
+	     $('.navbar-light .dmenu').hover(function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+	         }, function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+	         });
+	     });
+	  </script>
 </body>
 </html>

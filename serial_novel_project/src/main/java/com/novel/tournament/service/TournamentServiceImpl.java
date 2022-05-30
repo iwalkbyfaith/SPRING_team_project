@@ -29,16 +29,52 @@ public class TournamentServiceImpl implements TournamentService{
 		return mapper.getList();
 	}
 	
-	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
-		@Override
-		public List<Integer> select8ToworkRecord() {
-			return mapper.select8ToworkRecord();
-		}
+
+		
+	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	@Transactional
+	@Override
+	public void check8ToworkRecord() {
+		// 8강에 적재된 데이터가 있는지 확인
+			List<TournamentWorkVO> record8 = mapper.getTournamentData(1);
+			log.info(record8);
+			
+			// 8강 데이터가 없다면 적재
+			if(record8.isEmpty()) {
+				log.info("▼ 8강 데이터가 없다면 적재");
+				List<Integer> list8 = mapper.select8ToworkRecord();
+				log.info(list8);
+				
+				for(int novel_num : list8) {
+					TournamentWorkVO vo = new TournamentWorkVO();
+					vo.setNovel_num(novel_num);
+					vo.setTo_num(1);
+					log.info("생성된 new vo");
+					log.info(vo);
+					mapper.insert8Towork(vo);
+				}
+			}
+		
+	}
 	
-		@Override
-		public void insert8Towork(TournamentWorkVO vo) {
-			mapper.insert8Towork(vo);
+		
+	// ■ 05.14 토너먼트 2 or 4강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	@Transactional
+	@Override
+	public void check2or4ToworkRecord(long to_num, int rownum) {
+		
+		// ● 2 or 4강에 적재된 데이터가 있는지 확인
+		List<TournamentWorkVO> record = mapper.getTournamentData(to_num+1);
+		log.info("▼ 4강 혹은 2강의 데이터가 있다면");
+		log.info(record);
+	
+		// ● 데이터가 없다면 적재
+		if(record.isEmpty()) {
+			log.info("▶ 4강 혹은 2강의 데이터가 없어서 DB에 적재");
+			mapper.insertTowork2or4(to_num, rownum);
 		}
+		
+	}
 		
 	// ■ 05.14 토너먼트 조회(이미 추가되었는지 확인하기 위해)
 	@Override
@@ -139,6 +175,13 @@ public class TournamentServiceImpl implements TournamentService{
 		
 	}
 
+
+
+	
+
+
+	
+	
 	
 	
 	
@@ -174,6 +217,17 @@ public class TournamentServiceImpl implements TournamentService{
 //	@Override
 //	public List<TournamentJoinVO> listTournamentWork2() {
 //		return mapper.getToWorkList2();
+//	}
+//	
+//	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
+//	@Override
+//	public List<Integer> select8ToworkRecord() {
+//		return mapper.select8ToworkRecord();
+//	}
+//
+//	@Override
+//	public void insert8Towork(TournamentWorkVO vo) {
+//		mapper.insert8Towork(vo);
 //	}
 
 

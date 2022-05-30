@@ -93,24 +93,33 @@
 			
 			/* 여기부터 조회수, 추천수 리스트 관련 */
 				.bestTotalView, .bestTotalHit{ 
-					background-color : whitesmoke;
+					/*background-color : whitesmoke;*/
 					width : 100%;
 					height : 350px;
 					
 				}
+				.bestBody{
+					background-color : whitesmoke;
+					/*background-color : 	#d2d2d2;*/
+					height : 320px;
+					text-align : center;
+					margin: 10px 0px 50px 0px;
+				}
+				.listtitle{
+					margin: 1px 0px 0px 8px;
+				}
+				
 				.work{
-					float : left;
+					
 					border : 1px solid black;
 					padding: 10px 12px;
 					margin : 30px;
-					background-color : #c8c8c8;
-					text-align : center;
+					/*background-color : #c8c8c8;*/
+					background-color : white;
+
+					display:inline-block;  zoom:1;
 				}
-				.bestBody{
-					background-color : 	#d2d2d2;
-					height : 320px;
-					text-align : center;
-				}
+				
 				.work img {
 					
 					width: 130px;
@@ -126,10 +135,28 @@
 					margin : 0px 5px;
 				}
 				.listtitle{
-					font-size : 20px;
+					font-weight : bold;
+					text-align : center;
 				}
+				
 			
-			
+				
+.menubar li ul {
+list-style:none;
+background: yellowgreen;
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+}
+.menubar li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}
+	
 	</style>
 <meta charset="UTF-8">
 <meta charset="utf-8">
@@ -155,9 +182,7 @@
 			            <li class="nav-item">
 			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
 			            </li>
-			            <li class="nav-item">
-			              	<a class="nav-link" href="#">About</a>
-			            </li>
+			           
 			            <li class="nav-item dropdown dmenu">
 			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 			              		소설 선택
@@ -173,10 +198,25 @@
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+		               </li>
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <sec:authorize access="isAuthenticated()">
-		            <a href="/mypage/myInfo">내 정보</a></i>
+		            <div class="menubar">
+		            <ul> 	
+    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
+        	 <ul>
+           <li><a href="/mypage/myInfo">계정정보</a></li>
+           <li><a href="/mypage/myFavor">선호작</a></li>
+           <li><a href="/mypage/bookmark">책갈피</a></li>
+           <li><a href="/secu/customLogout">로그아웃</a></li>
+           
+     	    </ul>
+   			   </li>
+      			</ul>
+      			</div>
 		            </sec:authorize>
 		            <sec:authorize access="isAnonymous()">
 		            <i class="join"><a href="/secu/join">join</a></i>
@@ -207,7 +247,7 @@
      	<div class="crsOutter">
 	     	<div class="carousel">
 	     		<div class="innerCrs">
-	     			<a href="#"><img src="/resources/carousel/1.png"></a>
+	     			<a href="http://localhost:8181/enroll/list"><img src="/resources/carousel/1.png"></a>
 	     		</div>
 	     		<div class="innerCrs">
 	     			<a href="http://localhost:8181/tourna/list2"><img src="/resources/carousel/2.png"></a>
@@ -224,7 +264,7 @@
 	     	<button id="crsBtn2" class="btn btn-light btn btn-secondary btn-sm">　</button>
 	     	<button id ="crsBtn3" class="btn btn-light btn btn-secondary btn-sm">　</button>
 			<button id ="next" class="btn btn-light btn btn-secondary btn-sm">　</button>
-		</div>
+		</div><br/><br/>
 		
 		
 		
@@ -302,11 +342,7 @@
      	</script>
      
   
-  
-     
-    <a href="/secu/join">join</a>
-	<a href="/customLogin">login</a>
-    <a href="/charge">결제</a>
+ 
     
 
 
@@ -316,7 +352,7 @@
      	<!-- ■ 유료 소설 조회수 베스트 -->
     	
      	<div class='bestTotalView'>
-     		<div class="listTitle">유료소설 조회수 베스트 '.bestTotalView'</div>
+     		<h2 class="listTitle">유료소설 조회수 베스트</h2><!-- .bestTotalView -->
      		<div class="bestBody">
      			
      			<c:forEach var="view" items="${paidViewList}">
@@ -330,14 +366,14 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
      
      
-     	<!-- ■ 유료 소설 조회수 베스트 -->
+     	<!-- ■ 유료 소설 추천수 베스트 -->
      	     
      	<div class='bestTotalHit'>
-     		<div class="listTitle">유료 소설 추천수 베스트 '.bestTotalFav'</div>
+     		<h2 class="listTitle">유료소설 추천수 베스트</h2><!-- .bestTotalFav -->
      		<div class="bestBody">
      			
      			<c:forEach var="rec" items="${paidRecList}">
@@ -351,7 +387,7 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
      
      
@@ -361,7 +397,7 @@
        	<!-- ■ 무료 소설 조회수 베스트 -->
        	
      	<div class='bestTotalView'>
-     		<div class="listTitle">무료소설 조회수 베스트 '.bestTotalView'</div>
+     		<h2 class="listTitle">무료소설 조회수 베스트</h2><!-- .bestTotalView -->
      		<div class="bestBody">
      			
      			<c:forEach var="view" items="${freeViewList}">
@@ -376,14 +412,14 @@
      			
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
      
 		
 		
 		
        	<!-- ■ 무료 소설 추천수 베스트 -->		
 		<div class='bestTotalHit'>
-     		<div class="listTitle">무료소설 추천수 베스트 '.bestTotalFav'</div>
+			<h2 class="listTitle">무료소설 추천수 베스트</h2><!-- .bestTotalFav -->
      		<div class="bestBody">
      			
      			<c:forEach var="rec" items="${freeRecList}">
@@ -397,7 +433,7 @@
      			</c:forEach>
      			
      		</div><!-- 바디 -->
-     	</div><!-- 제일 바깥 --> <br/><br/>
+     	</div><!-- 제일 바깥 --> <br/><br/><br/>
 
 
 

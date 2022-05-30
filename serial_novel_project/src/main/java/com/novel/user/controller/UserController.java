@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.user.domain.BookmarkVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.service.UserService;
 
@@ -75,13 +76,39 @@ public class UserController {
 	
 	@GetMapping("/bookmark")
 	public String bookmark(Principal principal,Model model){
-		log.info("책갈피 접근");
+		
+		System.out.println("책갈피 접근");
+		
+		String user_id = principal.getName();
+		
+		System.out.println("받아온 아이디 : " + user_id);
+		
+		model.addAttribute("user_id",user_id);
+		 
+		List<BookmarkVO> BookmarkList = service.selectBookmarkList(user_id);
+		
+		model.addAttribute("BookmarkList",BookmarkList);
+		
+		
+		System.out.println(BookmarkList);
 		
 		
 		return "mypage/bookmark";
 		}
 	
-	
+	@GetMapping("/bookmarkDetail/{freeNum}/{userNum}")
+	public String bookmarkDetail(@PathVariable long freeNum,@PathVariable long userNum,Principal principal,Model model){
+				
+		service.selectBookmarkDetail(freeNum, userNum);
+		
+		List<BookmarkVO> BookmarkList = service.selectBookmarkDetail(freeNum, userNum);
+		
+		model.addAttribute("BookmarkList",BookmarkList);
+		
+		
+		
+		return "mypage/bookmarkDetail";
+		}
 	
 		
 

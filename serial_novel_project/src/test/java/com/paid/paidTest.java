@@ -22,7 +22,7 @@ public class paidTest {
 	@Autowired
 	private PaidNovelMapper mapper;
 	
-	@Test
+	//@Test
 	public void getxxxx(){
 		String user_id = "user0";
 		log.info(user_id);
@@ -30,8 +30,8 @@ public class paidTest {
 		long user_num = mapper.getUserNumber(user_id);
 		log.info(user_num);
 		
-		PaidFavVO fav= mapper.favList(1, user_num);
-		log.info(fav);
+		//PaidFavVO fav= mapper.favList(1, user_num);
+		//log.info(fav);
 		
 	}
 

@@ -46,6 +46,28 @@ img {
 	margin-left: 24px;
 	padding:0;
 }
+
+.imgTh{
+	width: 230px;
+	
+}
+
+/*메뉴바*/
+.menubar li ul {
+	list-style:none;
+	background: yellowgreen;
+	display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+	height:auto;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	position:absolute;
+	width:200px;
+	z-index:200;
+}
+.menubar li:hover ul {
+	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}				
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -55,66 +77,61 @@ img {
 </head>
 <body>
 	<div class="header">
+	<sec:authentication property="principal.user" var="user"/>
 	<nav class="navbar navbar-expand-sm   navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item dropdown dmenu">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-              소설 선택
-            </a>
-            <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">무료소설</a>
-              <a class="dropdown-item" href="#">유료소설</a>
-              </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">자유게시판</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">토너먼트</a>
-          </li>
-           <!-- <li class="nav-item dropdown dmenu">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-              Dropdown link
-            </a>
-            <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">Link 1</a>
-              <a class="dropdown-item" href="#">Link 2</a>
-              <a class="dropdown-item" href="#">Link 3</a>
-              <a class="dropdown-item" href="#">Link 4</a>
-              <a class="dropdown-item" href="#">Link 5</a>
-              <a class="dropdown-item" href="#">Link 6</a>
-            </div>
-          </li> -->
-          </ul>
-          <div class="social-part">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </div>
-        </div>
-      </nav>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	
+        	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			            <li class="nav-item">
+			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
+			            </li>
+			           
+			            <li class="nav-item dropdown dmenu">
+			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			              		소설 선택
+			            	</a>
+			            	<div class="dropdown-menu sm-menu">
+			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
+			              	</div>
+			          	</li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
+			          </li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
+			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num }">결제</a>
+		               </li>
+		          </ul><!-- ul 태그 끝 -->
+				<div class="menubar">
+					<ul> 	
+						<li style="list-style:none;"><a href="#" id="current">내정보</a>
+							<ul>
+								<li><a href="/mypage/myInfo">계정정보</a></li>
+								<li><a href="/mypage/myFavor">선호작</a></li>
+								<li><a href="/mypage/bookmark">책갈피</a></li>
+								<li><a href="/useList/${user.user_num }">구매내역</a></li>
+								<li><a href="/customLogout">로그아웃</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- menuar 끝 -->
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
 	</div>
 	<div class="container">
-	<sec:authentication property="principal.user" var="user"/>
 	
-	<hr>
 		<h2 class="text text-info">${novel.novel_title }</h2>
 		
 			<table class="table caption-top table-sm">
 			  <tbody>
 			    <tr>
-			    	<th rowspan="5"><img src='/resources/novel_image/${novel.novel_num}.png' ></th>
+			    	<th class="imgTh" rowspan="5"><img src='/resources/novel_image/${novel.novel_num}.png' ></th>
 			      <th scope="row">회차제목</th>
 			      	<td>${novel.paid_title }</td>
 			      <th scope="row">작가</th>
@@ -133,7 +150,7 @@ img {
 			
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/paid/List/${novel.novel_num }/${user.user_num}" class="btn-sm"><button class="btn-sm">목록</button></a>
+				<a href="/paid/List/${novel.novel_num }/${user.user_num}" class="btn-sm"><button class="btn btn-secondary btn-sm">목록</button></a>
 			</div>
 		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 추천버튼 없애기-->
 		<c:if test="${rec.user_num ne user.user_num}">
@@ -518,6 +535,15 @@ img {
 			});
 			
 		}
+		
+		// 네비 메뉴바 마우스 호버하는 경우 (소설 선택 -> 유료/무료 소설 페이지 뜨도록)
+	     $(document).ready(function () {
+	     $('.navbar-light .dmenu').hover(function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+	         }, function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+	         });
+	     });
 	</script>
 	<div class="footer">
 	

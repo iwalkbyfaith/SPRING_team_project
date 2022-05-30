@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.free.domain.FreeRecVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 import com.novel.user.domain.FavorVO;
@@ -35,8 +36,20 @@ public interface FreeNovelMapper {
 		
 	public int countPageNum(SearchCriteria cri);									// 작품 페이지 
 
+	// ■ 무료소설 추천한 아이디 리스트 불러오기
+	public List<FreeRecVO> selectRecList(long free_num);
 	
-
+	// ■ 무료소설 추천한 아이디 테이블에 저장
+	public void insertRec(FreeRecVO vo);	
+	
+	// ■ 무료소설 추천을 하면 동시에 무료소설의 추천수가 올라야함.
+	public void addRec(FreeRecVO vo);
+	
+	// ■ 무료소설 추천한 아이디 테이블에 삭제
+	public void deleteRec(FreeRecVO vo);
+	
+	// ■ 무료소설 추천을 하면 동시에 무료소설의 추천수가 내려가야함.
+	public void subtractRec(FreeRecVO vo);
 	
 		
 }

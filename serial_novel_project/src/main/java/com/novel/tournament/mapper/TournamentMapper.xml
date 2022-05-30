@@ -12,7 +12,11 @@
 	<!-- ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기 (select로 조건에 맞게 가져와서 insert로 넣어줌) -->
 		<select id="select8ToworkRecord" resultType="int">
 			<![CDATA[
-			SELECT novel_num FROM (SELECT fb.novel_num FROM free_tbl fb GROUP BY fb.novel_num ORDER BY sum(fb.free_rec)*10 + sum(fb.free_hit) DESC) WHERE rownum <= 8
+			SELECT novel_num 
+				FROM 
+			(SELECT fb.novel_num FROM free_tbl fb GROUP BY fb.novel_num ORDER BY sum(fb.free_rec)*10 + sum(fb.free_hit) DESC) 
+				WHERE 
+			rownum <= 8
 			]]>
 		</select>
 	

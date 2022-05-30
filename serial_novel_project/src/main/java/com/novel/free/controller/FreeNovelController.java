@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.novel.free.domain.FreeNovelJoinVO;
 import com.novel.free.domain.FreeNovelVO;
+import com.novel.free.domain.FreeRecVO;
 import com.novel.free.domain.NovelVO;
 import com.novel.free.service.FreeNovelService;
 import com.novel.service.SecurityService;
+import com.novel.user.domain.BookmarkVO;
 import com.novel.user.domain.FavorVO;
 import com.novel.user.service.UserService;
 
@@ -220,5 +222,77 @@ public class FreeNovelController {
 		return entity;
 		
 	}
+	@GetMapping(value="/bookmark/{userId}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<BookmarkVO>> selectbookmark(@PathVariable("userId") String userId){
+		
+		log.info(userId);
+		
+		ResponseEntity<List<BookmarkVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(userService.selectBookmarkList(userId), HttpStatus.OK);
+			
+			log.info(entity);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
+	}
+	
+	@GetMapping(value="/rec/{free_num}", produces = {MediaType.APPLICATION_ATOM_XML_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<FreeRecVO>> selectRec(@PathVariable("free_num") long free_num){
+		
+		ResponseEntity<List<FreeRecVO>> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>(service.selectRecList(free_num), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);	
+		}
+		
+		return entity;
+		
+	}
+	
+	
+	@PostMapping(value="insert/rec", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> insertRec(
+			@RequestBody FreeRecVO vo){
+		
+		log.info(vo);
+		ResponseEntity<String> entity = null;
+		try {
+		
+			service.insertRec(vo);
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+			
+		} catch(Exception e) {
+		
+			entity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@DeleteMapping(value="delete/rec",consumes="application/json",
+			produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> deleteRec(@RequestBody FreeRecVO vo){
+
+		ResponseEntity<String> entity = null;
+
+		try {
+			service.deleteRec(vo);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			} catch(Exception e) {
+				entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+				return entity;
+}
 }
 

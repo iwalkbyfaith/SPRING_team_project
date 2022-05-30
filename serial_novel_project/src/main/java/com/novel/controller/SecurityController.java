@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -116,6 +117,31 @@ public class SecurityController {
 					
 				
 			}
-	
+			@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_FREE_WRITER', 'ROLE_PAID_WRITER', 'ROLE_ADMIN')")
+			@GetMapping("/update")
+			public void updateForm() {
+				log.info("회원수정창 접속");
+			}
+			
+			@PostMapping("/update")
+			public void update(UserVO vo) { 
+				log.info("수정시 받는 데이터들 : " + vo);
+				System.out.println(vo);
+				
+				// ● 비밀번호 암호화 (평문으로 되어있던 암호를 encode를 사용하여 암호화를 시킨다)
+				
+				// 1. getter로 vo에 들어온 비밀번호를 조회
+				String beforeCrpw = vo.getUser_pw();
+				log.info("암호화 전 비밀번호-> " + beforeCrpw);
+				
+				// 2. setter를 사용해 암호화된 비밀번호를 vo에 넣은 후, getter를 사용해 조회한다.
+				vo.setUser_pw(pwen.encode(beforeCrpw));
+				log.info("암호화 후 비밀번호-> " + vo.getUser_pw());
+				
+				// ■ 회원정보 수정
+				service.updateMember(vo);
+			}
+			
+			
 
 }

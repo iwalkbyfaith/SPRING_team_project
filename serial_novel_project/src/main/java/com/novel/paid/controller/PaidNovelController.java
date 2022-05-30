@@ -72,17 +72,10 @@ public class PaidNovelController {
 	// ■ 해당 유료소설의 상세회차들 (paidsList)
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/List/{novelNum}")
-	//public String paidList(@PathVariable("novelNum") long novelNum, @PathVariable("userNum") long userNum, Model model) {
-		public String paidList(@PathVariable("novelNum") long novelNum, Principal principal, Model model) {
-		
-			log.info("paidsList 진입");
-			
-			log.info("유저네임:" + principal.getName());
-		//log.info("프린시플유저아이디" + user_id);
+	public String paidList(@PathVariable("novelNum") long novelNum, Principal principal, Model model) {
 		
 			
-			//log.info("프린시플유저아이디" + userNum);
-			
+
 	
 		NovelVO novelList = novelservice.detailNovel(novelNum);
 		
@@ -95,9 +88,6 @@ public class PaidNovelController {
 		
 		String user_id = principal.getName();
 		
-		System.out.println("프린시플 아이디" + principal.getName());
-		System.out.println("프린시플 유저아이디" + user_id);
-		//		long userNum = paidservice.getUserNumber(user_id);
 		PaidFavVO fav = paidservice.favList(novelNum, user_id);
 		model.addAttribute("fav", fav);
 		
@@ -159,7 +149,7 @@ public class PaidNovelController {
 	@PostMapping("/paidUpdate")
 	public String updateS(PaidVO vo, long novel_num){
 		paidservice.update(vo);
-	return "redirect:/paid/detail/" + novel_num + "/" + vo.getPaid_num();
+	return "redirect:/paid/novelList/";
 	}
 }
 

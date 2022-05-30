@@ -39,7 +39,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		log.warn("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		
 		if(roleList.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/secu/admin");
+			response.sendRedirect("/");
 			return;
 		}
 		if(roleList.contains("ROLE_PAID_WRITER")) {

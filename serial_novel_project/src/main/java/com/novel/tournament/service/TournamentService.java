@@ -14,9 +14,11 @@ public interface TournamentService {
 	// ■ 전체 리스트 가져오기
 	public List<TournamentVO> listTournament();
 	
-	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
-	public List<Integer> select8ToworkRecord();		// 8강에 들어갈 작품번호(novel_num) 리스트 반환
-	public void insert8Towork(TournamentWorkVO vo);	// 적재
+	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	public void check8ToworkRecord();
+	
+	// ■ 05.14 토너먼트 2 or 4강에 들어갈 작품 적재하기(없는 경우) & 가져오기
+	public void check2or4ToworkRecord(@Param("to_num") long to_num, @Param("rownum")int rownum);
 	
 	// ■ 05.14 토너먼트 조회(이미 추가되었는지 확인하기 위해)
 	public List<TournamentWorkVO> getTournamentData(long to_num);
@@ -66,5 +68,9 @@ public interface TournamentService {
 //	
 //	// ■ 8강 토너먼트 리스트 가져오기
 //	public List<TournamentJoinVO> listTournamentWork2();
+	
+//	// ■ 05.14 토너먼트 8강에 들어갈 작품 적재하기
+//		public List<Integer> select8ToworkRecord();		// 8강에 들어갈 작품번호(novel_num) 리스트 반환
+//		public void insert8Towork(TournamentWorkVO vo);	// 적재
 	
 }

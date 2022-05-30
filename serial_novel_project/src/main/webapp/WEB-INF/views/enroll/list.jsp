@@ -52,6 +52,18 @@
 		padding: 10px;
 		z-index: 1000;
 	}
+	
+	/* 리스트 버튼들 */
+	
+		.btnList{
+			 text-align: center;
+		}
+		#crsBtn1, #crsBtn2, #crsBtn3{
+			color : #dcdcdc;
+			padding: 0;
+			height : 10px;
+			width : 20px;				
+		}
 
 
 
@@ -77,44 +89,51 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<!-- ■ 상단 네비바 : 네비바 적용3) -->
+		<!-- ■ 상단 네비바 -->
 	<div class="header">
-		<nav class="navbar navbar-expand-sm   navbar-light bg-light">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarTogglerDemo03"
-				aria-controls="navbarTogglerDemo03" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item"><a class="nav-link" href="/">홈 <span
-							class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
-					<li class="nav-item dropdown dmenu"><a
-						class="nav-link dropdown-toggle" href="#" id="navbardrop"
-						data-toggle="dropdown"> 소설 선택 </a>
-						<div class="dropdown-menu sm-menu">
-							<a class="dropdown-item" href="/free/novelList">무료소설</a> <a
-								class="dropdown-item" href="/paid/novelList">유료소설</a>
-						</div></li>
-					<li class="nav-item"><a class="nav-link" href="/enroll/list">작품 신청 게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="/tourna/list2">토너먼트</a>
-					</li>
-				</ul>
-				<!-- ul 태그 끝 -->
-				<div class="social-part">
-					<i class="fa fa-facebook" aria-hidden="true"></i> <i
-						class="fa fa-twitter" aria-hidden="true"></i> <i
-						class="fa fa-instagram" aria-hidden="true"></i>
-				</div>
-			</div>
-			<!-- div 끝 -->
-		</nav>
-		<!-- 네비바 끝 -->
-	</div>
-	<!-- header 끝 (하단의 스크립트 태그까지 가져와야 함) -->
+	    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	
+        	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			            <li class="nav-item">
+			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
+			            </li>
+			           
+			            <li class="nav-item dropdown dmenu">
+			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			              		소설 선택
+			            	</a>
+			            	<div class="dropdown-menu sm-menu">
+			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
+			              	</div>
+			          	</li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
+			          </li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
+			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+		               </li>
+		          </ul><!-- ul 태그 끝 -->
+		          <div class="social-part">
+		            <sec:authorize access="isAuthenticated()">
+		            
+		            <a href="/mypage/myInfo">내 정보</a></i>
+		            </sec:authorize>
+		            <sec:authorize access="isAnonymous()">
+		            <i class="join"><a href="/secu/join">join</a></i>
+					<i class="login"><a href="/customLogin">login</a></i>
+					</sec:authorize>
+		          </div>
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
+     </div><!-- header 끝 --> 
 
 	<script>
 	     
@@ -132,199 +151,240 @@
 
 
 	<!-- ■ div 모음 -->
+	
+	<div class="container">
 
-	<!-- ● 글쓰기 버튼 -->
-	<button type="button" id="enrollBtn">작품 신청 '#enrollBtn'</button>
-
-
-	<!-- ● 승인 대기(0) 출력하는 테이블 -->
-	<div id="divResult0List">
-		<h3 class="text-primary">승인대기 리스트 출력 #divResult0List</h3>
-		<table class="table">
-			<!-- style="display:none;"> -->
-			<thead class="table-dark">
-				<tr>
-					<th>enroll_num</th>
-					<th>장르</th>
-					<th>제목</th>
-					<th>유저 아이디</th>
-					<th>결과값</th>
-				</tr>
-			</thead>
-			<tbody id="0List">
-				<!-- 리스트가 들어갈 위치 -->
-			</tbody>
-		</table>
-	</div>
-
-
-	<!-- ● 관리자만 조회할 수 있는 태그-->	
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
-			
-			<!-- ● 무료 승인(2) 출력하는 테이블 -->
-			<div id="divResult2List">
-				<h3 class="text-primary">무료 승인 리스트 출력 #divResult2List</h3>
-				<table class="table">
-					<!-- style="display:none;"> -->
-					<thead class="table-dark">
-						<tr>
-							<th>enroll_num</th>
-							<th>장르</th>
-							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
-						</tr>
-					</thead>
-					<tbody id="2List">
-						<!-- 리스트가 들어갈 위치 -->
-					</tbody>
-				</table>
-			</div>
-		
-		
-			<!-- ● 모든 리스트 출력하는 테이블 -->
-			<div id="divAllList">
-				<h3 class="text-primary">모든 리스트 출력 #allList</h3>
-				<table class="table">
-					<!-- style="display:none;"> -->
-					<thead class="table-dark">
-						<tr>
-							<th>enroll_num</th>
-							<th>장르</th>
-							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
-						</tr>
-					</thead>
-					<tbody id="allList">
-						<!-- 리스트가 들어갈 위치 -->
-					</tbody>
-				</table>
-			</div>
-		
-		
-			<!-- ● 승인 거부(1) 출력하는 테이블 -->
-			<div id="divResult1List">
-				<h3 class="text-primary">승인 거부 리스트 출력 #divResult1List</h3>
-				<table class="table">
-					<!-- style="display:none;"> -->
-					<thead class="table-dark">
-						<tr>
-							<th>enroll_num</th>
-							<th>장르</th>
-							<th>제목</th>
-							<th>유저 아이디</th>
-							<th>결과값</th>
-						</tr>
-					</thead>
-					<tbody id="1List">
-						<!-- 리스트가 들어갈 위치 -->
-					</tbody>
-				</table>
-			</div>
-	</sec:authorize><!-- 관리자만 조회할 수 있는 태그 끝 -->			
-			
-
-
-	<!-- ● 디테일 출력 -->
-	<div class="row box-box-success" id="divDetail">
-		<!-- id="detail"> test 하느라 잠깐 아래로 내림 -->
-		<div class="box-header">
-			<h3>여기 디테일 #detail</h3>
-		</div>
-		<!-- header 끝 -->
-		<div>
-			<button type="button" id="goAllList">리스트로 돌아가기 '#goAllList'</button>
-		</div>
-		<div class="box-body" id="detail">
-			<!-- 디테일이 들어갈 자리 -->
-		</div>
-		<!-- body 끝 -->
-		<div class="box-footer">
-			<!-- * 글을 쓴 유저와 작성자가 같은 경우에만 확인 가능 -->
-			<button type="button" id="updateForm" class="btn btn-warning" style="display:none;">수정 '#updateForm'</button>
-			<button type="button" id="deleteForm" class="btn btn-danger" style="display:none;">삭제 '#deleteForm'</button>
-			
-			<!-- * 관리자만 확인 가능 -->	
-			<sec:authorize access="hasRole('ROLE_ADMIN')">	
-				<button type="button" id="adminBtn" class="btn btn-dark">관리자 버튼 '#adminBtn'</button>
+			<!-- ● 글쓰기 버튼 (유저, 무료작가, 유료작가만 보이도록 설정) -->
+			<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_FREE_WRITER', 'ROLE_PAID_WRITER')">
+				<div style="float:right">
+					<button type="button" class="btn btn-success" id="enrollBtn">작품 신청</button><!-- '#enrollBtn' --> <br/><br/>
+				</div>
 			</sec:authorize>
-		</div>
-		<br /> <br /> <br /> <br />
+		
+			<!-- ● 승인 대기(0) 출력하는 테이블 -->
+			<div id="divResult0List">
+				<h3 class="font-weight-bold"> 승인 대기 리스트 </h3><!-- #divResult0List -->
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>신청 번호</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>아이디</th>
+							<th>승인 여부</th>
+						</tr>
+					</thead>
+					<tbody id="0List">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+			</div><br/>
+			
+			<!-- ● '나의 신청 결과'를 출력하는 테이블(본인만 확인 가능) -->
+			<div id="divMyResult">
+				<h3 class="font-weight-bold">나의 신청 결과</h3> <!-- #divMyResult / tbody #myResultList -->
+				<table class="table">
+					<!-- style="display:none;"> -->
+					<thead class="table-dark">
+						<tr>
+							<th>신청 번호</th>
+							<th>장르</th>
+							<th>제목</th>
+							<th>승인 여부</th>
+							<th>관리자 메세지</th>
+						</tr>
+					</thead>
+					<tbody id="myResultList">
+						<!-- 리스트가 들어갈 위치 -->
+					</tbody>
+				</table>
+				<br/><br/>
+			</div>
 
-		<!-- ※ 밑의 관리자 영역을 모달로 바꾸는 테스트 중 -->
-		<div class="box-footer2">
-			<div id="modDiv" style="display: none;">
-				<div class="modal-title"></div>
-				<div id="modBody">
-					<input type="text" id="form_enroll_msg" class="form-control"
-						placeholder="관리자 승인 메세지를 작성하세요" /> <select
-						id="form_enroll_result" class="form-select"
-						aria-label="Default select example">
-						<option value="0">승인 대기</option>
-						<option value="1">승인 거부</option>
-						<option value="2">무료 승인</option>
-						<option value="3">유료 승인</option>
-					</select>
+		
+		
+			<!-- ● 관리자만 조회할 수 있는 태그-->
+			
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+					
+					<!-- ● 리스트를 확인하는 버튼 -->
+					<div class="btnList">
+				    	<button id="2ListBtn" class="btn btn-light btn btn-secondary btn-sm">무료 승인</button>
+				     	<button id="1ListBtn" class="btn btn-light btn btn-secondary btn-sm">승인 거부</button>
+				     	<button id="AllListBtn" class="btn btn-light btn btn-secondary btn-sm">모든 리스트</button>
+					</div>
+					
+					<!-- ● 무료 승인(2) 출력하는 테이블 -->
+					<div id="divResult2List">
+						<h3 class="font-weight-bold">무료 승인 리스트</h3><!-- #divResult2List -->
+						<table class="table">
+							<!-- style="display:none;"> -->
+							<thead class="table-dark">
+								<tr>
+									<th>신청 번호</th>
+									<th>장르</th>
+									<th>제목</th>
+									<th>아이디</th>
+									<th>승인 여부</th>
+								</tr>
+							</thead>
+							<tbody id="2List">
+								<!-- 리스트가 들어갈 위치 -->
+							</tbody>
+						</table>
+					</div>
+				
+				
+					<!-- ● 승인 거부(1) 출력하는 테이블 -->
+					<div id="divResult1List">
+						<h3 class="font-weight-bold">승인 거부 리스트</h3><!--  #divResult1List -->
+						<table class="table">
+							<!-- style="display:none;"> -->
+							<thead class="table-dark">
+								<tr>
+									<th>신청 번호</th>
+									<th>장르</th>
+									<th>제목</th>
+									<th>아이디</th>
+									<th>승인 여부</th>
+								</tr>
+							</thead>
+							<tbody id="1List">
+								<!-- 리스트가 들어갈 위치 -->
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- ● 모든 리스트 출력하는 테이블 -->
+					<div id="divAllList">
+						<h3 class="font-weight-bold">모든 리스트</h3><!--  #allList -->
+						<table class="table">
+							<!-- style="display:none;"> -->
+							<thead class="table-dark">
+								<tr>
+									<th>신청 번호</th>
+									<th>장르</th>
+									<th>제목</th>
+									<th>아이디</th>
+									<th>승인 여부</th>
+								</tr>
+							</thead>
+							<tbody id="allList">
+								<!-- 리스트가 들어갈 위치 -->
+							</tbody>
+						</table>
+					</div>	
+					
+					
+			</sec:authorize><!-- 관리자만 조회할 수 있는 태그 끝 -->			
+					
+		
+		
+			<!-- ● 디테일 출력 -->
+			<div class="row box-box-success" id="divDetail">
+				<!-- id="detail"> test 하느라 잠깐 아래로 내림 -->
+				<div class="box-header">
+					<h3 class="font-weight-bold">상세 보기</h3> <!-- #detail -->
 				</div>
-				<br />
-				<div id="modFooter">
-					<button type="button" id="updateEnrollResult">선택하기</button>
-					<button type="button" id="closeBtn">닫기</button>
+				<!-- header 끝 -->
+				
+				<div class="box-body" id="detail">
+					<!-- 디테일이 들어갈 자리 -->
+				</div>
+				<!-- body 끝 -->
+				<div class="box-footer"><br/>
+					<!-- * 글을 쓴 유저와 작성자가 같은 경우에만 확인 가능 -->
+					<button type="button" id="updateForm" class="btn btn-warning" style="display:none;">수정</button><!-- '#updateForm' -->
+					<button type="button" id="deleteForm" class="btn btn-danger" style="display:none;">삭제</button><!--  '#deleteForm' -->
+					
+					<!-- * 관리자만 확인 가능 -->	
+					<sec:authorize access="hasRole('ROLE_ADMIN')">	
+						<button type="button" id="adminBtn" class="btn btn-light" style="border:1px solid black">관리자 버튼</button><!--  '#adminBtn' -->
+					</sec:authorize>
+					
+					<div style="float:right">
+						<button type="button" class="btn btn-dark" id="goAllList">돌아가기</button><!-- #goAllList -->
+					</div>
+				
+				</div>
+				<br /> <br /> <br /> <br />
+		
+				<!-- ※ 밑의 관리자 영역을 모달로 바꾸는 테스트 중 -->
+				<div class="box-footer2">
+					<div id="modDiv" style="display: none;">
+						<div class="modal-title"></div>
+						<div id="modBody">
+							<input type="text" id="form_enroll_msg" class="form-control"
+								placeholder="관리자 승인 메세지를 작성하세요" /> <select
+								id="form_enroll_result" class="form-select"
+								aria-label="Default select example">
+								<option value="0">승인 대기</option>
+								<option value="1">승인 거부</option>
+								<option value="2">무료 승인</option>
+								<!-- <option value="3">유료 승인</option> -->
+							</select>
+						</div>
+						<br />
+						<div id="modFooter" style="float:right">
+							<button type="button" class="btn btn-dark btn-sm" id="updateEnrollResult">선택하기</button>
+							<button type="button" class="btn btn-dark btn-sm" id="closeBtn">닫기</button>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-
-	<!-- ● 디테일 수정창 -->
-	<div class="row box-box-success" id="divUpdateDetail">
-		<!-- id="detail"> test 하느라 잠깐 아래로 내림 -->
-		<div class="box-header">
-			<h3>여기 디테일 수정하는 곳 #divUpdateDetail > .box-header</h3>
-		</div>
-		<!-- header 끝 -->
-		<div class="box-body" id="updateDetail">
-			여기는 디테일 바디인 #updateDetail => 디테일들 들어갈 자리
-			<!-- 디테일이 들어갈 자리 -->
-		</div>
-		<!-- body 끝 -->
-		<div class="box-footer">
-			<button type="button" id="updateDetailBtn" class="btn btn-warning">수정완료'#updateDetailBtn'</button>
-		</div>
-	</div>
-
-
-	<!-- ● 글쓰기 폼 출력 -->
-	<div class="row box-box-success" id="enrollForm">
-		<div class="box-header">
-			<h3>여기 글쓰기 폼 #enrollForm</h3>
-		</div>
-		<!-- header 끝 -->
-		<div class="box-body">
-			<input type="text" id="insert_novel_title" placeholder="소설 제목"
-				class="form-control" /> <input type="text" id="insert_novel_writer"
-				placeholder="사용할 필명" class="form-control" /> <select
-				id="insert_novel_category" class="form-select"
-				aria-label="Default select example">
-				<option value="fantasy">판타지</option>
-				<option value="romance">로맨스</option>
-				<option value="wuxia">무협지</option>
-				<option value="mystery">미스터리</option>
-			</select> <input type="text" id="insert_user_id"
-				value="<sec:authentication property="principal.user.user_id"/>"
-				class="form-control" readonly />
-			<textarea id="insert_enroll_intro"
-				style="width: 100%; height: 6.25em; resize: none;">시놉시스 및 예상 결말 입력</textarea>
-		</div>
-		<!-- body 끝 -->
-		<div class="box-footer">
-			<button type="button" class="btn btn-success" id="enrollFormAddBtn">
-				작성 완료 '#enrollFormAddBtn'</button>
-		</div>
-		<!-- footer 끝 -->
-	</div>
-
+		
+		
+			<!-- ● 디테일 수정창 -->
+			<div class="row box-box-success" id="divUpdateDetail">
+				<!-- id="detail"> test 하느라 잠깐 아래로 내림 -->
+				<div class="box-header">
+					<h3 class="font-weight-bold">게시글 수정</h3><!-- #divUpdateDetail > .box-header -->
+				</div>
+				<!-- header 끝 -->
+				<div class="box-body" id="updateDetail">
+					여기는 디테일 바디인 #updateDetail => 디테일들 들어갈 자리
+					<!-- 디테일이 들어갈 자리 -->
+				</div>
+				<!-- body 끝 -->
+				<div class="box-footer">
+					<button type="button" id="updateDetailBtn" class="btn btn-warning" style="float:right">수정완료</button><!-- '#updateDetailBtn' -->
+				</div>
+			</div>
+		
+		
+			<!-- ● 글쓰기 폼 출력 -->
+			<div class="row box-box-success" id="enrollForm">
+				<div class="box-header">
+					<h3 class="font-weight-bold">작품 신청</h3><br/><!-- #enrollForm -->
+				</div>
+				<!-- header 끝 -->
+				<div class="box-body">
+					<input type="text" id="insert_novel_title" placeholder="소설 제목"
+						class="form-control" /> <input type="text" id="insert_novel_writer"
+						placeholder="작품 연재시 사용할 필명" class="form-control" /> <select
+						id="insert_novel_category" class="form-select"
+						aria-label="Default select example">
+						<option value="fantasy">판타지</option>
+						<option value="romance">로맨스</option>
+						<option value="wuxia">무협지</option>
+						<option value="mystery">미스터리</option>
+					</select> <input type="text" id="insert_user_id"
+						value="<sec:authentication property="principal.user.user_id"/>"
+						class="form-control" readonly />
+					<textarea id="insert_enroll_intro"
+						style="width: 100%; height: 12.25em; resize: none;">시놉시스 및 예상 결말을 입력하세요</textarea>
+				</div>
+				<!-- body 끝 -->
+				<div class="box-footer">
+					<div style="float:right">
+						<button type="button" class="btn btn-success" id="enrollFormAddBtn">작성 완료</button><!-- #enrollFormAddBtn -->
+					</div>
+				</div>
+				<!-- footer 끝 -->
+			</div>
+			
+	</div><!-- .container 종료 -->
 
 
 
@@ -367,6 +427,9 @@
 		<!-- ■ 승인 대기 리스트 가져오기 -->
 		<!-- ■ 승인 거부 리스트 가져오기 -->
 		<!-- ■ 무료 승인 리스트 가져오기 -->
+		<!-- ■ 나의 신청 결과 리스트 가져오기 -->
+		
+		<!-- ■ 무료 승인, 승인 거부, 전체 리스트를 불러오는 버튼 onClick -->
 		
 		<!-- ■ 전체 리스트 디테일 가져오기 -->
 		<!-- ■ 승인 대기 리스트 디테일 가져오기 -->	
@@ -378,7 +441,7 @@
 		<!-- ■ 수정 완료 버튼 눌렀을 때 DB에 update 하기 -->
 		<!-- ■ 삭제 버튼 눌렀을때 디테일 삭제하기 -->
 		
-		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
+		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중 세번째 코드) -->
 		<!-- ■ 글쓰기 폼에서 '작성완료'(#enrollFormAddBtn) 버튼을 눌러 데이터 전송하기 -->
 		
 		<!-- ■ 관리자 기능 모달 버튼으로 눌러서 나오게 만들기 -->
@@ -426,6 +489,15 @@
 			
 			// ● 무료 승인(2) 리스트 보여주기
 			get2List();
+			
+			// ● 나의 신청 결과 리스트 불러오기 & 비활성화(활성화->if로 비활성화는 화면에 데이터가 뿌려졌다가 사라짐)
+			getMyResultList();
+			$("#divMyResult").hide();
+			
+			// ● 무료 승인, 승인 거부, 모든 리스트 div는 숨기기 (버튼 클릭해야 보이도록)
+			$("#divResult2List").hide();
+			$("#divResult1List").hide();
+			$("#divAllList").hide();			
 			
 			// ● 디테일 페이지(#divDetail) 숨기기
 			$("#divDetail").hide();
@@ -513,9 +585,21 @@
 						result = "유료 소설";	
 					}
 					
+					// ● 카테고리
+					let category = "";
+					if(this.novel_category == 'wuxia'){
+						category ="무협";
+					}else if(this.novel_category == 'romance'){
+						category ="로맨스";
+					}else if(this.novel_category == 'mystery'){
+						category ="미스터리";
+					}else{
+						category ="판타지";
+					}
+					
 					str+= "<tr class='go_to_detail'>" 
 							+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
-							+ "<td>"+ this.novel_category +"</td>"
+							+ "<td>"+ category +"</td>"
 							+ "<td>" + 
 								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
 								  this.novel_title +
@@ -559,9 +643,22 @@
 						result = "유료 소설";	
 					}
 					
+					
+					// ● 카테고리
+					let category = "";
+					if(this.novel_category == 'wuxia'){
+						category ="무협";
+					}else if(this.novel_category == 'romance'){
+						category ="로맨스";
+					}else if(this.novel_category == 'mystery'){
+						category ="미스터리";
+					}else{
+						category ="판타지";
+					}
+					
 					str+= "<tr class='go_to_detail'>" 
 							+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
-							+ "<td>"+ this.novel_category +"</td>"
+							+ "<td>"+ category +"</td>"
 							+ "<td>" + 
 								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
 								  this.novel_title +
@@ -605,9 +702,21 @@
 						result = "유료 소설";	
 					}
 					
+					// ● 카테고리
+					let category = "";
+					if(this.novel_category == 'wuxia'){
+						category ="무협";
+					}else if(this.novel_category == 'romance'){
+						category ="로맨스";
+					}else if(this.novel_category == 'mystery'){
+						category ="미스터리";
+					}else{
+						category ="판타지";
+					}
+					
 					str+= "<tr class='go_to_detail'>" 
 							+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
-							+ "<td>"+ this.novel_category +"</td>"
+							+ "<td>"+ category +"</td>"
 							+ "<td>" + 
 								  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
 								  this.novel_title +
@@ -626,9 +735,110 @@
 		
 		
 		
+		<!-- ■ 나의 신청 결과 리스트 가져오기 -->
+		function getMyResultList(){
+			
+			$.getJSON("/enrollAjax/getMyResultList/" + id, function(data){
+				
+				console.log("신청결과 리스트 데이터 유무 ->" + data);
+				console.log("!data 결과 -> " + !data);
+				console.log("data=='' 결과(공백) -> " + data == "");
+				
+				// ● 테이블로 출력
+				let str = "";
+				
+					$(data).each(function(){
+						
+						// ● 나의 결과 리스트 보여주기 (처음에 비활성화 시켜 놓음)
+						$("#divMyResult").show();
+						
+						// ● 결과값(숫자)에 따른 의미
+						let result = "";
+						
+						if(this.enroll_result == 0){
+							result = "승인 대기";	
+						}else if(this.enroll_result == 1){
+							result = "승인 거부";	
+						}else if(this.enroll_result == 2){
+							result = "무료 승인";	
+						}else if(this.enroll_result == 3){
+							result = "유료 승인";	
+						}
+						
+						// ● 관리자 메세지
+						let msg ="";
+						if(this.enroll_msg != null){
+							msg = this.enroll_msg;
+						}
+						
+						// ● 카테고리
+						let category = "";
+						if(this.novel_category == 'wuxia'){
+							category ="무협";
+						}else if(this.novel_category == 'romance'){
+							category ="로맨스";
+						}else if(this.novel_category == 'mystery'){
+							category ="미스터리";
+						}else{
+							category ="판타지";
+						}
+						
+						str+= "<tr class='go_to_detail'>" 
+								+ "<td class='list' data-enroll-num='"+this.enroll_num+"'data-enroll-result='"+this.enroll_result+"' data-user-id='"+this.user_id+ "'>" + this.enroll_num + "</td>"
+								+ "<td>"+ category +"</td>"
+								+ "<td>" + 
+									  //"<a href='/enrollAjax/getDetail/" + this.enroll_num + "'>" + this.novel_title + "</a>" +
+									  this.novel_title +
+								  "</td>"
+								+ "<td>"+ result +"</td>"
+								+ "<td>"+ msg +"</td>" + 
+							  "</tr>"
+					});// end .eachs
+				
+				
+				
+					$("#myResultList").html(str);
+
+				
+			}); // end getJSON
+			
+		}// end getMyResultList()
 		
 		
+
 		
+		
+		<!-- ■ 무료 승인, 승인 거부, 전체 리스트를 불러오는 버튼 onClick -->
+			
+			<!-- ● 무료 승인 -->
+			$("#2ListBtn").on("click", function(){
+				
+				$("#divResult2List").show();
+				$("#divResult1List").hide();
+				$("#divAllList").hide();
+				
+			});// end click 2ListBtn
+			
+			<!-- ● 승인 거부 -->
+			$("#1ListBtn").on("click", function(){
+				
+				$("#divResult1List").show();
+				$("#divResult2List").hide();
+				$("#divAllList").hide();
+				
+			});// end click 1ListBtn
+			
+			<!-- ● 모든 리스트 -->
+			$("#AllListBtn").on("click", function(){
+				
+				$("#divAllList").show();
+				$("#divResult2List").hide();
+				$("#divResult1List").hide();
+				
+			});// end click AllListBtn
+		
+		
+
 		<!-- ■ 전체 리스트 디테일 가져오기 -->
 		
 			$("#allList").on("click", (".go_to_detail"), function(){
@@ -661,6 +871,14 @@
 							
 							// * 디테일 수정창 숨기기
 							$("#divUpdateDetail").hide();
+							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
 							
 							
 						
@@ -705,11 +923,12 @@
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
 							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
-							+  "<textarea readonly id='input_enroll_intro' style='width: 100%; height: 6.25em; resize: none;' >" + data.enroll_intro + "</textarea>"
+							+  "<textarea readonly id='input_enroll_intro' style='width: 100%; height: 12.25em; resize: none;' >" + data.enroll_intro + "</textarea>"
+							+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 						
-						
+	
 						$("#detail").html(str);
 					
 					
@@ -755,6 +974,14 @@
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
 							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
+							
 						
 						// ● 보이기
 							// * 디테일 보이기
@@ -797,7 +1024,8 @@
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
 							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
-							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 200px; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 						
@@ -854,6 +1082,14 @@
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
 							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
+							
 						
 						// ● 보이기
 							// * 디테일 보이기
@@ -896,7 +1132,8 @@
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
 							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "' readonly/>"
-							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 200px; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 						
@@ -946,6 +1183,14 @@
 							// * 관리자 메세지를 비워놔야하나?(일단 주석)
 							//$("#input_enroll_msg").val("");
 							
+							// * 관리자 리스트 확인 버튼 숨기기
+							$("#2ListBtn").hide();
+							$("#1ListBtn").hide();
+							$("#AllListBtn").hide();
+							
+							// * 나의 신청 결과 리스트 숨기기
+							$("#divMyResult").hide();
+							
 						
 						// ● 보이기
 							// * 디테일 보이기
@@ -988,7 +1233,8 @@
 							+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
 							+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
 							+  "<input type='text' id='input_user_id' class='form-control' value='" + data.user_id + "'readonly/>"
-							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<textarea id='input_enroll_intro' readonly style='width: 100%; height: 200px; resize: none;'>" + data.enroll_intro + "</textarea>"
+							+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
 							+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
 							+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 						
@@ -1015,14 +1261,15 @@
 					
 					// * 디테일 수정창 숨기기
 					$("#divUpdateDetail").hide();
-				
+					
+					
 				
 				
 				// ● 보이기
 				
 					// * 모든 리스트 보이기
 					getAllList();
-					$("#divAllList").show();
+					//$("#divAllList").show();
 	
 					// * 승인 대기 리스트 보이기
 					get0List();
@@ -1030,14 +1277,22 @@
 					
 					// * 승인 거부 리스트 보이기
 					get1List();
-					$("#divResult1List").show();
+					//$("#divResult1List").show();
 					
 					// * 무료 승인 리스트 보이기
 					get2List();
-					$("#divResult2List").show();
+					//$("#divResult2List").show();
 					
 					// * 작가 신청 버튼은 보여야함
 					$("#enrollBtn").show();
+					
+					// * 관리자 리스트 확인 버튼 보이기
+					$("#2ListBtn").show();
+					$("#1ListBtn").show();
+					$("#AllListBtn").show();
+					
+					// * 나의 신청 결과 리스트 보이기
+					$("#divMyResult").show();
 				
 				
 				// ● 전체 리스트 보여주기
@@ -1105,6 +1360,9 @@
 				// ● 숨기기									
 					// * 디테일 #divDetail 가리기
 					$("#divDetail").hide();
+				
+					// * 나의 신청 결과 리스트 숨기기
+					$("#divMyResult").hide();
 					
 				// ● 보이기
 					// * 전체 리스트로 가는 버튼 활성화
@@ -1152,7 +1410,7 @@
 						+ "<option value='mystery'>미스터리</option>"
 				    + "</select>" 
 					+  "<input type='text' id='update_user_id' class='form-control' value='" + id + "' readonly />"
-					+  "<textarea id='update_enroll_intro' style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
+					+  "<textarea id='update_enroll_intro' style='width: 100%; height: 200px; resize: none;'>" + data.enroll_intro + "</textarea>"
 					;
 
 				$("#updateDetail").html(str);
@@ -1256,14 +1514,15 @@
 													msg = data.enroll_msg;
 												}
 											
-											str += "<input type='text' id='input_enroll_num' class='form-control' value='" + data.enroll_num + "'/>"
-												+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "'/>"
-												+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "'/>"
-												+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "'/>"
-												+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "'/>"
-												+  "<textarea id='input_enroll_intro' style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
-												+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "'/>"
-												+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "'/>" ;
+											str += "<input type='text' id='input_enroll_num' class='form-control' value='" + data.enroll_num + "' readonly/>"
+												+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "'readonly/>"
+												+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "'readonly/>"
+												+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "'readonly/>"
+												+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "'readonly/>"
+												+  "<textarea id='input_enroll_intro' style='width: 100%; height: 200px; resize: none;' readonly>" + data.enroll_intro + "</textarea>"
+												+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
+												+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "'readonly/>"
+												+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "'readonly/>" ;
 											
 											
 											$("#detail").html(str);
@@ -1354,153 +1613,8 @@
 		});// on click #deleteForm
 		
 		
-		<%--
 
-		function checkUserResult0List(){
-			
-			let check = false;
-
-			console.log("(● 함수 getJSON 진입 이전) checkUserResult0List의 check 상태 -> " + check)
-			
-			$.getJSON("/enrollAjax/checkUsersResult0List/"+id, function(data){
-				console.log("/checkUsersResult0List에서 확인된 sec user_id -> " + id);
-				console.log("/checkUsersResult0List에서 확인된 data ▼ ");
-				console.log(data);
-				
-				// 데이터가 없으면("", null, undefined, NaN은 false로 반환된다.)
-				if(!data){
-					check = false;
-					console.log("(● 함수 if) 함수 checkUserResult0List의 check 상태 (if:false)-> " + check)
-					
-				// 데이터가 있으면
-				}else{
-					check = true;
-					console.log("(● 함수 else)checkUserResult0List의 check 상태 (else:true)-> " + check)
-
-				}
-			
-			
-				//return check;
-			
-			});// end getJSON	
-			
-			
-			
-			console.log("(● 함수 return 전) checkUserResult0List의 check 상태 (리턴하기 바로 직전 )-> " + check)
-			
-			return check;
-			
-		}// end checkUserResult0List() 
-		
-		
-		
-		
-		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
-		$("#enrollBtn").on("click", function(){
-			
-			console.log("(● 버튼)enrollBtn 클릭");
-			// ● 이미 작성한 신청(승인대기)가 있을 때는 '승인 대기중인 신청서가 있습니다' 뜨게 하기
-				// 1) 로그인한 유저 아이디 받아오고
-				// 2) DB에서 user_id=아이디 and enroll_result=0의 결과를 받아옴
-				// 3) data != null이라면 경고창alert
-				// 4) data == null이라면 진입 가능
-				
-			alert("#enrollBtn 클릭하여 진입");
-			
-			let check = checkUserResult0List();
-			console.log("(● 버튼)checkUserResult0List()에서 리턴받은 check 상태-> " + check);
-					
-					// 데이터가 있는 경우
-					if(check){
-
-						alert("이미 승인 대기중인 신청서가 있습니다.");	
-						console.log("(● 버튼 if) 데이터가 있는 경우 check -> " + check);
-						
-					}else{ 	
-						
-						console.log("(● 버튼 else) 데이터가 없는 경우 check -> " + check);
-						
-						// ● 보이기
-							// * 디테일 폼
-							$("#enrollForm").show();
-					
-						// ● 숨기기				
-							// ＊ 전체 리스트 숨기기   
-							$("#divAllList").hide();
-				
-							// * 승인 대기 리스트 숨기기
-							$("#divResult0List").hide();
-							
-							// * 승인 거부 리스트 숨기기
-							$("#divResult1List").hide();
-							
-							// * 무료 승인 리스트 숨기기
-							$("#divResult2List").hide();
-							
-							// * 작가신청 버튼 숨기기
-							$("#enrollBtn").hide();
-											
-							// * 작가신청 버튼도 가림
-							$("#enrollBtn").hide();
-							
-							// * 디테일 수정창 숨기기
-							$("#divUpdateDetail").hide();
-						
-					}//end if~else
-				
-
-			
-				
-		});// end click #enrollBtn
-		
-		--%>
-
-		
-		<%--
-
-		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중) -->
-		$("#enrollBtn").on("click", function(){
-			
-			// ● 이미 작성한 신청(승인대기)가 있을 때는 '승인 대기중인 신청서가 있습니다' 뜨게 하기
-				// 1) 로그인한 유저 아이디 받아오고
-				// 2) DB에서 user_id=아이디 and enroll_result=0의 결과를 받아옴
-				// 3) data != null이라면 경고창alert
-				// 4) data == null이라면 진입 가능
-				
-			
-					// ● 보이기
-						// * 디테일 폼
-						$("#enrollForm").show();
-				
-					// ● 숨기기				
-						// ＊ 전체 리스트 숨기기   
-						$("#divAllList").hide();
-			
-						// * 승인 대기 리스트 숨기기
-						$("#divResult0List").hide();
-						
-						// * 승인 거부 리스트 숨기기
-						$("#divResult1List").hide();
-						
-						// * 무료 승인 리스트 숨기기
-						$("#divResult2List").hide();
-						
-						// * 작가신청 버튼 숨기기
-						$("#enrollBtn").hide();
-										
-						// * 작가신청 버튼도 가림
-						$("#enrollBtn").hide();
-						
-						// * 디테일 수정창 숨기기
-						$("#divUpdateDetail").hide();
-					
-				
-
-					
-		});// end click #enrollBtn
-		
-		--%>
-		
+	
 		
 		<!-- ■ 작가신청 버튼(#enrollBtn)을 눌러 글쓰기 폼으로 들어가기 (수정중 세번째 코드) -->
 		$("#enrollBtn").on("click", function(){
@@ -1563,6 +1677,9 @@
 					
 					// * 디테일 수정창 숨기기
 					$("#divUpdateDetail").hide();
+					
+					// * 나의 신청 결과 리스트 숨기기
+					$("#divMyResult").hide();
 				
 			// ● 이미 작성했다면 경고창만 띄우고 같은 창에 머무르기.
 			}else{
@@ -1587,11 +1704,11 @@
 			//console.log($(this).parent().siblings(".box-body").children("#novel_title").val());
 			
 			// ● 폼에 입력한 데이터 받아오기 
-			let novel_title = $(this).parent().siblings(".box-body").children("#insert_novel_title").val();
-			let novel_writer = $(this).parent().siblings(".box-body").children("#insert_novel_writer").val();
-			let novel_category = $(this).parent().siblings(".box-body").children("#insert_novel_category").val();
-			let user_id = $(this).parent().siblings(".box-body").children("#insert_user_id").val();
-			let enroll_intro = $(this).parent().siblings(".box-body").children("#insert_enroll_intro").val();
+			let novel_title = $(this).parent().parent().siblings(".box-body").children("#insert_novel_title").val();
+			let novel_writer = $(this).parent().parent().siblings(".box-body").children("#insert_novel_writer").val();
+			let novel_category = $(this).parent().parent().siblings(".box-body").children("#insert_novel_category").val();
+			let user_id = $(this).parent().parent().siblings(".box-body").children("#insert_user_id").val();
+			let enroll_intro = $(this).parent().parent().siblings(".box-body").children("#insert_enroll_intro").val();
 			
 			// ● 디버깅
 			console.log(novel_title);
@@ -1678,9 +1795,9 @@
 				let adminEnrollResult = $(this).parent().siblings("#detail").children("#input_enroll_result").val();
 				
 					// * 이미 변경 사항이 있다면(= '승인 대기'가 아니라면) 확인창 띄움
-					if(adminEnrollResult != "승인 대기"){
+					if(adminEnrollResult == "승인 거부"){
 						
-						if(confirm("이미 변경 사항이 있습니다. 다시 변경하시겠습니까?")){
+						if(confirm("이미 승인 거부하셨습니다. 다시 변경하시겠습니까?")){
 							
 							// 모달 열기
 							$("#modDiv").show("slow");
@@ -1688,6 +1805,10 @@
 						}// end confirm id
 					
 					// * 승인 대기 상태(초기값)라면 바로 모달 열기
+					}else if(adminEnrollResult == "무료 소설"){
+						
+						alert("이미 무료 소설로 선정된 작품은 변경할 수 없습니다.");
+						
 					}else{
 						
 						// 모달 열기
@@ -1817,14 +1938,15 @@
 														msg = data.enroll_msg;
 													}
 												
-												str += "<input type='text' id='input_enroll_num' class='form-control' value='" + data.enroll_num + "'/>"
-													+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "'/>"
-													+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "'/>"
-													+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "'/>"
-													+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "'/>"
-													+  "<textarea id='input_enroll_intro' style='width: 100%; height: 6.25em; resize: none;'>" + data.enroll_intro + "</textarea>"
-													+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "'/>"
-													+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "'/>" ;
+												str += "<input type='text' id='input_enroll_num' class='form-control' value='" + data.enroll_num + "' readonly/>"
+													+  "<input type='text' id='input_novel_title' class='form-control' value='" + data.novel_title + "' readonly/>"
+													+  "<input type='text' id='input_novel_writer' class='form-control' value='" + data.novel_writer + "' readonly/>"
+													+  "<input type='text' id='input_novel_category' class='form-control' value='" + data.novel_category + "' readonly/>"
+													+  "<input type='text' id='input_user_id' class='form-control' value='" + id + "' readonly/>"
+													+  "<textarea id='input_enroll_intro' style='width: 100%; height: 200px; resize: none;' readonly>" + data.enroll_intro + "</textarea>"
+													+  "<br/><br/>" + "<h4 class='font-weight-bold'>승인 결과</h4>" 
+													+  "<input type='text' id='input_enroll_result' class='form-control' value='" + result + "' readonly/>"
+													+  "<input type='text'id='input_enroll_msg' class='form-control' value='" + msg + "' readonly/>" ;
 												
 												
 												$("#detail").html(str);

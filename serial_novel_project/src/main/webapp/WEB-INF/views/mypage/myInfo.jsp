@@ -65,7 +65,7 @@ z-index:200;
 .menubar li:hover ul {
 display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 }
-	
+
 
 	</style>
 <meta charset="UTF-8">
@@ -119,7 +119,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
            <li><a href="/mypage/myInfo">계정정보</a></li>
            <li><a href="/mypage/myFavor">선호작</a></li>
            <li><a href="/mypage/bookmark">책갈피</a></li>
-           <li><a href="/secu/customLogout">로그아웃</a></li>
+           <li><a href="/customLogout">로그아웃</a></li>
            
      	    </ul>
    			   </li>
@@ -146,25 +146,51 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 		     });
      
      </script>
-     
-    <p>아이디  : <sec:authentication property="principal.user.user_id"/></p>					
-	
-	<p>이름 : <sec:authentication property="principal.user.user_name"/></p>					
-	
-	<p>핸드폰 : <sec:authentication property="principal.user.user_pnum"/></p>					
-	
-	<p>이메일 : <sec:authentication property="principal.user.user_email"/></p>					
-	
-	<p>보유 코인 : <sec:authentication property="principal.user.user_coin"/></p>					
-	
-	<p>보유 쿠폰 : <sec:authentication property="principal.user.user_coupon"/></p>					
-	
-	<p>가입일  : <sec:authentication property="principal.user.user_rdate"/></p>					
 						
-	
-	
+<div class="container contact-form">
+            
+           <form action="/secu/update"method="get">
+                <h3>회원정보</h3>
+               <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            아이디  <input type="text" name="user_id" class="form-control" value="<sec:authentication property="principal.user.user_id"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            이름  <input type="text" name="user_name" class="form-control" value="<sec:authentication property="principal.user.user_name"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            핸드폰 <input type="text" name="user_phone" class="form-control" value="<sec:authentication property="principal.user.user_pnum"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            이메일 <input type="email" name="user_email" class="form-control" value="<sec:authentication property="principal.user.user_email"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            보유 코인<input type="text" name="user_coin" class="form-control" value="<sec:authentication property="principal.user.user_coin"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            보유 쿠폰 <input type="text" name="user_coupon" class="form-control" value="<sec:authentication property="principal.user.user_coupon"/>" readonly/>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            가입일 <input type="text" name="user_rdate" class="form-control" value="<sec:authentication property="principal.user.user_rdate"/>" readonly/>
+                        </div>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <br/>
+                        <div class="form-group">
+                        	<input type="submit" name="Modify" class="btnModify" value="수정하기" />
+                        </div>
+                    </div>
+                   
+                </div>
+            </form>
+</div>
 		
-    
     
      
   

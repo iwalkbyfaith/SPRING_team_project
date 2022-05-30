@@ -82,6 +82,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 	
 	<!-- ■ 상단 네비바 -->
 	<div class="header">
+	    <sec:authentication property="principal.user" var="user"/>
 	    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
 	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
 	          <span class="navbar-toggler-icon"></span>
@@ -92,9 +93,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 			            <li class="nav-item">
 			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
 			            </li>
-			            <li class="nav-item">
-			              	<a class="nav-link" href="#">About</a>
-			            </li>
+			           
 			            <li class="nav-item dropdown dmenu">
 			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 			              		소설 선택
@@ -105,30 +104,28 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 			              	</div>
 			          	</li>
 			          <li class="nav-item">
-				            <a class="nav-link" href="/enroll/list">작가 신청 게시판</a>
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
 			          </li>
 			          <li class="nav-item">
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num }">결제</a>
+		               </li>
 		          </ul><!-- ul 태그 끝 -->
-		          <div class="menubar">
-	   		
-    	 	<ul> 	
-    	  	<li style="list-style:none;"><a href="#" id="current">내정보</a>
-        	 <ul>
-           <li><a href="/mypage/myInfo">계정정보</a></li>
-           <li><a href="/mypage/myFavor">선호작</a></li>
-           <li><a href="/mypage/bookmark">책갈피</a></li>
-           <li><a href="/secu/customLogout">로그아웃</a></li>
-           
-     	    </ul>
-   			   </li>
-      			</ul>
-      
-   
-</div>
-	
-
+		         <div class="menubar">
+					<ul> 	
+						<li style="list-style:none;"><a href="#" id="current">내정보</a>
+							<ul>
+								<li><a href="/mypage/myInfo">계정정보</a></li>
+								<li><a href="/mypage/myFavor">선호작</a></li>
+								<li><a href="/mypage/bookmark">책갈피</a></li>
+								<li><a href="/useList/${user.user_num }">구매내역</a></li>
+								<li><a href="/customLogout">로그아웃</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- menuar 끝 -->
 	        </div><!-- div 끝 -->
 	    </nav><!-- 네비바 끝 -->
      </div><!-- header 끝 --> 
@@ -148,36 +145,28 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
      </script>
      <sec:authentication property="principal.user" var="user"/>
      
-    <p>아이디  : <sec:authentication property="principal.user.user_id"/></p>					
-	
-	<p>이름 : <sec:authentication property="principal.user.user_name"/></p>					
-	
-	<p>핸드폰 : <sec:authentication property="principal.user.user_pnum"/></p>					
-	
-	<p>이메일 : <sec:authentication property="principal.user.user_email"/></p>					
-	
-	<p>보유 코인 : <sec:authentication property="principal.user.user_coin"/></p>					
-	
-	<p>보유 쿠폰 : <sec:authentication property="principal.user.user_coupon"/></p>					
-	
-	<p>가입일  : <sec:authentication property="principal.user.user_rdate"/></p>					
-						
+   
 	  <h1>내 구매 목록</h1>
-     	${useList }
-		<table class="table table-bordered border-info">
-			<tr>
-				<th>소설제목</th>
-				<th>구매금액</th>
-				<th>구매날짜</th>
-			</tr>
-			<c:forEach var="use" items="${useList }">
+     	
+     	<c:if test="${empty useList}">
+    		<h1>구매한 내역이 없습니다.</h1>
+    	</c:if>
+    	<c:if test="${not empty useList}">
+			<table class="table table-bordered border-info">
 				<tr>
-					<td><a href ="/paid/detail/${use.novel_num}/${use.paid_num}/${user.user_num}">${use.paid_title}</a></td>
-					<td>${use.use_count}</td>
-					<td>${use.use_date}</td>
+					<th>소설제목</th>
+					<th>구매금액</th>
+					<th>구매날짜</th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach var="use" items="${useList }">
+					<tr>
+						<td><a href ="/paid/detail/${use.novel_num}/${use.paid_num}/${user.user_num}">${use.paid_title}</a></td>
+						<td>${use.use_count}</td>
+						<td>${use.use_date}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:if>
     
     
      
