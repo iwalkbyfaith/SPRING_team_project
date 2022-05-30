@@ -124,8 +124,13 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 
 	@Override
-	public PaidFavVO favList(long novelNum, long userNum) {
-		return paidMapper.favList(novelNum, userNum);
+	public PaidFavVO favList(long novelNum, String user_id) {
+		return paidMapper.favList(novelNum, user_id);
+	}
+
+	@Override
+	public long getUserNumber(String user_id) {
+		return paidMapper.getUserNumber(user_id);
 	}
 
 

@@ -156,6 +156,23 @@
 		</delete>
 		
 		<select id="favList" resultType="com.novel.paid.domain.PaidFavVO">
-			SELECT * FROM favorite_tbl WHERE novel_num = #{novelNum} and user_num = #{userNum}
+			SELECT * FROM favorite_tbl WHERE novel_num = #{novelNum} and user_num = (select user_num from user_tbl
+				WHERE user_id=#{user_id})
 		</select>
+		
+		
+		<!-- getUserNumber -->
+		<select id="getUserNumber" resultType="long">
+			select ft.user_num from favorite_tbl ft
+    			inner join
+        	user_tbl ut
+   				ON
+        	ft.user_num = ut.user_num
+        		WHERE 
+        	user_id =#{user_id}
+		</select>
+		
+		
+		
+		
 	</mapper>

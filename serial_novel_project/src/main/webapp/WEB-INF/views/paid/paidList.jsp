@@ -102,7 +102,7 @@ img {
      		<div class="weekBody">
      			<c:forEach var="mon" items="${monList}">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${mon.novel_num}/${user.user_num}"><img src='/resources/novel_image/${mon.novel_num}.png'></a></div>
+	     				<div><a href="http://localhost:8181/paid/List/${mon.novel_num}"><img src='/resources/novel_image/${mon.novel_num}.png'></a></div>
 	     				<div class="word">${mon.novel_title}</div>
      				</div>
      			</c:forEach>
@@ -114,7 +114,7 @@ img {
      		<div class="weekBody">
      			<c:forEach var="tue" items="${tueList }">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${tue.novel_num}/${user.user_num}"><img src='/resources/novel_image/${tue.novel_num}.png'></a></div>
+	     				<div><a href="http://localhost:8181/paid/List/${tue.novel_num}"><img src='/resources/novel_image/${tue.novel_num}.png'></a></div>
 	     				<div class="word">${tue.novel_title}</div>
      				</div>
      			</c:forEach>
@@ -126,7 +126,8 @@ img {
      		<div class="weekBody">
      			<c:forEach var="wed" items="${wedList }">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${wed.novel_num}/${user.user_num}"><img src='/resources/novel_image/${wed.novel_num}.png'></a></div>
+	     				<!-- <div><a href="http://localhost:8181/paid/List/${wed.novel_num}/${user.user_num}"><img src='/resources/novel_image/${wed.novel_num}.png'></a></div> -->
+	     				<div><a href="http://localhost:8181/paid/List/${wed.novel_num}"><img src='/resources/novel_image/${wed.novel_num}.png'></a></div>
 	     				<div class="word">${wed.novel_title}</div>
      				</div>
      			</c:forEach>
@@ -138,7 +139,7 @@ img {
      		<div class="weekBody">
      			<c:forEach var="thu" items="${thuList }">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${thu.novel_num}/${user.user_num}"><img src='/resources/novel_image/${thu.novel_num}.png'></a></div>
+	     				<div><a href="http://localhost:8181/paid/List/${thu.novel_num}"><img src='/resources/novel_image/${thu.novel_num}.png'></a></div>
 	     				<div class="word">${thu.novel_title}</div>
      				</div>
      			</c:forEach>
@@ -150,7 +151,7 @@ img {
      		<div class="weekBody">
      			<c:forEach var="fri" items="${friList }">
      				<div class="work">
-	     				<div><a href="http://localhost:8181/paid/List/${fri.novel_num}/${user.user_num}"><img src='/resources/novel_image/${fri.novel_num}.png'></a></div>
+	     				<div><a href="http://localhost:8181/paid/List/${fri.novel_num}"><img src='/resources/novel_image/${fri.novel_num}.png'></a></div>
 	     				<div class="word">${fri.novel_title}</div>
      				</div>
      			</c:forEach>

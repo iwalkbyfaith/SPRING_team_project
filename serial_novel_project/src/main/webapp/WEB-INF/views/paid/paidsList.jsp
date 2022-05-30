@@ -27,7 +27,11 @@ img {
 </head>
 <body>
 	<sec:authentication property="principal.user" var="user"/>
-	
+	<sec:authentication property="principal.user"/>
+	${user }<br>
+	fav: ${fav}<br>
+	${ novelList }<br>
+	${paidList }
 		<div class="header">
 		
 		</div>
@@ -101,6 +105,9 @@ img {
 		
 		$('#addfavBtn').on("click",function(){
 			
+			
+			
+			
 			$.ajax({
 				type : 'post',
 				url : '/paid/fav',
@@ -120,7 +127,7 @@ img {
 					if(result == 'SUCCESS'){
 						alert("선호작 등록완료.");
 						$("#addfavBtn").hide();
-						location.href = "/paid/List/${novelList.novel_num}/${user.user_num}";
+						location.href = "/paid/List/${novelList.novel_num}";
 					}
 				}
 			});
@@ -142,7 +149,7 @@ img {
 					if(result == 'SUCCESS'){
 						alert("선호작 삭제완료.");
 						$("#delfavBtn").hide();
-						location.href = "/paid/List/${novelList.novel_num}/${user.user_num}";
+						location.href = "/paid/List/${novelList.novel_num}";
 					}
 				}
 			});

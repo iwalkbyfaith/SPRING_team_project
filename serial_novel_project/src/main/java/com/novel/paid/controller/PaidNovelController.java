@@ -1,6 +1,7 @@
 package com.novel.paid.controller;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.novel.paid.domain.PaidFavVO;
 import com.novel.paid.domain.PaidRecVO;
 import com.novel.paid.domain.PaidVO;
 import com.novel.paid.domain.SearchCriteria;
+import com.novel.paid.mapper.PaidNovelMapper;
 import com.novel.paid.service.PaidNovelService;
 
 import lombok.extern.log4j.Log4j;
@@ -38,6 +40,8 @@ public class PaidNovelController {
 	
 	@Autowired
 	private ChargeService chargeservice;
+	
+	
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/novelList")
@@ -67,18 +71,34 @@ public class PaidNovelController {
 	
 	// ■ 해당 유료소설의 상세회차들 (paidsList)
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping(value="/List/{novelNum}/{userNum}")
-	public String paidList(@PathVariable("novelNum") long novelNum, @PathVariable long userNum, Model model) {
+	@GetMapping(value="/List/{novelNum}")
+	//public String paidList(@PathVariable("novelNum") long novelNum, @PathVariable("userNum") long userNum, Model model) {
+		public String paidList(@PathVariable("novelNum") long novelNum, Principal principal, Model model) {
 		
+			log.info("paidsList 진입");
+			
+			log.info("유저네임:" + principal.getName());
+		//log.info("프린시플유저아이디" + user_id);
+		
+			
+			//log.info("프린시플유저아이디" + userNum);
+			
+	
 		NovelVO novelList = novelservice.detailNovel(novelNum);
 		
 		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
 		
-		PaidFavVO fav = paidservice.favList(novelNum, userNum);
 		
 		model.addAttribute("novelNum", novelNum);
 		model.addAttribute("paidList", paidList);
 		model.addAttribute("novelList", novelList);
+		
+		String user_id = principal.getName();
+		
+		System.out.println("프린시플 아이디" + principal.getName());
+		System.out.println("프린시플 유저아이디" + user_id);
+		//		long userNum = paidservice.getUserNumber(user_id);
+		PaidFavVO fav = paidservice.favList(novelNum, user_id);
 		model.addAttribute("fav", fav);
 		
 		return "paid/paidsList";

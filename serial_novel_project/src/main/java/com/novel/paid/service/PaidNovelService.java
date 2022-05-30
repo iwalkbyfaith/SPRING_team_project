@@ -44,5 +44,8 @@ public interface PaidNovelService {
 	
 	public void delFav(@Param("novel_num")long novel_num,@Param("user_num")long user_num); // ■ 선호작 삭제
 	
-	public PaidFavVO favList(@Param("novelNum")long novelNum,@Param("userNum")long userNum); // ■ 선호작 조회
+	public PaidFavVO favList(@Param("novelNum")long novelNum, @Param("user_id") String user_id); // ■ 선호작 조회
+	
+	// 유저 아이디로 유저 번호 가져오기
+		public long getUserNumber(String user_id);
 }
