@@ -1,11 +1,15 @@
 package com.novel.charge.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +29,17 @@ public class ChargeController {
 	@Autowired
 	private ChargeService service;
 	
-	
+	// ■ 유저의 결제내역
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping("/charge")
-	public void pay() {
+	@GetMapping("/charge/{user_num}")
+	public String pay(@PathVariable long user_num,Model model) {
 		
+		List<ChargeVO> chargeList =service.chargeList(user_num);
+		model.addAttribute("chargeList", chargeList);
+		return "charge";
 	}
+	
+	
 	
 	@ResponseBody
 	@PostMapping(value="/order", consumes="application/json",
@@ -95,6 +104,15 @@ public class ChargeController {
 		return entity;
 		}
 		
+		// ■ 유저의 유료소설 구매 내역
+		@GetMapping(value="/useList/{user_num}")
+		public String UseList(@PathVariable long user_num,Model model){
+			
+			List<UseVO> useList = service.useList2(user_num);
+			model.addAttribute("useList", useList);
+			
+		return "mypage/myUse";
+		}
 		
 		
 }

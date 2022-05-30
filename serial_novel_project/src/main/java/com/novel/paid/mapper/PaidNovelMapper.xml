@@ -3,15 +3,75 @@
 	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.novel.paid.mapper.PaidNovelMapper">
-	
-		<select id="selectList" resultType="com.novel.paid.domain.PaidVO">
-		SELECT n.novel_title , n.novel_num, p.paid_num FROM novel_tbl n INNER JOIN paid_tbl p ON n.novel_num = p.novel_num 
-			WHERE n.novel_week = #{novelWeek} GROUP BY n.novel_title, n.novel_num, p.paid_num
+		
+			<sql id="search">
+				<if test="searchType != null">
+					<if test="searchType == 't'.toString()">
+						(novel_title like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'w'.toString()">
+						(novel_writer like '%'||#{keyword}||'%') AND
+					</if>
+					<if test="searchType == 'tw'.toString()">
+						((novel_title like '%'||#{keyword}||'%')
+							or
+						(novel_writer like '%'||#{keyword}||'%')) AND
+					</if>
+				</if>	
+			</sql>
+		
+		
+		
+		<select id="selectMon" resultType="com.novel.novel.domain.NovelVO">
+			<![CDATA[
+			SELECT * FROM novel_tbl WHERE
+			]]>	
+				<include refid="search"></include>
+			<![CDATA[
+			 novel_week = 'Mon'
+			]]>	
 		</select>
 		
-		<select id="selectWeekList" resultType="com.novel.paid.domain.PaidVO">
-			SELECT * FROM novel_tbl WHERE novel_week = #{novelWeek}
+		<select id="selectTue" resultType="com.novel.novel.domain.NovelVO">
+			<![CDATA[
+			SELECT * FROM novel_tbl WHERE
+			]]>	
+				<include refid="search"></include>
+			<![CDATA[
+			 novel_week = 'Tue'
+			]]>	
 		</select>
+		
+		<select id="selectWed" resultType="com.novel.novel.domain.NovelVO">
+			<![CDATA[
+			SELECT * FROM novel_tbl WHERE
+			]]>	
+				<include refid="search"></include>
+			<![CDATA[
+			 novel_week = 'Wed'
+			]]>	
+		</select>
+		
+		<select id="selectThu" resultType="com.novel.novel.domain.NovelVO">
+			<![CDATA[
+			SELECT * FROM novel_tbl WHERE
+			]]>	
+				<include refid="search"></include>
+			<![CDATA[
+			 novel_week = 'Thu'
+			]]>	
+		</select>
+		
+		<select id="selectFri" resultType="com.novel.novel.domain.NovelVO">
+			<![CDATA[
+			SELECT * FROM novel_tbl WHERE
+			]]>	
+				<include refid="search"></include>
+			<![CDATA[
+			 novel_week = 'Fri'
+			]]>	
+		</select>
+		
 		
 		<select id="selectDetail" resultType="com.novel.paid.domain.PaidVO">
 			SELECT *
@@ -67,4 +127,52 @@
 			paid_title = #{paid_title}, paid_snum = #{paid_snum}, paid_content1 = #{paid_content1}, paid_content2 = #{paid_content2}, paid_mdate = sysdate, paid_price = #{paid_price} 
 			WHERE paid_num = #{paid_num}
 		</update>
+		
+		
+		<update id="upHit">
+			UPDATE paid_tbl SET paid_hit = (paid_hit + 1) WHERE paid_num = #{paid_num}
+		</update>
+		
+		<insert id="addRec">
+			INSERT INTO paid_rec_tbl (rec_num, user_num, paid_num) values
+                        (rec_num.nextval, #{user_num}, #{paid_num})
+		</insert>
+		
+		<update id="plusRec">
+			UPDATE paid_tbl SET paid_rec = (paid_rec + 1) WHERE paid_num = #{paid_num}
+		</update>
+		
+		<select id="recList" resultType="com.novel.paid.domain.PaidRecVO">
+			select * from paid_rec_tbl where paid_num = #{paid_num} and user_num = #{user_num}
+		</select>
+		
+		<insert id="addFav">
+			INSERT INTO favorite_tbl (fav_num, novel_num, user_num) values
+                          (fav_num.nextval, #{novel_num}, #{user_num})
+		</insert>
+		
+		<delete id="delFav">
+			delete from favorite_tbl where novel_num = #{novel_num} and user_num = #{user_num}
+		</delete>
+		
+		<select id="favList" resultType="com.novel.paid.domain.PaidFavVO">
+			SELECT * FROM favorite_tbl WHERE novel_num = #{novelNum} and user_num = (select user_num from user_tbl
+				WHERE user_id=#{user_id})
+		</select>
+		
+		
+		<!-- getUserNumber -->
+		<select id="getUserNumber" resultType="long">
+			select ft.user_num from favorite_tbl ft
+    			inner join
+        	user_tbl ut
+   				ON
+        	ft.user_num = ut.user_num
+        		WHERE 
+        	user_id =#{user_id}
+		</select>
+		
+		
+		
+		
 	</mapper>

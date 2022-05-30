@@ -23,7 +23,20 @@
 	</update>
 	
 	<insert id="insertUse">
-		INSERT INTO use_tbl (use_num, user_num, use_type, use_count) values
-           						(use_num.nextval, #{user_num}, #{use_type}, #{use_count})
+		INSERT INTO use_tbl (use_num, user_num, use_type, use_count,paid_num) values
+           						(use_num.nextval, #{user_num}, #{use_type}, #{use_count},#{paid_num})
 	</insert>
+	
+	<select id="useList" resultType="com.novel.charge.domain.UseVO">
+		select * from use_tbl where user_num = #{user_num} and paid_num = #{paid_num}
+	</select>
+	
+	<select id="useList2" resultType="com.novel.charge.domain.UseVO">
+		SELECT u.*, p.paid_title, p.novel_num FROM use_tbl u 
+			INNER JOIN paid_tbl p ON u.paid_num = p.paid_num WHERE user_num=#{user_num}
+	</select>
+	
+	<select id="chargeList" resultType="com.novel.charge.domain.ChargeVO">
+		SELECT * FROM charge_tbl where user_num = #{user_num} ORDER BY charge_num DESC
+	</select>
 </mapper>	

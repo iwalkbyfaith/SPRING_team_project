@@ -39,6 +39,35 @@ ul li a{
 	 	padding : 10px;
 	 	z-index : 1000; /*무조건 1보다 클것*/
 }
+
+img {
+	
+	width:163px;
+	margin-left: 24px;
+	padding:0;
+}
+
+.imgTh{
+	width: 230px;
+	
+}
+
+/*메뉴바*/
+.menubar li ul {
+	list-style:none;
+	background: yellowgreen;
+	display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+	height:auto;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	position:absolute;
+	width:200px;
+	z-index:200;
+}
+.menubar li:hover ul {
+	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+}				
 </style>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -48,118 +77,93 @@ ul li a{
 </head>
 <body>
 	<div class="header">
+	<sec:authentication property="principal.user" var="user"/>
 	<nav class="navbar navbar-expand-sm   navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="#">홈 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item dropdown dmenu">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-              소설 선택
-            </a>
-            <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">무료소설</a>
-              <a class="dropdown-item" href="#">유료소설</a>
-              </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">자유게시판</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">토너먼트</a>
-          </li>
-           <!-- <li class="nav-item dropdown dmenu">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-              Dropdown link
-            </a>
-            <div class="dropdown-menu sm-menu">
-              <a class="dropdown-item" href="#">Link 1</a>
-              <a class="dropdown-item" href="#">Link 2</a>
-              <a class="dropdown-item" href="#">Link 3</a>
-              <a class="dropdown-item" href="#">Link 4</a>
-              <a class="dropdown-item" href="#">Link 5</a>
-              <a class="dropdown-item" href="#">Link 6</a>
-            </div>
-          </li> -->
-          </ul>
-          <div class="social-part">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-            <i class="fa fa-instagram" aria-hidden="true"></i>
-          </div>
-        </div>
-      </nav>
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	
+        	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+		          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			            <li class="nav-item">
+			            	<a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
+			            </li>
+			           
+			            <li class="nav-item dropdown dmenu">
+			           		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+			              		소설 선택
+			            	</a>
+			            	<div class="dropdown-menu sm-menu">
+			              		<a class="dropdown-item" href="/free/novelList">무료소설</a>
+			              		<a class="dropdown-item" href="/paid/novelList">유료소설</a>
+			              	</div>
+			          	</li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/enroll/list">작품 신청 게시판</a>
+			          </li>
+			          <li class="nav-item">
+				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
+			          </li>
+			           <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num }">결제</a>
+		               </li>
+		          </ul><!-- ul 태그 끝 -->
+				<div class="menubar">
+					<ul> 	
+						<li style="list-style:none;"><a href="#" id="current">내정보</a>
+							<ul>
+								<li><a href="/mypage/myInfo">계정정보</a></li>
+								<li><a href="/mypage/myFavor">선호작</a></li>
+								<li><a href="/mypage/bookmark">책갈피</a></li>
+								<li><a href="/useList/${user.user_num }">구매내역</a></li>
+								<li><a href="/customLogout">로그아웃</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- menuar 끝 -->
+	        </div><!-- div 끝 -->
+	    </nav><!-- 네비바 끝 -->
 	</div>
 	<div class="container">
-	${novel}
-	<hr>
-	<p><sec:authentication property="principal.user" /></p>
-	<sec:authentication property="principal.user" var="user"/>
 	
-	유저아이디 :  ${user.user_id }
-	<hr>
-		<h1 class="text text-info">${novel.novel_title }</h1>
-		<div class="row">
-			<div class="col-md-1">소제목</div>
-			<div class="col-md-4">
-				<input type="text" id="pTitle1" class="form-control" value="${novel.paid_title }" readonly>
-			</div>
-			<div class="col-md-1">글쓴이</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" value="${novel.novel_writer }" readonly>
-			</div>
-			<div class="col-md-1">조회수</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_hit }" readonly>
-			</div>
-			<div class="col-md-1">추천</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_rec }" readonly>
-			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-md-1">작성일</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.paid_rdate }" readonly>
-			</div>
-			<div class="col-md-1">수정일</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.paid_mdate}" readonly>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">장르</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="${novel.novel_category}" readonly>
-			</div>
-			<div class="col-md-1">회차</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_snum }" readonly>
-			</div>
-			<div class="col-md-1">가격</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" value="${novel.paid_price }" readonly>
-			</div>
-		</div>
+		<h2 class="text text-info">${novel.novel_title }</h2>
+		
+			<table class="table caption-top table-sm">
+			  <tbody>
+			    <tr>
+			    	<th class="imgTh" rowspan="5"><img src='/resources/novel_image/${novel.novel_num}.png' ></th>
+			      <th scope="row">회차제목</th>
+			      	<td>${novel.paid_title }</td>
+			      <th scope="row">작가</th>
+			      	<td>${novel.novel_writer }</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">게시일</th>
+			      	<td>${novel.paid_rdate }</td>
+			      <th scope="row">가격</th>
+			      <td>${novel.paid_price } coin</td>
+			    </tr>
+			  	
+			  </tbody>
+			</table>
+			
+			
 		<div class="row">
 			<div class="col-md-1">
-				<a href="/paid/List/${novel.novel_num }" class="btn-sm">목록</a>
+				<a href="/paid/List/${novel.novel_num }/${user.user_num}" class="btn-sm"><button class="btn btn-secondary btn-sm">목록</button></a>
 			</div>
+		<!-- 유료소설추천테이블과 로그인유저의 번호 비교 추천버튼 없애기-->
+		<c:if test="${rec.user_num ne user.user_num}">
 			<div class="col-md-1">
-				<button type="button">선호</button>
+				<button class="recBtn">추천</button>
 			</div>
-			<div class="col_md-1">
+		</c:if>
+		<!-- 유료소설결제테이블과 로그인유저의 번호 비교 결제버튼 없애기-->
+		<c:if test="${use.user_num ne user.user_num}">
+			<div class="col-md-1">
 				<button class="chargeBtn">결제</button>
 			</div>
+		</c:if>
 			<div class="col-md-1">
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/updateS" method="POST">
@@ -183,12 +187,13 @@ ul li a{
 		</div>
 		<hr>
 		<div class="container2">
-			
+		<!-- 결제 내역이 없으면 본문은 보이지 않음 -->
+		<c:if test="${use.user_num eq user.user_num }">
 			<!-- 본문내용공간 -->
 			<ul id="Pcon">
 			
 			</ul>
-			
+		</c:if>
 			
 			
 			
@@ -409,10 +414,12 @@ ul li a{
 		// ■ 결제시 코인 차감 
 		$(".chargeBtn").on("click", function(){
 			
+			if(${user.user_coin < 100}){
+				alert("코인이 부족합니다. 충전페이지로 이동합니다");
+				location.href = "/charge/${user.user_num}";
+			} else{
 			var coin = ${novel.paid_price}
 			var userNum = ${user.user_num};
-			
-			
 			
 			// 코인 차감
 			$.ajax({
@@ -433,11 +440,11 @@ ul li a{
 				dataType : 'text',
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("결제 되었습니다.");
 						addUse();
 					}
 				}
 			});
+			}
 		});
 		
 		// ■ 구매시 use테이블(구매목록) 테이블에 넣어주기
@@ -459,16 +466,84 @@ ul li a{
 				dataType : 'text',
 				data : JSON.stringify({
 					user_num : userNum,
+					paid_num : paidnum,
 					use_type : useType,
 					use_count : coin
 				}),
 				success : function(result){
 					if(result == 'SUCCESS'){
-						alert("구매목록에 등록 되었습니다.");
+						alert("결제완료! 구매목록에 등록되었습니다.");
+						$(".chargeBtn").hide();
+						location.href = "/paid/detail/${novel.novel_num}/${novel.paid_num}/${user.user_num}";
 					}
 				}
 			});
 		}
+		
+		// ■ 추천버튼 클릭시 유료추천테이블 적재
+		$('.recBtn').on("click",function(){
+			
+			var userNum = ${user.user_num};
+			
+			$.ajax({
+				type : 'post',
+				url : '/paid',
+				headers:{
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				dataType : 'text',
+				data : JSON.stringify({
+					user_num : userNum,
+					paid_num : paidnum,
+				}),
+				success : function(result){
+					if(result == 'SUCCESS'){
+						addRec();
+					}
+				}
+			});
+		});
+		
+		// ■ 추천시 추천수 올리기
+		function addRec(){
+			
+			$.ajax({
+				type : 'patch', 
+				url : '/paid/' + paidnum,
+				header : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PATCH" 
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+				contentType : "application/json",
+				data : JSON.stringify({paid_num : paidnum}),
+				dataType : 'text',
+				success : function(result){
+					console.log("result : " + result);
+					if(result == 'SUCCESS'){
+						alert("추천되었습니다.");
+						location.href = "/paid/detail/${novel.novel_num}/${novel.paid_num}/${user.user_num}";
+						
+					}
+				}
+			});
+			
+		}
+		
+		// 네비 메뉴바 마우스 호버하는 경우 (소설 선택 -> 유료/무료 소설 페이지 뜨도록)
+	     $(document).ready(function () {
+	     $('.navbar-light .dmenu').hover(function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+	         }, function () {
+	             $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+	         });
+	     });
 	</script>
 	<div class="footer">
 	
