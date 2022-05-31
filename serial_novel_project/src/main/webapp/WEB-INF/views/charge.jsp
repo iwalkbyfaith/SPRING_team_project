@@ -43,9 +43,15 @@
 	}
 	
 	h1 {
-		margin-top: 50;
-	}
+		margin-top: 70px;
+		font-style: italic;
+		line-height: 0.5;
+		color: darkgrey;
+		background-color: aliceblue;
 
+	}
+	
+	
 /*메뉴바*/
 .menubar li ul {
 	list-style:none;
@@ -140,7 +146,7 @@
 					<p data-price="1000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">1,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">1,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -154,7 +160,7 @@
 					<p data-price="3000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">3,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">3,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -168,7 +174,7 @@
 					<p data-price="5000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">5,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">5,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -182,7 +188,7 @@
 					<p data-price="10000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">10,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">10,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -196,7 +202,7 @@
 					<p data-price="30000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">30,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">30,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -210,15 +216,15 @@
 					<p data-price="50000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">50,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">50,000원</button>
 				</div>
 			</div>
 		</div><!-- itemSection -->
 		
 	</div><!-- container -->
 	<hr>
-	<h1>내 결제 내역</h1>
-	<div class="container2"> 
+	<h1>결제 내역</h1>
+	<div class="container"> 
 		
     	<c:if test="${empty chargeList}">
     		<h1>결제한 내역이 없습니다.</h1>
@@ -240,7 +246,7 @@
 			</table>
     	</c:if>
 	
-	</div><!-- container2 -->
+	</div><!-- container-->
 	
 	
 <script type="text/javascript">
@@ -252,12 +258,14 @@
 	var itemTitle = "";
 	var merchant_uid = "";
 	var userNum = ${user.user_num};
+	var userEmail = "${user.user_email}";
+	var userId = "${user.user_id}";
 	
 	var coin = "";
 	var coupon = "";
 	
 	// 위임처리
-	$(".itemSection").on("click",".orderBtn",function(){
+	$(".itemSection").on("click","#orderBtn",function(){
 		itemPrice = $(this).parent().siblings(".itemPrice").children().attr("data-price");
 		
 		if(itemPrice == 3000){
@@ -301,8 +309,8 @@ function iamport(){
 		merchant_uid : merchant_uid,
 		name : itemTitle,
 		amount : itemPrice,
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '구매자',
+		buyer_email : userEmail,
+		buyer_name : userId,
 		buyer_tel : '010-1234-5678',
 		buyer_addr : '서울특별시 강남구 삼성동',
 		buyer_postcode : '123-456'

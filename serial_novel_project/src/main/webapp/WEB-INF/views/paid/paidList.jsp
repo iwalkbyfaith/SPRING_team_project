@@ -114,15 +114,15 @@ ul li a{
 			         <div class="row">	  	
 					  	<form action="/paid/novelList" method="get">
 					  		<!-- select태그를 이용해 클릭시 검색조건을 선택할수 있도록 처리합니다. -->
-					  		<select name="searchType">
+					  		<select name="searchType" >
 					  			<!-- 검색조건을 option태그를 이용해 만듭니다. -->
 					  			<option value="n">-</option>
 					  			<option value="t" ${pageMaker.cri.searchType eq 't' ? 'selected' : ''}>제목</option>
 					  			<option value="w" ${pageMaker.cri.searchType eq 'w' ? 'selected' : ''}>작가</option>
 					  			<option value="tcw" ${pageMaker.cri.searchType eq 'tw' ? 'selected' : ''}>제목+작가</option>
 					  		</select>
-					  		<input type="text" name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
-					  		<input type="submit" value="Search">
+					  		<input type="text"  name="keyword" placeholder="검색어" value="${pageMaker.cri.keyword }">
+					  		<input type="submit" value="Search" class="btn btn-secondary btn-sm">
 					  	</form>
 				  	</div><!-- 검색 끝 -->
 				<div class="menubar">
