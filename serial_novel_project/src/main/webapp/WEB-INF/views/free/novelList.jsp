@@ -1510,7 +1510,7 @@ $.getJSON(url, function(data){
 		
 	});	
 
-
+	// ■ 댓글 불러오는 로직.
 	$.getJSON("/replies/detail/"+ freeNum, function(data){
 	let repl="";
 	let replDelete="";
@@ -1524,7 +1524,7 @@ $.getJSON(url, function(data){
 	$(".replyContainer").html(reply);
 	$(data).each(
 		function(){
-			
+			// let id = "<sec:authentication property="principal.user.user_id"/>";
 			if(id == this.user_id){
 				replUpdate += "<button id='replUpdateBtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.free_num+"' data-novelNum='"+ novelNum +"'>수정</button>";
 				replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
@@ -2423,7 +2423,7 @@ $(".replyContainer").on("click","#replInsert",function(){
 							function(){
 								
 								if(id == this.user_id){
-									replUpdate+= "<button id='replUpdatebtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+this.freeNum+"'>수정</button>"
+									replUpdate+= "<button id='replUpdatebtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+freeNum+"'>수정</button>"
 									replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
 								}
 								
