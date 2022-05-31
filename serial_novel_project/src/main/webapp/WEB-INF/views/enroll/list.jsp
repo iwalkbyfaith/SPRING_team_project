@@ -81,7 +81,7 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i"
 	rel="stylesheet">
-<title>Insert title here</title>
+<title>작품 신청 게시판</title>
 </head>
 <body>
 

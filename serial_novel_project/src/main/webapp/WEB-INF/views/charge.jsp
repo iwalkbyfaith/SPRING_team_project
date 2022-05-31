@@ -82,7 +82,7 @@ ul li a{
 <!-- 제이쿼리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제</title>
 </head>
 <body>
 <!-- ■ 상단 네비바 추가하기 3)-->
