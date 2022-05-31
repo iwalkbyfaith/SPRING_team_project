@@ -47,6 +47,8 @@
 		font-style: italic;
 		line-height: 0.5;
 		color: darkgrey;
+		background-color: aliceblue;
+
 	}
 	
 	
@@ -144,7 +146,7 @@
 					<p data-price="1000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">1,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">1,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -158,7 +160,7 @@
 					<p data-price="3000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">3,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">3,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -172,7 +174,7 @@
 					<p data-price="5000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">5,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">5,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -186,7 +188,7 @@
 					<p data-price="10000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">10,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">10,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -200,7 +202,7 @@
 					<p data-price="30000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">30,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">30,000원</button>
 				</div>
 			</div>
 			<div class="itemCard">
@@ -214,7 +216,7 @@
 					<p data-price="50000"></p>
 				</div>
 				<div class="itemButton">
-					<button class="orderBtn">50,000원</button>
+					<button id="orderBtn" class="btn btn-outline-dark btn-lg">50,000원</button>
 				</div>
 			</div>
 		</div><!-- itemSection -->
@@ -256,12 +258,14 @@
 	var itemTitle = "";
 	var merchant_uid = "";
 	var userNum = ${user.user_num};
+	var userEmail = "${user.user_email}";
+	var userId = "${user.user_id}";
 	
 	var coin = "";
 	var coupon = "";
 	
 	// 위임처리
-	$(".itemSection").on("click",".orderBtn",function(){
+	$(".itemSection").on("click","#orderBtn",function(){
 		itemPrice = $(this).parent().siblings(".itemPrice").children().attr("data-price");
 		
 		if(itemPrice == 3000){
@@ -305,8 +309,8 @@ function iamport(){
 		merchant_uid : merchant_uid,
 		name : itemTitle,
 		amount : itemPrice,
-		buyer_email : 'iamport@siot.do',
-		buyer_name : '구매자',
+		buyer_email : userEmail,
+		buyer_name : userId,
 		buyer_tel : '010-1234-5678',
 		buyer_addr : '서울특별시 강남구 삼성동',
 		buyer_postcode : '123-456'

@@ -131,7 +131,7 @@ td p {
 			      <td><button id="addfavBtn" class="btn btn-outline-danger btn-lg" >♡</button></td>
 				</c:if>
 				<c:if test="${fav ne null}">
-			      <td><button id="delfavBtn" class="btn btn-outline-danger btn-lg">♥</button></td>
+			      <td><button id="delfavBtn" class="btn btn-danger btn-lg">♥</button></td>
 				</c:if>
 			    </tr>
 			  </tbody>
