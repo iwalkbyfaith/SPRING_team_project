@@ -135,6 +135,11 @@
 			DELETE FROM free_bookmark_tbl WHERE fbm_free_num = #{free_num} and user_num = #{user_num}
 		</delete>
 		
+		<!-- ■ 무료 책갈피 삭제(글삭제시 트랜잭션용) -->
+		<delete id="deleteAllFreeBookmark">
+			DELETE FROM free_bookmark_tbl WHERE fbm_free_num = #{free_num}
+		</delete>
+		
 		
 		<!-- ■ 회원정보 수정을 하려면 그에 딸려있는 모든 유저정보를 먼저 수정해야함. -->
 		<!--  1. auth_tbl     --> 

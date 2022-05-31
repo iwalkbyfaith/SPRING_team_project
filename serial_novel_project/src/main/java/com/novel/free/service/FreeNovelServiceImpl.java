@@ -13,6 +13,7 @@ import com.novel.free.domain.NovelVO;
 import com.novel.free.domain.SearchCriteria;
 import com.novel.free.mapper.FreeNovelMapper;
 import com.novel.free.mapper.FreeReplyMapper;
+import com.novel.user.mapper.UserMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -25,6 +26,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	private FreeNovelMapper freeMapper;
 	@Autowired
 	private FreeReplyMapper replyMapper;
+	@Autowired 
+	private UserMapper userMapper;
 
 	@Override
 	public List<NovelVO> selectList(String novelCategory){
@@ -76,6 +79,8 @@ public class FreeNovelServiceImpl implements FreeNovelService{
 	@Override
 	public void delete(long freeNum) {
 		replyMapper.deleteAll(freeNum);
+		
+		userMapper.deleteAllFreeBookmark(freeNum);
 		
 		freeMapper.delete(freeNum);
 		
