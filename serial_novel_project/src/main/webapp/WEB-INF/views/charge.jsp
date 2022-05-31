@@ -67,7 +67,11 @@
 }
 .menubar li:hover ul {
 	display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
-}			
+}		
+ul li a{
+	
+    margin-right: 20px;
+}	
 </style>
 	
 	

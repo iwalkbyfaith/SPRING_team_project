@@ -24,5 +24,5 @@ public class TournamentController {
 	public String goTournamentMain2() {
 		return "tournament/tournament2_test";
 	}
-	
+		
 }

@@ -196,6 +196,7 @@
 
 <body>
 
+	<sec:authentication property="principal.user" var="user"/>
 	
 	<!-- ■ jqueryCDN 추가 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -232,7 +233,7 @@
 				            <a class="nav-link" href="/tourna/list2">토너먼트</a>
 			          </li>
 			           <li class="nav-item">
-			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+			              	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num}">결제</a>
 		               </li>
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
