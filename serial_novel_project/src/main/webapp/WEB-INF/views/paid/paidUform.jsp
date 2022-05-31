@@ -99,7 +99,7 @@
 		</div>
 		<div class="mb-3">
 			<label>작가</label>
-				<input type="text" class="form-control col-md-3" id="writer"name="paid_title" value="${vo.novel_writer }" readonly>
+				<input type="text" class="form-control col-md-3" name="paid_writer" value="${vo.novel_writer }" readonly>
 			<label>회차</label>
 				<input type="number" class="form-control col-md-3" name="paid_snum"  min="1"  value="${vo.paid_snum }">
 			<label>가격</label>
