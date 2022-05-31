@@ -207,9 +207,6 @@ cursor: pointer;
             <li class="nav-item">
               <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
             <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
               소설 선택
@@ -225,6 +222,9 @@ cursor: pointer;
           <li class="nav-item">
 	            <a class="nav-link" href="/tourna/list2">토너먼트</a>
           </li>
+          <li class="nav-item">
+           	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
+           </li>
            <!-- <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
               Dropdown link

@@ -155,7 +155,7 @@
 	<div class="container">
 
 			<!-- ● 글쓰기 버튼 (유저, 무료작가, 유료작가만 보이도록 설정) -->
-			<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_FREE_WRITER', 'ROLE_PAID_WRITER')">
+			<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_FREE_WRTIER', 'ROLE_PAID_WRTIER')">
 				<div style="float:right">
 					<button type="button" class="btn btn-success" id="enrollBtn">작품 신청</button><!-- '#enrollBtn' --> <br/><br/>
 				</div>

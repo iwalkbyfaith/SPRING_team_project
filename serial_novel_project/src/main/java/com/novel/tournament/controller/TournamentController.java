@@ -19,7 +19,7 @@ public class TournamentController {
 	@Autowired
 	private TournamentService service;
 	
-	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_FREE_WRITER', 'ROLE_PAID_WRITER', 'ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list2")
 	public String goTournamentMain2() {
 		return "tournament/tournament2_test";

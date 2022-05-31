@@ -166,7 +166,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
 
-<title>메인 만들기 test</title>
+<title>메인</title>
 </head>
 <body>
 	
@@ -211,7 +211,7 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
            <li><a href="/mypage/myInfo">계정정보</a></li>
            <li><a href="/mypage/myFavor">선호작</a></li>
            <li><a href="/mypage/bookmark">책갈피</a></li>
-           <li><a href="/secu/customLogout">로그아웃</a></li>
+           <li><a href="/customLogout">로그아웃</a></li>
            
      	    </ul>
    			   </li>

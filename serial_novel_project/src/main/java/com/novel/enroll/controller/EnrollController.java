@@ -18,7 +18,7 @@ public class EnrollController {
 	@Autowired
 	private EnrollService service;
 	
-	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_FREE_WRITER', 'ROLE_PAID_WRITER', 'ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/list")
 	public void showAllList() {
 		
