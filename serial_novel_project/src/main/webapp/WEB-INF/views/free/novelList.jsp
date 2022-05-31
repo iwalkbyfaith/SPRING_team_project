@@ -949,6 +949,7 @@ console.log(novelNum);
 				let date1 = new Date(timestamp1);
 				let date2 = new Date(timestamp2);
 				let testDate = new Date(1970,0,1);
+					
 				
 				let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 				let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
@@ -1830,9 +1831,17 @@ $("#nBtn").on("click",".nCancel",function(){
 					let timestamp2 = this.free_mdate;
 					let date1 = new Date(timestamp1);
 					let date2 = new Date(timestamp2);
+					let testDate = new Date(1970,0,1);
+					
 					
 					let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 					let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+					let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
+					
+					if(formattedTime2 == formattedTime3){
+						formattedTime2 = "";
+					
+					 }
 					
 					str+= "<tr><td>"+this.free_snum+"</td>"
 						+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"'>"+this.free_title+"</td>"
@@ -1905,9 +1914,16 @@ $(".delete").on("click",".nDelete",function(){
 								let timestamp2 = this.free_mdate;
 								let date1 = new Date(timestamp1);
 								let date2 = new Date(timestamp2);
+								let testDate = new Date(1970,0,1);
 								
 								let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 								let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+								let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
+								
+								if(formattedTime2 == formattedTime3){
+									formattedTime2 = "";
+								
+								 }
 								
 								str+= "<tr><td>"+this.free_snum+"</td>"
 								+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
@@ -2198,6 +2214,7 @@ $("#uBtn").on("click",".uModify",function(){
 			}
 		}); // ajax마무리
 });
+// ■ 댓글 삭제.
 $(".repl").on("click","#replDelete",function(){
 	var frepl_num = $(this).attr("data-freplNum");
 	var freeNum = $(this).attr("data-freeNum");
@@ -2283,7 +2300,7 @@ $(".repl").on("click","#replUpdateBtn",function(){
 	
 	});
 
-// ■ 수정 도중 취소를 누르면 다시 원래있던 댓글목록을 뿌려줌.
+// ■ 수정 도중 를 누르면 다시 원래있던 댓글목록을 뿌려줌.
 $(".repl").on("click","#replCancel",function(){
 	var freeNum = $(this).attr("data-freeNum");
 	var novelNum = $(this).attr("data-novelNum");
@@ -2325,7 +2342,7 @@ $(".repl").on("click","#replCancel",function(){
 	
 });
 	
-// ■ (처음 수정버튼을 누르면 해당 댓글을 수정하는 부분이 먼저나옴 #replUpdateBtn) 수정 버튼(#replUpdate)을 눌렀을때 수정이 되는 로직.	
+// ■ 수정 버튼(#replUpdate)을 눌렀을때 수정이 되는 로직.	
 $(".repl").on("click","#replUpdate",function(){
 	var frepl_num = $(this).attr("data-freplNum");
 	
@@ -2428,7 +2445,7 @@ $(".replyContainer").on("click","#replInsert",function(){
 							function(){
 								
 								if(id == this.user_id){
-									replUpdate+= "<button id='replUpdatebtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+freeNum+"'>수정</button>"
+									replUpdate+= "<button id='replUpdatebtn' data-freplNum='"+this.frepl_num+"' data-user_id='"+this.user_id+"' data-freeNum='"+freeNum+"' data-novelNum='"+novel_num+"'>수정</button>"
 									replDelete += "<button id='replDelete' data-freplNum='"+this.frepl_num+"' data-freeNum='"+this.free_num+"'>삭제</button>";
 								}
 								
