@@ -118,7 +118,7 @@
 		</insert>
 		
 		<delete id="delete">
-			DELETE FROM paid_tbl WHERE paid_snum = #{paid_snum}
+			DELETE FROM paid_tbl WHERE paid_num = #{paid_num}
 		</delete>
 		
 		<update id="update">

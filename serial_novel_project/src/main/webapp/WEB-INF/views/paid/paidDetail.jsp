@@ -189,7 +189,7 @@ h2 {
 			<div class="col-md-1">
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/DeleteS" method="POST">
-						<input type="hidden" name="paid_snum" value="${novel.paid_snum}">
+						<input type="hidden" name="paid_num" value="${novel.paid_num}">
 						<input type="hidden" name="novel_num" value="${novel.novel_num}">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input type="submit" value="삭제" class="btn btn-outline-danger">

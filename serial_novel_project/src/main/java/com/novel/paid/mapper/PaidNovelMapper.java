@@ -32,7 +32,7 @@ public interface PaidNovelMapper {
 	
 	public void insert(PaidVO vo); // ■ paid 상세 회차 작성
 	
-	public void delete(long paid_snum); // ■ paid 상세 회차 삭제
+	public void delete(long paid_num); // ■ paid 상세 회차 삭제
 	
 	public void update(PaidVO vo); // ■ paid 상세 회차 수정
 	

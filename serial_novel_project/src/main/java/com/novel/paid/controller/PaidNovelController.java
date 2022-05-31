@@ -132,8 +132,8 @@ public class PaidNovelController {
 	
 	// ■ 유료소설 회차 삭제
 	@PostMapping("/DeleteS")
-	public String deleteS(long paid_snum, long novel_num) {
-		paidservice.delete(paid_snum);
+	public String deleteS(long paid_num, long novel_num) {
+		paidservice.delete(paid_num);
 		return "redirect:/paid/List/" + novel_num; 
 	}
 	

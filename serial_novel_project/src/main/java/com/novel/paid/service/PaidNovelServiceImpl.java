@@ -48,8 +48,8 @@ public class PaidNovelServiceImpl implements PaidNovelService{
 	}
 	
 	@Override
-	public void delete(long paid_snum) {
-		paidMapper.delete(paid_snum);
+	public void delete(long paid_num) {
+		paidMapper.delete(paid_num);
 		
 	}
 

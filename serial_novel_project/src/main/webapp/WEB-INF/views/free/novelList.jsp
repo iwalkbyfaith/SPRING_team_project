@@ -196,11 +196,6 @@ cursor: pointer;
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i" rel="stylesheet">
 </head>
   <body>
-  
-  <sec:authentication property="principal.user" var="user"/>
-  
-  
-  
 	<div class="header">
     <nav class="navbar navbar-expand-sm   navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -212,6 +207,7 @@ cursor: pointer;
             <li class="nav-item">
               <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
             </li>
+            
             <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
               소설 선택
@@ -228,7 +224,7 @@ cursor: pointer;
 	            <a class="nav-link" href="/tourna/list2">토너먼트</a>
           </li>
           <li class="nav-item">
-           	<a class="nav-link" href="http://localhost:8181/charge/${user.user_num}">결제</a>
+           	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
            </li>
            <!-- <li class="nav-item dropdown dmenu">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
