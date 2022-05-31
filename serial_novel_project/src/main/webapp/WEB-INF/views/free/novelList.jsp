@@ -1769,10 +1769,17 @@ $("#nBtn").on("click",".nSubmit",function(){
 							let timestamp2 = this.free_mdate;
 							let date1 = new Date(timestamp1);
 							let date2 = new Date(timestamp2);
+							let testDate = new Date(1970,0,1);
+							
 							
 							let formattedTime1 = date1.getFullYear()+"/"+(date1.getMonth()+1)+"/"+date1.getDate();
 							let formattedTime2 = date2.getFullYear()+"/"+(date2.getMonth()+1)+"/"+date2.getDate();
+							let formattedTime3 = testDate.getFullYear()+"/"+(testDate.getMonth()+1)+"/"+testDate.getDate();
 							
+							if(formattedTime2 == formattedTime3){
+								formattedTime2 = "";
+							
+							 }	
 							str+= "<tr><td>"+this.free_snum+"</td>"
 							+ "<td class='title' data-freeSNum='"+this.free_snum+"'data-novelNum='"+this.novel_num+"' data-freeNum='"+this.free_num+"' data-novelCategory='"+novelCategory+"' data-userId='"+this.user_id+"'>"+this.free_title+"</td>"
 							+ "<td>"+this.novel_writer+"</td>"
