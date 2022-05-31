@@ -125,10 +125,10 @@
 	            ) tt2
 	        LEFT JOIN
 	            (
-	            SELECT novel_num, sum(free_hit) as totalrec FROM free_tbl group by novel_num
+	            SELECT novel_num, sum(free_hit) as totalHit FROM free_tbl group by novel_num
 	            ) tt3
 	        ON tt2.novel_num = tt3.novel_num
-	        ORDER BY to_num DESC, towork_rec DESC, totalrec DESC
+	        ORDER BY to_num DESC, towork_rec DESC, totalHit DESC
 	       )
        WHERE rownum <= 1
         
