@@ -159,6 +159,7 @@ td p {
 					</c:forEach>
 			</table>
 			<a href="/paid/novelList">요일별 목록</a><br>
+			<!-- 자신이 작성한 유료소설이 아닐경우 글쓰기 버튼 미출력 -->
 			<c:if test="${user.user_id eq paidList[0].user_id}">
 				<a href="/paid/insertS/${novelNum}">회차 글쓰기</a>
 			</c:if>
@@ -174,9 +175,8 @@ td p {
 			var csrfHeaderName = "${_csrf.headerName}"
 			var csrfTokenValue="${_csrf.token}"
 		
+			// ■ 선호 버튼 클릭시
 		$('#addfavBtn').on("click",function(){
-			
-			
 			
 			
 			$.ajax({
@@ -204,6 +204,7 @@ td p {
 			});
 		});
 		
+			// 활성화 된 선호 버튼 클릭 시
 		$("#delfavBtn").on("click", function(){
 			
 			$.ajax({

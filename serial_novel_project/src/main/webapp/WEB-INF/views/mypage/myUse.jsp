@@ -132,10 +132,12 @@ body h1{
 	 <hr>
 	 
      <div class="container"> 
-     
+     	
+     	<!-- 구매리스트가 없을경우 -->
      	<c:if test="${empty useList}">
     		<h1>구매한 내역이 없습니다.</h1>
     	</c:if>
+    	<!-- 구매리스트가 있을경우 -->
     	<c:if test="${not empty useList}">
 			<table class="table table-bordered border-info">
 				<tr>

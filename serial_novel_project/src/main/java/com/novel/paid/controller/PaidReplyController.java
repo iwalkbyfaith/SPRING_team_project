@@ -28,7 +28,7 @@ public class PaidReplyController {
 	@Autowired
 	private PaidReplyService service;
 	
-	
+	// ■ 유료소설의 댓글리스트 - paidDetail.jsp
 	@GetMapping(value="/all/{novelNum}/{paidNum}", 
 			produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<PaidReplyVO>> list(@PathVariable("novelNum") long novelNum, 
@@ -44,7 +44,7 @@ public class PaidReplyController {
 		return entity;
 	}
 	
-	
+	// ■ 유료소설의 댓글 추가 - paidDetail.jsp
 	@PostMapping(value="", consumes="application/json",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> register(@RequestBody PaidReplyVO vo){
@@ -62,7 +62,7 @@ public class PaidReplyController {
 	return entity;
 	}
 	
-	
+	// ■ 유료소설의 댓글 삭제 - paidDetail.jsp
 	@DeleteMapping(value="/{preplNum}",
 			produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("preplNum") long preplNum){
@@ -78,7 +78,7 @@ public class PaidReplyController {
 		return entity;
 	}
 	
-	
+	// ■ 유료소설의 댓글 수정 - paidDetail.jsp
 	@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
 			value="/{preplNum}",
 			consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})

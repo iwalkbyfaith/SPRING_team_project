@@ -13,6 +13,7 @@ import com.novel.paid.domain.SearchCriteria;
 
 public interface PaidNovelMapper {
 	
+	// ■ 요일별 리스트데이터 
 	public List<PaidVO> selectMon(SearchCriteria cri);
 	public List<PaidVO> selectTue(SearchCriteria cri);
 	public List<PaidVO> selectWed(SearchCriteria cri);
@@ -50,7 +51,7 @@ public interface PaidNovelMapper {
 	
 	public PaidFavVO favList(@Param("novelNum")long novelNum, @Param("user_id") String user_id); // ■ 선호작 조회
 	
-	// 유저 아이디로 유저 번호 가져오기
+	// ■ 유저 아이디로 유저 번호 가져오기
 	public long getUserNumber(String user_id);
 	
 	

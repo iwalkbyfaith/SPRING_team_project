@@ -10,6 +10,7 @@ import com.novel.user.domain.UserVO;
 
 public interface ChargeService {
 	
+	// ■ 결제테이블(charge_tbl)에 결제내역 적재
 	public void insertPay(ChargeVO vo);
 	
 	// ■ 결제 성공시 해당 유저 코인 발급 로직

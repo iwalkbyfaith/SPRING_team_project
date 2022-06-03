@@ -42,7 +42,8 @@ public class PaidNovelController {
 	private ChargeService chargeservice;
 	
 	
-	
+	// 인증된 사용자 전용
+	// ■ 각 요일별(월~금)로 데이터 가져오기 - paidList.jsp
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/novelList")
 	public String getPaidList(SearchCriteria cri,Model model) {
@@ -69,51 +70,48 @@ public class PaidNovelController {
 	
 	
 	
-	// ■ 해당 유료소설의 상세회차들 (paidsList)
+	// ■ 해당 유료소설의 상세회차들 - paidsList.jsp
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value="/List/{novelNum}")
 	public String paidList(@PathVariable("novelNum") long novelNum, Principal principal, Model model) {
 		
-			
-
-	
-		NovelVO novelList = novelservice.detailNovel(novelNum);
+		NovelVO novelList = novelservice.detailNovel(novelNum); // 소설의 디테일한 정보
 		
-		List<PaidVO> paidList = paidservice.selectPaidList(novelNum);
+		List<PaidVO> paidList = paidservice.selectPaidList(novelNum); // 소설에 해당된 유료소설리스트
 		
 		
 		model.addAttribute("novelNum", novelNum);
 		model.addAttribute("paidList", paidList);
 		model.addAttribute("novelList", novelList);
 		
-		String user_id = principal.getName();
+		String user_id = principal.getName(); // 유저 네임으로 아이디에 저장
 		
-		PaidFavVO fav = paidservice.favList(novelNum, user_id);
+		PaidFavVO fav = paidservice.favList(novelNum, user_id); // 선호작 리스트
 		model.addAttribute("fav", fav);
 		
 		return "paid/paidsList";
 	}
 	
-	// ■ 유료소설 회자 상세 (paidDetail)
+	// ■ 유료소설 회자 상세 paidDetail.jsp
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail/{novel_num}/{paid_num}/{user_num}")
 	public String getPaidDetail(@PathVariable long novel_num, @PathVariable long paid_num, 
 			@PathVariable long user_num, Model model ) {
 		
-		paidservice.upHit(paid_num);
-		PaidVO novel = paidservice.selectDetail(paid_num, novel_num);
+		paidservice.upHit(paid_num); // 조회수 증감
+		PaidVO novel = paidservice.selectDetail(paid_num, novel_num); // 유료소설 디테일
 		model.addAttribute("novel",novel);
 		
-		PaidRecVO rec = paidservice.recList(paid_num, user_num);
+		PaidRecVO rec = paidservice.recList(paid_num, user_num); // 추천테이블 조회
 		model.addAttribute("rec",rec);
 		
-		UseVO use = chargeservice.useList(paid_num, user_num);
+		UseVO use = chargeservice.useList(paid_num, user_num); // 구매리스트 조회
 		model.addAttribute("use",use);
 		
 		return "paid/paidDetail";
 	}
 	
-	// ■ 유료소설 상세 페이지 폼
+	// ■ 유료소설 상세 페이지 폼 - paidSfrom.jsp 로 이동시킴
 	@GetMapping("/insertS/{novelNum}")
 	public String insertS(@PathVariable long novelNum, Model model) {
 		
@@ -123,21 +121,21 @@ public class PaidNovelController {
 		return "paid/paidSform";
 	}
 	
-	// ■ 유료소설 상세 소설 작성
+	// ■ 유료소설 상세 소설 작성 - paidSform.jsp
 	@PostMapping("/insertS")
 	public String insertS(PaidVO paidvo) {
 		paidservice.insert(paidvo);
 		return "redirect:/paid/List/" + paidvo.getNovel_num();
 	}
 	
-	// ■ 유료소설 회차 삭제
+	// ■ 유료소설 회차 삭제 - paidDetail.jsp
 	@PostMapping("/DeleteS")
 	public String deleteS(long paid_snum, long novel_num) {
 		paidservice.delete(paid_snum);
 		return "redirect:/paid/List/" + novel_num; 
 	}
 	
-	// ■ 유료소설 상세 수정페이지 폼
+	// ■ 유료소설 상세 수정페이지 폼 - paidUform.jsp
 	@PostMapping(value="/updateS")
 	public String updateForm(long novel_num, long paid_num, Model model) {
 		PaidVO vo = paidservice.selectDetail(paid_num, novel_num);
@@ -145,7 +143,7 @@ public class PaidNovelController {
 		return "paid/paidUform";
 	}
 	
-	// ■ 유료소설 회차 수정
+	// ■ 유료소설 회차 수정 - paidUform.jsp
 	@PostMapping("/paidUpdate")
 	public String updateS(PaidVO vo, long novel_num){
 		paidservice.update(vo);

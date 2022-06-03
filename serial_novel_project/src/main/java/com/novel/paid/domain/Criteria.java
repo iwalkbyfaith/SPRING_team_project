@@ -1,7 +1,7 @@
 package com.novel.paid.domain;
 
 import lombok.Data;
-
+// 페이징처리를 위한 Criteria
 @Data
 public class Criteria {
 	private long pageNum = 1;

@@ -29,7 +29,8 @@ public class ChargeController {
 	@Autowired
 	private ChargeService service;
 	
-	// ■ 유저의 결제내역
+	// 로그인 한 사용자 전용
+	// ■ 유저의 결제페이지(결제 테이블을 조회해서 넘어감)
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/charge/{user_num}")
 	public String pay(@PathVariable long user_num,Model model) {
@@ -40,7 +41,7 @@ public class ChargeController {
 	}
 	
 	
-	
+	// ■ 유저의 결제내역에 적재하기 (로그인 한 사용자 전용)
 	@ResponseBody
 	@PostMapping(value="/order", consumes="application/json",
 				produces= {MediaType.TEXT_PLAIN_VALUE})
@@ -51,7 +52,7 @@ public class ChargeController {
 	}
 	
 	
-	// 결제성공시 코인 추가되는 컨트롤러
+	// ■ 결제성공시 코인 추가되는 컨트롤러
 	@ResponseBody
 	@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
 						value="/coinAdd",
@@ -70,7 +71,7 @@ public class ChargeController {
 		}
 	
 		
-		// 소설결제시 코인 차감되는 컨트롤러
+		// ■ 소설결제시 코인 차감
 		@ResponseBody
 		@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
 							value="/remove",
@@ -89,7 +90,7 @@ public class ChargeController {
 			}
 		
 		
-		// 소설 결제 내역 남기기
+		// ■ 소설 결제 내역 남기기
 		@ResponseBody
 		@PostMapping(value="/insertUse", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> insertUse(@RequestBody UseVO uVo){

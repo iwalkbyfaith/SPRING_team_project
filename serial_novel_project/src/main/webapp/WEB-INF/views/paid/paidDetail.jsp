@@ -135,7 +135,7 @@ h2 {
 	    </nav><!-- 네비바 끝 -->
 	</div>
 	<div class="container">
-	
+		
 		<h2 class="text text-info">${novel.novel_title }</h2>
 		
 			<table class="table caption-top table-sm">
@@ -175,6 +175,7 @@ h2 {
 			</div>
 		</c:if>
 			<div class="col-md-1">
+				<!-- 로그인한 유저의 아이디와 소설 작성한 유저아이디 비교 -->
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/updateS" method="POST">
 						<input type="hidden" name="paid_num" value="${novel.paid_num}">
@@ -185,6 +186,7 @@ h2 {
 				</c:if>
 			</div>
 			<div class="col-md-1">
+				<!-- 로그인한 유저의 아이디와 소설 작성한 유저아이디 비교 -->
 				<c:if test="${user.user_id eq novel.user_id}">
 					<form action="/paid/DeleteS" method="POST">
 						<input type="hidden" name="paid_snum" value="${novel.paid_snum}">

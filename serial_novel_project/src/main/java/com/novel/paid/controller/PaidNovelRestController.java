@@ -33,7 +33,7 @@ public class PaidNovelRestController {
 	private PaidNovelService paidservice;
 	
 
-	// ■ paidDetail에서 본문 가져오기
+	// ■ paidDetail에서 본문 가져오기(결제버튼 클릭시 본문내용 출력) -paidDetail.jsp
 	@GetMapping(value="/{paidnum}",
 					produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<PaidVO> DetailCon(@PathVariable("paidnum") long paidnum){
@@ -48,7 +48,7 @@ public class PaidNovelRestController {
 	return entity;
 }	
 	
-		// ■ 유료소설 추천 테이블에 적재하기
+		// ■ 유료소설 추천 테이블에 적재하기 -paidDetail.jsp
 		@PostMapping(value="", consumes="application/json",produces= {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> addRec(@RequestBody PaidRecVO vo){
 			ResponseEntity<String> entity = null;
@@ -64,7 +64,7 @@ public class PaidNovelRestController {
 		return entity;
 		}
 		
-		// ■ 유료소설 추천수 올리기
+		// ■ 유료소설 추천수 올리기 -paidDetail.jsp
 		@RequestMapping(method= {RequestMethod.PUT,RequestMethod.PATCH},
 				value="/{paid_num}",
 				consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
@@ -80,7 +80,7 @@ public class PaidNovelRestController {
 			return entity;
 		}	
 		
-		// ■ 유료소설 선호작 등록하기
+		// ■ 유료소설 선호작 등록하기 -paidDetail.jsp
 		@PostMapping(value="/fav",consumes="application/json",produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 		public ResponseEntity<String> insertFav(
 				@RequestBody PaidFavVO vo){
@@ -96,7 +96,7 @@ public class PaidNovelRestController {
 				return entity;
 			}
 		
-		// ■ 유료소설 선호작 삭제하기
+		// ■ 유료소설 선호작 삭제하기 -paidDetail.jsp
 		@DeleteMapping(value="/del/{novelNum}/{userNum}",
 				produces= {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> deleteFav(@PathVariable("novelNum") long novel_num, @PathVariable("userNum") long user_num){
