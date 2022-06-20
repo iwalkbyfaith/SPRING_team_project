@@ -130,15 +130,21 @@ ___
 ---
 > ### 토너먼트 게시판
 >> 8강, 4강, 2강(결승), 예상 우승 작품 조회
+>> ![image](https://user-images.githubusercontent.com/93142964/174600684-cd0ba4a0-4372-45f5-b3d6-01a0e373ba21.png)
 >> 
 >
 >> 각 토너먼트 별 추천 버튼
+>> * 추천수가 동수인 경우는 총 조회수를 기준으로 선정
+>> ![image](https://user-images.githubusercontent.com/93142964/174600890-592fc2ae-dc7b-44ba-8f26-9d4249ec858f.png)
 >> 
 >
 >> 토너먼트 종료시의 변화
+>> ![image](https://user-images.githubusercontent.com/93142964/174600916-3f1646b7-1457-4753-ba1e-cabbba0cf0e5.png)
+
 >> 1. 작품 & 작가 관련
 >> 
 >> 1-1) 작품의 컬럼인 week를 무료 게시판에서 유료 게시판으로 변경(유료 게시판에 새로 적재됨)
+>> ![image](https://user-images.githubusercontent.com/93142964/174600987-df364801-bffa-4b7c-bfb4-c0c90d1a860e.png)
 >> 
 >> 1-2) 작가의 등급 변경(유료 작가)
 >> 
@@ -156,7 +162,7 @@ ___
 ---
 > ### 유료 소설 게시판 CRUD
 >> 유료 소설 새로운 회차 추가   
->> 
+>> ![image](https://user-images.githubusercontent.com/93142964/174601050-d2e29209-9947-4af8-8008-da20a01d9a2b.png)
 >
 >> 회차 수정
 >> 
@@ -170,7 +176,9 @@ ___
 ---
 > ### 결제
 >> KG 이니시스를 사용한 결제 모듈 적용  
->
+>![image](https://user-images.githubusercontent.com/93142964/174601120-407516bd-5eb9-4669-aed3-1ccb62746d77.png)
+>![image](https://user-images.githubusercontent.com/93142964/174601165-1e582131-c578-437b-8546-13e7e99b1430.png)
+
 
 ---
 ## 배운점
