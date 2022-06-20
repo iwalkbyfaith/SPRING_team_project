@@ -74,7 +74,7 @@ ___
 ## 기능
 
 ---
-> ### 메인화면
+> ### ⬛ 메인화면
 ![image](https://user-images.githubusercontent.com/93142964/174599853-7d9c36fc-0a90-40e8-958a-bf4d7159e870.png)
 >> * 스프링 시큐리티를 적용한 로그인
 >> 
@@ -85,7 +85,7 @@ ___
 >> * 캐러셀을 클릭하여 게시판에 접근 가능
 
 ---
-> ### 작품 신청 게시판 CRUD
+> ### ⬛ 작품 신청 게시판 CRUD
 >> 작품 조회
 >> ![image](https://user-images.githubusercontent.com/93142964/174600225-62ef012b-3e12-4692-b1b0-1f807b5f0c08.png)
 >> * 다른 사람이 작성한 신청 폼을 조회할 수 있음
@@ -109,7 +109,7 @@ ___
 
 
 ---
-> ### 무료 소설 게시판 CRUD
+> ### ⬛ 무료 소설 게시판 CRUD
 ![image](https://user-images.githubusercontent.com/93142964/174599313-cbecd894-e453-45dd-a416-6fc741fb1a06.png)
 
 >> 무료 소설 새로운 회차 추가   
@@ -128,7 +128,7 @@ ___
 
 
 ---
-> ### 토너먼트 게시판
+> ### ⬛ 토너먼트 게시판
 >> 8강, 4강, 2강(결승), 예상 우승 작품 조회
 >> ![image](https://user-images.githubusercontent.com/93142964/174600684-cd0ba4a0-4372-45f5-b3d6-01a0e373ba21.png)
 >> 
@@ -160,7 +160,7 @@ ___
 >> 2-3) 토너먼트 추천 기록 테이블 데이터 삭제
 > 
 ---
-> ### 유료 소설 게시판 CRUD
+> ### ⬛ 유료 소설 게시판 CRUD
 >> 유료 소설 새로운 회차 추가   
 >> ![image](https://user-images.githubusercontent.com/93142964/174601050-d2e29209-9947-4af8-8008-da20a01d9a2b.png)
 >
@@ -174,7 +174,7 @@ ___
 
 
 ---
-> ### 결제
+> ### ⬛ 결제
 >> KG 이니시스를 사용한 결제 모듈 적용  
 >![image](https://user-images.githubusercontent.com/93142964/174601120-407516bd-5eb9-4669-aed3-1ccb62746d77.png)
 >![image](https://user-images.githubusercontent.com/93142964/174601165-1e582131-c578-437b-8546-13e7e99b1430.png)
