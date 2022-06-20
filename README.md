@@ -75,7 +75,7 @@ ___
 
 ---
 > ### ⬛ 메인화면
-![image](https://user-images.githubusercontent.com/93142964/174599853-7d9c36fc-0a90-40e8-958a-bf4d7159e870.png)
+>![image](https://user-images.githubusercontent.com/93142964/174599853-7d9c36fc-0a90-40e8-958a-bf4d7159e870.png)
 >> ◾ 스프링 시큐리티를 적용한 로그인
 >> 
 >
@@ -84,6 +84,7 @@ ___
 >
 >> ◾ 캐러셀을 클릭하여 게시판에 접근 가능
 
+<br><br>
 ---
 > ### ⬛ 작품 신청 게시판 CRUD
 >> ◾ 작품 조회
@@ -102,15 +103,15 @@ ___
 >>
 >
 >> ◾ 관리자 승인/거부 버튼
->> ![image](https://user-images.githubusercontent.com/93142964/174599995-bdd1f02a-698a-41b3-8aba-56824e35a53b.png)
->> * 관리자 계정으로 로그인하여 'ROLE_ADMIN' 등급을 가지고 있어야 확인할 수 있는 '관리자 버튼'
->> * 관리자는 메세지와 함께 대기/거부/무료 승인을 선택할 수 있음
->> * 무료승인을 선택한 경우, 해당 작품은 바로 '무료 소설 게시판'으로 이동하고 작가는 즉시 연재 가능함.
+>>> ![image](https://user-images.githubusercontent.com/93142964/174599995-bdd1f02a-698a-41b3-8aba-56824e35a53b.png)
+>>> * 관리자 계정으로 로그인하여 'ROLE_ADMIN' 등급을 가지고 있어야 확인할 수 있는 '관리자 버튼'
+>>> * 관리자는 메세지와 함께 대기/거부/무료 승인을 선택할 수 있음
+>>> * 무료승인을 선택한 경우, 해당 작품은 바로 '무료 소설 게시판'으로 이동하고 작가는 즉시 연재 가능함.
 
-
+<br><br>
 ---
 > ### ⬛ 무료 소설 게시판 CRUD
-![image](https://user-images.githubusercontent.com/93142964/174599313-cbecd894-e453-45dd-a416-6fc741fb1a06.png)
+>![image](https://user-images.githubusercontent.com/93142964/174599313-cbecd894-e453-45dd-a416-6fc741fb1a06.png)
 
 >> ◾ 무료 소설 새로운 회차 추가   
 >> 
@@ -122,11 +123,11 @@ ___
 >>
 >
 >> ◾ 선호작, 책갈피, 추천, 댓글
-![image](https://user-images.githubusercontent.com/93142964/174599431-eb9e3109-622e-4990-a729-7c0d0c1ad198.png)
-![image](https://user-images.githubusercontent.com/93142964/174599510-080687d0-2fc3-44bb-96d5-799018f0aaf9.png)
+>>>![image](https://user-images.githubusercontent.com/93142964/174599431-eb9e3109-622e-4990-a729-7c0d0c1ad198.png)
+>>>![image](https://user-images.githubusercontent.com/93142964/174599510-080687d0-2fc3-44bb-96d5-799018f0aaf9.png)
 
 
-
+<br><br>
 ---
 > ### ⬛ 토너먼트 게시판
 >> ◾ 8강, 4강, 2강(결승), 예상 우승 작품 조회
@@ -134,8 +135,8 @@ ___
 >> 
 >
 >> ◾ 각 토너먼트 별 추천 버튼
->> * 추천수가 동수인 경우는 총 조회수를 기준으로 선정
->> ![image](https://user-images.githubusercontent.com/93142964/174600890-592fc2ae-dc7b-44ba-8f26-9d4249ec858f.png)
+>>> * 추천수가 동수인 경우는 총 조회수를 기준으로 선정
+>>> ![image](https://user-images.githubusercontent.com/93142964/174600890-592fc2ae-dc7b-44ba-8f26-9d4249ec858f.png)
 >> 
 >
 >> ◾ 토너먼트 종료시의 변화
@@ -143,21 +144,21 @@ ___
 
 >>> 1. 작품 & 작가 관련
 >> 
->>> 1-1) 작품의 컬럼인 week를 무료 게시판에서 유료 게시판으로 변경(유료 게시판에 새로 적재됨)
->> ![image](https://user-images.githubusercontent.com/93142964/174600987-df364801-bffa-4b7c-bfb4-c0c90d1a860e.png)
+>>>> 1-1) 작품의 컬럼인 week를 무료 게시판에서 유료 게시판으로 변경(유료 게시판에 새로 적재됨)
+>>>> ![image](https://user-images.githubusercontent.com/93142964/174600987-df364801-bffa-4b7c-bfb4-c0c90d1a860e.png)
 >> 
->>> 1-2) 작가의 등급 변경(유료 작가)
+>>>> 1-2) 작가의 등급 변경(유료 작가)
 >> 
->>> 1-3) 무료 게시판에서 연재했던 데이터 삭제
+>>>> 1-3) 무료 게시판에서 연재했던 데이터 삭제
 
 
->> 2. 대회 관련
+>>> 2. 대회 관련
 >> 
->>> 2-1) 다음 토너먼트를 위해서 날짜 데이터 업데이트
+>>>> 2-1) 다음 토너먼트를 위해서 날짜 데이터 업데이트
 >> 
->>> 2-2) 토너먼트 테이블 데이터 삭제
+>>>> 2-2) 토너먼트 테이블 데이터 삭제
 >> 
->>> 2-3) 토너먼트 추천 기록 테이블 데이터 삭제
+>>>> 2-3) 토너먼트 추천 기록 테이블 데이터 삭제
 > 
 ---
 > ### ⬛ 유료 소설 게시판 CRUD
@@ -170,16 +171,16 @@ ___
 >> ◾ 회차 삭제
 >>
 >
->> 선호작, 책갈피
+>> ◾ 선호작, 책갈피
 
-
+<br><br>
 ---
 > ### ⬛ 결제
 >> ◾ KG 이니시스를 사용한 결제 모듈 적용  
 >![image](https://user-images.githubusercontent.com/93142964/174601120-407516bd-5eb9-4669-aed3-1ccb62746d77.png)
 >![image](https://user-images.githubusercontent.com/93142964/174601165-1e582131-c578-437b-8546-13e7e99b1430.png)
 
-
+<br><br>
 ---
 ## 배운점
 
@@ -188,7 +189,8 @@ ___
 3. KG이니시스를 사용해 결제 기능을 구현
 4. JUnit을 활용한 DB연결과 & 서비스로직 테스트 가능.
 
-
+<br><br>
+---
 ## 느낀점
 
 1. 첫 번째 프로젝트보다 늘어난 DB를 계속해서 수정하고 컨트롤 하는 과정에서, 데이터베이스를 탄탄하게 만드는 것이 가장 중요하다는 것을 느꼈음.
