@@ -75,7 +75,7 @@ ___
 
 ---
 > ### 메인화면
-![image](https://user-images.githubusercontent.com/93142964/174597723-58b4338b-f69a-48a2-9e3c-49401e4b330b.png)
+>![image](https://user-images.githubusercontent.com/93142964/174597723-58b4338b-f69a-48a2-9e3c-49401e4b330b.png)
 >> 스프링 시큐리티를 적용한 로그인
 >> 
 >
