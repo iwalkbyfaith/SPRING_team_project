@@ -102,6 +102,8 @@ ___
 
 ---
 > ### 무료 소설 게시판 CRUD
+![image](https://user-images.githubusercontent.com/93142964/174599313-cbecd894-e453-45dd-a416-6fc741fb1a06.png)
+
 >> 무료 소설 새로운 회차 추가   
 >> 
 >
@@ -111,8 +113,10 @@ ___
 >> 회차 삭제
 >>
 >
->> 선호작, 책갈피
->> 
+>> 선호작, 책갈피, 추천, 댓글
+![image](https://user-images.githubusercontent.com/93142964/174599431-eb9e3109-622e-4990-a729-7c0d0c1ad198.png)
+![image](https://user-images.githubusercontent.com/93142964/174599510-080687d0-2fc3-44bb-96d5-799018f0aaf9.png)
+
 
 
 ---
