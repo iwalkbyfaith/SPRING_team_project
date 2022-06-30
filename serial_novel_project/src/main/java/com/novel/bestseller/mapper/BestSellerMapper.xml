@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.novel.bestseller.mapper.BestSellerMapper">
+
+	<!-- ■ 카테고리별 소비자 별점 가져오기 -->
+	<select id ="getRankByCategory" resultType="com.novel.bestseller.domain.BestSellerVO">
+		select 
+			category_id, round(avg(customer_review_rank), 2) as rank_by_category 
+		from 
+			best_seller_tbl 
+		group by 
+			category_id 
+		order by 
+			category_id
+	</select>
+	
+	<!-- ■ 샘플 데이터 10개 가져오기 -->
+	<select id="getSampleData" resultType="com.novel.bestseller.domain.BestSellerVO">
+		select 
+			* 
+		from 
+			best_seller_tbl 
+		where 
+			bs_num between 2845 and 2854
+	</select>
+	
+
+
+</mapper>

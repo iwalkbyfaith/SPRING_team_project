@@ -201,6 +201,9 @@ display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
 			           <li class="nav-item">
 			              	<a class="nav-link" href="http://localhost:8181/charge">결제</a>
 		               </li>
+		               <li class="nav-item">
+			              	<a class="nav-link" href="http://localhost:8181/bestseller/list">베스트 셀러</a>
+		               </li>
 		          </ul><!-- ul 태그 끝 -->
 		          <div class="social-part">
 		            <sec:authorize access="isAuthenticated()">
