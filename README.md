@@ -5,7 +5,7 @@
 ## 목차
 1. [**프로젝트 소개**](#프로젝트-소개)
 
-2. [**팀원 및 기능**](#팀원-및-기능)
+2. [**조원 구성**](#조원-구성)
 
 3. [**개발 환경**](#개발-환경)
 
@@ -178,6 +178,31 @@
 >> ◾ KG 이니시스를 사용한 결제 모듈 적용  
 >![image](https://user-images.githubusercontent.com/93142964/174601120-407516bd-5eb9-4669-aed3-1ccb62746d77.png)
 >![image](https://user-images.githubusercontent.com/93142964/174601165-1e582131-c578-437b-8546-13e7e99b1430.png)
+
+<br><br/>
+
+> ### ⬛ 파이썬 api
+> <br>
+>
+> ![image](https://user-images.githubusercontent.com/93142964/177359678-4ba38c6d-ce41-49a4-a16b-82788fbd9b73.png)
+> - 파이썬(주피터노트북)을 사용해 인터파크 api에서 받아온 json 데이터를 Oracle DB에 넣음
+> - 베스트셀러의 카테고리별 평균 별점을 구해 Amchart로 나타냄
+>
+> <br>
+>
+>> - 작성한 파이썬 코드 <br>
+>>
+>>
+>> ![image](https://user-images.githubusercontent.com/93142964/177360311-197f5ae3-2b9e-4b01-9c51-f68eb25c5725.png)
+>>>  - 1. Json 데이터를 파이썬 내부 변수인 best_seller_result에 넣음 
+>> <br><br>
+>>
+>> ![image](https://user-images.githubusercontent.com/93142964/177360710-028c7394-be69-4136-b5f6-25acf20918eb.png)
+>>> - 2.  best_seller_result 변수의 데이터를 오라클 테이블에 적재
+
+
+
+
 
 <br><br>
 ---
