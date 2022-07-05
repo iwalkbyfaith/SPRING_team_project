@@ -159,7 +159,8 @@
 >>>> 
 >>>> 2-3) 토너먼트 추천 기록 테이블 데이터 삭제
 > 
----
+<br><hr>
+
 > ### ⬛ 유료 소설 게시판 CRUD
 >> ◾ 유료 소설 새로운 회차 추가   
 >> ![image](https://user-images.githubusercontent.com/93142964/174601050-d2e29209-9947-4af8-8008-da20a01d9a2b.png)
@@ -179,7 +180,8 @@
 >![image](https://user-images.githubusercontent.com/93142964/174601120-407516bd-5eb9-4669-aed3-1ccb62746d77.png)
 >![image](https://user-images.githubusercontent.com/93142964/174601165-1e582131-c578-437b-8546-13e7e99b1430.png)
 
-<br><br/>
+<br><br>
+---
 
 > ### ⬛ 파이썬 api
 > <br>
